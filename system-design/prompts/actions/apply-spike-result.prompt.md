@@ -1,0 +1,5 @@
+# SD-06/12 Apply Spike Result
+
+Validate the Spike Result against the exact request identity, class, environment/workload, required evidence, and affected artifact binding. Explain whether the result is conclusive, which design/parameter claims it supports, and which Skeleton/Draft/Review identities become stale.
+
+For SD-06 architecture feasibility, do not edit the Skeleton through SD-11: return `FEASIBILITY_CONFIRMED` for SD-07 or `DIRECTION_INVALIDATED` with the result evidence for SD-04. For an SD-12 design-owned parameter, create a Revision Request only when the result changes Design content or validation evidence; SD-11 then creates the new Draft version. If no Design content changes, bind the result and continue to SD-13. Downstream implementation, Contract and tuning results are not prerequisites consumed by SD-12; a later result returns only when it crosses the recorded design-reopen condition. If evidence is inconclusive or mismatched, keep the design-owned Spike open or publish a revised request; do not invent closure or apply the same result twice.

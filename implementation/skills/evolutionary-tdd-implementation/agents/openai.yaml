@@ -1,0 +1,4 @@
+interface:
+  display_name: "Evolutionary TDD Implementation"
+  short_description: "Evolve a minimal prototype through frozen tests"
+  default_prompt: "Use $evolutionary-tdd-implementation to take the current rung from RED to GREEN without editing tests."

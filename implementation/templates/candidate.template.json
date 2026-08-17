@@ -1,0 +1,24 @@
+{
+  "schema_version": "1.0.0",
+  "design_identity": "sha256:DESIGN_DIGEST",
+  "obligation_register_identity": "sha256:OBLIGATION_REGISTER_DIGEST",
+  "obligations": [
+    { "id": "OBLIGATION-ID", "class": "IMPLEMENTATION_VERIFICATION", "state": "VERIFIED", "affected_goal_ids": ["GOAL-ID"] },
+    { "id": "TUNING-ID", "class": "OPERATIONAL_TUNING", "state": "HANDED_OFF", "fitness_threshold_required": false }
+  ],
+  "candidate_tree": "GIT_TREE",
+  "goals": [{ "id": "GOAL-ID", "status": "VERIFIED" }],
+  "findings": [],
+  "review_results": [
+    { "lens": "black-box", "scope": "GOAL", "goal_id": "GOAL-ID", "status": "PASSED", "baseline": "GIT_TREE" },
+    { "lens": "white-box", "scope": "GOAL", "goal_id": "GOAL-ID", "status": "PASSED", "baseline": "GIT_TREE" },
+    { "lens": "black-box", "scope": "WHOLE_SCOPE", "status": "PASSED", "baseline": "GIT_TREE" },
+    { "lens": "white-box", "scope": "WHOLE_SCOPE", "status": "PASSED", "baseline": "GIT_TREE" }
+  ],
+  "tests": [
+    { "phase": "focused", "status": "PASSED", "baseline": "GIT_TREE" },
+    { "phase": "full", "status": "PASSED", "baseline": "GIT_TREE" },
+    { "phase": "coverage", "status": "PASSED", "baseline": "GIT_TREE" }
+  ],
+  "unauthorized_stubs": []
+}

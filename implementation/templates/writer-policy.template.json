@@ -1,0 +1,13 @@
+{
+  "schema_version": "1.0.0",
+  "roles": {
+    "implementer": {
+      "allow": ["PROJECT_PRODUCTION_PATH/**"],
+      "deny": ["PROJECT_TEST_PATH/**", "HARNESS_BINDING_PATH", "WRITER_POLICY_PATH"]
+    },
+    "test_designer": {
+      "allow": ["PROJECT_TEST_PATH/**", "PROJECT_TEST_CONFIG_PATH/**"],
+      "deny": ["PROJECT_PRODUCTION_PATH/**", "HARNESS_BINDING_PATH", "WRITER_POLICY_PATH"]
+    }
+  }
+}

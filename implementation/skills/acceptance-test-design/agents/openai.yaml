@@ -1,0 +1,4 @@
+interface:
+  display_name: "Acceptance Test Design"
+  short_description: "Design and calibrate black-box acceptance tests"
+  default_prompt: "Use $acceptance-test-design to materialize and calibrate the next Test Ladder rung."

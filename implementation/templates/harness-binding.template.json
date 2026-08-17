@@ -1,0 +1,15 @@
+{
+  "schema_version": "1.0.0",
+  "commands": {
+    "feasibility": { "argv": ["PROJECT_WRAPPER", "BOUNDED_FEASIBILITY_ARGS"] },
+    "focused": { "argv": ["PROJECT_WRAPPER", "FOCUSED_TEST_ARGS"] },
+    "full": { "argv": ["PROJECT_WRAPPER", "FULL_TEST_ARGS"] },
+    "coverage": { "argv": ["PROJECT_WRAPPER", "COVERAGE_ARGS"] },
+    "static": { "argv": ["PROJECT_WRAPPER", "STATIC_CHECK_ARGS"] },
+    "build": { "argv": ["PROJECT_WRAPPER", "BUILD_ARGS"] }
+  },
+  "environment": {
+    "isolation": "PROJECT_SPECIFIC_SAFE_TEST_ENVIRONMENT",
+    "external_effects": []
+  }
+}

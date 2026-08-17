@@ -1,0 +1,4 @@
+interface:
+  display_name: "White-box Implementation Review"
+  short_description: "Review implementation integrity and design conformance"
+  default_prompt: "Use $white-box-implementation-review to inspect a Goal candidate for overfitting, scope drift, and unsafe logic."

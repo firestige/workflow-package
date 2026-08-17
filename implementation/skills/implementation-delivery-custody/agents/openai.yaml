@@ -1,0 +1,4 @@
+interface:
+  display_name: "Implementation Delivery Custody"
+  short_description: "Run deterministic preflight, verification, and Git custody"
+  default_prompt: "Use $implementation-delivery-custody to run the authorized CLI Gate for the current Implementation Action."

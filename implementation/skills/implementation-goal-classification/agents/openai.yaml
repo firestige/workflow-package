@@ -1,0 +1,4 @@
+interface:
+  display_name: "Implementation Goal Classification"
+  short_description: "Derive and classify testable implementation goals"
+  default_prompt: "Use $implementation-goal-classification to derive a frozen Goal Graph from an admitted design."

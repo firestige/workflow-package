@@ -1,0 +1,4 @@
+interface:
+  display_name: "Black-box Goal Adversary"
+  short_description: "Find counterexamples within a frozen implementation goal"
+  default_prompt: "Use $black-box-goal-adversary to challenge a verified Goal without reading its implementation first."

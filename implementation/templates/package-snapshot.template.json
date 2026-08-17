@@ -1,0 +1,22 @@
+{
+  "schema_version": "1.0.0-design",
+  "template_status": "NON_ADMISSIBLE_DESIGN_TEMPLATE",
+  "snapshot_id": "PACKAGE-SNAPSHOT-ID",
+  "package": {
+    "id": "implementation-workflow",
+    "version": "PACKAGE-VERSION",
+    "definition_identity": "CONTENT-IDENTITY",
+    "contract_version": "UNPUBLISHED"
+  },
+  "owned_resources": [],
+  "referenced_resources": [],
+  "route_bindings": [],
+  "authority_order": ["workflow_action", "role", "action_prompt", "skill", "artifact_user_data"],
+  "environment_requirements": [],
+  "resolution_proof": {
+    "resolver_identity": "RESOLVER-ID",
+    "resource_closure": "PASSED",
+    "ambient_fallback": "ABSENT"
+  },
+  "content_digest": "sha256:SNAPSHOT-DIGEST"
+}

@@ -1,0 +1,21 @@
+{
+  "schema_version": "1.0.0-design",
+  "template_status": "NON_ADMISSIBLE_DESIGN_TEMPLATE",
+  "manifest_id": "MANIFEST-ID",
+  "revision_id": "IMMUTABLE-REVISION-ID",
+  "previous_revision_id": null,
+  "delivery_id": "DELIVERY-ID",
+  "package_snapshot_id": "PACKAGE-SNAPSHOT-ID",
+  "execution_mode": "MANAGED_DELIVERY",
+  "logical_root": "RUN_WORKSPACE/DELIVERY-ID",
+  "physical_binding": "ENVIRONMENT-RESOLVED-PRIVATE-PATH",
+  "candidate": {
+    "baseline_commit": "GIT-COMMIT",
+    "current_tree": "GIT-TREE"
+  },
+  "artifacts": [],
+  "dependency_edges": [],
+  "state_or_simulation_reference": "REFERENCE-ID",
+  "cleanup_dispositions": [],
+  "content_digest": "sha256:MANIFEST-DIGEST"
+}

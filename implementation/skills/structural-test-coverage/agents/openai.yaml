@@ -1,0 +1,4 @@
+interface:
+  display_name: "Structural Test Coverage"
+  short_description: "Close behavior-relevant branch correctness gaps"
+  default_prompt: "Use $structural-test-coverage to classify and test behavior-bearing branches."

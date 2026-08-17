@@ -1,0 +1,19 @@
+{
+  "name": "@agent-ops/implementation-workflow-cli",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "bin": {
+    "implementation-preflight": "bin/implementation-preflight.mjs",
+    "implementation-test": "bin/implementation-test.mjs",
+    "implementation-writer": "bin/implementation-writer.mjs",
+    "implementation-custodian": "bin/implementation-custodian.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "test": "node --test tests/*.test.mjs",
+    "check": "node --check bin/implementation-preflight.mjs && node --check bin/implementation-test.mjs && node --check bin/implementation-writer.mjs && node --check bin/implementation-custodian.mjs && node --check lib/core.mjs"
+  }
+}
