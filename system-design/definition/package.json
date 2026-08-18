@@ -1,0 +1,577 @@
+{
+  "kind": "agentops.package",
+  "schemaVersion": "agentops.workflow-dsl@0.1.0",
+  "package": {
+    "name": "system-design-workflow",
+    "version": "0.3.0",
+    "purpose": "Turn a short Intake, project authority material and user opinions into an IMPLEMENTATION_READY System Design that states what problem is solved, why the design is shaped this way, and how fitness for the current project is proven; budget exhaustion or missing external authority enters recoverable INCOMPLETE, explicit cancellation enters CANCELLED, and non-retryable failure enters FAILED (none equals success).",
+    "status": "DRAFT",
+    "admissibility": "DESIGN_REFERENCE",
+    "ownership": {
+      "owner": "repository owner",
+      "authoritySource": "team-config configuration authority"
+    },
+    "definition": {
+      "name": "system-design-workflow",
+      "version": "0.3.0",
+      "contentIdentity": "sha256:04ffd1f2e7fb422e3d8a36ed6a84d2da4e9ea5726fab694b36f7e306d386e62b"
+    }
+  },
+  "documents": {
+    "workflow": "workflow.json",
+    "actions": "actions.json",
+    "roles": "roles.json",
+    "routes": "routes.json",
+    "artifacts": "artifacts.json",
+    "validation": "validation.json"
+  },
+  "resources": {
+    "owned": [
+      {
+        "id": "resource.role-prompt.grilling-facilitator",
+        "kind": "role-prompt",
+        "owner": "owned",
+        "path": "../roles/grilling-facilitator.role.md",
+        "contentIdentity": "sha256:acbcfd7c06f247625ae9df06593b9d382c5fea83f80a8c177a791c1a61840418",
+        "use": "Grilling Facilitator role authority for intake, adaptive grilling, Brief confirmation and Brief Change Request facilitation"
+      },
+      {
+        "id": "resource.role-prompt.evidence-scout",
+        "kind": "role-prompt",
+        "owner": "owned",
+        "path": "../roles/evidence-scout.role.md",
+        "contentIdentity": "sha256:2451f85457e1c0de9eeede4469b2d8eda4ee4ff93d03b490376c94d764b9a81f",
+        "use": "Evidence Scout role authority for bounded evidence research"
+      },
+      {
+        "id": "resource.role-prompt.system-designer",
+        "kind": "role-prompt",
+        "owner": "owned",
+        "path": "../roles/system-designer.role.md",
+        "contentIdentity": "sha256:193b5b2524018cd6f3c3cbaa5fa8ffc890977026d5627bf188c8fb54818818e7",
+        "use": "System Designer role authority for Skeleton, expansion, integration, targeted revision and handoff classification"
+      },
+      {
+        "id": "resource.role-prompt.architecture-reviewer",
+        "kind": "role-prompt",
+        "owner": "owned",
+        "path": "../roles/architecture-reviewer.role.md",
+        "contentIdentity": "sha256:9903ff5229bd4393fd5f04a74c7d10ea88806931551b5f737c1f3f72dcae5a18",
+        "use": "Architecture Reviewer role authority for the direction review and the architecture review lens"
+      },
+      {
+        "id": "resource.role-prompt.problem-solution-reviewer",
+        "kind": "role-prompt",
+        "owner": "owned",
+        "path": "../roles/problem-solution-reviewer.role.md",
+        "contentIdentity": "sha256:0833a227cf9b2d8a36606ff815ca1646fc5b91477edddfc0d8f4c88929cec9df",
+        "use": "Problem-Solution Reviewer role authority for the problem-solution review lens"
+      },
+      {
+        "id": "resource.role-prompt.quality-reviewer",
+        "kind": "role-prompt",
+        "owner": "owned",
+        "path": "../roles/quality-reviewer.role.md",
+        "contentIdentity": "sha256:2105381b78b7f0ffebf34d44401b038bd7c1863b526fc44ab5bbb2428dba55ff",
+        "use": "Quality & Acceptance Reviewer role authority for the quality-acceptance review lens"
+      },
+      {
+        "id": "resource.role-prompt.finding-aggregator",
+        "kind": "role-prompt",
+        "owner": "owned",
+        "path": "../roles/finding-aggregator.role.md",
+        "contentIdentity": "sha256:9c9f031dc53a53cb9044157986882c1fdf958d7728ad92b9744b95645c0cae52",
+        "use": "Finding Aggregator role authority for aggregation and triage"
+      },
+      {
+        "id": "resource.role-prompt.fresh-reader",
+        "kind": "role-prompt",
+        "owner": "owned",
+        "path": "../roles/fresh-reader.role.md",
+        "contentIdentity": "sha256:e1d079bf840a74084b70da6a4fa40f00b1a5e54b60553419c18533bc58769820",
+        "use": "Fresh Reader role authority for the Fresh Reader Test"
+      },
+      {
+        "id": "resource.role-prompt.runtime-custodian",
+        "kind": "role-prompt",
+        "owner": "owned",
+        "path": "resources/runtime-custodian.role.md",
+        "contentIdentity": "sha256:afc8dc177c4e1cee5fe2bfb79173c5900ec054277e04323b85679d3e5fa7e6f9",
+        "use": "Declarative route-closure role prompt for the Runtime deterministic lifecycle authority (SD-14/SD-15); no Agent session"
+      },
+      {
+        "id": "resource.prompt.intake-and-authority",
+        "kind": "action-prompt",
+        "owner": "owned",
+        "path": "../prompts/actions/intake-and-authority.prompt.md",
+        "contentIdentity": "sha256:2410ae27d4f3ce8e7ad7bc081465041b4f8c373f295234fc244b6fe8ec6210ab",
+        "use": "action.sd-01 mission"
+      },
+      {
+        "id": "resource.prompt.adaptive-grilling",
+        "kind": "action-prompt",
+        "owner": "owned",
+        "path": "../prompts/actions/adaptive-grilling.prompt.md",
+        "contentIdentity": "sha256:af19e9cd5716346770f80034ac4bf2bec9bd71883d799e1d7d96e56a6f08fcf2",
+        "use": "action.sd-02 mission"
+      },
+      {
+        "id": "resource.prompt.evidence-research",
+        "kind": "action-prompt",
+        "owner": "owned",
+        "path": "../prompts/actions/evidence-research.prompt.md",
+        "contentIdentity": "sha256:33858dcc4f4224e0b14fca3e88819e2b305aa5f36dcf370fc55035802164e52a",
+        "use": "action.sd-01R mission"
+      },
+      {
+        "id": "resource.prompt.produce-skeleton",
+        "kind": "action-prompt",
+        "owner": "owned",
+        "path": "../prompts/actions/produce-skeleton.prompt.md",
+        "contentIdentity": "sha256:581ea01d4ee2511bfdbf65ace357f61f1b74c7d468b14577818ed11e52b1a34c",
+        "use": "action.sd-04 mission"
+      },
+      {
+        "id": "resource.prompt.prepare-spike-request",
+        "kind": "action-prompt",
+        "owner": "owned",
+        "path": "../prompts/actions/prepare-spike-request.prompt.md",
+        "contentIdentity": "sha256:5dfdb7c78320559b10bb3b194fcf030e1231a8fcfef95ef651a5193c49fd8d44",
+        "use": "action.sd-06 spike request preparation mission"
+      },
+      {
+        "id": "resource.prompt.apply-spike-result",
+        "kind": "action-prompt",
+        "owner": "owned",
+        "path": "../prompts/actions/apply-spike-result.prompt.md",
+        "contentIdentity": "sha256:98b6a9b65f8e10a5b409cf12fdb531e45f8778eba325e6f6ab25714efeb45321",
+        "use": "action.sd-06 spike result validation/application mission"
+      },
+      {
+        "id": "resource.prompt.expand-system-design",
+        "kind": "action-prompt",
+        "owner": "owned",
+        "path": "../prompts/actions/expand-system-design.prompt.md",
+        "contentIdentity": "sha256:c75fd8c889fb557134f5d91f8110fbcfd3597ce07a70344f24afe6e4dd0f3ce3",
+        "use": "action.sd-07 mission"
+      },
+      {
+        "id": "resource.prompt.integrate-draft",
+        "kind": "action-prompt",
+        "owner": "owned",
+        "path": "../prompts/actions/integrate-draft.prompt.md",
+        "contentIdentity": "sha256:eb5003d890bb0d9e6d4031f37ac0827b34952503512b10f0675c47f671b5513d",
+        "use": "action.sd-08 mission"
+      },
+      {
+        "id": "resource.prompt.architecture-direction-review",
+        "kind": "action-prompt",
+        "owner": "owned",
+        "path": "../prompts/actions/architecture-direction-review.prompt.md",
+        "contentIdentity": "sha256:40bb043509fdc3eed84c9b8ec5ecd96bb572408add886ac061204a8aaa6f8b8f",
+        "use": "action.sd-05 mission"
+      },
+      {
+        "id": "resource.prompt.architecture-review",
+        "kind": "action-prompt",
+        "owner": "owned",
+        "path": "../prompts/actions/architecture-review.prompt.md",
+        "contentIdentity": "sha256:48ce1f6175a48afb9e0419b8cc69a02c0673719bd86bde1356747cea55bca084",
+        "use": "action.sd-09 architecture lens mission"
+      },
+      {
+        "id": "resource.prompt.problem-solution-review",
+        "kind": "action-prompt",
+        "owner": "owned",
+        "path": "../prompts/actions/problem-solution-review.prompt.md",
+        "contentIdentity": "sha256:8383968480c20928604e3b372a17a0976278a9e62bf566110011701279fec9d7",
+        "use": "action.sd-09 problem-solution lens mission"
+      },
+      {
+        "id": "resource.prompt.quality-acceptance-review",
+        "kind": "action-prompt",
+        "owner": "owned",
+        "path": "../prompts/actions/quality-acceptance-review.prompt.md",
+        "contentIdentity": "sha256:327dd7f142e2d682383a1faac86a725ba5b2f26ba56eb8eb48fabfbb9489f31e",
+        "use": "action.sd-09 quality-acceptance lens mission"
+      },
+      {
+        "id": "resource.prompt.aggregate-findings",
+        "kind": "action-prompt",
+        "owner": "owned",
+        "path": "../prompts/actions/aggregate-findings.prompt.md",
+        "contentIdentity": "sha256:9d59101b03f404a3c79f03f22b0f6c04557fcc7bcc429ca421b1bd784d846fb7",
+        "use": "action.sd-10 mission"
+      },
+      {
+        "id": "resource.prompt.targeted-revision",
+        "kind": "action-prompt",
+        "owner": "owned",
+        "path": "../prompts/actions/targeted-revision.prompt.md",
+        "contentIdentity": "sha256:cc912c16a30e3931c9006bc40cec491902a805ae7e9215f22f0966da42e3e318",
+        "use": "action.sd-11 mission"
+      },
+      {
+        "id": "resource.prompt.human-decision-dialogue",
+        "kind": "action-prompt",
+        "owner": "owned",
+        "path": "../prompts/actions/human-decision-dialogue.prompt.md",
+        "contentIdentity": "sha256:789c6641f5ba40d7c0c99b3a7e2d369902e0153ada1b903e5bd3c98726be199a",
+        "use": "action.sd-11H human decision branch mission"
+      },
+      {
+        "id": "resource.prompt.classify-downstream-handoffs",
+        "kind": "action-prompt",
+        "owner": "owned",
+        "path": "../prompts/actions/classify-downstream-handoffs.prompt.md",
+        "contentIdentity": "sha256:68bdafdec4949c91e19f979cc641141bd67f22e5fbc38025b9a57e1e252ea476",
+        "use": "action.sd-12 mission"
+      },
+      {
+        "id": "resource.prompt.fresh-reader-test",
+        "kind": "action-prompt",
+        "owner": "owned",
+        "path": "../prompts/actions/fresh-reader-test.prompt.md",
+        "contentIdentity": "sha256:211a2767423df9b9a624acc921b98996e8f4d32507408d81c2d8be3fe382cc19",
+        "use": "action.sd-13 mission"
+      },
+      {
+        "id": "resource.skill.system-design-authoring",
+        "kind": "skill",
+        "owner": "owned",
+        "path": "../skills/system-design-authoring/SKILL.md",
+        "contentIdentity": "sha256:330ee6bad63604c7c8bee456fa7a0cd0b273277d6d5cc7dcd685fdaf8a5f8a23",
+        "use": "Bounded authoring method for the System Designer route"
+      },
+      {
+        "id": "resource.skill.architecture-review",
+        "kind": "skill",
+        "owner": "owned",
+        "path": "../skills/architecture-review/SKILL.md",
+        "contentIdentity": "sha256:26cd742f3ff539b75c1d14adda772d45a9d4439f0b017441b864ba4b3205c40e",
+        "use": "Bounded architecture review method for the architecture reviewer routes"
+      },
+      {
+        "id": "resource.skill.problem-solution-review",
+        "kind": "skill",
+        "owner": "owned",
+        "path": "../skills/problem-solution-review/SKILL.md",
+        "contentIdentity": "sha256:5c85191c698a5282731ddcb78dd19c5c8458e91f4836459dbb9706123188bcdb",
+        "use": "Bounded problem-solution review method for the problem-solution reviewer route"
+      },
+      {
+        "id": "resource.skill.quality-acceptance-review",
+        "kind": "skill",
+        "owner": "owned",
+        "path": "../skills/quality-acceptance-review/SKILL.md",
+        "contentIdentity": "sha256:1cdbe298b10847bd18de53772d3b0e637d86cbb4ce3b4b7bfd30c0e3187b1e7e",
+        "use": "Bounded quality-acceptance review method for the quality reviewer route"
+      },
+      {
+        "id": "resource.template.system-design-brief",
+        "kind": "template",
+        "owner": "owned",
+        "path": "../templates/system-design-brief.template.md",
+        "contentIdentity": "sha256:8fb188e9a6f04470bdc58bbb4615b0c597c087914b511d0ad87c177386fe6b30",
+        "use": "Brief artifact template referenced by artifact.brief"
+      },
+      {
+        "id": "resource.template.system-design-skeleton",
+        "kind": "template",
+        "owner": "owned",
+        "path": "../templates/system-design-skeleton.template.md",
+        "contentIdentity": "sha256:2b57b643b4236123ede0df2d1abd4a685797bb59495e791f7984516350318466",
+        "use": "Skeleton artifact template referenced by artifact.skeleton"
+      },
+      {
+        "id": "resource.template.system-design-document",
+        "kind": "template",
+        "owner": "owned",
+        "path": "../templates/system-design-document.template.md",
+        "contentIdentity": "sha256:1ceaafe8d79322a24dde087e8beada62b4149934328dd131acab72991ac1e58b",
+        "use": "System Design document template referenced by artifact.draft and artifact.final-design"
+      },
+      {
+        "id": "resource.template.brief-change-request",
+        "kind": "template",
+        "owner": "owned",
+        "path": "../templates/brief-change-request.template.md",
+        "contentIdentity": "sha256:0199e10852dfa5d1d5a664194bfeee7ff352ee28ef67bed4b01253feb86fc4a6",
+        "use": "Brief Change Request template for the SD-11H Brief gap path"
+      },
+      {
+        "id": "resource.template.evidence-research-request",
+        "kind": "template",
+        "owner": "owned",
+        "path": "../templates/evidence-research-request.template.md",
+        "contentIdentity": "sha256:dfdd31d9824e984dc17aa794e9e3cc95c0854deb49fecf5303f92dbfcabe1e22",
+        "use": "Evidence Research Request template referenced by artifact.evidence-research-request"
+      },
+      {
+        "id": "resource.template.spike-request",
+        "kind": "template",
+        "owner": "owned",
+        "path": "../templates/spike-request.template.md",
+        "contentIdentity": "sha256:c047b898323bf566bd9150511b3c0b585c118dfb6221e48a2059930773f7d619",
+        "use": "Spike Request template referenced by artifact.spike-request"
+      },
+      {
+        "id": "resource.template.spike-result",
+        "kind": "template",
+        "owner": "owned",
+        "path": "../templates/spike-result.template.md",
+        "contentIdentity": "sha256:8c8ca2271fd0e023213191ad30e191496efee1350a1f02ed174bf3ea35df39f3",
+        "use": "Spike Result template referenced by artifact.spike-result"
+      },
+      {
+        "id": "resource.template.human-decision-request",
+        "kind": "template",
+        "owner": "owned",
+        "path": "../templates/human-decision-request.template.md",
+        "contentIdentity": "sha256:3170e9785c140dfab1f07f318fbd6ef2037ad3fc4694a44f37ed2f0eca79b443",
+        "use": "Human Decision Request template referenced by artifact.human-decision-request"
+      },
+      {
+        "id": "resource.template.human-decision-record",
+        "kind": "template",
+        "owner": "owned",
+        "path": "../templates/human-decision-record.template.md",
+        "contentIdentity": "sha256:ea89e823531bf3264843e38d1f4f54d54c430e89d8acd73608268a289badd5e4",
+        "use": "Human Decision Record template referenced by artifact.human-decision-record"
+      },
+      {
+        "id": "resource.schema.action-result",
+        "kind": "schema",
+        "owner": "owned",
+        "path": "../schemas/action-result.schema.md",
+        "contentIdentity": "sha256:68c34e2b794f07c3fbab7052b71b3a85bd83ef0721aa1b7c9bd0977da85d0f22",
+        "use": "Design-time Action result semantic shape; future machine-readable schemas must preserve these semantics"
+      },
+      {
+        "id": "resource.schema.review-finding",
+        "kind": "schema",
+        "owner": "owned",
+        "path": "../schemas/review-finding.schema.md",
+        "contentIdentity": "sha256:739dcc9f37ffe515e47021d9d8f1556b60df4d0a8bd05c34c37b0105be2ddbbc",
+        "use": "Design-time Finding/REVIEW_SIGNAL semantic shape"
+      },
+      {
+        "id": "resource.schema.artifact-dependency",
+        "kind": "schema",
+        "owner": "owned",
+        "path": "../schemas/artifact-dependency.schema.md",
+        "contentIdentity": "sha256:557c930c8c47830858437df77ce73e9f7dbf415b15758be1d04c5c3f3592f35d",
+        "use": "Design-time artifact dependency semantics (digest/invalidation)"
+      },
+      {
+        "id": "resource.schema.artifact-status",
+        "kind": "schema",
+        "owner": "owned",
+        "path": "../schemas/artifact-status.schema.md",
+        "contentIdentity": "sha256:7210d7a12ffd8c2dc10a9a10f9b22099da0ea030c8330888528cd95faf2446b9",
+        "use": "Design-time maturity and dependency-validity states"
+      },
+      {
+        "id": "resource.schema.acceptance-trace",
+        "kind": "schema",
+        "owner": "owned",
+        "path": "../schemas/acceptance-trace.schema.md",
+        "contentIdentity": "sha256:6d88cce81ad012cb33b33f67eb8fe32820fadb86838cdfe02d631aae142e4d2a",
+        "use": "Design-time acceptance relation semantics"
+      },
+      {
+        "id": "resource.schema.revision-request",
+        "kind": "schema",
+        "owner": "owned",
+        "path": "../schemas/revision-request.schema.md",
+        "contentIdentity": "sha256:f16e3495b4773c6f2d6a10262cac84a535120e617b4975799da169e74ffb67c3",
+        "use": "Design-time Revision Request semantics including return_action"
+      },
+      {
+        "id": "resource.schema.spike-result",
+        "kind": "schema",
+        "owner": "owned",
+        "path": "../schemas/spike-result.schema.md",
+        "contentIdentity": "sha256:96768b8fab86d817a8d129d8cff4ace0d7c8e55f0d78042d44bb4bf6103a2ee1",
+        "use": "Design-time Spike Result semantics"
+      },
+      {
+        "id": "resource.schema.reader-question",
+        "kind": "schema",
+        "owner": "owned",
+        "path": "../schemas/reader-question.schema.md",
+        "contentIdentity": "sha256:5603e0ab22a211165db1b9487fe20b3ebfd90dac9b7094728924e843d66fc436",
+        "use": "Design-time Fresh Reader question set semantics"
+      },
+      {
+        "id": "resource.schema.workflow-control",
+        "kind": "schema",
+        "owner": "owned",
+        "path": "../schemas/workflow-control.schema.md",
+        "contentIdentity": "sha256:69794a7b8103e53bd45c4325c2a332223b2114b423140926a220a6f70b432976",
+        "use": "Design-time durable Wait and terminal result semantics"
+      },
+      {
+        "id": "resource.schema.evidence-research-request",
+        "kind": "schema",
+        "owner": "owned",
+        "path": "../schemas/evidence-research-request.schema.md",
+        "contentIdentity": "sha256:cac59fea025f4126069131d937d2d672a0bd5c81852d21aca12336fdcb42a5dc",
+        "use": "Design-time Evidence Research Request semantics (resume_action/resume_lens)"
+      },
+      {
+        "id": "resource.schema.downstream-obligation",
+        "kind": "schema",
+        "owner": "owned",
+        "path": "../schemas/downstream-obligation.schema.md",
+        "contentIdentity": "sha256:81284fba21d5624575afaacf3196f5b784c22a37dc148877f5593044308d7c84",
+        "use": "Design-time downstream obligation semantics"
+      },
+      {
+        "id": "resource.validators.readme",
+        "kind": "validator",
+        "owner": "owned",
+        "path": "../validators/README.md",
+        "contentIdentity": "sha256:0d642afa849e4f55f85ad2d5574415763ea2438a64216b14f5d8c99bcdff15fc",
+        "use": "Deterministic verification and SD-15 cleanup Gate check definitions"
+      },
+      {
+        "id": "resource.conformance.positive",
+        "kind": "conformance",
+        "owner": "owned",
+        "path": "../conformance/positive/README.md",
+        "contentIdentity": "sha256:69b0255159bbfd93a6f4e0157ab2278f81c809eb03591bd3a59362bed0079bf3",
+        "use": "Positive conformance scenario source for validation.conformance"
+      },
+      {
+        "id": "resource.conformance.negative",
+        "kind": "conformance",
+        "owner": "owned",
+        "path": "../conformance/negative/README.md",
+        "contentIdentity": "sha256:f0cac704fd33c16bc6517cb0334102fb2f1ce3ffb9af49aa47d7350581c5a6ab",
+        "use": "Negative conformance scenario source for validation.conformance"
+      },
+      {
+        "id": "resource.conformance.recovery",
+        "kind": "conformance",
+        "owner": "owned",
+        "path": "../conformance/recovery/README.md",
+        "contentIdentity": "sha256:a1f0986b69cf474b3eb8a15c1e71eb8e9923911db7b01412589dcd7923e40bea",
+        "use": "Wait/resume/failure/recovery conformance scenario source for validation.conformance"
+      },
+      {
+        "id": "resource.workflow-definition-source",
+        "kind": "documentation",
+        "owner": "owned",
+        "path": "../workflow.md",
+        "contentIdentity": "sha256:6317aacf628c5ac67ddf1f2488bf727c6b1ccc1d39652f615f970fca1ad13786",
+        "use": "Semantic source of this Definition (workflow.md); every Action/transition/Gate/Wait/terminal translates from it"
+      },
+      {
+        "id": "resource.routes-catalog",
+        "kind": "documentation",
+        "owner": "owned",
+        "path": "../agents/routes.md",
+        "contentIdentity": "sha256:579b50a27ea35abcae1c6bd615ec0f4e7356f2197f3fa8013ff6ebb090510900",
+        "use": "Design-time route catalog; every route in this Definition binds from it"
+      },
+      {
+        "id": "resource.package-readme",
+        "kind": "documentation",
+        "owner": "owned",
+        "path": "../README.md",
+        "contentIdentity": "sha256:82b40d5d7f317f91d1df8f9eb59339a4e3830789b83ad4d0c42b4e866dfdfe13",
+        "use": "Package-level design-time reference documentation"
+      }
+    ],
+    "referenced": [
+      {
+        "id": "resource.skill.grilling",
+        "kind": "skill",
+        "owner": "referenced",
+        "sourceLocator": {
+          "repository": "workflow-package",
+          "path": ".agents/skills/grilling/SKILL.md"
+        },
+        "contentIdentity": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "use": "Shared adaptive grilling method used by the facilitator routes; method-only, no control-flow authority; exact content identity resolved by the future Package Snapshot (placeholder, do not fabricate)"
+      },
+      {
+        "id": "resource.skill.codebase-design",
+        "kind": "skill",
+        "owner": "referenced",
+        "sourceLocator": {
+          "repository": "workflow-package",
+          "path": ".agents/skills/codebase-design/SKILL.md"
+        },
+        "contentIdentity": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "use": "Shared codebase-design method (Module/Interface/Seam/Depth/Leverage/Locality) used when structure is in scope; exact content identity resolved by the future Package Snapshot (placeholder, do not fabricate)"
+      },
+      {
+        "id": "resource.agent-definition.managed",
+        "kind": "agent-definition",
+        "owner": "referenced",
+        "sourceLocator": {
+          "repository": "agent-ops-ledger",
+          "path": "agents/managed-agent-definition.yaml"
+        },
+        "contentIdentity": "sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+        "use": "Managed agent definition projected through the declared Driver; exact identity resolved by the future Package Snapshot (placeholder, do not fabricate)"
+      },
+      {
+        "id": "resource.model.managed",
+        "kind": "model",
+        "owner": "referenced",
+        "sourceLocator": {
+          "repository": "agent-ops-ledger",
+          "path": "bindings/managed-model.yaml"
+        },
+        "contentIdentity": "sha256:dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+        "use": "Managed model binding with declared capability/cost class; exact identity resolved by the future Package Snapshot (placeholder, do not fabricate)"
+      },
+      {
+        "id": "resource.driver.managed-cli",
+        "kind": "driver",
+        "owner": "referenced",
+        "sourceLocator": {
+          "repository": "agent-ops-ledger",
+          "path": "bindings/managed-cli-driver.yaml"
+        },
+        "contentIdentity": "sha256:eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+        "use": "Managed CLI Driver projecting the frozen route, never ambient defaults; exact identity resolved by the future Package Snapshot (placeholder, do not fabricate)"
+      },
+      {
+        "id": "resource.tool.repo-read",
+        "kind": "tool",
+        "owner": "referenced",
+        "sourceLocator": {
+          "repository": "agent-ops-ledger",
+          "path": "tools/repo-read.yaml"
+        },
+        "contentIdentity": "sha256:ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+        "use": "Repository/authorized-source read tool for routes that read repository evidence; exact identity resolved by the future Package Snapshot (placeholder, do not fabricate)"
+      }
+    ]
+  },
+  "authority": {
+    "order": [
+      "workflow_action",
+      "role_prompt",
+      "action_prompt",
+      "skill",
+      "artifact_user"
+    ],
+    "conflictMode": "fail-closed"
+  },
+  "environmentRequirements": [
+    "git",
+    "managed runtime with interrupt/resume and checkpoint correlation",
+    "ignored run workspace under tmp/system-design/<run-id>/ or an equivalent Runtime-private ignored location",
+    "external Spike Workflow integration for SD-06/SD-12 Spike publication and correlation",
+    "deterministic validator CLI for SD-14/SD-15 (checks defined under validators/README.md)"
+  ],
+  "compatibility": {
+    "minContractVersion": "0.1.0",
+    "maxContractVersion": "0.1.0"
+  }
+}

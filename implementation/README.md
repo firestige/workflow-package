@@ -12,7 +12,7 @@
 | Design version | `0.3.0-design` |
 | Design status | `CONFIRMED` |
 | Governing model | [`docs/workflow-composition-model.md`](../../docs/workflow-composition-model.md) |
-| Workflow authority | [`workflow.md`](workflow.md) until a versioned Runtime DSL is published |
+| Workflow authority | [`workflow.md`](workflow.md) until a versioned Runtime DSL is published; the machine-readable Definition under [`definition/`](definition/) is the candidate translation per [`agentops.workflow-dsl@0.1.0`](../../docs/contracts/workflow/workflow-definition-dsl.md) (Contract `REVIEW_CANDIDATE`, not published) |
 | Initial validation mode | `UNMANAGED_SIMULATION` with package-owned CLI Gates |
 
 ## 核心原则
@@ -34,6 +34,7 @@
 | 资源 | 位置 | 用途 |
 | --- | --- | --- |
 | Human Execution Guide | [`execution-guide.md`](execution-guide.md) | 核心流程、Goal 循环、Finding、Wait 与 Git 边界的分层图解 |
+| Machine Definition | [`definition/`](definition/) | 符合 Workflow DSL 的机器可读 Definition（package/workflow/actions/roles/routes/artifacts/validation + 语义保真核对表），candidate translation，`DESIGN_REFERENCE` |
 | Workflow | [`workflow.md`](workflow.md) | Action、transition、Gate、Wait、恢复与终态 |
 | Artifact Lifecycle | [`artifact-lifecycle.md`](artifact-lifecycle.md) | Snapshot、State、Run Artifact、Git deliverable、lineage、retention 与 cleanup |
 | Composition Review | [`composition-conformance.md`](composition-conformance.md) | 对照 governing model 的闭合项、实现义务与未决 authority 问题 |

@@ -1,0 +1,75 @@
+{
+  "kind": "agentops.validation",
+  "schemaVersion": "agentops.workflow-dsl@0.1.0",
+  "validators": [
+    { "id": "validator.intake-checks", "purpose": "Intake binds exact frozen design identity, authority order and working Obligation Register; derivable facts investigated rather than converted into questions; no ambient design/current-file substitution; non-ready or contradictory design fails closed.", "input": "intake result and state", "output": "pass/fail", "deterministic": true },
+    { "id": "validator.preflight-checks", "purpose": "Preflight verifies clean worktree, design status/identity, project-native build/test/coverage/static commands, safe test isolation, obligation classification completeness, Contract availability facts and tool/permission availability; unsafe/unclassified/unmeasurable conditions cannot be waived by an Agent.", "input": "preflight result and repository state", "output": "pass/fail", "deterministic": true },
+    { "id": "validator.feasibility-checks", "purpose": "Every IMPLEMENTATION_FEASIBILITY obligation has a conclusive compatible result and selected binding from the frozen Harness feasibility phase; inconclusive evidence stays in IM-02V; a result that invalidates the frozen design stops the Delivery.", "input": "feasibility evidence records", "output": "pass/fail", "deterministic": true },
+    { "id": "validator.grilling-checks", "purpose": "Grilling asked one decision at a time and investigated facts first; every Goal has classification, dependency, Oracle, Test Ladder and completion relation; measurement authority established without architecture decisions.", "input": "grilling result and goal packets", "output": "pass/fail", "deterministic": true },
+    { "id": "validator.goal-graph-checks", "purpose": "Every upstream obligation mapped to a Goal, feasibility result, external blocker or operational handoff; no unresolved user decision remains; the Goal Graph is confirmed and frozen by the human.", "input": "goal graph and confirmation", "output": "pass/fail", "deterministic": true },
+    { "id": "validator.branch-checks", "purpose": "Feature branch activated from a clean baseline with the baseline commit recorded; no auto-stash, reset, merge or conflicting-branch reuse.", "input": "git state", "output": "pass/fail", "deterministic": true },
+    { "id": "validator.selection-checks", "purpose": "Deterministic selector order: Harness prerequisite, minimum end-to-end Walking Skeleton, then topological Goal/Test Ladder order; Implementer preference cannot choose the next Goal; a missing Contract waits only when no independent Ready Goal remains.", "input": "goal graph and goal states", "output": "pass/fail", "deterministic": true },
+    { "id": "validator.calibration-checks", "purpose": "Current behavior fails for the expected reason, or existing-green is challenged by a negative fixture/controlled mutant; a test file that merely exists is insufficient; flaky/skipped/misdirected/non-discriminating tests cannot enter implementation.", "input": "test feedback", "output": "pass/fail", "deterministic": true },
+    { "id": "validator.evolve-checks", "purpose": "The smallest production-code change turns the calibrated RED into GREEN; no formal test/fixture/Harness/coverage/writer-policy changes; diagnostic probes stay ignored and non-authoritative; stubs bound to known Contracts only.", "input": "production diff and test feedback", "output": "pass/fail", "deterministic": true },
+    { "id": "validator.coverage-checks", "purpose": "New/modified behavior-bearing branches require 100% coverage plus branch-specific assertions; historical coverage cannot regress; generated/non-behavioral/proven-unreachable exclusions require exact evidence and later Auditor admission.", "input": "coverage map and diff", "output": "pass/fail", "deterministic": true },
+    { "id": "validator.refactor-checks", "purpose": "Refactor improves the current prototype without changing frozen behavior; no speculative abstraction, future feature, generic HA/transaction/retry machinery or unrelated cleanup; NO_REFACTOR_NEEDED is valid.", "input": "refactor diff and frozen behavior", "output": "pass/fail", "deterministic": true },
+    { "id": "validator.rung-verify", "purpose": "Rung verification checks current tests, affected regression, writer policy, stub ledger and Action evidence against one Git baseline; a random rerun to obtain GREEN is prohibited.", "input": "test evidence and git baseline", "output": "pass/fail", "deterministic": true },
+    { "id": "validator.review-isolation", "purpose": "Both review lenses started fresh from the same Goal candidate and remained isolated until the barrier closed; black-box lens did not inspect the implementation before its initial counterexample result froze; shared raw evidence does not equal shared conclusions.", "input": "session and barrier records", "output": "pass/fail", "deterministic": true },
+    { "id": "validator.aggregation-rules", "purpose": "Aggregation preserved provenance, merged only clear common causes, detected conflicts, routed each Finding; no voting, no severity changes, no test/code edits and no Finding closure by the aggregator.", "input": "review results and aggregation output", "output": "pass/fail", "deterministic": true },
+    { "id": "validator.resolution-checks", "purpose": "Resolution stayed strictly within the frozen Goal (test-side: tests/fixtures only; implementation-side: production code only); negative feedback order is failing executable test, deterministic rule, then structured semantic recheck; any requested semantic expansion stops the Delivery.", "input": "finding, treatment and candidate", "output": "pass/fail", "deterministic": true },
+    { "id": "validator.recheck-checks", "purpose": "Only the original Finding lens closes its Finding against the exact treatment and new candidate in a fresh session; Implementer/Aggregator cannot close it; the Finding records its review scope and return Action so recovery cannot confuse the two loops.", "input": "finding disposition and recheck result", "output": "pass/fail", "deterministic": true },
+    { "id": "validator.goal-commit-checks", "purpose": "All Goal rungs complete, local Findings closed, writer/scope clean, focused/affected regression/coverage green, no unauthorized stubs; commit only explicit approved paths with Goal identity; RED states remain checkpoints, never commits.", "input": "candidate, findings and git state", "output": "pass/fail", "deterministic": true },
+    { "id": "validator.whole-scope-checks", "purpose": "Cross-Goal composition, shared state, final Project Context applicability, mapped implementation-verification obligations and full regression pass against the complete branch; Findings return through IM-13; no partial success.", "input": "branch, goal commits and regression evidence", "output": "pass/fail", "deterministic": true },
+    { "id": "validator.final-checks", "purpose": "Terminal Gate: every in-scope Goal VERIFIED, all Findings disposition-valid, required Harness phases pass against the candidate, no unauthorized stub/debug artifact, process artifacts absent from Git, worktree clean, exact run-manifest/retention disposition valid; an unmeasured tuning value cannot be reported as passed; no push/PR/merge/deploy.", "input": "candidate, state and manifest", "output": "pass/fail", "deterministic": true },
+    { "id": "validator.writer-policy", "purpose": "Writer policy compares the Action-start Git baseline with staged, unstaged, renamed, deleted and untracked paths; Test Designer writes formal tests only, Implementer writes production code only; no cross-writer edits.", "input": "git diff and policy", "output": "pass/fail", "deterministic": true },
+    { "id": "validator.cli-checks", "purpose": "Package CLI outputs structured JSON, command/argv, exit status, checked identities and bounded stdout/stderr; frozen argv arrays and shell=false; CLI failure is never reinterpreted as success.", "input": "CLI results", "output": "pass/fail", "deterministic": true }
+  ],
+  "aggregation": [
+    {
+      "id": "aggregation.review",
+      "scope": "action.IM-12",
+      "rule": "preserve-provenance",
+      "arbiter": "role.finding-aggregator",
+      "prohibited": ["voting", "severity change without the source lens", "closing findings by the aggregator", "test/code edits by the aggregator"]
+    },
+    {
+      "id": "aggregation.whole-scope",
+      "scope": "action.IM-17",
+      "rule": "no-voting",
+      "arbiter": "role.finding-aggregator",
+      "prohibited": ["partial success", "finding closure by the aggregator"]
+    }
+  ],
+  "review": [
+    {
+      "id": "review.goal-blackbox",
+      "lens": "black-box",
+      "role": "role.goal-adversary",
+      "isolation": "session-isolated",
+      "barrier": true,
+      "admission": { "findingShape": "artifact.finding" }
+    },
+    {
+      "id": "review.implementation-whitebox",
+      "lens": "white-box",
+      "role": "role.implementation-reviewer",
+      "isolation": "session-isolated",
+      "barrier": true,
+      "admission": { "findingShape": "artifact.finding" }
+    }
+  ],
+  "conformance": [
+    { "id": "conf.positive.single-goal", "class": "positive", "scenario": "IM-01 → 02 → 02V (when applicable) → 03 → 04 → 05 → 06 → 07(RED) → 08(GREEN) → 09 → 10 → 11 → 12 → 13 → 16 → 17 → 18", "preconditions": "one ready pure-behavior Goal; clean repository", "expected": "one Goal commit; VERIFIED_IMPLEMENTATION_READY; no publication effect" },
+    { "id": "conf.positive.multi-goal", "class": "positive", "scenario": "Harness Goal plus core and collaborator Goals with Walking Skeleton and Contract-bound stubs", "preconditions": "frozen goal graph", "expected": "serialized production writes, per-Goal commits, stub replacement, whole-scope success" },
+    { "id": "conf.positive.existing-green", "class": "positive", "scenario": "baseline already satisfies the Goal; controlled negative fixture/mutant proves discrimination", "preconditions": "existing-green behavior", "expected": "Goal completes without unnecessary production change" },
+    { "id": "conf.positive.obligation", "class": "positive", "scenario": "four upstream obligations classified separately and routed to feasibility/verification/tuning", "preconditions": "obligation register bound", "expected": "only dependent Goals wait; candidate completes without false evidence claims" },
+    { "id": "conf.negative.transition", "class": "negative", "scenario": "a successor proposal outside the declared out-edge set", "preconditions": "proposal outside allowedSuccessors", "expected": "rejected; no state advance; fail closed" },
+    { "id": "conf.negative.writer", "class": "negative", "scenario": "Implementer edits formal tests or Test Designer edits production code", "preconditions": "writer policy violation in diff", "expected": "writer gate fails; no commit; fail closed" },
+    { "id": "conf.negative.feedback", "class": "negative", "scenario": "non-discriminating, skipped, flaky or misdirected tests presented as calibrated", "preconditions": "invalid test feedback", "expected": "calibration gate fails; cannot enter implementation" },
+    { "id": "conf.negative.ambient", "class": "negative", "scenario": "missing resource, unresolved route binding or Driver substitution", "preconditions": "package closure gap", "expected": "admission/recovery fails explicitly; no ambient fallback" },
+    { "id": "conf.recovery.wait", "class": "recovery", "scenario": "wait.user-measurement or wait.external-coordination answer is stale or mismatched", "preconditions": "correlation identity differs from the pending wait", "expected": "no resume; wait persists; no state advance" },
+    { "id": "conf.recovery.budget", "class": "recovery", "scenario": "attempt budget exhausted during the Goal Loop", "preconditions": "budget exhausted", "expected": "terminal:INCOMPLETE with current Goal/rung, baseline, attempts, Findings and resume Action; no Gate relaxed" },
+    { "id": "conf.recovery.design-reopen", "class": "recovery", "scenario": "a measured feasibility result crosses a frozen design-reopen condition", "preconditions": "feasibility.reopen", "expected": "current Delivery stops at terminal:DESIGN_REOPEN; new Delivery requires a new design version" },
+    { "id": "conf.recovery.crash", "class": "recovery", "scenario": "checkpoint binding identities are re-resolved before recovery", "preconditions": "missing/corrupt/mismatched binding", "expected": "fail closed into explicit reconciliation/INCOMPLETE; no blind replay" }
+  ]
+}

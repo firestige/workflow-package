@@ -1,0 +1,1031 @@
+{
+  "kind": "agentops.workflow-definition",
+  "schemaVersion": "agentops.workflow-dsl@0.1.0",
+  "workflow": {
+    "id": "system-design-workflow",
+    "name": "System Design Workflow",
+    "version": "0.3.0",
+    "purpose": "Turn a short Intake, project authority material and user opinions into a System Design that explains what problem is solved, why the design is shaped this way, and how fitness for the current project is proven. The only success terminal is IMPLEMENTATION_READY; budget exhaustion or missing external authority enters recoverable INCOMPLETE, explicit cancellation enters CANCELLED, and non-retryable execution/configuration failure enters FAILED; none of the three equals success.",
+    "contractVersion": "agentops.workflow-dsl@0.1.0"
+  },
+  "state": {
+    "fields": [
+      {
+        "name": "status",
+        "type": "string",
+        "reducer": "overwrite",
+        "required": true,
+        "description": "Lifecycle marker written by each Action result; last write wins."
+      },
+      {
+        "name": "routing",
+        "type": "string",
+        "reducer": "overwrite",
+        "description": "Per-Action routing result consumed by the graph's conditional edges; overwritten by the most recent Action result."
+      },
+      {
+        "name": "return_action",
+        "type": "string",
+        "reducer": "overwrite",
+        "description": "SD-11 validated return_action (SD-09 | SD-13 | SD-14) selected from the invalidated validation evidence of the Revision Request; Runtime validates it against origin and invalidation state; SD-09 is not the unconditional default."
+      },
+      {
+        "name": "evidence_return_action",
+        "type": "string",
+        "reducer": "overwrite",
+        "description": "Recorded resume_action of the Evidence Research Request (SD-05 | SD-09); Runtime persists the return binding, the Evidence Scout cannot change it."
+      },
+      {
+        "name": "resume_lens",
+        "type": "string",
+        "reducer": "overwrite",
+        "description": "Affected SD-09 lens (PROBLEM_SOLUTION | ARCHITECTURE | QUALITY_ACCEPTANCE) recorded when evidence research returns to SD-09; research resumes only that fresh recheck before aggregation resumes."
+      },
+      {
+        "name": "findings",
+        "type": "array",
+        "items": {
+          "type": "object"
+        },
+        "reducer": "append",
+        "description": "Admitted review Findings appended across review iterations; severity/disposition is decided by the source lens and never overwritten."
+      },
+      {
+        "name": "review_signals",
+        "type": "array",
+        "items": {
+          "type": "object"
+        },
+        "reducer": "append",
+        "description": "Non-blocking REVIEW_SIGNAL records; never counted as Findings, never block, never trigger Human Decision admission."
+      },
+      {
+        "name": "aggregation",
+        "type": "object",
+        "reducer": "overwrite",
+        "description": "SD-10 aggregation result: { routing, mergedFindings, contradictions }; the routing value drives the conditional edges of node.sd-10."
+      },
+      {
+        "name": "brief",
+        "type": "artifactRef",
+        "reducer": "overwrite",
+        "description": "Immutable Confirmed Design Brief artifact reference with run-workspace content digest and topic identities."
+      },
+      {
+        "name": "skeleton",
+        "type": "artifactRef",
+        "reducer": "overwrite",
+        "description": "Confirmed System Design Skeleton artifact reference; architecture direction and technical feasibility closed."
+      },
+      {
+        "name": "draft",
+        "type": "artifactRef",
+        "reducer": "overwrite",
+        "description": "Versioned complete Draft artifact reference in the ignored run workspace, suitable for independent review."
+      },
+      {
+        "name": "design",
+        "type": "artifactRef",
+        "reducer": "overwrite",
+        "description": "Final System Design candidate bound at SD-15 to the exact content and dependency closure in Workflow state."
+      },
+      {
+        "name": "grilling_questions",
+        "type": "integer",
+        "reducer": "sum",
+        "description": "Budget accounting for grilling questions (budget.questions); accumulated with the sum reducer."
+      },
+      {
+        "name": "research_attempts",
+        "type": "integer",
+        "reducer": "sum",
+        "description": "Budget accounting for evidence research attempts (budget.research); accumulated with the sum reducer."
+      },
+      {
+        "name": "feasibility_iterations",
+        "type": "integer",
+        "reducer": "sum",
+        "description": "Budget accounting for architecture-feasibility iterations (budget.feasibility); accumulated with the sum reducer."
+      },
+      {
+        "name": "review_iterations",
+        "type": "integer",
+        "reducer": "sum",
+        "description": "Budget accounting for review iterations (budget.review); accumulated with the sum reducer."
+      },
+      {
+        "name": "revision_count",
+        "type": "integer",
+        "reducer": "sum",
+        "description": "Budget accounting for targeted revisions (budget.revision); accumulated with the sum reducer."
+      },
+      {
+        "name": "decision_turns",
+        "type": "integer",
+        "reducer": "sum",
+        "description": "Budget accounting for human decision dialogue turns (budget.decision-dialogue); accumulated with the sum reducer."
+      }
+    ]
+  },
+  "graph": {
+    "start": "node.sd-01",
+    "nodes": [
+      {
+        "id": "node.sd-01",
+        "action": "action.sd-01",
+        "checkpoint": {
+          "mode": "always",
+          "bindings": [
+            "delivery",
+            "snapshot",
+            "actionAttempt",
+            "manifestRevision",
+            "gitTree"
+          ]
+        }
+      },
+      {
+        "id": "node.sd-02",
+        "action": "action.sd-02",
+        "checkpoint": {
+          "mode": "always",
+          "bindings": [
+            "delivery",
+            "snapshot",
+            "actionAttempt",
+            "manifestRevision",
+            "gitTree",
+            "pendingWait",
+            "budgets",
+            "artifactVersions"
+          ]
+        }
+      },
+      {
+        "id": "node.sd-03",
+        "action": "action.sd-03",
+        "checkpoint": {
+          "mode": "always",
+          "bindings": [
+            "delivery",
+            "snapshot",
+            "actionAttempt",
+            "manifestRevision",
+            "gitTree",
+            "pendingWait",
+            "budgets",
+            "artifactVersions"
+          ]
+        }
+      },
+      {
+        "id": "node.sd-04",
+        "action": "action.sd-04"
+      },
+      {
+        "id": "node.sd-05",
+        "action": "action.sd-05"
+      },
+      {
+        "id": "node.sd-01r",
+        "action": "action.sd-01r",
+        "checkpoint": {
+          "mode": "always",
+          "bindings": [
+            "delivery",
+            "snapshot",
+            "actionAttempt",
+            "manifestRevision",
+            "gitTree",
+            "budgets"
+          ]
+        }
+      },
+      {
+        "id": "node.sd-06",
+        "action": "action.sd-06",
+        "checkpoint": {
+          "mode": "always",
+          "bindings": [
+            "delivery",
+            "snapshot",
+            "actionAttempt",
+            "manifestRevision",
+            "gitTree",
+            "pendingWait",
+            "budgets",
+            "artifactVersions"
+          ]
+        }
+      },
+      {
+        "id": "node.sd-07",
+        "action": "action.sd-07"
+      },
+      {
+        "id": "node.sd-08",
+        "action": "action.sd-08"
+      },
+      {
+        "id": "node.sd-09",
+        "action": "action.sd-09"
+      },
+      {
+        "id": "node.sd-10",
+        "action": "action.sd-10"
+      },
+      {
+        "id": "node.sd-11",
+        "action": "action.sd-11"
+      },
+      {
+        "id": "node.sd-11h",
+        "action": "action.sd-11h",
+        "checkpoint": {
+          "mode": "always",
+          "bindings": [
+            "delivery",
+            "snapshot",
+            "actionAttempt",
+            "manifestRevision",
+            "gitTree",
+            "pendingWait",
+            "budgets",
+            "artifactVersions"
+          ]
+        }
+      },
+      {
+        "id": "node.sd-12",
+        "action": "action.sd-12",
+        "checkpoint": {
+          "mode": "always",
+          "bindings": [
+            "delivery",
+            "snapshot",
+            "actionAttempt",
+            "manifestRevision",
+            "gitTree",
+            "pendingWait",
+            "budgets",
+            "artifactVersions"
+          ]
+        }
+      },
+      {
+        "id": "node.sd-13",
+        "action": "action.sd-13"
+      },
+      {
+        "id": "node.sd-14",
+        "action": "action.sd-14"
+      },
+      {
+        "id": "node.sd-15",
+        "action": "action.sd-15",
+        "checkpoint": {
+          "mode": "always",
+          "bindings": [
+            "delivery",
+            "snapshot",
+            "actionAttempt",
+            "manifestRevision",
+            "gitTree",
+            "budgets",
+            "artifactVersions",
+            "lastProgress"
+          ]
+        }
+      }
+    ],
+    "edges": [
+      {
+        "id": "edge.sd-01-sd-02",
+        "from": "node.sd-01",
+        "to": "node.sd-02"
+      },
+      {
+        "id": "edge.sd-02-sd-03",
+        "from": "node.sd-02",
+        "to": "node.sd-03",
+        "condition": {
+          "field": "routing",
+          "op": "eq",
+          "value": "brief-ready"
+        }
+      },
+      {
+        "id": "edge.sd-03-sd-04",
+        "from": "node.sd-03",
+        "to": "node.sd-04"
+      },
+      {
+        "id": "edge.sd-04-sd-05",
+        "from": "node.sd-04",
+        "to": "node.sd-05"
+      },
+      {
+        "id": "edge.sd-07-sd-08",
+        "from": "node.sd-07",
+        "to": "node.sd-08"
+      },
+      {
+        "id": "edge.sd-08-sd-09",
+        "from": "node.sd-08",
+        "to": "node.sd-09"
+      },
+      {
+        "id": "edge.sd-09-sd-10",
+        "from": "node.sd-09",
+        "to": "node.sd-10"
+      },
+      {
+        "id": "edge.sd-15-implementation-ready",
+        "from": "node.sd-15",
+        "to": "terminal:implementation-ready",
+        "condition": {
+          "field": "routing",
+          "op": "eq",
+          "value": "clean"
+        }
+      }
+    ],
+    "conditionalEdges": [
+      {
+        "id": "cedge.sd-05",
+        "source": "node.sd-05",
+        "conditions": [
+          {
+            "when": {
+              "field": "routing",
+              "op": "eq",
+              "value": "pass"
+            },
+            "target": "node.sd-06"
+          },
+          {
+            "when": {
+              "field": "routing",
+              "op": "eq",
+              "value": "direction-fix"
+            },
+            "target": "node.sd-04"
+          },
+          {
+            "when": {
+              "field": "routing",
+              "op": "eq",
+              "value": "evidence-gap"
+            },
+            "target": "node.sd-01r"
+          },
+          {
+            "when": {
+              "field": "routing",
+              "op": "eq",
+              "value": "brief-gap"
+            },
+            "target": "node.sd-11h"
+          }
+        ],
+        "default": "terminal:failed"
+      },
+      {
+        "id": "cedge.sd-01r",
+        "source": "node.sd-01r",
+        "conditions": [
+          {
+            "when": {
+              "field": "evidence_return_action",
+              "op": "eq",
+              "value": "SD-05"
+            },
+            "target": "node.sd-05"
+          },
+          {
+            "when": {
+              "field": "evidence_return_action",
+              "op": "eq",
+              "value": "SD-09"
+            },
+            "target": "node.sd-09"
+          }
+        ],
+        "default": "terminal:failed"
+      },
+      {
+        "id": "cedge.sd-06",
+        "source": "node.sd-06",
+        "conditions": [
+          {
+            "when": {
+              "field": "routing",
+              "op": "eq",
+              "value": "feasibility-confirmed"
+            },
+            "target": "node.sd-07"
+          },
+          {
+            "when": {
+              "field": "routing",
+              "op": "eq",
+              "value": "invalidates-direction"
+            },
+            "target": "node.sd-04"
+          }
+        ],
+        "default": "terminal:failed"
+      },
+      {
+        "id": "cedge.sd-10",
+        "source": "node.sd-10",
+        "conditions": [
+          {
+            "when": {
+              "field": "routing",
+              "op": "eq",
+              "value": "evidence-gap"
+            },
+            "target": "node.sd-01r"
+          },
+          {
+            "when": {
+              "field": "routing",
+              "op": "eq",
+              "value": "brief-gap"
+            },
+            "target": "node.sd-11h"
+          },
+          {
+            "when": {
+              "field": "routing",
+              "op": "eq",
+              "value": "conflict"
+            },
+            "target": "node.sd-11h"
+          },
+          {
+            "when": {
+              "field": "routing",
+              "op": "eq",
+              "value": "skeleton-invalid"
+            },
+            "target": "node.sd-04"
+          },
+          {
+            "when": {
+              "field": "routing",
+              "op": "eq",
+              "value": "draft-fix"
+            },
+            "target": "node.sd-11"
+          },
+          {
+            "when": {
+              "field": "routing",
+              "op": "eq",
+              "value": "disposition-valid"
+            },
+            "target": "node.sd-12"
+          }
+        ],
+        "default": "terminal:failed"
+      },
+      {
+        "id": "cedge.sd-11",
+        "source": "node.sd-11",
+        "conditions": [
+          {
+            "when": {
+              "field": "return_action",
+              "op": "eq",
+              "value": "SD-09"
+            },
+            "target": "node.sd-09"
+          },
+          {
+            "when": {
+              "field": "return_action",
+              "op": "eq",
+              "value": "SD-13"
+            },
+            "target": "node.sd-13"
+          },
+          {
+            "when": {
+              "field": "return_action",
+              "op": "eq",
+              "value": "SD-14"
+            },
+            "target": "node.sd-14"
+          }
+        ],
+        "default": "terminal:failed"
+      },
+      {
+        "id": "cedge.sd-11h",
+        "source": "node.sd-11h",
+        "conditions": [
+          {
+            "when": {
+              "field": "routing",
+              "op": "eq",
+              "value": "new-brief"
+            },
+            "target": "node.sd-03"
+          },
+          {
+            "when": {
+              "field": "routing",
+              "op": "eq",
+              "value": "direction-invalidated"
+            },
+            "target": "node.sd-04"
+          },
+          {
+            "when": {
+              "field": "routing",
+              "op": "eq",
+              "value": "draft-decision"
+            },
+            "target": "node.sd-11"
+          }
+        ],
+        "default": "terminal:failed"
+      },
+      {
+        "id": "cedge.sd-12",
+        "source": "node.sd-12",
+        "conditions": [
+          {
+            "when": {
+              "field": "routing",
+              "op": "eq",
+              "value": "closed"
+            },
+            "target": "node.sd-13"
+          },
+          {
+            "when": {
+              "field": "routing",
+              "op": "eq",
+              "value": "affects-design"
+            },
+            "target": "node.sd-11"
+          }
+        ],
+        "default": "terminal:failed"
+      },
+      {
+        "id": "cedge.sd-13",
+        "source": "node.sd-13",
+        "conditions": [
+          {
+            "when": {
+              "field": "routing",
+              "op": "eq",
+              "value": "pass"
+            },
+            "target": "node.sd-14"
+          },
+          {
+            "when": {
+              "field": "routing",
+              "op": "eq",
+              "value": "fresh-reader-finding"
+            },
+            "target": "node.sd-11"
+          }
+        ],
+        "default": "terminal:failed"
+      },
+      {
+        "id": "cedge.sd-14",
+        "source": "node.sd-14",
+        "conditions": [
+          {
+            "when": {
+              "field": "routing",
+              "op": "eq",
+              "value": "pass"
+            },
+            "target": "node.sd-15"
+          },
+          {
+            "when": {
+              "field": "routing",
+              "op": "eq",
+              "value": "fixable-failure"
+            },
+            "target": "node.sd-11"
+          }
+        ],
+        "default": "terminal:failed"
+      }
+    ],
+    "terminals": [
+      {
+        "id": "implementation-ready",
+        "kind": "success",
+        "meaning": "Only success terminal: Confirmed Design Brief frozen; Skeleton architecture direction and technical feasibility closed; the complete Design passed three mutually independent adversarial reviews; Blocking/Major Findings closed by their corresponding lens and Minor Findings closed or explicitly accepted by the source lens; all design-owned feasibility and parameter questions closed; every downstream obligation owner-complete with return location and design-reopen condition; Fresh Reader Test and deterministic verification passed; final Design bound to exact Git/artifact identity and not stale; necessary lineage/decision/review conclusions absorbed; session artifacts cleaned and the Git candidate set free of workflow intermediates.",
+        "validation": [
+          "validator.final-verification",
+          "validator.cleanup-gate"
+        ],
+        "proposalCheckpoint": true
+      },
+      {
+        "id": "incomplete",
+        "kind": "incomplete",
+        "meaning": "Resumable stop: budget exhausted or external authority missing; records current artifact identities, closed topics, unresolved issues, remaining Findings/Spikes, stop reason, resume Action and required input/budget; preserves state and never relaxes a Gate; resumable from recorded state.",
+        "proposalCheckpoint": true
+      },
+      {
+        "id": "cancelled",
+        "kind": "cancelled",
+        "meaning": "Explicit durable cancellation; preserves required lineage per retention policy (in Runtime state, not in Git); cannot be reported as INCOMPLETE or success.",
+        "proposalCheckpoint": true
+      },
+      {
+        "id": "failed",
+        "kind": "failure",
+        "meaning": "Non-retryable configuration/execution failure; terminates with current artifacts and failure evidence; cannot be converted to INCOMPLETE to allow silent substitution; requires a new authorized Delivery.",
+        "proposalCheckpoint": true
+      }
+    ]
+  },
+  "waits": [
+    {
+      "id": "wait.user-grilling-answer",
+      "kind": "user",
+      "purpose": "WAITING_FOR_USER during adaptive grilling: persists the pending question identity, evidence binding and dialogue history; only a correlated answer bound to the same question identity may resume the same working Brief.",
+      "triggerAction": "action.sd-02",
+      "resumeAction": "action.sd-02",
+      "resumeSchema": {
+        "type": "object",
+        "properties": {
+          "question_id": {
+            "type": "string"
+          },
+          "answer": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "question_id",
+          "answer"
+        ]
+      },
+      "correlation": {
+        "identitySource": "wait-request-id (pending question identity)",
+        "staleRejected": true,
+        "duplicateRejected": true
+      },
+      "expiry": {
+        "policy": "renewal allowed through the recorded Action; otherwise resumable INCOMPLETE with the pending request; never success and never silent cancellation",
+        "renewalAllowed": true
+      }
+    },
+    {
+      "id": "wait.user-brief-confirm",
+      "kind": "user",
+      "purpose": "WAITING_FOR_USER until explicit whole-Brief confirmation: Runtime persists the wait, validates identity and freezes the artifact; an answer bound to another Brief version cannot freeze this version; follow-up remains allowed until explicit confirmation.",
+      "triggerAction": "action.sd-03",
+      "resumeAction": "action.sd-03",
+      "resumeSchema": {
+        "type": "object",
+        "properties": {
+          "confirmed": {
+            "type": "boolean"
+          },
+          "follow_up": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "confirmed"
+        ]
+      },
+      "correlation": {
+        "identitySource": "wait-request-id (exact Brief version identity)",
+        "staleRejected": true,
+        "duplicateRejected": true
+      },
+      "expiry": {
+        "policy": "renewal allowed through the recorded Action; otherwise resumable INCOMPLETE with the pending request; never success and never silent cancellation",
+        "renewalAllowed": true
+      }
+    },
+    {
+      "id": "wait.user-decision",
+      "kind": "user",
+      "purpose": "WAITING_FOR_USER for the multi-turn Human Decision Dialogue: persists the pending decision identity, evidence binding, dialogue history and exact resume_action; resumable only within the same admitted decision identity and evidence binding; questions and exploratory replies are never interpreted as final decisions; exit only with an explicit Human Decision Record.",
+      "triggerAction": "action.sd-11h",
+      "resumeAction": "action.sd-11h",
+      "resumeSchema": {
+        "type": "object",
+        "properties": {
+          "decision_id": {
+            "type": "string"
+          },
+          "response_kind": {
+            "type": "string",
+            "enum": [
+              "final-confirmation",
+              "question",
+              "new-option",
+              "exploratory"
+            ]
+          },
+          "content": {
+            "type": "string"
+          },
+          "decision_record": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "decision_id",
+          "response_kind",
+          "content"
+        ]
+      },
+      "correlation": {
+        "identitySource": "decision-request-id (exact admitted decision identity)",
+        "staleRejected": true,
+        "duplicateRejected": true
+      },
+      "expiry": {
+        "policy": "renewal allowed through the recorded Action while policy/budget permits; otherwise resumable INCOMPLETE with the pending request; never success and never silent cancellation",
+        "renewalAllowed": true
+      }
+    },
+    {
+      "id": "wait.spike-feasibility",
+      "kind": "spike",
+      "purpose": "WAITING_FOR_SPIKE for architecture-feasibility evidence: persists the exact Spike Request identity and content digest, external execution correlation, deadline Gate and exact resume_action; mismatched or duplicate results cannot advance state; a valid result is validated against its exact request, environment, method and evidence binding before being applied.",
+      "triggerAction": "action.sd-06",
+      "resumeAction": "action.sd-06",
+      "resumeSchema": {
+        "type": "object",
+        "properties": {
+          "result_id": {
+            "type": "string"
+          },
+          "request_binding": {
+            "type": "string"
+          },
+          "class": {
+            "type": "string",
+            "const": "architecture-feasibility"
+          },
+          "executor_environment": {
+            "type": "string"
+          },
+          "method_evidence": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "CONCLUSIVE",
+              "INCONCLUSIVE",
+              "INVALID"
+            ]
+          },
+          "observations": {
+            "type": "array"
+          },
+          "recommendation": {
+            "type": "object"
+          },
+          "threshold_comparison": {
+            "type": "object"
+          },
+          "affected_identities": {
+            "type": "array"
+          },
+          "resume_action": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "result_id",
+          "request_binding",
+          "status",
+          "resume_action"
+        ]
+      },
+      "correlation": {
+        "identitySource": "spike-request-id + request content digest",
+        "staleRejected": true,
+        "duplicateRejected": true
+      },
+      "expiry": {
+        "policy": "deadline Gate: renewal resumes the recorded Action to publish the same or a new versioned request while permitted; otherwise resumable INCOMPLETE with the pending request; never success and never silent cancellation",
+        "renewalAllowed": true
+      }
+    },
+    {
+      "id": "wait.spike-design-parameter",
+      "kind": "spike",
+      "purpose": "WAITING_FOR_SPIKE for design-owned parameter evidence: persists the exact Spike Request identity and content digest, external execution correlation, deadline Gate and exact resume_action; mismatched or duplicate results cannot advance state; only a result whose request, environment, method and evidence satisfy the request contract may close the parameter.",
+      "triggerAction": "action.sd-12",
+      "resumeAction": "action.sd-12",
+      "resumeSchema": {
+        "type": "object",
+        "properties": {
+          "result_id": {
+            "type": "string"
+          },
+          "request_binding": {
+            "type": "string"
+          },
+          "class": {
+            "type": "string",
+            "const": "design-owned-parameter"
+          },
+          "executor_environment": {
+            "type": "string"
+          },
+          "method_evidence": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "CONCLUSIVE",
+              "INCONCLUSIVE",
+              "INVALID"
+            ]
+          },
+          "observations": {
+            "type": "array"
+          },
+          "recommendation": {
+            "type": "object"
+          },
+          "threshold_comparison": {
+            "type": "object"
+          },
+          "affected_identities": {
+            "type": "array"
+          },
+          "resume_action": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "result_id",
+          "request_binding",
+          "status",
+          "resume_action"
+        ]
+      },
+      "correlation": {
+        "identitySource": "spike-request-id + request content digest",
+        "staleRejected": true,
+        "duplicateRejected": true
+      },
+      "expiry": {
+        "policy": "deadline Gate: renewal resumes the recorded Action to publish the same or a new versioned request while permitted; otherwise resumable INCOMPLETE with the pending request; never success and never silent cancellation",
+        "renewalAllowed": true
+      }
+    }
+  ],
+  "budgets": [
+    {
+      "id": "budget.questions",
+      "scope": "action",
+      "action": "action.sd-02",
+      "resource": "iterations",
+      "limit": 20,
+      "onExhaustion": "incomplete",
+      "accounting": "each grilling question consumed adds to state.grilling_questions (sum reducer); the exact limit is project/runtime policy; exhaustion enters terminal:INCOMPLETE without lowering the grilling closure standard and never relaxes a Gate"
+    },
+    {
+      "id": "budget.research",
+      "scope": "action",
+      "action": "action.sd-01r",
+      "resource": "attempts",
+      "limit": 5,
+      "onExhaustion": "incomplete",
+      "accounting": "each research attempt adds to state.research_attempts (sum reducer); the exact limit is project/runtime policy; exhaustion enters terminal:INCOMPLETE and never relaxes a Gate"
+    },
+    {
+      "id": "budget.feasibility",
+      "scope": "action",
+      "action": "action.sd-06",
+      "resource": "iterations",
+      "limit": 3,
+      "onExhaustion": "incomplete",
+      "accounting": "each feasibility iteration adds to state.feasibility_iterations (sum reducer); the exact limit is project/runtime policy; exhaustion enters terminal:INCOMPLETE and never relaxes a Gate"
+    },
+    {
+      "id": "budget.review",
+      "scope": "action",
+      "action": "action.sd-09",
+      "resource": "iterations",
+      "limit": 3,
+      "onExhaustion": "incomplete",
+      "accounting": "each review iteration adds to state.review_iterations (sum reducer); the exact limit is project/runtime policy; exhaustion enters terminal:INCOMPLETE and never relaxes a Gate"
+    },
+    {
+      "id": "budget.revision",
+      "scope": "action",
+      "action": "action.sd-11",
+      "resource": "iterations",
+      "limit": 5,
+      "onExhaustion": "incomplete",
+      "accounting": "each targeted revision adds to state.revision_count (sum reducer); the exact limit is project/runtime policy; exhaustion enters terminal:INCOMPLETE and never relaxes a Gate"
+    },
+    {
+      "id": "budget.decision-dialogue",
+      "scope": "action",
+      "action": "action.sd-11h",
+      "resource": "iterations",
+      "limit": 10,
+      "onExhaustion": "incomplete",
+      "accounting": "each decision dialogue turn adds to state.decision_turns (sum reducer); the exact limit is project/runtime policy; exhaustion enters terminal:INCOMPLETE and never relaxes a Gate"
+    }
+  ],
+  "recovery": [
+    {
+      "id": "recovery.retry-continue",
+      "scope": "workflow",
+      "mode": "continue",
+      "noBlindReplay": true
+    },
+    {
+      "id": "recovery.incomplete-resume",
+      "scope": "workflow",
+      "mode": "restartFromSavepoint",
+      "noBlindReplay": true
+    },
+    {
+      "id": "recovery.intervene",
+      "scope": "workflow",
+      "mode": "intervene",
+      "condition": {
+        "field": "status",
+        "op": "eq",
+        "value": "uncertain"
+      },
+      "noBlindReplay": true
+    },
+    {
+      "id": "recovery.cleanup-retry",
+      "scope": "action",
+      "action": "action.sd-15",
+      "mode": "continue",
+      "noBlindReplay": true
+    }
+  ],
+  "handoffs": [
+    {
+      "id": "handoff.contract-prerequisite",
+      "kind": "CUSTOM",
+      "domainSemantics": "Downstream obligation (SD-12 register): records identity, accountable owner, affected design identities, semantic dependency, required evidence, return location and design-reopen condition. Contract publication of frozen design semantics may remain open for the consuming Workflow to classify and publish; this Delivery does not choose the downstream Action, Gate, Wait or terminal, and the record never declares them.",
+      "invalidationConditions": "A later change to the frozen Design or to the referenced authority identities invalidates the recorded prerequisite.",
+      "semanticDependency": "Published Contract semantics must preserve the frozen design semantics; unexecuted downstream evidence is never reported as passed evidence.",
+      "requiredEvidence": "Contract publication or authoritative reference with exact content identity.",
+      "returnLocation": "Consuming Workflow return location recorded in the downstream obligation register.",
+      "reopenCondition": "A published fact contradicts the frozen design semantic dependency.",
+      "semanticOnly": true
+    },
+    {
+      "id": "handoff.implementation-feasibility",
+      "kind": "CUSTOM",
+      "domainSemantics": "Downstream obligation (SD-12 register): records identity, accountable owner, affected design identities, semantic dependency, required evidence, return location and design-reopen condition. Implementation feasibility obligations are explicit downstream handoffs; their lifecycle classification, Action, Gate and terminal impact are owned by the consuming Workflow.",
+      "invalidationConditions": "A later change to the frozen Design or to the implementation baseline invalidates the recorded feasibility expectation.",
+      "semanticDependency": "Implementation feasibility evidence must be produced by the current implementation and bound to exact content identities, never assumed or substituted.",
+      "requiredEvidence": "Implementation feasibility evidence with exact content identity.",
+      "returnLocation": "Consuming Workflow return location recorded in the downstream obligation register.",
+      "reopenCondition": "A measured implementation fact contradicts the frozen design semantic dependency.",
+      "semanticOnly": true
+    },
+    {
+      "id": "handoff.implementation-verification",
+      "kind": "CUSTOM",
+      "domainSemantics": "Downstream obligation (SD-12 register): records identity, accountable owner, affected design identities, semantic dependency, required evidence, return location and design-reopen condition. Implementation verification obligations are explicit downstream handoffs; the consuming Workflow owns the lifecycle classification and terminal impact.",
+      "invalidationConditions": "A later change to the frozen Design or to the verification scope invalidates the recorded verification claim.",
+      "semanticDependency": "Implementation verification evidence must be produced by the current implementation, not assumed or substituted.",
+      "requiredEvidence": "Implementation verification result with exact evidence identities.",
+      "returnLocation": "Consuming Workflow return location recorded in the downstream obligation register.",
+      "reopenCondition": "A measured implementation fact contradicts the frozen design semantic dependency.",
+      "semanticOnly": true
+    },
+    {
+      "id": "handoff.operational-tuning",
+      "kind": "CUSTOM",
+      "domainSemantics": "Downstream obligation (SD-12 register): records identity, accountable owner, affected design identities, semantic dependency, required evidence, return location and design-reopen condition. Runtime tuning parameters may close during test/runtime validation; measured facts that violate design assumptions reopen the design through the recorded reopen condition.",
+      "invalidationConditions": "A measured runtime fact that violates a frozen design assumption invalidates the affected design content.",
+      "semanticDependency": "Runtime tuning values are parameters, not passed design evidence; the design-reopen condition governs when a value reopens the design.",
+      "requiredEvidence": "Measured runtime value with method, owner and return location.",
+      "returnLocation": "Consuming Workflow return location recorded in the downstream obligation register.",
+      "reopenCondition": "A measured fact violates design assumptions stated in the design-reopen condition.",
+      "semanticOnly": true
+    }
+  ],
+  "consumedHandoffs": []
+}

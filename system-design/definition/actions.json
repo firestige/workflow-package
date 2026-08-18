@@ -1,0 +1,640 @@
+{
+  "kind": "agentops.actions",
+  "schemaVersion": "agentops.workflow-dsl@0.1.0",
+  "actions": [
+    {
+      "id": "action.sd-01",
+      "name": "SD-01 Intake and Authority Scan",
+      "purpose": "Turn the initial one- or two-sentence request into an evidence-backed starting context: authority map, initial Project Context Profile, facts, conflicts and unknowns; derivable facts are investigated rather than converted into user questions.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "intake": { "type": "string" },
+          "repository": { "type": "string" }
+        },
+        "required": ["intake"]
+      },
+      "resultSchema": {
+        "type": "object",
+        "properties": {
+          "status": { "type": "string", "enum": ["SUCCEEDED", "INCOMPLETE", "FAILED"] },
+          "authorityMap": { "type": "object" },
+          "projectContextProfile": { "type": "object" },
+          "facts": { "type": "array" },
+          "conflicts": { "type": "array" },
+          "unknowns": { "type": "array" }
+        },
+        "required": ["status"]
+      },
+      "responsibleAuthority": { "kind": "role", "role": "role.grilling-facilitator" },
+      "allowedRoutes": ["route.facilitator.standard"],
+      "execution": { "mode": "single" },
+      "selector": { "kind": "deterministic" },
+      "allowedSuccessors": ["node.sd-02"],
+      "escalation": {
+        "allowed": false,
+        "scope": "route-within-allowed",
+        "cannotChange": ["user-question authority", "gate", "successor-set"]
+      },
+      "gate": {
+        "preconditions": [{ "field": "status", "op": "exists" }],
+        "postconditions": [{ "field": "status", "op": "exists" }],
+        "deterministic": ["validator.intake-authority"],
+        "freeTextBypass": "prohibited"
+      }
+    },
+    {
+      "id": "action.sd-01r",
+      "name": "SD-01R Bounded Evidence Research",
+      "purpose": "Resolve one derivable factual gap without restarting Intake/Grilling or asking the user; return only to the recorded requester: the SD-05 direction review or the affected SD-09 review lens before aggregation resumes.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "evidenceResearchRequest": { "type": "object" }
+        },
+        "required": ["evidenceResearchRequest"]
+      },
+      "resultSchema": {
+        "type": "object",
+        "properties": {
+          "status": { "type": "string", "enum": ["SUCCEEDED", "INCONCLUSIVE", "FAILED"] },
+          "sources": { "type": "array" },
+          "observations": { "type": "array" },
+          "conflicts": { "type": "array" },
+          "confidence": { "type": "string" },
+          "resolved": { "type": "boolean" }
+        },
+        "required": ["status", "resolved"]
+      },
+      "responsibleAuthority": { "kind": "role", "role": "role.evidence-scout" },
+      "allowedRoutes": ["route.scout.evidence"],
+      "execution": { "mode": "single" },
+      "selector": { "kind": "deterministic" },
+      "allowedSuccessors": ["node.sd-05", "node.sd-09", "terminal:failed"],
+      "escalation": {
+        "allowed": false,
+        "scope": "route-within-allowed",
+        "cannotChange": ["recorded resume_action", "recorded resume_lens", "gate", "successor-set"]
+      },
+      "gate": {
+        "preconditions": [{ "field": "evidence_return_action", "op": "exists" }],
+        "postconditions": [
+          { "field": "evidence_return_action", "op": "in", "value": ["SD-05", "SD-09"] }
+        ],
+        "deterministic": ["validator.evidence-return-binding"],
+        "freeTextBypass": "prohibited"
+      },
+      "budget": "budget.research"
+    },
+    {
+      "id": "action.sd-02",
+      "name": "SD-02 Adaptive Grilling",
+      "purpose": "Pressure-test requirements and guide the user until both sides clearly understand what is being built: one question at a time, follow the user's answer, use solution hypotheses as probes without making architecture decisions; classify every remaining unknown with owner, impact, required evidence and return location.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "intakeContext": { "type": "object" }
+        },
+        "required": ["intakeContext"]
+      },
+      "resultSchema": {
+        "type": "object",
+        "properties": {
+          "status": { "type": "string", "enum": ["SUCCEEDED", "INCOMPLETE", "FAILED"] },
+          "routing": { "type": "string", "enum": ["brief-ready"] },
+          "workingBrief": { "type": "object" }
+        },
+        "required": ["status", "routing"]
+      },
+      "responsibleAuthority": { "kind": "role", "role": "role.grilling-facilitator" },
+      "allowedRoutes": ["route.facilitator.standard"],
+      "execution": { "mode": "single" },
+      "selector": { "kind": "deterministic" },
+      "allowedSuccessors": ["node.sd-03"],
+      "escalation": {
+        "allowed": false,
+        "scope": "route-within-allowed",
+        "cannotChange": ["gate", "successor-set", "formal architecture decisions"]
+      },
+      "gate": {
+        "preconditions": [{ "field": "status", "op": "exists" }],
+        "postconditions": [{ "field": "routing", "op": "eq", "value": "brief-ready" }],
+        "deterministic": ["validator.grilling-closure"],
+        "freeTextBypass": "prohibited"
+      },
+      "waitPolicy": { "kind": "user", "wait": "wait.user-grilling-answer" },
+      "budget": "budget.questions"
+    },
+    {
+      "id": "action.sd-03",
+      "name": "SD-03 Confirm and Freeze Brief",
+      "purpose": "Turn the conversation into an explicit shared-understanding artifact: run the Brief Closure Check, present a decision-oriented summary and navigable topic index, allow follow-up, require explicit whole-Brief confirmation, then freeze the immutable Confirmed Design Brief with run-workspace content digest, authoritative-source bindings and topic identities.",
+      "resultSchema": {
+        "type": "object",
+        "properties": {
+          "status": { "type": "string", "enum": ["SUCCEEDED", "INCOMPLETE", "FAILED"] },
+          "brief": { "type": "object" },
+          "frozenDigest": { "type": "string" }
+        },
+        "required": ["status", "brief"]
+      },
+      "responsibleAuthority": { "kind": "role", "role": "role.grilling-facilitator" },
+      "allowedRoutes": ["route.facilitator.standard"],
+      "execution": { "mode": "single" },
+      "selector": { "kind": "deterministic" },
+      "allowedSuccessors": ["node.sd-04"],
+      "escalation": {
+        "allowed": false,
+        "scope": "route-within-allowed",
+        "cannotChange": ["frozen brief content", "gate", "successor-set"]
+      },
+      "gate": {
+        "preconditions": [{ "field": "routing", "op": "exists" }],
+        "postconditions": [{ "field": "brief", "op": "exists" }],
+        "deterministic": ["validator.brief-closure-check"],
+        "freeTextBypass": "prohibited"
+      },
+      "waitPolicy": { "kind": "user", "wait": "wait.user-brief-confirm" }
+    },
+    {
+      "id": "action.sd-04",
+      "name": "SD-04 Produce System Design Skeleton",
+      "purpose": "Make the first formal architecture decisions before prose expansion: problem decomposition, candidate/selected Modules, responsibility and state ownership, key relationships, design-driver mapping, major trade-offs and the View Plan; each Module hides meaningful complexity, every required scenario has an architectural path, and quality scenarios already shape the direction.",
+      "resultSchema": {
+        "type": "object",
+        "properties": {
+          "status": { "type": "string", "enum": ["SUCCEEDED", "FAILED"] },
+          "skeleton": { "type": "object" }
+        },
+        "required": ["status", "skeleton"]
+      },
+      "responsibleAuthority": { "kind": "role", "role": "role.system-designer" },
+      "allowedRoutes": ["route.designer.standard"],
+      "execution": { "mode": "single" },
+      "selector": { "kind": "deterministic" },
+      "allowedSuccessors": ["node.sd-05"],
+      "gate": {
+        "preconditions": [{ "field": "brief", "op": "exists" }],
+        "postconditions": [{ "field": "skeleton", "op": "exists" }],
+        "deterministic": ["validator.skeleton-gate"],
+        "freeTextBypass": "prohibited"
+      }
+    },
+    {
+      "id": "action.sd-05",
+      "name": "SD-05 Independent Architecture Direction Review",
+      "purpose": "Challenge the Skeleton before expensive expansion: outcome is pass, return to Skeleton, evidence request, or Brief Change Request; suspicious smells become Findings only after project-specific impact is evidenced.",
+      "resultSchema": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": ["SUCCEEDED", "NEEDS_EVIDENCE", "NEEDS_BRIEF_CHANGE", "NEEDS_REVISION", "FAILED"]
+          },
+          "routing": {
+            "type": "string",
+            "enum": ["pass", "direction-fix", "evidence-gap", "brief-gap"]
+          },
+          "findings": { "type": "array" },
+          "review_signals": { "type": "array" }
+        },
+        "required": ["status", "routing"]
+      },
+      "responsibleAuthority": { "kind": "role", "role": "role.architecture-reviewer" },
+      "allowedRoutes": ["route.reviewer.architecture"],
+      "execution": { "mode": "single" },
+      "selector": { "kind": "deterministic" },
+      "allowedSuccessors": ["node.sd-01r", "node.sd-04", "node.sd-06", "node.sd-11h", "terminal:failed"],
+      "escalation": {
+        "allowed": false,
+        "scope": "route-within-allowed",
+        "cannotChange": ["gate", "successor-set", "skeleton direction write authority"]
+      },
+      "gate": {
+        "preconditions": [{ "field": "skeleton", "op": "exists" }],
+        "postconditions": [
+          { "field": "routing", "op": "in", "value": ["pass", "direction-fix", "evidence-gap", "brief-gap"] }
+        ],
+        "deterministic": ["validator.finding-admission"],
+        "freeTextBypass": "prohibited"
+      }
+    },
+    {
+      "id": "action.sd-06",
+      "name": "SD-06 Resolve Architecture Feasibility",
+      "purpose": "Close questions whose answer determines whether the Skeleton's technical direction is viable: publish a Spike Request to the external Spike Workflow (never execute the Spike inside an Agent Skill), persist WAITING_FOR_SPIKE, correlate the matching result, and validate the returned Spike Result against its exact request, environment, method and evidence binding before applying it.",
+      "resultSchema": {
+        "type": "object",
+        "properties": {
+          "status": { "type": "string", "enum": ["SUCCEEDED", "INCOMPLETE", "FAILED"] },
+          "routing": { "type": "string", "enum": ["feasibility-confirmed", "invalidates-direction"] },
+          "spikeResult": { "type": "object" }
+        },
+        "required": ["status", "routing"]
+      },
+      "responsibleAuthority": { "kind": "role", "role": "role.system-designer" },
+      "allowedRoutes": ["route.designer.standard"],
+      "execution": { "mode": "single" },
+      "selector": { "kind": "deterministic" },
+      "allowedSuccessors": ["node.sd-04", "node.sd-07", "terminal:failed"],
+      "escalation": {
+        "allowed": false,
+        "scope": "route-within-allowed",
+        "cannotChange": ["gate", "successor-set", "spike execution boundary"]
+      },
+      "gate": {
+        "preconditions": [{ "field": "skeleton", "op": "exists" }],
+        "postconditions": [
+          { "field": "routing", "op": "in", "value": ["feasibility-confirmed", "invalidates-direction"] }
+        ],
+        "deterministic": ["validator.feasibility-application"],
+        "freeTextBypass": "prohibited"
+      },
+      "waitPolicy": { "kind": "spike", "wait": "wait.spike-feasibility" },
+      "budget": "budget.feasibility"
+    },
+    {
+      "id": "action.sd-07",
+      "name": "SD-07 Progressive System Design Expansion",
+      "purpose": "Deepen the confirmed Skeleton in reasoning order (context/problem, decomposition/structure, collaboration/views, data/state/interfaces, system-wide mechanisms, contextual quality realization, risks/trade-offs/acceptance); save Draft checkpoints in the ignored run workspace, never mutate the frozen Brief, and request local grilling for requirement-level gaps; checkpoints are resumable working state, not Git deliverables.",
+      "resultSchema": {
+        "type": "object",
+        "properties": {
+          "status": { "type": "string", "enum": ["SUCCEEDED", "INCOMPLETE", "FAILED"] },
+          "draftCheckpoints": { "type": "array" }
+        },
+        "required": ["status"]
+      },
+      "responsibleAuthority": { "kind": "role", "role": "role.system-designer" },
+      "allowedRoutes": ["route.designer.standard"],
+      "execution": { "mode": "single" },
+      "selector": { "kind": "deterministic" },
+      "allowedSuccessors": ["node.sd-08"],
+      "gate": {
+        "preconditions": [
+          { "field": "brief", "op": "exists" },
+          { "field": "skeleton", "op": "exists" }
+        ],
+        "postconditions": [{ "field": "status", "op": "exists" }],
+        "deterministic": ["validator.writer-boundary"],
+        "freeTextBypass": "prohibited"
+      }
+    },
+    {
+      "id": "action.sd-08",
+      "name": "SD-08 Integrate Complete Draft",
+      "purpose": "Produce one coherent System Design using the formal template: terminology, human-first reading order, IDs, diagram/text parity, ownership, traceability, quality mechanisms, risks, decisions, Spike state and acceptance plan; lead with names and concepts, present one branch-free successful core before named exception scenarios, and move dense identity mappings out of behavioral prose.",
+      "resultSchema": {
+        "type": "object",
+        "properties": {
+          "status": { "type": "string", "enum": ["SUCCEEDED", "FAILED"] },
+          "draft": { "type": "object" }
+        },
+        "required": ["status", "draft"]
+      },
+      "responsibleAuthority": { "kind": "role", "role": "role.system-designer" },
+      "allowedRoutes": ["route.designer.standard"],
+      "execution": { "mode": "single" },
+      "selector": { "kind": "deterministic" },
+      "allowedSuccessors": ["node.sd-09"],
+      "gate": {
+        "preconditions": [{ "field": "routing", "op": "exists" }],
+        "postconditions": [{ "field": "draft", "op": "exists" }],
+        "deterministic": ["validator.integrate-checks"],
+        "freeTextBypass": "prohibited"
+      }
+    },
+    {
+      "id": "action.sd-09",
+      "name": "SD-09 Parallel Independent Adversarial Review",
+      "purpose": "Run three mutually isolated adversarial lenses (Problem-Solution, Architecture, Quality & Acceptance) over the same admitted Draft lineage; the lenses cannot see each other's analysis before the review barrier closes; each emits admitted Findings or non-blocking REVIEW_SIGNALs; results are not votes. The first pass runs all three lenses behind the barrier; later recheck runs only lenses whose exact review evidence was invalidated (independence and fresh-session rules still apply). The three lens roles share responsibility; each branch runs under its own lens role declared in validation.review; the action-level authority is declared as the architecture lens role.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "draft": { "type": "object" }
+        },
+        "required": ["draft"]
+      },
+      "resultSchema": {
+        "type": "object",
+        "properties": {
+          "findings": { "type": "array" },
+          "review_signals": { "type": "array" }
+        },
+        "required": ["findings"]
+      },
+      "responsibleAuthority": { "kind": "role", "role": "role.architecture-reviewer" },
+      "allowedRoutes": [
+        "route.reviewer.problem-solution",
+        "route.reviewer.architecture",
+        "route.reviewer.quality"
+      ],
+      "execution": {
+        "mode": "parallel",
+        "branches": [
+          {
+            "route": "route.reviewer.problem-solution",
+            "isolation": "session-isolated",
+            "required": true
+          },
+          {
+            "route": "route.reviewer.architecture",
+            "isolation": "session-isolated",
+            "required": true
+          },
+          {
+            "route": "route.reviewer.quality",
+            "isolation": "session-isolated",
+            "required": true
+          }
+        ],
+        "join": {
+          "mode": "aggregator",
+          "aggregatorAction": "action.sd-10",
+          "barrier": true
+        }
+      },
+      "selector": { "kind": "deterministic" },
+      "allowedSuccessors": ["node.sd-10"],
+      "escalation": {
+        "allowed": false,
+        "scope": "route-within-allowed",
+        "cannotChange": ["lens isolation until the barrier", "gate", "successor-set"]
+      },
+      "gate": {
+        "preconditions": [{ "field": "draft", "op": "exists" }],
+        "postconditions": [{ "field": "routing", "op": "exists" }],
+        "deterministic": ["validator.review-isolation", "validator.finding-admission"],
+        "freeTextBypass": "prohibited"
+      },
+      "budget": "budget.review"
+    },
+    {
+      "id": "action.sd-10",
+      "name": "SD-10 Aggregate and Triage Findings",
+      "purpose": "Merge corroborating Findings while preserving provenance, relate common causes, identify contradictions, and route by evidence and affected stage; never decide by majority, hide risk, inflate signals, change severity without returning to the Reviewer, or close Findings; the Finding Aggregator holds no technical decision authority.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "findings": { "type": "array" }
+        }
+      },
+      "resultSchema": {
+        "type": "object",
+        "properties": {
+          "status": { "type": "string", "enum": ["SUCCEEDED", "FAILED"] },
+          "routing": {
+            "type": "string",
+            "enum": ["evidence-gap", "brief-gap", "conflict", "skeleton-invalid", "draft-fix", "disposition-valid"]
+          },
+          "mergedFindings": { "type": "array" },
+          "contradictions": { "type": "array" }
+        },
+        "required": ["status", "routing"]
+      },
+      "responsibleAuthority": { "kind": "role", "role": "role.finding-aggregator" },
+      "allowedRoutes": ["route.aggregator.standard"],
+      "execution": { "mode": "single" },
+      "selector": { "kind": "deterministic" },
+      "allowedSuccessors": [
+        "node.sd-01r",
+        "node.sd-04",
+        "node.sd-11",
+        "node.sd-11h",
+        "node.sd-12",
+        "terminal:failed"
+      ],
+      "escalation": {
+        "allowed": false,
+        "scope": "route-within-allowed",
+        "cannotChange": ["voting", "finding severity", "finding closure", "gate", "successor-set"]
+      },
+      "gate": {
+        "preconditions": [{ "field": "findings", "op": "exists" }],
+        "postconditions": [
+          {
+            "field": "routing",
+            "op": "in",
+            "value": ["evidence-gap", "brief-gap", "conflict", "skeleton-invalid", "draft-fix", "disposition-valid"]
+          }
+        ],
+        "deterministic": ["validator.aggregation-rules"],
+        "freeTextBypass": "prohibited"
+      }
+    },
+    {
+      "id": "action.sd-11",
+      "name": "SD-11 Targeted Resolution",
+      "purpose": "Consume one validated Revision Request (from a Review Finding, Fresh Reader Finding, applied Spike result, confirmed Human Decision, or deterministic validation failure), revise only affected content while checking downstream consistency, and submit the treatment and new Draft; the Designer cannot close its own Finding; Fresh Reader Findings return to SD-13 for fresh recheck; non-Finding corrections (Spike/validator requests) retain their origin identity without creating an artificial Review Finding. Runtime validates return_action and invalidation state, then returns to the affected SD-09 lens(es), SD-13, or SD-14; SD-09 is not the unconditional default.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "revisionRequest": { "type": "object" }
+        },
+        "required": ["revisionRequest"]
+      },
+      "resultSchema": {
+        "type": "object",
+        "properties": {
+          "status": { "type": "string", "enum": ["SUCCEEDED", "FAILED"] },
+          "return_action": { "type": "string", "enum": ["SD-09", "SD-13", "SD-14"] },
+          "revisedDraft": { "type": "object" }
+        },
+        "required": ["status", "return_action"]
+      },
+      "responsibleAuthority": { "kind": "role", "role": "role.system-designer" },
+      "allowedRoutes": ["route.designer.standard"],
+      "execution": { "mode": "single" },
+      "selector": { "kind": "deterministic" },
+      "allowedSuccessors": ["node.sd-09", "node.sd-13", "node.sd-14", "terminal:failed"],
+      "escalation": {
+        "allowed": false,
+        "scope": "route-within-allowed",
+        "cannotChange": ["own finding closure", "return_action validation", "gate", "successor-set"]
+      },
+      "gate": {
+        "preconditions": [{ "field": "return_action", "op": "exists" }],
+        "postconditions": [
+          { "field": "return_action", "op": "in", "value": ["SD-09", "SD-13", "SD-14"] }
+        ],
+        "deterministic": ["validator.revision-return-validation"],
+        "freeTextBypass": "prohibited"
+      },
+      "budget": "budget.revision"
+    },
+    {
+      "id": "action.sd-11h",
+      "name": "SD-11H Brief/Human Resolution",
+      "purpose": "Two paths share the human boundary: (1) Brief gap - create a Brief Change Request, run fresh local grilling against the frozen Brief, confirm a new Brief version, then invalidate dependants; (2) True direction conflict - admit a Human Decision Request only after evidence is exhausted and alternatives cannot coexist, enter a multi-turn Decision Dialogue (allow questions and new options; never interpret exploratory replies as decisions), and exit only with an explicit Human Decision Record. At most one human decision is pending; Agent recommendations are required but no Arbiter Agent replaces the human owner. The Grilling Facilitator maintains dialogue/decision artifacts; the Runtime persists WAITING_FOR_USER, correlates answers to the exact request, and resumes the recorded Action.",
+      "resultSchema": {
+        "type": "object",
+        "properties": {
+          "status": { "type": "string", "enum": ["SUCCEEDED", "INCOMPLETE", "FAILED"] },
+          "routing": { "type": "string", "enum": ["new-brief", "direction-invalidated", "draft-decision"] },
+          "decisionRecord": { "type": "object" }
+        },
+        "required": ["status", "routing"]
+      },
+      "responsibleAuthority": { "kind": "role", "role": "role.grilling-facilitator" },
+      "allowedRoutes": ["route.facilitator.standard", "route.facilitator.decision"],
+      "execution": { "mode": "single" },
+      "selector": { "kind": "deterministic" },
+      "allowedSuccessors": ["node.sd-03", "node.sd-04", "node.sd-11", "terminal:failed"],
+      "escalation": {
+        "allowed": false,
+        "scope": "route-within-allowed",
+        "cannotChange": ["human decision authority", "decision record", "gate", "successor-set"]
+      },
+      "gate": {
+        "preconditions": [{ "field": "routing", "op": "exists" }],
+        "postconditions": [
+          { "field": "routing", "op": "in", "value": ["new-brief", "direction-invalidated", "draft-decision"] }
+        ],
+        "deterministic": ["validator.human-decision-admission"],
+        "freeTextBypass": "prohibited"
+      },
+      "waitPolicy": { "kind": "user", "wait": "wait.user-decision" },
+      "budget": "budget.decision-dialogue"
+    },
+    {
+      "id": "action.sd-12",
+      "name": "SD-12 Close Design Parameters and Classify Downstream Handoffs",
+      "purpose": "Close empirical values that change Design semantics, then classify every remaining downstream obligation without choosing another Workflow's Action, Gate or terminal; each obligation records identity, accountable owner, affected design identities, semantic dependency, required evidence, return location and design-reopen condition; a suggested consumer or lifecycle is non-authoritative guidance; Contract publication, implementation feasibility/verification and runtime tuning may remain open for their consuming Workflow to classify and cannot be reported as passed evidence.",
+      "resultSchema": {
+        "type": "object",
+        "properties": {
+          "status": { "type": "string", "enum": ["SUCCEEDED", "INCOMPLETE", "FAILED"] },
+          "routing": { "type": "string", "enum": ["closed", "affects-design"] },
+          "designParameters": { "type": "object" },
+          "downstreamObligations": { "type": "array" }
+        },
+        "required": ["status", "routing"]
+      },
+      "responsibleAuthority": { "kind": "role", "role": "role.system-designer" },
+      "allowedRoutes": ["route.designer.standard"],
+      "execution": { "mode": "single" },
+      "selector": { "kind": "deterministic" },
+      "allowedSuccessors": ["node.sd-11", "node.sd-13", "terminal:failed"],
+      "escalation": {
+        "allowed": false,
+        "scope": "route-within-allowed",
+        "cannotChange": ["downstream Workflow control", "gate", "successor-set"]
+      },
+      "gate": {
+        "preconditions": [{ "field": "routing", "op": "exists" }],
+        "postconditions": [
+          { "field": "routing", "op": "in", "value": ["closed", "affects-design"] }
+        ],
+        "deterministic": ["validator.parameter-closure", "validator.downstream-obligation-completeness"],
+        "freeTextBypass": "prohibited"
+      },
+      "waitPolicy": { "kind": "spike", "wait": "wait.spike-design-parameter" }
+    },
+    {
+      "id": "action.sd-13",
+      "name": "SD-13 Fresh Reader Test",
+      "purpose": "A Fresh Reader in a context-isolated session tests whether a downstream implementer can understand problem, decomposition, flows, ownership, constraints, quality mechanisms, parameter status and acceptance using only the candidate Design and Brief-derived questions; it finds ambiguity and hidden assumptions but does not reopen architecture based on preference; admitted Fresh Reader Findings are rechecked and closed only by a fresh SD-13 session against the revised exact Design.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "candidateDesign": { "type": "object" },
+          "readerQuestionSet": { "type": "object" }
+        },
+        "required": ["candidateDesign"]
+      },
+      "resultSchema": {
+        "type": "object",
+        "properties": {
+          "status": { "type": "string", "enum": ["SUCCEEDED", "FAILED"] },
+          "routing": { "type": "string", "enum": ["pass", "fresh-reader-finding"] },
+          "findings": { "type": "array" },
+          "questions": { "type": "array" }
+        },
+        "required": ["status", "routing"]
+      },
+      "responsibleAuthority": { "kind": "role", "role": "role.fresh-reader" },
+      "allowedRoutes": ["route.reader.fresh"],
+      "execution": { "mode": "single" },
+      "selector": { "kind": "deterministic" },
+      "allowedSuccessors": ["node.sd-11", "node.sd-14", "terminal:failed"],
+      "escalation": {
+        "allowed": false,
+        "scope": "route-within-allowed",
+        "cannotChange": ["gate", "successor-set", "reader context isolation"]
+      },
+      "gate": {
+        "preconditions": [{ "field": "draft", "op": "exists" }],
+        "postconditions": [
+          { "field": "routing", "op": "in", "value": ["pass", "fresh-reader-finding"] }
+        ],
+        "deterministic": ["validator.fresh-reader-boundary"],
+        "freeTextBypass": "prohibited"
+      }
+    },
+    {
+      "id": "action.sd-14",
+      "name": "SD-14 Deterministic Final Verification",
+      "purpose": "Runtime deterministic validator (no Agent Role or Skill): run the checks defined under validators/ validating identity, structure, links, IDs, readability heuristics, traceability, Finding/Spike state and lifecycle conditions; a fixable failure creates a DETERMINISTIC_FAILURE Revision Request whose return Action is SD-14; it does not judge architecture quality or project appropriateness.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "candidate": { "type": "object" }
+        },
+        "required": ["candidate"]
+      },
+      "resultSchema": {
+        "type": "object",
+        "properties": {
+          "status": { "type": "string", "enum": ["PASS", "FIXABLE_FAILURE", "FAILED"] },
+          "routing": { "type": "string", "enum": ["pass", "fixable-failure"] },
+          "validatorReport": { "type": "object" }
+        },
+        "required": ["status", "routing"]
+      },
+      "responsibleAuthority": { "kind": "runtime", "validator": "validator.final-verification" },
+      "allowedRoutes": ["route.runtime.deterministic"],
+      "execution": { "mode": "single" },
+      "selector": { "kind": "deterministic" },
+      "allowedSuccessors": ["node.sd-11", "node.sd-15", "terminal:failed"],
+      "gate": {
+        "preconditions": [{ "field": "routing", "op": "exists" }],
+        "postconditions": [
+          { "field": "routing", "op": "in", "value": ["pass", "fixable-failure"] }
+        ],
+        "deterministic": ["validator.final-verification"],
+        "freeTextBypass": "prohibited"
+      }
+    },
+    {
+      "id": "action.sd-15",
+      "name": "SD-15 Freeze, Promote, and Clean",
+      "purpose": "Runtime lifecycle/identity authority (no Agent Role or Skill): freeze the exact Design content and dependency closure in Workflow state; ensure all durable decisions, accepted risks, open work, acceptance mappings, downstream obligations and runtime-tuning handoffs are represented in the Design; promote only the final Design and explicitly requested formal companions to repository paths; then delete the run workspace's Brief/Skeleton/Draft/revision/review/question/aggregation/verification/freeze files; report IMPLEMENTATION_READY only when the cleanup Gate succeeds; later feedback may mark the Design stale/invalidated, but it becomes SUPERSEDED only when a later final Design explicitly replaces it.",
+      "resultSchema": {
+        "type": "object",
+        "properties": {
+          "status": { "type": "string", "enum": ["CLEAN", "FAILED"] },
+          "routing": { "type": "string", "enum": ["clean"] },
+          "promotedDeliverables": { "type": "array" }
+        },
+        "required": ["status", "routing"]
+      },
+      "responsibleAuthority": { "kind": "runtime", "validator": "validator.cleanup-gate" },
+      "allowedRoutes": ["route.runtime.deterministic"],
+      "execution": { "mode": "single" },
+      "selector": { "kind": "deterministic" },
+      "allowedSuccessors": ["terminal:implementation-ready"],
+      "escalation": {
+        "allowed": false,
+        "scope": "route-within-allowed",
+        "cannotChange": ["gate", "successor-set", "promotion scope", "intermediate promotion"]
+      },
+      "gate": {
+        "preconditions": [{ "field": "draft", "op": "exists" }],
+        "postconditions": [{ "field": "routing", "op": "eq", "value": "clean" }],
+        "deterministic": ["validator.cleanup-gate"],
+        "freeTextBypass": "prohibited"
+      },
+      "recovery": "recovery.cleanup-retry"
+    }
+  ]
+}

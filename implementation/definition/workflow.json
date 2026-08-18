@@ -1,0 +1,1008 @@
+{
+  "kind": "agentops.workflow-definition",
+  "schemaVersion": "agentops.workflow-dsl@0.1.0",
+  "workflow": {
+    "id": "implementation-workflow",
+    "name": "Implementation Workflow",
+    "version": "0.3.0",
+    "purpose": "Turns one exact frozen, implementation-authorizing design into a VERIFIED_IMPLEMENTATION_READY feature-branch candidate through Goal Graph, Test Ladder and evolutionary TDD; preserves every upstream obligation semantic while owning its own lifecycle classification, Actions, Gates and terminal effects.",
+    "contractVersion": "agentops.workflow-dsl@0.1.0"
+  },
+  "state": {
+    "fields": [
+      {
+        "name": "design",
+        "type": "object",
+        "reducer": "overwrite",
+        "required": true,
+        "description": "Frozen upstream design binding: identity, content identity, IMPLEMENTATION_READY status, scope, referenced Contracts and obligations. A design-semantic change stops the Delivery."
+      },
+      {
+        "name": "intake",
+        "type": "object",
+        "reducer": "overwrite",
+        "description": "IM-01 result: authorityBound, designIdentityExact, obligationRegisterBound, derivableFactMissing, blockers."
+      },
+      {
+        "name": "obligationRegister",
+        "type": "object",
+        "reducer": "merge",
+        "description": "Classified upstream obligations (CONTRACT_PREREQUISITE / IMPLEMENTATION_FEASIBILITY / IMPLEMENTATION_VERIFICATION / OPERATIONAL_TUNING) with preserved semantic dependency and reopen condition."
+      },
+      {
+        "name": "preflight",
+        "type": "object",
+        "reducer": "overwrite",
+        "description": "IM-02 result: passed, feasibilityObligations (count), harnessBinding, contractAvailability facts, blockers."
+      },
+      {
+        "name": "feasibility",
+        "type": "object",
+        "reducer": "overwrite",
+        "description": "IM-02V result: allCalibrated, pendingWithProgress, externalUnavailable, reopen, evidence identity."
+      },
+      {
+        "name": "grilling",
+        "type": "object",
+        "reducer": "overwrite",
+        "description": "IM-03 result: allClassified, needsUser, ambiguity, projectContextSnapshot, goalPackets."
+      },
+      {
+        "name": "goalGraph",
+        "type": "object",
+        "reducer": "overwrite",
+        "description": "IM-04 result: frozen (bool), correctionRequired (bool), goals, dependencies, ladders, completion relation."
+      },
+      {
+        "name": "branch",
+        "type": "object",
+        "reducer": "overwrite",
+        "description": "IM-05 result: activated (bool), baseline identity, feature branch identity."
+      },
+      {
+        "name": "selection",
+        "type": "object",
+        "reducer": "overwrite",
+        "description": "IM-06 deterministic selector result: goalRungReady, allGoalsCommitted, missingContract, selected goal/rung or exact wait/terminal proposal."
+      },
+      {
+        "name": "currentGoal",
+        "type": "string",
+        "reducer": "overwrite",
+        "description": "Exact loop position: current Goal id."
+      },
+      {
+        "name": "currentRung",
+        "type": "string",
+        "reducer": "overwrite",
+        "description": "Exact loop position: current Test Ladder rung id."
+      },
+      {
+        "name": "ladder",
+        "type": "object",
+        "reducer": "overwrite",
+        "description": "Test Ladder feedback for the current rung: calibrated, ambiguity, expectedRedProgress, green, branchRedIntroduced, branchesClosed, regression, noRefactorOrGreen, anotherRung, verified, invalidFeedback."
+      },
+      {
+        "name": "returnAction",
+        "type": "string",
+        "reducer": "overwrite",
+        "description": "Recorded owning Action for dynamic returns: IM-01R returns to its recorded requester; IM-11 invalid feedback returns to the recorded owning Action; SD-style return_action routing."
+      },
+      {
+        "name": "review",
+        "type": "object",
+        "reducer": "overwrite",
+        "description": "Review state: barrierReached, finding (none|test|implementation), findingOpen, goalScopeFindingClosed, wholeScopeFindingClosed."
+      },
+      {
+        "name": "findings",
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "lens": {
+              "type": "string"
+            },
+            "scope": {
+              "type": "string"
+            },
+            "severity": {
+              "type": "string"
+            },
+            "disposition": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "id",
+            "lens",
+            "scope"
+          ]
+        },
+        "reducer": "append",
+        "description": "Admitted review findings; appended, never overwritten; dispositions closed only by the source lens."
+      },
+      {
+        "name": "commit",
+        "type": "object",
+        "reducer": "overwrite",
+        "description": "IM-16 result: verifiedGoalCommitted (bool), Goal commit identity, new baseline."
+      },
+      {
+        "name": "regressionWhole",
+        "type": "object",
+        "reducer": "overwrite",
+        "description": "IM-17 result: passed (bool), wholeScopeFindingAdmitted (bool), regression evidence."
+      },
+      {
+        "name": "terminalGate",
+        "type": "object",
+        "reducer": "overwrite",
+        "description": "IM-18 result: passed (bool), final candidate identity, verification summary, operational-tuning handoffs."
+      },
+      {
+        "name": "attempts",
+        "type": "integer",
+        "reducer": "sum",
+        "required": true,
+        "description": "Attempt accounting: each retry gains a new attempt identity; repeating the same failure without new diagnosis consumes budget; numeric limit is project/runtime policy and never relaxes a Gate."
+      },
+      {
+        "name": "gitBaseline",
+        "type": "string",
+        "reducer": "keepFirst",
+        "description": "Clean starting baseline; never auto-stash/reset/merge."
+      },
+      {
+        "name": "currentTree",
+        "type": "string",
+        "reducer": "overwrite",
+        "description": "Current candidate Git tree identity for checkpoint binding."
+      },
+      {
+        "name": "status",
+        "type": "string",
+        "reducer": "overwrite",
+        "required": true,
+        "description": "Lifecycle marker; 'unknown' triggers the intervention recovery path."
+      }
+    ]
+  },
+  "graph": {
+    "start": "node.IM-01",
+    "nodes": [
+      {
+        "id": "node.IM-01",
+        "action": "action.IM-01",
+        "checkpoint": {
+          "mode": "always",
+          "bindings": [
+            "delivery",
+            "snapshot",
+            "actionAttempt",
+            "manifestRevision",
+            "gitTree"
+          ]
+        }
+      },
+      {
+        "id": "node.IM-01R",
+        "action": "action.IM-01R"
+      },
+      {
+        "id": "node.IM-02",
+        "action": "action.IM-02"
+      },
+      {
+        "id": "node.IM-02V",
+        "action": "action.IM-02V"
+      },
+      {
+        "id": "node.IM-03",
+        "action": "action.IM-03"
+      },
+      {
+        "id": "node.IM-04",
+        "action": "action.IM-04"
+      },
+      {
+        "id": "node.IM-05",
+        "action": "action.IM-05"
+      },
+      {
+        "id": "node.IM-06",
+        "action": "action.IM-06"
+      },
+      {
+        "id": "node.IM-07",
+        "action": "action.IM-07"
+      },
+      {
+        "id": "node.IM-08",
+        "action": "action.IM-08"
+      },
+      {
+        "id": "node.IM-09",
+        "action": "action.IM-09"
+      },
+      {
+        "id": "node.IM-10",
+        "action": "action.IM-10"
+      },
+      {
+        "id": "node.IM-11",
+        "action": "action.IM-11"
+      },
+      {
+        "id": "node.IM-12",
+        "action": "action.IM-12"
+      },
+      {
+        "id": "node.IM-13",
+        "action": "action.IM-13"
+      },
+      {
+        "id": "node.IM-14T",
+        "action": "action.IM-14T"
+      },
+      {
+        "id": "node.IM-14I",
+        "action": "action.IM-14I"
+      },
+      {
+        "id": "node.IM-15",
+        "action": "action.IM-15"
+      },
+      {
+        "id": "node.IM-16",
+        "action": "action.IM-16"
+      },
+      {
+        "id": "node.IM-17",
+        "action": "action.IM-17"
+      },
+      {
+        "id": "node.IM-18",
+        "action": "action.IM-18"
+      }
+    ],
+    "edges": [
+      {
+        "id": "e.intake.preflight",
+        "from": "node.IM-01",
+        "to": "node.IM-02",
+        "condition": {
+          "allOf": [
+            {
+              "field": "intake.authorityBound",
+              "op": "eq",
+              "value": true
+            },
+            {
+              "field": "intake.designIdentityExact",
+              "op": "eq",
+              "value": true
+            },
+            {
+              "field": "intake.obligationRegisterBound",
+              "op": "eq",
+              "value": true
+            }
+          ]
+        }
+      },
+      {
+        "id": "e.intake.research",
+        "from": "node.IM-01",
+        "to": "node.IM-01R",
+        "condition": {
+          "field": "intake.derivableFactMissing",
+          "op": "eq",
+          "value": true
+        }
+      },
+      {
+        "id": "e.research.intake",
+        "from": "node.IM-01R",
+        "to": "node.IM-01",
+        "condition": {
+          "field": "returnAction",
+          "op": "eq",
+          "value": "IM-01"
+        }
+      },
+      {
+        "id": "e.research.grilling",
+        "from": "node.IM-01R",
+        "to": "node.IM-03",
+        "condition": {
+          "field": "returnAction",
+          "op": "eq",
+          "value": "IM-03"
+        }
+      },
+      {
+        "id": "e.preflight.feasibility",
+        "from": "node.IM-02",
+        "to": "node.IM-02V",
+        "condition": {
+          "allOf": [
+            {
+              "field": "preflight.passed",
+              "op": "eq",
+              "value": true
+            },
+            {
+              "field": "preflight.feasibilityObligations",
+              "op": "gt",
+              "value": 0
+            }
+          ]
+        }
+      },
+      {
+        "id": "e.preflight.grilling",
+        "from": "node.IM-02",
+        "to": "node.IM-03",
+        "condition": {
+          "allOf": [
+            {
+              "field": "preflight.passed",
+              "op": "eq",
+              "value": true
+            },
+            {
+              "field": "preflight.feasibilityObligations",
+              "op": "eq",
+              "value": 0
+            }
+          ]
+        }
+      },
+      {
+        "id": "e.feasibility.grilling",
+        "from": "node.IM-02V",
+        "to": "node.IM-03",
+        "condition": {
+          "field": "feasibility.allCalibrated",
+          "op": "eq",
+          "value": true
+        }
+      },
+      {
+        "id": "e.feasibility.self",
+        "from": "node.IM-02V",
+        "to": "node.IM-02V",
+        "condition": {
+          "field": "feasibility.pendingWithProgress",
+          "op": "eq",
+          "value": true
+        }
+      },
+      {
+        "id": "e.feasibility.reopen",
+        "from": "node.IM-02V",
+        "to": "terminal:DESIGN_REOPEN",
+        "condition": {
+          "field": "feasibility.reopen",
+          "op": "eq",
+          "value": true
+        }
+      },
+      {
+        "id": "e.grilling.confirm",
+        "from": "node.IM-03",
+        "to": "node.IM-04",
+        "condition": {
+          "field": "grilling.allClassified",
+          "op": "eq",
+          "value": true
+        }
+      },
+      {
+        "id": "e.confirm.grilling",
+        "from": "node.IM-04",
+        "to": "node.IM-03",
+        "condition": {
+          "field": "goalGraph.correctionRequired",
+          "op": "eq",
+          "value": true
+        }
+      },
+      {
+        "id": "e.confirm.branch",
+        "from": "node.IM-04",
+        "to": "node.IM-05",
+        "condition": {
+          "field": "goalGraph.frozen",
+          "op": "eq",
+          "value": true
+        }
+      },
+      {
+        "id": "e.branch.select",
+        "from": "node.IM-05",
+        "to": "node.IM-06",
+        "condition": {
+          "field": "branch.activated",
+          "op": "eq",
+          "value": true
+        }
+      },
+      {
+        "id": "e.select.calibrate",
+        "from": "node.IM-06",
+        "to": "node.IM-07",
+        "condition": {
+          "field": "selection.goalRungReady",
+          "op": "eq",
+          "value": true
+        }
+      },
+      {
+        "id": "e.select.whole",
+        "from": "node.IM-06",
+        "to": "node.IM-17",
+        "condition": {
+          "field": "selection.allGoalsCommitted",
+          "op": "eq",
+          "value": true
+        }
+      },
+      {
+        "id": "e.calibrate.evolve",
+        "from": "node.IM-07",
+        "to": "node.IM-08",
+        "condition": {
+          "field": "ladder.calibrated",
+          "op": "eq",
+          "value": true
+        }
+      },
+      {
+        "id": "e.calibrate.grilling",
+        "from": "node.IM-07",
+        "to": "node.IM-03",
+        "condition": {
+          "field": "ladder.ambiguity",
+          "op": "eq",
+          "value": true
+        }
+      },
+      {
+        "id": "e.evolve.self",
+        "from": "node.IM-08",
+        "to": "node.IM-08",
+        "condition": {
+          "field": "ladder.expectedRedProgress",
+          "op": "eq",
+          "value": true
+        }
+      },
+      {
+        "id": "e.evolve.close",
+        "from": "node.IM-08",
+        "to": "node.IM-09",
+        "condition": {
+          "field": "ladder.green",
+          "op": "eq",
+          "value": true
+        }
+      },
+      {
+        "id": "e.close.evolve",
+        "from": "node.IM-09",
+        "to": "node.IM-08",
+        "condition": {
+          "field": "ladder.branchRedIntroduced",
+          "op": "eq",
+          "value": true
+        }
+      },
+      {
+        "id": "e.close.refactor",
+        "from": "node.IM-09",
+        "to": "node.IM-10",
+        "condition": {
+          "field": "ladder.branchesClosed",
+          "op": "eq",
+          "value": true
+        }
+      },
+      {
+        "id": "e.refactor.evolve",
+        "from": "node.IM-10",
+        "to": "node.IM-08",
+        "condition": {
+          "field": "ladder.regression",
+          "op": "eq",
+          "value": true
+        }
+      },
+      {
+        "id": "e.refactor.verify",
+        "from": "node.IM-10",
+        "to": "node.IM-11",
+        "condition": {
+          "field": "ladder.noRefactorOrGreen",
+          "op": "eq",
+          "value": true
+        }
+      },
+      {
+        "id": "e.verify.calibrate",
+        "from": "node.IM-11",
+        "to": "node.IM-07",
+        "condition": {
+          "field": "ladder.anotherRung",
+          "op": "eq",
+          "value": true
+        }
+      },
+      {
+        "id": "e.verify.review",
+        "from": "node.IM-11",
+        "to": "node.IM-12",
+        "condition": {
+          "field": "ladder.verified",
+          "op": "eq",
+          "value": true
+        }
+      },
+      {
+        "id": "e.verify.return07",
+        "from": "node.IM-11",
+        "to": "node.IM-07",
+        "condition": {
+          "field": "returnAction",
+          "op": "eq",
+          "value": "IM-07"
+        }
+      },
+      {
+        "id": "e.verify.return08",
+        "from": "node.IM-11",
+        "to": "node.IM-08",
+        "condition": {
+          "field": "returnAction",
+          "op": "eq",
+          "value": "IM-08"
+        }
+      },
+      {
+        "id": "e.verify.return09",
+        "from": "node.IM-11",
+        "to": "node.IM-09",
+        "condition": {
+          "field": "returnAction",
+          "op": "eq",
+          "value": "IM-09"
+        }
+      },
+      {
+        "id": "e.verify.return10",
+        "from": "node.IM-11",
+        "to": "node.IM-10",
+        "condition": {
+          "field": "returnAction",
+          "op": "eq",
+          "value": "IM-10"
+        }
+      },
+      {
+        "id": "e.review.aggregate",
+        "from": "node.IM-12",
+        "to": "node.IM-13",
+        "condition": {
+          "field": "review.barrierReached",
+          "op": "eq",
+          "value": true
+        }
+      },
+      {
+        "id": "e.aggregate.commit",
+        "from": "node.IM-13",
+        "to": "node.IM-16",
+        "condition": {
+          "field": "review.finding",
+          "op": "eq",
+          "value": "none"
+        }
+      },
+      {
+        "id": "e.aggregate.resolveTest",
+        "from": "node.IM-13",
+        "to": "node.IM-14T",
+        "condition": {
+          "field": "review.finding",
+          "op": "eq",
+          "value": "test"
+        }
+      },
+      {
+        "id": "e.aggregate.resolveImpl",
+        "from": "node.IM-13",
+        "to": "node.IM-14I",
+        "condition": {
+          "field": "review.finding",
+          "op": "eq",
+          "value": "implementation"
+        }
+      },
+      {
+        "id": "e.resolveTest.recheck",
+        "from": "node.IM-14T",
+        "to": "node.IM-15"
+      },
+      {
+        "id": "e.resolveImpl.recheck",
+        "from": "node.IM-14I",
+        "to": "node.IM-15"
+      },
+      {
+        "id": "e.recheck.aggregate",
+        "from": "node.IM-15",
+        "to": "node.IM-13",
+        "condition": {
+          "field": "review.findingOpen",
+          "op": "eq",
+          "value": true
+        }
+      },
+      {
+        "id": "e.recheck.commit",
+        "from": "node.IM-15",
+        "to": "node.IM-16",
+        "condition": {
+          "field": "review.goalScopeFindingClosed",
+          "op": "eq",
+          "value": true
+        }
+      },
+      {
+        "id": "e.recheck.whole",
+        "from": "node.IM-15",
+        "to": "node.IM-17",
+        "condition": {
+          "field": "review.wholeScopeFindingClosed",
+          "op": "eq",
+          "value": true
+        }
+      },
+      {
+        "id": "e.commit.select",
+        "from": "node.IM-16",
+        "to": "node.IM-06",
+        "condition": {
+          "field": "commit.verifiedGoalCommitted",
+          "op": "eq",
+          "value": true
+        }
+      },
+      {
+        "id": "e.whole.aggregate",
+        "from": "node.IM-17",
+        "to": "node.IM-13",
+        "condition": {
+          "field": "regressionWhole.wholeScopeFindingAdmitted",
+          "op": "eq",
+          "value": true
+        }
+      },
+      {
+        "id": "e.whole.final",
+        "from": "node.IM-17",
+        "to": "node.IM-18",
+        "condition": {
+          "field": "regressionWhole.passed",
+          "op": "eq",
+          "value": true
+        }
+      },
+      {
+        "id": "e.final.success",
+        "from": "node.IM-18",
+        "to": "terminal:VERIFIED_IMPLEMENTATION_READY",
+        "condition": {
+          "field": "terminalGate.passed",
+          "op": "eq",
+          "value": true
+        }
+      }
+    ],
+    "terminals": [
+      {
+        "id": "VERIFIED_IMPLEMENTATION_READY",
+        "kind": "success",
+        "meaning": "All in-scope Goals verified and committed; both reviews and whole-scope regression pass; terminal Gate passes; no push/PR/merge/deploy unless separately authorized.",
+        "validation": [
+          "validator.final-checks"
+        ],
+        "proposalCheckpoint": true
+      },
+      {
+        "id": "INCOMPLETE",
+        "kind": "incomplete",
+        "meaning": "Budget exhausted or external authority missing; records current Goal/rung, Git baseline, test results, attempts, Findings and exact resume Action; never relaxes a Gate.",
+        "proposalCheckpoint": true
+      },
+      {
+        "id": "CANCELLED",
+        "kind": "cancelled",
+        "meaning": "Explicit durable cancellation; cannot be reported as success or incomplete.",
+        "proposalCheckpoint": true
+      },
+      {
+        "id": "FAILED",
+        "kind": "failure",
+        "meaning": "Non-retryable configuration or execution failure; current artifacts and failure evidence preserved.",
+        "proposalCheckpoint": true
+      },
+      {
+        "id": "DESIGN_REOPEN",
+        "kind": "custom",
+        "meaning": "A measured feasibility result or upstream semantic change crosses a frozen design-reopen condition: the current Delivery stops and a new Delivery requires a new design version. No local substitution of authority.",
+        "proposalCheckpoint": true
+      }
+    ]
+  },
+  "waits": [
+    {
+      "id": "wait.user-measurement",
+      "kind": "user",
+      "purpose": "One measurement/intent decision required by adaptive grilling (IM-03); exactly one decision per wait.",
+      "triggerAction": "action.IM-03",
+      "resumeAction": "action.IM-03",
+      "resumeSchema": {
+        "type": "object",
+        "properties": {
+          "decision": {
+            "type": "string"
+          },
+          "answer": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "decision"
+        ]
+      },
+      "correlation": {
+        "identitySource": "wait-request-id",
+        "staleRejected": true,
+        "duplicateRejected": true
+      },
+      "expiry": {
+        "policy": "renewable-once-then-incomplete",
+        "renewalAllowed": true
+      }
+    },
+    {
+      "id": "wait.user-confirm",
+      "kind": "user",
+      "purpose": "Explicit whole-Brief/goal-graph confirmation (IM-04); human confirms, executor persists the exact frozen artifacts.",
+      "triggerAction": "action.IM-04",
+      "resumeAction": "action.IM-04",
+      "resumeSchema": {
+        "type": "object",
+        "properties": {
+          "confirmed": {
+            "type": "boolean"
+          },
+          "correction": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "confirmed"
+        ]
+      },
+      "correlation": {
+        "identitySource": "wait-request-id",
+        "staleRejected": true,
+        "duplicateRejected": true
+      },
+      "expiry": {
+        "policy": "renewable-while-open",
+        "renewalAllowed": true
+      }
+    },
+    {
+      "id": "wait.external-coordination",
+      "kind": "external",
+      "purpose": "A selected Goal requires a missing cross-owner Contract/design artifact (IM-06); a compatible result resumes IM-03 classification; a result that changes design semantics stops the Delivery.",
+      "triggerAction": "action.IM-06",
+      "resumeAction": "action.IM-03",
+      "resumeSchema": {
+        "type": "object",
+        "properties": {
+          "requestId": {
+            "type": "string"
+          },
+          "compatible": {
+            "type": "boolean"
+          },
+          "artifactIdentity": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "requestId",
+          "compatible"
+        ]
+      },
+      "correlation": {
+        "identitySource": "coordination-request-id",
+        "staleRejected": true,
+        "duplicateRejected": true
+      },
+      "expiry": {
+        "policy": "renewable-while-compatible",
+        "renewalAllowed": true
+      }
+    },
+    {
+      "id": "wait.external-authority",
+      "kind": "external",
+      "purpose": "IM-02V requires an external authority/environment fact the current Delivery cannot produce; resumes IM-02V when available.",
+      "triggerAction": "action.IM-02V",
+      "resumeAction": "action.IM-02V",
+      "resumeSchema": {
+        "type": "object",
+        "properties": {
+          "available": {
+            "type": "boolean"
+          },
+          "evidence": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "available"
+        ]
+      },
+      "correlation": {
+        "identitySource": "authority-request-id",
+        "staleRejected": true,
+        "duplicateRejected": true
+      },
+      "expiry": {
+        "policy": "renewable-while-compatible",
+        "renewalAllowed": true
+      }
+    }
+  ],
+  "recovery": [
+    {
+      "id": "recovery.default",
+      "scope": "workflow",
+      "mode": "continue",
+      "noBlindReplay": true,
+      "condition": {
+        "field": "status",
+        "op": "ne",
+        "value": "unknown"
+      }
+    },
+    {
+      "id": "recovery.intervene",
+      "scope": "workflow",
+      "mode": "intervene",
+      "noBlindReplay": true,
+      "condition": {
+        "field": "status",
+        "op": "eq",
+        "value": "unknown"
+      }
+    },
+    {
+      "id": "recovery.incomplete-resume",
+      "scope": "workflow",
+      "mode": "restartFromSavepoint",
+      "noBlindReplay": true,
+      "condition": {
+        "field": "status",
+        "op": "eq",
+        "value": "INCOMPLETE"
+      }
+    }
+  ],
+  "handoffs": [
+    {
+      "id": "handoff.verified-candidate",
+      "kind": "IMPLEMENTATION_VERIFICATION",
+      "domainSemantics": "The VERIFIED_IMPLEMENTATION_READY candidate establishes which in-scope Goals of the frozen design were implemented and verified, with exact evidence identities and a bounded verification summary.",
+      "invalidationConditions": "A later design-semantic change, a later measurement contradicting the frozen scope, or an unmeasured operational-tuning value presented as passed invalidates the claim.",
+      "semanticDependency": "The consuming Workflow must not treat unmeasured values as passed evidence and must not treat the candidate as merged/pushed/deployed.",
+      "requiredEvidence": "Exact branch/head/change-set identity and bounded verification summary with evidence identities.",
+      "returnLocation": "consuming workflow",
+      "reopenCondition": "A measured fact contradicts the frozen design semantic dependency.",
+      "semanticOnly": true
+    }
+  ],
+  "consumedHandoffs": [
+    {
+      "id": "consume.contract-prerequisite",
+      "upstreamHandoff": {
+        "package": "system-design-workflow",
+        "packageVersion": "0.3.0",
+        "handoff": "handoff.contract-prerequisite"
+      },
+      "classification": "CONTRACT_PREREQUISITE",
+      "owner": "implementation-workflow owner",
+      "affectedLocal": [
+        "action.IM-02",
+        "action.IM-03",
+        "action.IM-06"
+      ],
+      "preservesSemantics": {
+        "semanticDependency": "A cross-owner, versioned Contract is a prerequisite for a reliable Oracle/integration; a missing Contract blocks only dependent Goals and is obtained through external coordination.",
+        "reopenCondition": "The Contract or its version changes such that the frozen dependency is no longer satisfied."
+      },
+      "mustNotWeaken": true
+    },
+    {
+      "id": "consume.implementation-feasibility",
+      "upstreamHandoff": {
+        "package": "system-design-workflow",
+        "packageVersion": "0.3.0",
+        "handoff": "handoff.implementation-feasibility"
+      },
+      "classification": "IMPLEMENTATION_FEASIBILITY",
+      "owner": "implementation-workflow owner",
+      "affectedLocal": [
+        "action.IM-02V"
+      ],
+      "preservesSemantics": {
+        "semanticDependency": "Dependency versions, SDK/API and local substrate suitability must be calibrated by the current implementation before Goal freeze; an invalidated direction stops the Delivery.",
+        "reopenCondition": "A measured feasibility result contradicts a frozen design semantic dependency."
+      },
+      "mustNotWeaken": true
+    },
+    {
+      "id": "consume.implementation-verification",
+      "upstreamHandoff": {
+        "package": "system-design-workflow",
+        "packageVersion": "0.3.0",
+        "handoff": "handoff.implementation-verification"
+      },
+      "classification": "IMPLEMENTATION_VERIFICATION",
+      "owner": "implementation-workflow owner",
+      "affectedLocal": [
+        "action.IM-07",
+        "action.IM-08",
+        "action.IM-09",
+        "action.IM-10",
+        "action.IM-11",
+        "action.IM-17"
+      ],
+      "preservesSemantics": {
+        "semanticDependency": "Verification evidence must be produced by the current implementation and its conformance/fault tests; unexecuted evidence is never reported as passed.",
+        "reopenCondition": "A measured implementation fact contradicts a frozen design semantic dependency."
+      },
+      "mustNotWeaken": true
+    },
+    {
+      "id": "consume.operational-tuning",
+      "upstreamHandoff": {
+        "package": "system-design-workflow",
+        "packageVersion": "0.3.0",
+        "handoff": "handoff.operational-tuning"
+      },
+      "classification": "OPERATIONAL_TUNING",
+      "owner": "implementation-workflow owner",
+      "affectedLocal": [
+        "action.IM-18"
+      ],
+      "preservesSemantics": {
+        "semanticDependency": "Operational tuning values are measurable only with a runnable candidate and representative environment; they remain an explicit owner-complete handoff and never block VERIFIED_IMPLEMENTATION_READY unless a frozen Fitness Threshold applies.",
+        "reopenCondition": "A measured tuning value violates a frozen design assumption."
+      },
+      "mustNotWeaken": true
+    }
+  ]
+}

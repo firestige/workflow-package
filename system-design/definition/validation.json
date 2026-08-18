@@ -1,0 +1,337 @@
+{
+  "kind": "agentops.validation",
+  "schemaVersion": "agentops.workflow-dsl@0.1.0",
+  "validators": [
+    {
+      "id": "validator.intake-authority",
+      "purpose": "SD-01 gate: derivable facts were investigated rather than converted into user questions; the authority map and exact input identity are bound.",
+      "input": "intake result, authority map and state",
+      "output": "pass/fail",
+      "deterministic": true
+    },
+    {
+      "id": "validator.grilling-closure",
+      "purpose": "SD-02 gate: no design-significant ambiguity remains unclassified or ownerless; every unknown has owner, impact, required evidence and return location.",
+      "input": "working Brief and unknown classification records",
+      "output": "pass/fail",
+      "deterministic": true
+    },
+    {
+      "id": "validator.brief-closure-check",
+      "purpose": "SD-03 gate: every fixed topic/subtopic has explicit status; design-significant derivable facts are resolved; no USER_DECISION_REQUIRED or BLOCKED remains; non-blocking DERIVABLE, DESIGN_EXPLORATION, TO_BE_MEASURED and DEFERRED items have owner, blocks, evidence and return location; the frozen Brief binds its content digest and authoritative sources.",
+      "input": "Brief, closure check records and confirmation record",
+      "output": "pass/fail",
+      "deterministic": true
+    },
+    {
+      "id": "validator.skeleton-gate",
+      "purpose": "SD-04 gate: each Module hides meaningful complexity; no required scenario lacks an architectural path; quality scenarios already shape the direction.",
+      "input": "Skeleton and Brief scenario coverage",
+      "output": "pass/fail",
+      "deterministic": true
+    },
+    {
+      "id": "validator.finding-admission",
+      "purpose": "Finding admission (SD-05 and SD-09): a Finding requires exact location, observed statement/omission, applicable project/Brief/design requirement, evidence, concrete impact, project-specific relevance, resolution direction, severity and confidence; suspicious smells become Findings only after project-specific impact is evidenced.",
+      "input": "finding records and project context",
+      "output": "pass/fail",
+      "deterministic": true
+    },
+    {
+      "id": "validator.evidence-return-binding",
+      "purpose": "SD-01R gate: research returns only to the recorded requester (SD-05 direction review or the affected SD-09 review lens) before aggregation resumes; the Scout did not change the recorded resume_action or resume_lens.",
+      "input": "evidence research request/result and return binding",
+      "output": "pass/fail",
+      "deterministic": true
+    },
+    {
+      "id": "validator.feasibility-application",
+      "purpose": "SD-06 gate: every architecture-feasibility result is applied and validated against its exact request, environment, method and evidence binding; an invalidated Skeleton returns to SD-04 and loses its prior review pass.",
+      "input": "Spike request/result bindings and applied state",
+      "output": "pass/fail",
+      "deterministic": true
+    },
+    {
+      "id": "validator.writer-boundary",
+      "purpose": "SD-07 rule: one System Designer writes; Draft checkpoints live in the ignored run workspace and are never Git deliverables; the frozen Brief is never mutated.",
+      "input": "writer records and checkpoint storage",
+      "output": "pass/fail",
+      "deterministic": true
+    },
+    {
+      "id": "validator.integrate-checks",
+      "purpose": "SD-08 checks: terminology, human-first reading order, IDs, diagram/text parity, ownership, traceability, quality mechanisms, risks, decisions, Spike state and acceptance plan; one branch-free successful core before named exception scenarios; dense identity mappings moved out of behavioral prose.",
+      "input": "integrated Draft",
+      "output": "pass/fail",
+      "deterministic": true
+    },
+    {
+      "id": "validator.review-isolation",
+      "purpose": "SD-09 gate: the three review lenses used isolated result identities and the same admitted Draft lineage and could not see each other's analysis before the review barrier closes; shared raw evidence does not equal shared conclusions; recheck sessions are fresh.",
+      "input": "session, barrier and result identity records",
+      "output": "pass/fail",
+      "deterministic": true
+    },
+    {
+      "id": "validator.aggregation-rules",
+      "purpose": "SD-10 gate: aggregation preserved provenance, merged only common causes, never decided by majority, never hid risk, never inflated signals, never changed severity without returning to the Reviewer, and never closed Findings.",
+      "input": "aggregation result and finding records",
+      "output": "pass/fail",
+      "deterministic": true
+    },
+    {
+      "id": "validator.revision-return-validation",
+      "purpose": "SD-11 gate: Runtime validates return_action against the Revision Request origin and invalidation state; the Designer cannot close its own Finding; Fresh Reader Findings return to SD-13 for fresh recheck; non-Finding corrections retain their origin identity; SD-09 is not the unconditional default.",
+      "input": "Revision Request origin/return_action and invalidation state",
+      "output": "pass/fail",
+      "deterministic": true
+    },
+    {
+      "id": "validator.human-decision-admission",
+      "purpose": "SD-11H gate: human intervention is admitted only when all six conditions hold (one exact decision; evidence exhausted; at least two directions cannot simultaneously hold; choice materially changes boundary/responsibility/quality target/architecture; correct human owner; complete Decision Packet with claims, evidence, prior investigation, options, consequences, recommendation, affected identities and return Action); at most one human decision is pending; exploratory replies are never final decisions.",
+      "input": "decision request packet, evidence state and pending-wait state",
+      "output": "pass/fail",
+      "deterministic": true
+    },
+    {
+      "id": "validator.parameter-closure",
+      "purpose": "SD-12 gate: no design-owned feasibility/parameter question remains open; architecture feasibility closed after Skeleton and before expansion; design-owned parameters closed before IMPLEMENTATION_READY when their value changes Module boundaries, responsibilities, dependency direction, state ownership or a design mechanism.",
+      "input": "parameter and Spike records",
+      "output": "pass/fail",
+      "deterministic": true
+    },
+    {
+      "id": "validator.downstream-obligation-completeness",
+      "purpose": "SD-12 gate: every downstream obligation is explicit and owner-complete with identity, owner, affected design identities, semantic dependency, required evidence, return location and design-reopen condition; no handoff text prescribes another Workflow's Action, Gate, Wait, classification or terminal; Contract publication, implementation feasibility/verification and runtime tuning may remain open for the consuming Workflow and cannot be reported as passed evidence.",
+      "input": "downstream obligation register",
+      "output": "pass/fail",
+      "deterministic": true
+    },
+    {
+      "id": "validator.fresh-reader-boundary",
+      "purpose": "SD-13 gate: the reader session was context-isolated (no grilling transcript or hidden author/reviewer context); the reader finds ambiguity and hidden assumptions but does not reopen architecture based on preference; admitted Fresh Reader Findings are rechecked only by a fresh SD-13 session against the revised exact Design.",
+      "input": "reader session isolation records and finding records",
+      "output": "pass/fail",
+      "deterministic": true
+    },
+    {
+      "id": "validator.final-verification",
+      "purpose": "SD-14 deterministic verification: validate identity, structure, links, IDs, readability heuristics, traceability, Finding/Spike state and lifecycle conditions; all Blocking/Major Findings CLOSED_FIXED or CLOSED_NOT_VALID by their corresponding lens; every Minor Finding CLOSED_FIXED, CLOSED_NOT_VALID or ACCEPTED_MINOR by its source lens; no admitted Finding remains OPEN; no REVIEW_SIGNAL counted as a Finding; architecture-feasibility Spikes closed before expansion; design-owned parameters closed before IMPLEMENTATION_READY; downstream obligations owner-complete; Fresh Reader Test passed against the exact candidate Design; maturity transition legal. It does not judge architecture quality or project appropriateness.",
+      "input": "candidate Design, state, Finding/Spike/lifecycle records",
+      "output": "pass/fail",
+      "deterministic": true
+    },
+    {
+      "id": "validator.cleanup-gate",
+      "purpose": "SD-15 post-promotion cleanup Gate: the final Design has no required reference to a run-workspace intermediate; no workflow intermediate is present in the Git index or tracked file set; no docs/**/workflow-artifacts/ path is created or tracked; the ignored run workspace has been deleted; only the final Design and explicitly requested formal companions remain as repository candidate changes. Failure remains pre-terminal and retries bounded cleanup; it never reports IMPLEMENTATION_READY.",
+      "input": "final Design, Git index/worktree and run-workspace state",
+      "output": "pass/fail",
+      "deterministic": true
+    }
+  ],
+  "aggregation": [
+    {
+      "id": "aggregation.sd09",
+      "scope": "action.sd-09",
+      "rule": "preserve-provenance",
+      "arbiter": "role.finding-aggregator",
+      "prohibited": [
+        "voting",
+        "hiding risk",
+        "inflating signals",
+        "changing severity without returning to the source Reviewer",
+        "closing Findings"
+      ]
+    }
+  ],
+  "review": [
+    {
+      "id": "review.architecture-direction",
+      "lens": "architecture-direction",
+      "role": "role.architecture-reviewer",
+      "isolation": "session-isolated",
+      "barrier": true,
+      "admission": { "findingShape": "artifact.review-finding" }
+    },
+    {
+      "id": "review.problem-solution",
+      "lens": "problem-solution",
+      "role": "role.problem-solution-reviewer",
+      "isolation": "session-isolated",
+      "barrier": true,
+      "admission": { "findingShape": "artifact.review-finding" }
+    },
+    {
+      "id": "review.architecture",
+      "lens": "architecture",
+      "role": "role.architecture-reviewer",
+      "isolation": "session-isolated",
+      "barrier": true,
+      "admission": { "findingShape": "artifact.review-finding" }
+    },
+    {
+      "id": "review.quality-acceptance",
+      "lens": "quality-acceptance",
+      "role": "role.quality-reviewer",
+      "isolation": "session-isolated",
+      "barrier": true,
+      "admission": { "findingShape": "artifact.review-finding" }
+    }
+  ],
+  "conformance": [
+    {
+      "id": "conf.positive.main-path",
+      "class": "positive",
+      "scenario": "Intake → adaptive grilling → Brief confirmed and frozen → Skeleton → architecture direction review pass → feasibility confirmed (no Spike) → progressive expansion → integrated Draft → three-lens parallel review (isolated, barrier) → aggregation routes disposition-valid → parameters closed, handoffs classified → Fresh Reader pass → deterministic verification pass → freeze/promote/clean → IMPLEMENTATION_READY.",
+      "preconditions": "One-sentence Intake; project authority available; all derivable facts resolvable from the repository.",
+      "expected": "Frozen, self-contained final Design bound to exact Git/artifact identity; session artifacts cleaned; IMPLEMENTATION_READY reported only after the cleanup Gate succeeds."
+    },
+    {
+      "id": "conf.positive.grilling-adaptive",
+      "class": "positive",
+      "scenario": "A one-sentence Intake is expanded through adaptive grilling into a confirmed, navigable Brief without a prepared questionnaire; a solution hypothesis exposes a hidden trade-off and the Brief records the user preference without making an architecture decision.",
+      "preconditions": "Intake context and authority map available.",
+      "expected": "Working Brief covers the fixed topics; unknowns classified; no design-significant ambiguity remains unclassified or ownerless."
+    },
+    {
+      "id": "conf.positive.spike-confirms-direction",
+      "class": "positive",
+      "scenario": "Skeleton review identifies an architecture-feasibility Spike; SD-06 publishes the Spike Request, WAITING_FOR_SPIKE resumes with a conclusive correlated result, feasibility is confirmed, and SD-06 proceeds directly to SD-07 without an artificial Draft Revision Request.",
+      "preconditions": "Exact Spike Request identity/content digest; matching conclusive result.",
+      "expected": "Feasibility confirmed; progression to expansion; no artificial Review Finding created."
+    },
+    {
+      "id": "conf.positive.brief-change",
+      "class": "positive",
+      "scenario": "A Brief gap during SD-05 creates a Brief Change Request, a fresh local-grilling session confirms Brief v2, and invalidation propagates through the transitive closure of affected identities while unrelated design content is revalidated rather than rewritten.",
+      "preconditions": "Frozen Brief v1; Brief Change Request admitted.",
+      "expected": "Brief v2 frozen; dependants deterministically invalidated; unaffected content rebound through revalidation records."
+    },
+    {
+      "id": "conf.positive.finding-closure",
+      "class": "positive",
+      "scenario": "An admitted Finding is rechecked by the corresponding review lens in a fresh session with the original Finding, treatment, new Draft and evidence, and is closed by that lens; the Designer did not close its own Finding; a Minor is ACCEPTED_MINOR by its source lens with a reasoned statement.",
+      "preconditions": "Finding admitted by a lens; Designer submitted treatment and new Draft.",
+      "expected": "Finding closed by the corresponding lens; no Design-authority Finding closure."
+    },
+    {
+      "id": "conf.positive.handoff",
+      "class": "positive",
+      "scenario": "An unresolved implementation-version question does not alter Module boundaries or mechanisms; SD-12 records an owner-complete downstream obligation and the Design reaches IMPLEMENTATION_READY without claiming that the version evidence passed.",
+      "preconditions": "Design-owned parameters closed; downstream obligations owner-complete with return location and reopen condition.",
+      "expected": "IMPLEMENTATION_READY with explicit downstream handoffs; no unexecuted evidence reported as passed."
+    },
+    {
+      "id": "conf.negative.route",
+      "class": "negative",
+      "scenario": "An Action is executed on a route not declared in its allowedRoutes, or an ambient/default Agent is substituted for a missing binding.",
+      "preconditions": "Route or substitution outside the declared set.",
+      "expected": "Activation fails closed and records drift evidence; state does not advance."
+    },
+    {
+      "id": "conf.negative.authority",
+      "class": "negative",
+      "scenario": "A Skill or Artifact text claims transition-selection or terminal authority, or a later instruction layer expands an earlier layer's boundary.",
+      "preconditions": "Declared authority boundary violation.",
+      "expected": "Static conflict fails closed at admission; conflicts are never resolved by Driver-implicit priority."
+    },
+    {
+      "id": "conf.negative.wait-correlation",
+      "class": "negative",
+      "scenario": "A Wait resumes from an uncorrelated user answer or Spike result whose correlation identity differs from the pending wait.",
+      "preconditions": "Correlation identity differs from the pending wait-request-id.",
+      "expected": "No resume; wait persists; stale/mismatched answers have no effect; no state advance."
+    },
+    {
+      "id": "conf.negative.spike-mismatch",
+      "class": "negative",
+      "scenario": "A Spike result does not match the exact request identity/content digest, or a duplicate result arrives.",
+      "preconditions": "Result identity/digest mismatch or duplicate result.",
+      "expected": "Mismatched or duplicate results cannot advance state; the Spike wait persists."
+    },
+    {
+      "id": "conf.negative.budget",
+      "class": "negative",
+      "scenario": "Budget is exhausted and the Workflow claims completion with unresolved topics or Findings.",
+      "preconditions": "Budget exhausted (e.g., budget.review).",
+      "expected": "terminal:INCOMPLETE with exact state preserved; never success; no Gate relaxed."
+    },
+    {
+      "id": "conf.negative.cancel",
+      "class": "negative",
+      "scenario": "A cancellation is recorded as INCOMPLETE or success, or a non-retryable failure is retried with ambient replacement resources.",
+      "preconditions": "Cancellation or non-retryable failure recorded with wrong terminal.",
+      "expected": "CANCELLED preserves lineage and cannot be reported as INCOMPLETE or success; FAILED cannot be converted to INCOMPLETE for silent substitution."
+    },
+    {
+      "id": "conf.negative.return-action",
+      "class": "negative",
+      "scenario": "SD-11 defaults every Revision Request to SD-09, or returns to a lens whose review evidence was not invalidated.",
+      "preconditions": "return_action not selected from the invalidated validation evidence.",
+      "expected": "Runtime return-action validation rejects it; state does not advance."
+    },
+    {
+      "id": "conf.negative.voting",
+      "class": "negative",
+      "scenario": "The Aggregator closes Findings, chooses a majority opinion, or changes severity without returning to the source Reviewer.",
+      "preconditions": "Aggregation authority overreach.",
+      "expected": "validator.aggregation-rules fails; aggregation result rejected."
+    },
+    {
+      "id": "conf.negative.cleanup",
+      "class": "negative",
+      "scenario": "A Brief, Skeleton, Draft, treatment, review result, question set, validator report or freeze manifest is added under a tracked repository path or docs/**/workflow-artifacts/, or the final Design links to a session artifact that cleanup will delete.",
+      "preconditions": "Workflow intermediate in the Git index/worktree or required link to a run-workspace intermediate.",
+      "expected": "SD-15 cleanup Gate fails pre-terminal; IMPLEMENTATION_READY is never reported."
+    },
+    {
+      "id": "conf.negative.human-admission",
+      "class": "negative",
+      "scenario": "An evidence-resolvable difference is escalated to the user, or a question/exploratory statement in the Decision Dialogue is interpreted as a final decision.",
+      "preconditions": "Six Human Decision Admission conditions not all true, or no explicit Decision Record.",
+      "expected": "validator.human-decision-admission rejects it; no Decision Record may be frozen."
+    },
+    {
+      "id": "conf.recovery.retry",
+      "class": "recovery",
+      "scenario": "A retryable Agent/Driver execution failure occurs on an active Action.",
+      "preconditions": "Retryable failure; checkpoint binding identities re-resolved before recovery.",
+      "expected": "A new attempt identity on the same Action with budget accounting; artifact/checkpoint identity preserved; blind replay forbidden."
+    },
+    {
+      "id": "conf.recovery.incomplete-resume",
+      "class": "recovery",
+      "scenario": "Budget exhaustion or missing external authority enters INCOMPLETE, and a later authorized continuation resumes the same admitted state.",
+      "preconditions": "INCOMPLETE records current artifact identities, closed topics, unresolved issues, remaining Findings/Spikes, stop reason, resume Action and required input/budget.",
+      "expected": "Resumption from recorded state (restartFromSavepoint); no Gate relaxed; never recovered by committing intermediate artifacts."
+    },
+    {
+      "id": "conf.recovery.wait-expiry",
+      "class": "recovery",
+      "scenario": "A user or Spike Wait expires; renewal/retry remains admitted, so the Runtime resumes the recorded Action to publish the same or a new versioned request; otherwise expiry enters resumable INCOMPLETE with the pending request.",
+      "preconditions": "Wait expiry as a deterministic policy event.",
+      "expected": "Renewal through the recorded Action while policy permits; otherwise INCOMPLETE with the pending request; expiry is never success and never silent cancellation."
+    },
+    {
+      "id": "conf.recovery.evidence-return",
+      "class": "recovery",
+      "scenario": "Evidence research returns to the exact SD-05 or SD-09 requester; when returning to SD-09, only the affected lens re-runs in a fresh session before aggregation resumes.",
+      "preconditions": "Recorded resume_action and resume_lens bound to the request.",
+      "expected": "Research returns only to the recorded requester; SD-09 recheck covers only the invalidated lens; grilling is not restarted."
+    },
+    {
+      "id": "conf.recovery.cleanup-retry",
+      "class": "recovery",
+      "scenario": "SD-15 cleanup fails after promotion.",
+      "preconditions": "Cleanup failure detected by validator.cleanup-gate.",
+      "expected": "The Workflow remains pre-terminal and retries bounded cleanup; IMPLEMENTATION_READY is never reported with intermediates in the Git candidate set."
+    },
+    {
+      "id": "conf.recovery.cancelled",
+      "class": "recovery",
+      "scenario": "Explicit user cancellation from a user or Spike Wait, or during an active non-Wait Action.",
+      "preconditions": "Explicit cancellation signal; latest durable run-workspace lineage recorded.",
+      "expected": "Durable CANCELLED preserving required lineage per retention policy (not in Git); never reported as completion."
+    }
+  ]
+}

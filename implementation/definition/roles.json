@@ -1,0 +1,154 @@
+{
+  "kind": "agentops.roles",
+  "schemaVersion": "agentops.workflow-dsl@0.1.0",
+  "roles": [
+    {
+      "id": "role.goal-facilitator",
+      "name": "Goal Facilitator",
+      "responsibility": "Turns one exact frozen implementation-authorizing design into a confirmed Goal Graph without making architecture decisions; investigates derivable facts before asking; asks one measurement/intent decision at a time.",
+      "authorityBoundary": {
+        "concerns": ["responsibility", "mission", "write-permission", "data"],
+        "writePermissions": [
+          { "target": "ignored run-workspace Goal/context artifacts", "scope": "write" }
+        ],
+        "prohibited": [
+          "modifying the frozen design, production code or formal tests",
+          "deciding architecture",
+          "starting another Workflow",
+          "letting an unmeasurable Goal enter implementation"
+        ]
+      },
+      "independence": { "isolation": "shared", "barrier": false }
+    },
+    {
+      "id": "role.evidence-scout",
+      "name": "Evidence Scout",
+      "responsibility": "Resolves one repository/manual/tool fact for a recorded requesting Action; read-only.",
+      "authorityBoundary": {
+        "concerns": ["responsibility", "data"],
+        "writePermissions": [],
+        "prohibited": ["decisions", "writes", "Goal changes", "Workflow launch"]
+      },
+      "independence": { "isolation": "shared", "barrier": false }
+    },
+    {
+      "id": "role.implementation-feasibility-validator",
+      "name": "Implementation Feasibility Validator",
+      "responsibility": "Resolves implementation-owned version/SDK/substrate questions before Goal freeze using the frozen Harness feasibility phase and admitted authoritative sources.",
+      "authorityBoundary": {
+        "concerns": ["responsibility", "method", "write-permission", "data"],
+        "writePermissions": [
+          { "target": "ignored run-workspace probe/evidence content", "scope": "write" }
+        ],
+        "prohibited": [
+          "writing repository deliverables, formal tests/Harness or System Design content",
+          "making architecture decisions"
+        ]
+      },
+      "independence": { "isolation": "shared", "barrier": false }
+    },
+    {
+      "id": "role.test-designer",
+      "name": "Test Designer",
+      "responsibility": "Authors formal tests and fixtures in implementation-blind (IM-07) or code-aware (IM-09) fresh sessions and proves discriminating power.",
+      "authorityBoundary": {
+        "concerns": ["responsibility", "method", "write-permission", "data"],
+        "writePermissions": [
+          { "target": "formal tests and fixtures", "scope": "write" }
+        ],
+        "prohibited": [
+          "modifying production code",
+          "deleting, renaming, skipping, reconfiguring or weakening formal tests",
+          "letting non-discriminating/flaky/skipped tests enter implementation"
+        ]
+      },
+      "independence": { "isolation": "session-isolated", "barrier": true }
+    },
+    {
+      "id": "role.implementer",
+      "name": "Implementer",
+      "responsibility": "Makes the smallest production-code change that turns calibrated RED into GREEN and performs bounded refactoring without changing frozen behavior.",
+      "authorityBoundary": {
+        "concerns": ["responsibility", "method", "write-permission", "data"],
+        "writePermissions": [
+          { "target": "production paths", "scope": "write" }
+        ],
+        "prohibited": [
+          "editing formal tests, fixtures, Harness, coverage or writer policy",
+          "speculative abstraction, future features, generic machinery",
+          "changing frozen behavior"
+        ]
+      },
+      "independence": { "isolation": "shared", "barrier": false }
+    },
+    {
+      "id": "role.goal-adversary",
+      "name": "Goal Adversary",
+      "responsibility": "Black-box adversarial lens: derives counterexamples from the Goal, Interface and Project Context with the implementation initially hidden.",
+      "authorityBoundary": {
+        "concerns": ["responsibility", "method", "write-permission", "data"],
+        "writePermissions": [
+          { "target": "finding artifacts", "scope": "write" }
+        ],
+        "prohibited": [
+          "inspecting the implementation before its initial counterexample result is frozen",
+          "seeing the other lens analysis before the barrier",
+          "modifying the candidate"
+        ]
+      },
+      "independence": { "isolation": "session-isolated", "barrier": true, "sharedRawEvidenceOnly": true }
+    },
+    {
+      "id": "role.implementation-reviewer",
+      "name": "Implementation Reviewer",
+      "responsibility": "White-box adversarial lens: inspects code/test diff, coverage, overfitting, scope drift, design conformance, writer/stub integrity.",
+      "authorityBoundary": {
+        "concerns": ["responsibility", "method", "write-permission", "data"],
+        "writePermissions": [
+          { "target": "finding artifacts", "scope": "write" }
+        ],
+        "prohibited": [
+          "seeing the other lens analysis before the barrier",
+          "modifying the candidate"
+        ]
+      },
+      "independence": { "isolation": "session-isolated", "barrier": true, "sharedRawEvidenceOnly": true }
+    },
+    {
+      "id": "role.finding-aggregator",
+      "name": "Finding Aggregator",
+      "responsibility": "Preserves provenance, merges clear common causes, detects conflicts and routes each Finding; has no technical decision authority.",
+      "authorityBoundary": {
+        "concerns": ["responsibility", "data", "write-permission"],
+        "writePermissions": [
+          { "target": "aggregation artifacts", "scope": "write" }
+        ],
+        "prohibited": [
+          "voting",
+          "changing severity without returning to the Reviewer",
+          "editing tests or code",
+          "closing Findings"
+        ]
+      },
+      "independence": { "isolation": "shared", "barrier": false }
+    },
+    {
+      "id": "role.delivery-custodian",
+      "name": "Delivery Custodian",
+      "responsibility": "Executes deterministic package CLI Gates, branch activation, rung verification, Goal commits and candidate freezing; never authors source or tests.",
+      "authorityBoundary": {
+        "concerns": ["gate", "terminal", "data", "write-permission"],
+        "writePermissions": [
+          { "target": "Goal commits via approved path manifest", "scope": "commit" }
+        ],
+        "prohibited": [
+          "waiving CLI failure",
+          "choosing commit paths outside the approved Goal manifest",
+          "auto-stash, reset, merge or reuse of conflicting branches",
+          "push/PR/merge/deploy without explicit user authority"
+        ]
+      },
+      "independence": { "isolation": "shared", "barrier": false }
+    }
+  ]
+}

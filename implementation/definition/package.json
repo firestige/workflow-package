@@ -1,0 +1,854 @@
+{
+  "kind": "agentops.package",
+  "schemaVersion": "agentops.workflow-dsl@0.1.0",
+  "package": {
+    "name": "implementation-workflow",
+    "version": "0.3.0",
+    "purpose": "Turns one exact frozen, implementation-authorizing design into a tested, independently reviewed feature-branch candidate via Goal Graph, Test Ladder and evolutionary TDD; machine-readable Definition per agentops.workflow-dsl@0.1.0.",
+    "status": "DRAFT",
+    "admissibility": "DESIGN_REFERENCE",
+    "ownership": {
+      "owner": "repository owner",
+      "authoritySource": "team-config configuration authority"
+    },
+    "definition": {
+      "name": "implementation-workflow",
+      "version": "0.3.0",
+      "contentIdentity": "sha256:388c8678ba7e8b8f541fa604f1150437784367ad0c64955218f020f30a4b8e18"
+    }
+  },
+  "documents": {
+    "workflow": "workflow.json",
+    "actions": "actions.json",
+    "roles": "roles.json",
+    "routes": "routes.json",
+    "artifacts": "artifacts.json",
+    "validation": "validation.json"
+  },
+  "resources": {
+    "owned": [
+      {
+        "id": "doc.readme",
+        "kind": "documentation",
+        "owner": "owned",
+        "path": "../README.md",
+        "contentIdentity": "sha256:9aebfbe384cf3f60f39278149897be8cd8805f6c63eb60ebe18346d96e05dcef",
+        "use": "documentation resource at README.md"
+      },
+      {
+        "id": "doc.routes",
+        "kind": "documentation",
+        "owner": "owned",
+        "path": "../agents/routes.md",
+        "contentIdentity": "sha256:1164503996d34928d476ded97857ac5a6acb7e9a11d53adf77c459e0e06657b3",
+        "use": "documentation resource at agents/routes.md"
+      },
+      {
+        "id": "doc.artifact-lifecycle",
+        "kind": "documentation",
+        "owner": "owned",
+        "path": "../artifact-lifecycle.md",
+        "contentIdentity": "sha256:890ca34e1d05e7b0e541e25b22b2966277658e3107c9da397a5ea88adf3d282d",
+        "use": "documentation resource at artifact-lifecycle.md"
+      },
+      {
+        "id": "cli.readme",
+        "kind": "cli",
+        "owner": "owned",
+        "path": "../cli/README.md",
+        "contentIdentity": "sha256:eab3a50f40daf09801db193d2bb3e9ce367d43075bb567087d941ccae09c1fc7",
+        "use": "cli resource at cli/README.md"
+      },
+      {
+        "id": "cli.implementation-custodian",
+        "kind": "cli",
+        "owner": "owned",
+        "path": "../cli/bin/implementation-custodian.mjs",
+        "contentIdentity": "sha256:3d72ee5611a3af70779a8a2bfb7b583cc414c82a02034abd64712c237ccafc1c",
+        "use": "cli resource at cli/bin/implementation-custodian.mjs"
+      },
+      {
+        "id": "cli.implementation-preflight",
+        "kind": "cli",
+        "owner": "owned",
+        "path": "../cli/bin/implementation-preflight.mjs",
+        "contentIdentity": "sha256:ecde7d8339c7d74da42dae49aa18b90a07db28f9bb5d7a5afd81fa4628f8c556",
+        "use": "cli resource at cli/bin/implementation-preflight.mjs"
+      },
+      {
+        "id": "cli.implementation-test",
+        "kind": "cli",
+        "owner": "owned",
+        "path": "../cli/bin/implementation-test.mjs",
+        "contentIdentity": "sha256:983118f89bf031e1c0fad6962db1a26b34d01a6556feb9e3f5a69f0e2905e613",
+        "use": "cli resource at cli/bin/implementation-test.mjs"
+      },
+      {
+        "id": "cli.implementation-writer",
+        "kind": "cli",
+        "owner": "owned",
+        "path": "../cli/bin/implementation-writer.mjs",
+        "contentIdentity": "sha256:490ef39ea8d0d1e8b9aaf26fe8fb7eebe7156eff440a7da8fbe0ba03ae34a1bc",
+        "use": "cli resource at cli/bin/implementation-writer.mjs"
+      },
+      {
+        "id": "cli.lib.core",
+        "kind": "cli",
+        "owner": "owned",
+        "path": "../cli/lib/core.mjs",
+        "contentIdentity": "sha256:34cd7cbddd82503a748e993e4b853e864434cb57b80209c4c2b63977dc0e6824",
+        "use": "cli resource at cli/lib/core.mjs"
+      },
+      {
+        "id": "cli.package",
+        "kind": "cli",
+        "owner": "owned",
+        "path": "../cli/package.json",
+        "contentIdentity": "sha256:12ac153094b0ddd56dd218569ed372f53617586736e9690ccd9ba9b43450f956",
+        "use": "cli resource at cli/package.json"
+      },
+      {
+        "id": "cli.tests.conformance.test",
+        "kind": "cli",
+        "owner": "owned",
+        "path": "../cli/tests/conformance.test.mjs",
+        "contentIdentity": "sha256:23fecb7eb8e3a4ea70f66088ea416c32a1913392dac43947a30f58e28f06c04c",
+        "use": "cli resource at cli/tests/conformance.test.mjs"
+      },
+      {
+        "id": "cli.tests.custodian.test",
+        "kind": "cli",
+        "owner": "owned",
+        "path": "../cli/tests/custodian.test.mjs",
+        "contentIdentity": "sha256:18a1a7194c28746d0963d0e2b94b4849b0c2fd7cf018d75274933a06bb42d2f7",
+        "use": "cli resource at cli/tests/custodian.test.mjs"
+      },
+      {
+        "id": "cli.tests.harness.test",
+        "kind": "cli",
+        "owner": "owned",
+        "path": "../cli/tests/harness.test.mjs",
+        "contentIdentity": "sha256:9d823db37c5a2de02b53d8feb0014df4238b130d04b8ace1a6b56f880af31644",
+        "use": "cli resource at cli/tests/harness.test.mjs"
+      },
+      {
+        "id": "cli.tests.helpers",
+        "kind": "cli",
+        "owner": "owned",
+        "path": "../cli/tests/helpers.mjs",
+        "contentIdentity": "sha256:9453334cde5333b7c5b0d812131689f32d0d3c34fb09fffd1d01c4b28f69d324",
+        "use": "cli resource at cli/tests/helpers.mjs"
+      },
+      {
+        "id": "cli.tests.preflight.test",
+        "kind": "cli",
+        "owner": "owned",
+        "path": "../cli/tests/preflight.test.mjs",
+        "contentIdentity": "sha256:072c1409facfb33e3fada73780b8b93eec39fd53d10ca8212c20f20bc1f49f5f",
+        "use": "cli resource at cli/tests/preflight.test.mjs"
+      },
+      {
+        "id": "cli.tests.writer-policy.test",
+        "kind": "cli",
+        "owner": "owned",
+        "path": "../cli/tests/writer-policy.test.mjs",
+        "contentIdentity": "sha256:98a727a800edd3143c78239b461f8d266be71aab41c6ba174ab0e03b567429a2",
+        "use": "cli resource at cli/tests/writer-policy.test.mjs"
+      },
+      {
+        "id": "doc.composition-conformance",
+        "kind": "documentation",
+        "owner": "owned",
+        "path": "../composition-conformance.md",
+        "contentIdentity": "sha256:7be1789b3cbe7cf0ae89faa10d3dc28939ea8e72a8021a8a8f1db1bcc893dd71",
+        "use": "documentation resource at composition-conformance.md"
+      },
+      {
+        "id": "conformance.negative",
+        "kind": "conformance",
+        "owner": "owned",
+        "path": "../conformance/negative/README.md",
+        "contentIdentity": "sha256:f2a04caace10cb35b1091d9378823a8e1d1b3e5c8e968c630435478cab55da44",
+        "use": "conformance resource at conformance/negative/README.md"
+      },
+      {
+        "id": "conformance.positive",
+        "kind": "conformance",
+        "owner": "owned",
+        "path": "../conformance/positive/README.md",
+        "contentIdentity": "sha256:17fd695cc36d534df9f77f54dfa6fa7099add5d6296895e0545cda73c8c7a03a",
+        "use": "conformance resource at conformance/positive/README.md"
+      },
+      {
+        "id": "conformance.recovery",
+        "kind": "conformance",
+        "owner": "owned",
+        "path": "../conformance/recovery/README.md",
+        "contentIdentity": "sha256:432d22d7b9dbf29897355633de701011fcafdf0df93f408e7e2f9da7f0836421",
+        "use": "conformance resource at conformance/recovery/README.md"
+      },
+      {
+        "id": "doc.execution-guide",
+        "kind": "documentation",
+        "owner": "owned",
+        "path": "../execution-guide.md",
+        "contentIdentity": "sha256:ac0c4d7974aa047ed4257f9809608f402eef8173b284e2b13b3dbd930caf8c3f",
+        "use": "documentation resource at execution-guide.md"
+      },
+      {
+        "id": "prompt.adaptive-grilling",
+        "kind": "action-prompt",
+        "owner": "owned",
+        "path": "../prompts/actions/adaptive-grilling.prompt.md",
+        "contentIdentity": "sha256:05f7c7a4558e3441db18846ec4dcdfda22155488a630cf34543a08e9b3aa3aac",
+        "use": "action-prompt resource at prompts/actions/adaptive-grilling.prompt.md"
+      },
+      {
+        "id": "prompt.aggregate-findings",
+        "kind": "action-prompt",
+        "owner": "owned",
+        "path": "../prompts/actions/aggregate-findings.prompt.md",
+        "contentIdentity": "sha256:c96bebb8fa2290321da3540960bbb2821acdfb7451c2a1507014f9327c19a5cc",
+        "use": "action-prompt resource at prompts/actions/aggregate-findings.prompt.md"
+      },
+      {
+        "id": "prompt.black-box-goal-review",
+        "kind": "action-prompt",
+        "owner": "owned",
+        "path": "../prompts/actions/black-box-goal-review.prompt.md",
+        "contentIdentity": "sha256:323bcb2b3d4b994c2cb08fdeb52f9081f1b80305169e05acfa0f8d0c234f8133",
+        "use": "action-prompt resource at prompts/actions/black-box-goal-review.prompt.md"
+      },
+      {
+        "id": "prompt.close-structural-coverage",
+        "kind": "action-prompt",
+        "owner": "owned",
+        "path": "../prompts/actions/close-structural-coverage.prompt.md",
+        "contentIdentity": "sha256:1e30eb1b2806327f8523a574e069029e2bc358787b41496e32a38989c46b42f8",
+        "use": "action-prompt resource at prompts/actions/close-structural-coverage.prompt.md"
+      },
+      {
+        "id": "prompt.confirm-goal-graph",
+        "kind": "action-prompt",
+        "owner": "owned",
+        "path": "../prompts/actions/confirm-goal-graph.prompt.md",
+        "contentIdentity": "sha256:12509b37b26d851668bb47ebe43fa5cf30effc95436c7832834fd633982bdc5e",
+        "use": "action-prompt resource at prompts/actions/confirm-goal-graph.prompt.md"
+      },
+      {
+        "id": "prompt.custody-gate",
+        "kind": "action-prompt",
+        "owner": "owned",
+        "path": "../prompts/actions/custody-gate.prompt.md",
+        "contentIdentity": "sha256:deb9426fa29c1341c1d44549733aad8b548f4599198c486e9291608843b6eeb0",
+        "use": "action-prompt resource at prompts/actions/custody-gate.prompt.md"
+      },
+      {
+        "id": "prompt.evidence-research",
+        "kind": "action-prompt",
+        "owner": "owned",
+        "path": "../prompts/actions/evidence-research.prompt.md",
+        "contentIdentity": "sha256:bd250306c94c294049c1ca8831e8bfe77a251753f9e1578d22acfe944cb410b0",
+        "use": "action-prompt resource at prompts/actions/evidence-research.prompt.md"
+      },
+      {
+        "id": "prompt.evolve-prototype",
+        "kind": "action-prompt",
+        "owner": "owned",
+        "path": "../prompts/actions/evolve-prototype.prompt.md",
+        "contentIdentity": "sha256:407628332155a6919c39ce36b057bde579dd9326a0f12031fd31438abbc38bb7",
+        "use": "action-prompt resource at prompts/actions/evolve-prototype.prompt.md"
+      },
+      {
+        "id": "prompt.external-coordination",
+        "kind": "action-prompt",
+        "owner": "owned",
+        "path": "../prompts/actions/external-coordination.prompt.md",
+        "contentIdentity": "sha256:ddfb745cc0b494915ef23dc7c8f89dc86b4f186e0efb0ed0a9e74de9cab00efe",
+        "use": "action-prompt resource at prompts/actions/external-coordination.prompt.md"
+      },
+      {
+        "id": "prompt.implementation-resolution",
+        "kind": "action-prompt",
+        "owner": "owned",
+        "path": "../prompts/actions/implementation-resolution.prompt.md",
+        "contentIdentity": "sha256:d1c6977837b2c364cfbbd0a063429487ea5c6896b0704579d485c83e1c04c464",
+        "use": "action-prompt resource at prompts/actions/implementation-resolution.prompt.md"
+      },
+      {
+        "id": "prompt.intake-and-authority",
+        "kind": "action-prompt",
+        "owner": "owned",
+        "path": "../prompts/actions/intake-and-authority.prompt.md",
+        "contentIdentity": "sha256:ef367637b0336ff026d415d8f9a483dee31d92f28cbe939bf0aa863dbba7c028",
+        "use": "action-prompt resource at prompts/actions/intake-and-authority.prompt.md"
+      },
+      {
+        "id": "prompt.materialize-tests",
+        "kind": "action-prompt",
+        "owner": "owned",
+        "path": "../prompts/actions/materialize-tests.prompt.md",
+        "contentIdentity": "sha256:b5f44b47a607b8e46e5c497484043875ecd1b0af79a4de82f89bd0a79708abd6",
+        "use": "action-prompt resource at prompts/actions/materialize-tests.prompt.md"
+      },
+      {
+        "id": "prompt.preflight",
+        "kind": "action-prompt",
+        "owner": "owned",
+        "path": "../prompts/actions/preflight.prompt.md",
+        "contentIdentity": "sha256:1ecaaf97ed58accb39f99b99c81980375d95706fca27443a38401758d920ed6b",
+        "use": "action-prompt resource at prompts/actions/preflight.prompt.md"
+      },
+      {
+        "id": "prompt.recheck-finding",
+        "kind": "action-prompt",
+        "owner": "owned",
+        "path": "../prompts/actions/recheck-finding.prompt.md",
+        "contentIdentity": "sha256:f6addb335d0cacd51d6114f6ed02572bad0255a21bb473a93b25e7f537939b02",
+        "use": "action-prompt resource at prompts/actions/recheck-finding.prompt.md"
+      },
+      {
+        "id": "prompt.refactor-and-harden",
+        "kind": "action-prompt",
+        "owner": "owned",
+        "path": "../prompts/actions/refactor-and-harden.prompt.md",
+        "contentIdentity": "sha256:d04f673d28f274188b8e8d47fdd3108fbee5364e47b56e9a7b91b96cd2c09e5d",
+        "use": "action-prompt resource at prompts/actions/refactor-and-harden.prompt.md"
+      },
+      {
+        "id": "prompt.test-side-resolution",
+        "kind": "action-prompt",
+        "owner": "owned",
+        "path": "../prompts/actions/test-side-resolution.prompt.md",
+        "contentIdentity": "sha256:89c6acac31807214bb6e5fa7c3c0ab7557eb0d8f988b84d16d5fc1aa40c68427",
+        "use": "action-prompt resource at prompts/actions/test-side-resolution.prompt.md"
+      },
+      {
+        "id": "prompt.validate-implementation-feasibility",
+        "kind": "action-prompt",
+        "owner": "owned",
+        "path": "../prompts/actions/validate-implementation-feasibility.prompt.md",
+        "contentIdentity": "sha256:3e0f67f7c9c9b0f50fc085ac79e7526c4228891297f1b36247857db9c524abe9",
+        "use": "action-prompt resource at prompts/actions/validate-implementation-feasibility.prompt.md"
+      },
+      {
+        "id": "prompt.white-box-implementation-review",
+        "kind": "action-prompt",
+        "owner": "owned",
+        "path": "../prompts/actions/white-box-implementation-review.prompt.md",
+        "contentIdentity": "sha256:dd81695e7117bb6805caf6a522d5ef8933729ded1fe0b0d08f5477222c69cb09",
+        "use": "action-prompt resource at prompts/actions/white-box-implementation-review.prompt.md"
+      },
+      {
+        "id": "prompt.whole-scope-review",
+        "kind": "action-prompt",
+        "owner": "owned",
+        "path": "../prompts/actions/whole-scope-review.prompt.md",
+        "contentIdentity": "sha256:64038fe1d7cf65764523c20c39586c1b542bcc5bf50f76047b2de0eb71803e57",
+        "use": "action-prompt resource at prompts/actions/whole-scope-review.prompt.md"
+      },
+      {
+        "id": "role.prompt.delivery-custodian",
+        "kind": "role-prompt",
+        "owner": "owned",
+        "path": "../roles/delivery-custodian.role.md",
+        "contentIdentity": "sha256:55bfed26092d98d4bb91a2f31b27e0c3544271be057d5af03ffbd383e54d49e4",
+        "use": "role-prompt resource at roles/delivery-custodian.role.md"
+      },
+      {
+        "id": "role.prompt.evidence-scout",
+        "kind": "role-prompt",
+        "owner": "owned",
+        "path": "../roles/evidence-scout.role.md",
+        "contentIdentity": "sha256:f6c262d649a0a6c91c3ff0cced636e4576b7602057588999ba17e529117d93ef",
+        "use": "role-prompt resource at roles/evidence-scout.role.md"
+      },
+      {
+        "id": "role.prompt.finding-aggregator",
+        "kind": "role-prompt",
+        "owner": "owned",
+        "path": "../roles/finding-aggregator.role.md",
+        "contentIdentity": "sha256:0d3a4d7ee0a7686dfb53a6e78cc2825475f506877b5f354d60e604808cbc9ad2",
+        "use": "role-prompt resource at roles/finding-aggregator.role.md"
+      },
+      {
+        "id": "role.prompt.goal-adversary",
+        "kind": "role-prompt",
+        "owner": "owned",
+        "path": "../roles/goal-adversary.role.md",
+        "contentIdentity": "sha256:eb8f5945b1c25a4ad88450c08045dd58aac12e17c621789d9d49731f0e898aeb",
+        "use": "role-prompt resource at roles/goal-adversary.role.md"
+      },
+      {
+        "id": "role.prompt.goal-facilitator",
+        "kind": "role-prompt",
+        "owner": "owned",
+        "path": "../roles/goal-facilitator.role.md",
+        "contentIdentity": "sha256:26a8f1a53d1311f25160117d22a24f9a6f5304ccdde7a9a0c991d4ced7268eef",
+        "use": "role-prompt resource at roles/goal-facilitator.role.md"
+      },
+      {
+        "id": "role.prompt.implementation-feasibility-validator",
+        "kind": "role-prompt",
+        "owner": "owned",
+        "path": "../roles/implementation-feasibility-validator.role.md",
+        "contentIdentity": "sha256:7062ec6dac99bd5c52cb3fed18a53768c732ed7a0d04ba5c62e8ca9cfe94b0a4",
+        "use": "role-prompt resource at roles/implementation-feasibility-validator.role.md"
+      },
+      {
+        "id": "role.prompt.implementation-reviewer",
+        "kind": "role-prompt",
+        "owner": "owned",
+        "path": "../roles/implementation-reviewer.role.md",
+        "contentIdentity": "sha256:809833877cd6b62b7788da2dabb61ff717826e541a73cd3c7099c3bf7b04addd",
+        "use": "role-prompt resource at roles/implementation-reviewer.role.md"
+      },
+      {
+        "id": "role.prompt.implementer",
+        "kind": "role-prompt",
+        "owner": "owned",
+        "path": "../roles/implementer.role.md",
+        "contentIdentity": "sha256:4a3c22ec6b16e4e11c8a19bbb1cb6ecd0d6edfcb3673c204d55ae0d974e2e7de",
+        "use": "role-prompt resource at roles/implementer.role.md"
+      },
+      {
+        "id": "role.prompt.test-designer",
+        "kind": "role-prompt",
+        "owner": "owned",
+        "path": "../roles/test-designer.role.md",
+        "contentIdentity": "sha256:aea09b73573ab5e06d7b97f9e9487f8ceb6c6d0f508d9e9e03e8dead3c1995f8",
+        "use": "role-prompt resource at roles/test-designer.role.md"
+      },
+      {
+        "id": "schema.readme",
+        "kind": "schema",
+        "owner": "owned",
+        "path": "../schemas/README.md",
+        "contentIdentity": "sha256:e2dc1e29987007b03c18df91e2b28f4fc90f54ee8b929eea1b2143a1a2cb550a",
+        "use": "schema resource at schemas/README.md"
+      },
+      {
+        "id": "schema.action-result",
+        "kind": "schema",
+        "owner": "owned",
+        "path": "../schemas/action-result.schema.md",
+        "contentIdentity": "sha256:d1e220a24a2a6cbeb5f73822290651bfa9d08eb8305838a4cbfdaecf71b69dc1",
+        "use": "schema resource at schemas/action-result.schema.md"
+      },
+      {
+        "id": "schema.artifact-dependency",
+        "kind": "schema",
+        "owner": "owned",
+        "path": "../schemas/artifact-dependency.schema.md",
+        "contentIdentity": "sha256:fa4fd9613337b59a4c1b26e40f16779874241daf31e1c34b4a4100484a91505c",
+        "use": "schema resource at schemas/artifact-dependency.schema.md"
+      },
+      {
+        "id": "schema.artifact-record",
+        "kind": "schema",
+        "owner": "owned",
+        "path": "../schemas/artifact-record.schema.md",
+        "contentIdentity": "sha256:ae09bc812d08a27c930ef66b64d839c315277f91563fe4c7fefd4ce0d43c705d",
+        "use": "schema resource at schemas/artifact-record.schema.md"
+      },
+      {
+        "id": "schema.candidate",
+        "kind": "schema",
+        "owner": "owned",
+        "path": "../schemas/candidate.schema.md",
+        "contentIdentity": "sha256:f318c44d4bc446caa54a2a904cdc9bf6a6df52feeef4d445f3a4b263af2bd420",
+        "use": "schema resource at schemas/candidate.schema.md"
+      },
+      {
+        "id": "schema.cli-result",
+        "kind": "schema",
+        "owner": "owned",
+        "path": "../schemas/cli-result.schema.md",
+        "contentIdentity": "sha256:cb85c70fc11bdac9fb39f27e50e6ab8c2c7c55baec7e9058d9fd7c4093c10466",
+        "use": "schema resource at schemas/cli-result.schema.md"
+      },
+      {
+        "id": "schema.external-obligation",
+        "kind": "schema",
+        "owner": "owned",
+        "path": "../schemas/external-obligation.schema.md",
+        "contentIdentity": "sha256:97b46435ea562255136640fb65bc33ee8ee364c79c53312ee5ef3e587fe1fdd7",
+        "use": "schema resource at schemas/external-obligation.schema.md"
+      },
+      {
+        "id": "schema.feasibility-evidence",
+        "kind": "schema",
+        "owner": "owned",
+        "path": "../schemas/feasibility-evidence.schema.md",
+        "contentIdentity": "sha256:582827ba068cb7d08055647b1b0eb98d8cfd2d5d5e3e9fb503a970f5c15941c0",
+        "use": "schema resource at schemas/feasibility-evidence.schema.md"
+      },
+      {
+        "id": "schema.goal",
+        "kind": "schema",
+        "owner": "owned",
+        "path": "../schemas/goal.schema.md",
+        "contentIdentity": "sha256:2a14ac53d148e506ab0ceeb0dc05ce30413f125454a93c99c411a92b4cb8b968",
+        "use": "schema resource at schemas/goal.schema.md"
+      },
+      {
+        "id": "schema.package-snapshot",
+        "kind": "schema",
+        "owner": "owned",
+        "path": "../schemas/package-snapshot.schema.md",
+        "contentIdentity": "sha256:39730681b5d236c7ebdb75a41e84e8902c7d298328e49512099073321fdb32b9",
+        "use": "schema resource at schemas/package-snapshot.schema.md"
+      },
+      {
+        "id": "schema.review-finding",
+        "kind": "schema",
+        "owner": "owned",
+        "path": "../schemas/review-finding.schema.md",
+        "contentIdentity": "sha256:153c216dc6479749e7080360e37bc5e054c4f120a3066eecddd81e068411b54f",
+        "use": "schema resource at schemas/review-finding.schema.md"
+      },
+      {
+        "id": "schema.run-workspace-manifest",
+        "kind": "schema",
+        "owner": "owned",
+        "path": "../schemas/run-workspace-manifest.schema.md",
+        "contentIdentity": "sha256:59f65777c871cc217e0e65f3ac30183a0f6e64e0ee2c3186be9c2a5092b08e5a",
+        "use": "schema resource at schemas/run-workspace-manifest.schema.md"
+      },
+      {
+        "id": "schema.test-evidence",
+        "kind": "schema",
+        "owner": "owned",
+        "path": "../schemas/test-evidence.schema.md",
+        "contentIdentity": "sha256:eaca66475128666b4a806ba3e796b65046814c4092cf20c1b0b4924e0808178c",
+        "use": "schema resource at schemas/test-evidence.schema.md"
+      },
+      {
+        "id": "schema.workflow-control",
+        "kind": "schema",
+        "owner": "owned",
+        "path": "../schemas/workflow-control.schema.md",
+        "contentIdentity": "sha256:275da4d4011a40d8a5d735f020d506eced22376c28662e109bff07b8a4e0c9ec",
+        "use": "schema resource at schemas/workflow-control.schema.md"
+      },
+      {
+        "id": "skill.acceptance-test-design",
+        "kind": "skill",
+        "owner": "owned",
+        "path": "../skills/acceptance-test-design/SKILL.md",
+        "contentIdentity": "sha256:b789ee8e1f15805a1340b27f43463d86b033aaf47f536780f98360a983ea9ca3",
+        "use": "skill resource at skills/acceptance-test-design/SKILL.md"
+      },
+      {
+        "id": "agent.definition.acceptance-test-design",
+        "kind": "agent-definition",
+        "owner": "owned",
+        "path": "../skills/acceptance-test-design/agents/openai.yaml",
+        "contentIdentity": "sha256:0175e23bbe6263093ea74f93e64caf9d695abd2258d5c779fff89e40a641940e",
+        "use": "agent-definition resource at skills/acceptance-test-design/agents/openai.yaml"
+      },
+      {
+        "id": "skill.black-box-goal-adversary",
+        "kind": "skill",
+        "owner": "owned",
+        "path": "../skills/black-box-goal-adversary/SKILL.md",
+        "contentIdentity": "sha256:254925e14ac96ea90239f3facf096401a6f01b2fa6098d8d2fd502eb667943f7",
+        "use": "skill resource at skills/black-box-goal-adversary/SKILL.md"
+      },
+      {
+        "id": "agent.definition.black-box-goal-adversary",
+        "kind": "agent-definition",
+        "owner": "owned",
+        "path": "../skills/black-box-goal-adversary/agents/openai.yaml",
+        "contentIdentity": "sha256:ba9673e3f39802e3dfbb8b2025a785b435555a6c79120a18f62ac838bcccf527",
+        "use": "agent-definition resource at skills/black-box-goal-adversary/agents/openai.yaml"
+      },
+      {
+        "id": "skill.evolutionary-tdd-implementation",
+        "kind": "skill",
+        "owner": "owned",
+        "path": "../skills/evolutionary-tdd-implementation/SKILL.md",
+        "contentIdentity": "sha256:2823cc8c36cba1c0131d7196a72cd272eabed2ac50a46a15e66458f43475beaf",
+        "use": "skill resource at skills/evolutionary-tdd-implementation/SKILL.md"
+      },
+      {
+        "id": "agent.definition.evolutionary-tdd-implementation",
+        "kind": "agent-definition",
+        "owner": "owned",
+        "path": "../skills/evolutionary-tdd-implementation/agents/openai.yaml",
+        "contentIdentity": "sha256:0a80d9f805113e67c06a1ca852ffdcf86b18bcb32d73cbfa4af3fd3da666a637",
+        "use": "agent-definition resource at skills/evolutionary-tdd-implementation/agents/openai.yaml"
+      },
+      {
+        "id": "skill.implementation-delivery-custody",
+        "kind": "skill",
+        "owner": "owned",
+        "path": "../skills/implementation-delivery-custody/SKILL.md",
+        "contentIdentity": "sha256:18498d6b06ea41bb509f6ab4617e07a565bb578288b5400add84fcd0561a9479",
+        "use": "skill resource at skills/implementation-delivery-custody/SKILL.md"
+      },
+      {
+        "id": "agent.definition.implementation-delivery-custody",
+        "kind": "agent-definition",
+        "owner": "owned",
+        "path": "../skills/implementation-delivery-custody/agents/openai.yaml",
+        "contentIdentity": "sha256:e8479e775778391ccc7e3e45c9f4b5b0955ec60a2f591fc1223dfa3c38eeab57",
+        "use": "agent-definition resource at skills/implementation-delivery-custody/agents/openai.yaml"
+      },
+      {
+        "id": "skill.implementation-feasibility-validation",
+        "kind": "skill",
+        "owner": "owned",
+        "path": "../skills/implementation-feasibility-validation/SKILL.md",
+        "contentIdentity": "sha256:a94acf050c547f4fc7b5164339b04d37bf7da72f3ebc7ba3b629e273075a8c3c",
+        "use": "skill resource at skills/implementation-feasibility-validation/SKILL.md"
+      },
+      {
+        "id": "skill.implementation-goal-classification",
+        "kind": "skill",
+        "owner": "owned",
+        "path": "../skills/implementation-goal-classification/SKILL.md",
+        "contentIdentity": "sha256:f4d980cd31c4420dee267c3fb2e3a8de7d3c339adf8a6e4bf19d9effbb1df514",
+        "use": "skill resource at skills/implementation-goal-classification/SKILL.md"
+      },
+      {
+        "id": "agent.definition.implementation-goal-classification",
+        "kind": "agent-definition",
+        "owner": "owned",
+        "path": "../skills/implementation-goal-classification/agents/openai.yaml",
+        "contentIdentity": "sha256:0a03e1e9002a80015fb0c3caf7daa30546f9764a4223617e49bc4dcd8f9c7568",
+        "use": "agent-definition resource at skills/implementation-goal-classification/agents/openai.yaml"
+      },
+      {
+        "id": "skill.structural-test-coverage",
+        "kind": "skill",
+        "owner": "owned",
+        "path": "../skills/structural-test-coverage/SKILL.md",
+        "contentIdentity": "sha256:db041a38e85586e3cef78949c2462f2b2d1d3aa2505639cee0d4099ae6933ea9",
+        "use": "skill resource at skills/structural-test-coverage/SKILL.md"
+      },
+      {
+        "id": "agent.definition.structural-test-coverage",
+        "kind": "agent-definition",
+        "owner": "owned",
+        "path": "../skills/structural-test-coverage/agents/openai.yaml",
+        "contentIdentity": "sha256:a185a481914b2fd931c6a447dd8803a491b463b64ceb0535cfa52eb6bc57bd77",
+        "use": "agent-definition resource at skills/structural-test-coverage/agents/openai.yaml"
+      },
+      {
+        "id": "skill.white-box-implementation-review",
+        "kind": "skill",
+        "owner": "owned",
+        "path": "../skills/white-box-implementation-review/SKILL.md",
+        "contentIdentity": "sha256:3a0538b7e634da7b399b40f81c9644b46c0450d5ce254810055eb65fcb7eb525",
+        "use": "skill resource at skills/white-box-implementation-review/SKILL.md"
+      },
+      {
+        "id": "agent.definition.white-box-implementation-review",
+        "kind": "agent-definition",
+        "owner": "owned",
+        "path": "../skills/white-box-implementation-review/agents/openai.yaml",
+        "contentIdentity": "sha256:c34c4d0b34b51be9ffd06194753cfb4387c8735b733623fac77bdf84de318df8",
+        "use": "agent-definition resource at skills/white-box-implementation-review/agents/openai.yaml"
+      },
+      {
+        "id": "template.candidate",
+        "kind": "template",
+        "owner": "owned",
+        "path": "../templates/candidate.template.json",
+        "contentIdentity": "sha256:d105cf997fbfea7b5c145753c9555295c83f78ca83d0cf798d54434852a2f220",
+        "use": "template resource at templates/candidate.template.json"
+      },
+      {
+        "id": "template.external-coordination-request",
+        "kind": "template",
+        "owner": "owned",
+        "path": "../templates/external-coordination-request.template.md",
+        "contentIdentity": "sha256:fd2e8542c867985f605fade7a0c1f54a5dcee010a9dbcc561a6cbb08641843e6",
+        "use": "template resource at templates/external-coordination-request.template.md"
+      },
+      {
+        "id": "template.external-obligation-register",
+        "kind": "template",
+        "owner": "owned",
+        "path": "../templates/external-obligation-register.template.md",
+        "contentIdentity": "sha256:f6ef512c2d783c374af5a25b44d2b9cf5223fe7d4a4efa9b6382086b4926c6e2",
+        "use": "template resource at templates/external-obligation-register.template.md"
+      },
+      {
+        "id": "template.final-candidate",
+        "kind": "template",
+        "owner": "owned",
+        "path": "../templates/final-candidate.template.md",
+        "contentIdentity": "sha256:fbf333994167d2ef22ce7dd198ca5a16d1d26f78ebc8a60d77d849f5c909ebdc",
+        "use": "template resource at templates/final-candidate.template.md"
+      },
+      {
+        "id": "template.goal-graph",
+        "kind": "template",
+        "owner": "owned",
+        "path": "../templates/goal-graph.template.md",
+        "contentIdentity": "sha256:f720fbd66871920424236dcf92022b31095c730b5326599ba40b0567a3b30621",
+        "use": "template resource at templates/goal-graph.template.md"
+      },
+      {
+        "id": "template.goal-packet",
+        "kind": "template",
+        "owner": "owned",
+        "path": "../templates/goal-packet.template.md",
+        "contentIdentity": "sha256:b02502aafb67978b144ca850e4b4adf41281f447110872f4f247df76a484ded2",
+        "use": "template resource at templates/goal-packet.template.md"
+      },
+      {
+        "id": "template.goal-paths",
+        "kind": "template",
+        "owner": "owned",
+        "path": "../templates/goal-paths.template.json",
+        "contentIdentity": "sha256:1f8ba1220df8d2c5536d845ab947b1cfe484a3b5bca9831e1e0d0924e0a3f75d",
+        "use": "template resource at templates/goal-paths.template.json"
+      },
+      {
+        "id": "template.harness-binding",
+        "kind": "template",
+        "owner": "owned",
+        "path": "../templates/harness-binding.template.json",
+        "contentIdentity": "sha256:9d92e8fc7c6160e038a7e92b10625cb91a2e76c8d1a250fba23354f1c5da9ce3",
+        "use": "template resource at templates/harness-binding.template.json"
+      },
+      {
+        "id": "template.package-snapshot",
+        "kind": "template",
+        "owner": "owned",
+        "path": "../templates/package-snapshot.template.json",
+        "contentIdentity": "sha256:48002429d3347c21c66278aebfe859db34cf0759173c2ff28f2ddac70a407b12",
+        "use": "template resource at templates/package-snapshot.template.json"
+      },
+      {
+        "id": "template.project-context-snapshot",
+        "kind": "template",
+        "owner": "owned",
+        "path": "../templates/project-context-snapshot.template.md",
+        "contentIdentity": "sha256:0a313896a80ad891f1d39d74d92b7c12ab57a49065e59b2cc5e4f62f3c798329",
+        "use": "template resource at templates/project-context-snapshot.template.md"
+      },
+      {
+        "id": "template.run-workspace-manifest",
+        "kind": "template",
+        "owner": "owned",
+        "path": "../templates/run-workspace-manifest.template.json",
+        "contentIdentity": "sha256:b611d067d6c7e04e58182e9657a36102f2432d9557a990b6dcf85b747b7d5f7d",
+        "use": "template resource at templates/run-workspace-manifest.template.json"
+      },
+      {
+        "id": "template.test-ladder",
+        "kind": "template",
+        "owner": "owned",
+        "path": "../templates/test-ladder.template.md",
+        "contentIdentity": "sha256:37dd3b680b38fb52c005444c7009632f788866cb146708c5a75b6385b2deaeb0",
+        "use": "template resource at templates/test-ladder.template.md"
+      },
+      {
+        "id": "template.writer-policy",
+        "kind": "template",
+        "owner": "owned",
+        "path": "../templates/writer-policy.template.json",
+        "contentIdentity": "sha256:f8a67c86d7fa2d045331937d6c851904e21e68942d5c6de31df55a5fc2a54ad5",
+        "use": "template resource at templates/writer-policy.template.json"
+      },
+      {
+        "id": "validator.docs",
+        "kind": "validator",
+        "owner": "owned",
+        "path": "../validators/README.md",
+        "contentIdentity": "sha256:c82073090254eb84c42c50741fc0ba1c523e83847cc96b96d59ef4b1d300ee7b",
+        "use": "validator resource at validators/README.md"
+      },
+      {
+        "id": "doc.workflow",
+        "kind": "documentation",
+        "owner": "owned",
+        "path": "../workflow.md",
+        "contentIdentity": "sha256:f5fdcebe75118b82cbdfe14d4e15aed4738a7cc01db0e33ddd042b8b1aab13fa",
+        "use": "documentation resource at workflow.md"
+      }
+    ],
+    "referenced": [
+      {
+        "id": "skill.grilling",
+        "kind": "skill",
+        "owner": "referenced",
+        "sourceLocator": {
+          "repository": "workflow-package",
+          "path": ".agents/skills/grilling/SKILL.md",
+          "ref": "main"
+        },
+        "contentIdentity": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "use": "shared single-question measurement grilling method; method-only, no control-flow authority; exact content identity resolved at Package Snapshot admission"
+      },
+      {
+        "id": "agent.definition.managed",
+        "kind": "agent-definition",
+        "owner": "referenced",
+        "sourceLocator": {
+          "repository": "agent-ops-ledger",
+          "path": "agents/managed-agent-definition.yaml"
+        },
+        "contentIdentity": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "use": "managed agent definition projected through the declared Driver; exact identity resolved at Package Snapshot admission (IMPLEMENTATION_REQUIRED in composition-conformance)"
+      },
+      {
+        "id": "model.managed",
+        "kind": "model",
+        "owner": "referenced",
+        "sourceLocator": {
+          "repository": "agent-ops-ledger",
+          "path": "bindings/managed-model.yaml"
+        },
+        "contentIdentity": "sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+        "use": "managed model binding with declared capability/cost class; exact identity resolved at Package Snapshot admission"
+      },
+      {
+        "id": "driver.managed-cli",
+        "kind": "driver",
+        "owner": "referenced",
+        "sourceLocator": {
+          "repository": "agent-ops-ledger",
+          "path": "bindings/managed-cli-driver.yaml"
+        },
+        "contentIdentity": "sha256:dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+        "use": "managed CLI Driver; projects the frozen route, never ambient defaults; exact identity resolved at Package Snapshot admission"
+      },
+      {
+        "id": "tool.repo-read",
+        "kind": "tool",
+        "owner": "referenced",
+        "sourceLocator": {
+          "repository": "agent-ops-ledger",
+          "path": "tools/repo-read.yaml"
+        },
+        "contentIdentity": "sha256:eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+        "use": "repository read tool for intake/research/feasibility routes; exact identity resolved at Package Snapshot admission"
+      }
+    ]
+  },
+  "authority": {
+    "order": [
+      "workflow_action",
+      "role_prompt",
+      "action_prompt",
+      "skill",
+      "artifact_user"
+    ],
+    "conflictMode": "fail-closed"
+  },
+  "environmentRequirements": [
+    "git with clean baseline",
+    "project-native build/test/coverage/static commands",
+    "package CLI (preflight/test/writer/custodian)",
+    "managed runtime with interrupt/resume, checkpoint correlation and terminal settlement"
+  ],
+  "compatibility": {
+    "minContractVersion": "0.1.0",
+    "maxContractVersion": "0.1.0"
+  }
+}

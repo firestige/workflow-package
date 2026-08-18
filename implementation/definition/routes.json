@@ -1,0 +1,222 @@
+{
+  "kind": "agentops.routes",
+  "schemaVersion": "agentops.workflow-dsl@0.1.0",
+  "routes": [
+    {
+      "id": "route.goal.facilitator",
+      "role": "role.goal-facilitator",
+      "agent": { "definition": { "id": "agent.definition.managed" }, "managedProjection": "required" },
+      "resources": {
+        "rolePrompt": { "id": "role.prompt.goal-facilitator" },
+        "actionPrompts": [
+          { "action": "action.IM-01", "prompt": { "id": "prompt.intake-and-authority" } },
+          { "action": "action.IM-03", "prompt": { "id": "prompt.adaptive-grilling" } },
+          { "action": "action.IM-04", "prompt": { "id": "prompt.confirm-goal-graph" } }
+        ],
+        "skills": [{ "id": "skill.grilling" }, { "id": "skill.implementation-goal-classification" }],
+        "model": { "id": "model.managed" },
+        "tools": [{ "id": "tool.repo-read" }],
+        "driver": { "id": "driver.managed-cli" },
+        "sessionPolicy": { "freshness": "fresh-per-episode", "isolation": "shared" }
+      },
+      "access": [
+        { "target": "repository and frozen design", "mode": "read" },
+        { "target": "ignored run-workspace Goal artifacts", "mode": "write" }
+      ],
+      "escalationAllowed": false
+    },
+    {
+      "id": "route.evidence.scout",
+      "role": "role.evidence-scout",
+      "agent": { "definition": { "id": "agent.definition.managed" }, "managedProjection": "required" },
+      "resources": {
+        "rolePrompt": { "id": "role.prompt.evidence-scout" },
+        "actionPrompts": [{ "action": "action.IM-01R", "prompt": { "id": "prompt.evidence-research" } }],
+        "skills": [],
+        "model": { "id": "model.managed" },
+        "tools": [{ "id": "tool.repo-read" }],
+        "driver": { "id": "driver.managed-cli" },
+        "sessionPolicy": { "freshness": "fresh-per-episode", "isolation": "shared" }
+      },
+      "access": [{ "target": "admitted sources", "mode": "read" }],
+      "escalationAllowed": false
+    },
+    {
+      "id": "route.feasibility.validator",
+      "role": "role.implementation-feasibility-validator",
+      "agent": { "definition": { "id": "agent.definition.managed" }, "managedProjection": "required" },
+      "resources": {
+        "rolePrompt": { "id": "role.prompt.implementation-feasibility-validator" },
+        "actionPrompts": [{ "action": "action.IM-02V", "prompt": { "id": "prompt.validate-implementation-feasibility" } }],
+        "skills": [{ "id": "skill.implementation-feasibility-validation" }],
+        "model": { "id": "model.managed" },
+        "tools": [{ "id": "tool.repo-read" }],
+        "driver": { "id": "driver.managed-cli" },
+        "sessionPolicy": { "freshness": "fresh-per-episode", "isolation": "shared" }
+      },
+      "access": [
+        { "target": "authoritative sources", "mode": "read" },
+        { "target": "exact Harness feasibility command", "mode": "execute" },
+        { "target": "ignored run-workspace probe/evidence", "mode": "write" }
+      ],
+      "escalationAllowed": false
+    },
+    {
+      "id": "route.test.designer.blackbox",
+      "role": "role.test-designer",
+      "agent": { "definition": { "id": "agent.definition.managed" }, "managedProjection": "required" },
+      "resources": {
+        "rolePrompt": { "id": "role.prompt.test-designer" },
+        "actionPrompts": [
+          { "action": "action.IM-07", "prompt": { "id": "prompt.materialize-tests" } },
+          { "action": "action.IM-14T", "prompt": { "id": "prompt.test-side-resolution" } }
+        ],
+        "skills": [{ "id": "skill.acceptance-test-design" }],
+        "model": { "id": "model.managed" },
+        "tools": [],
+        "driver": { "id": "driver.managed-cli" },
+        "sessionPolicy": { "freshness": "fresh-per-episode", "isolation": "isolated" }
+      },
+      "access": [
+        { "target": "Goal/Contract/design", "mode": "read" },
+        { "target": "formal tests and fixtures", "mode": "write" }
+      ],
+      "escalationAllowed": false
+    },
+    {
+      "id": "route.test.designer.structural",
+      "role": "role.test-designer",
+      "agent": { "definition": { "id": "agent.definition.managed" }, "managedProjection": "required" },
+      "resources": {
+        "rolePrompt": { "id": "role.prompt.test-designer" },
+        "actionPrompts": [
+          { "action": "action.IM-09", "prompt": { "id": "prompt.close-structural-coverage" } },
+          { "action": "action.IM-14T", "prompt": { "id": "prompt.test-side-resolution" } }
+        ],
+        "skills": [{ "id": "skill.structural-test-coverage" }],
+        "model": { "id": "model.managed" },
+        "tools": [],
+        "driver": { "id": "driver.managed-cli" },
+        "sessionPolicy": { "freshness": "fresh-per-episode", "isolation": "isolated" }
+      },
+      "access": [
+        { "target": "code and coverage data", "mode": "read" },
+        { "target": "formal tests and fixtures", "mode": "write" }
+      ],
+      "escalationAllowed": false
+    },
+    {
+      "id": "route.implementation.standard",
+      "role": "role.implementer",
+      "agent": { "definition": { "id": "agent.definition.managed" }, "managedProjection": "required" },
+      "resources": {
+        "rolePrompt": { "id": "role.prompt.implementer" },
+        "actionPrompts": [
+          { "action": "action.IM-08", "prompt": { "id": "prompt.evolve-prototype" } },
+          { "action": "action.IM-10", "prompt": { "id": "prompt.refactor-and-harden" } },
+          { "action": "action.IM-14I", "prompt": { "id": "prompt.implementation-resolution" } }
+        ],
+        "skills": [{ "id": "skill.evolutionary-tdd-implementation" }],
+        "model": { "id": "model.managed" },
+        "tools": [],
+        "driver": { "id": "driver.managed-cli" },
+        "sessionPolicy": { "freshness": "continuous-within-goal", "isolation": "shared" }
+      },
+      "access": [
+        { "target": "production paths", "mode": "write" },
+        { "target": "formal tests and configuration (read-only; never written by Implementer)", "mode": "read" }
+      ],
+      "escalationAllowed": false
+    },
+    {
+      "id": "route.review.goal-blackbox",
+      "role": "role.goal-adversary",
+      "agent": { "definition": { "id": "agent.definition.managed" }, "managedProjection": "required" },
+      "resources": {
+        "rolePrompt": { "id": "role.prompt.goal-adversary" },
+        "actionPrompts": [
+          { "action": "action.IM-12", "prompt": { "id": "prompt.black-box-goal-review" } },
+          { "action": "action.IM-15", "prompt": { "id": "prompt.recheck-finding" } },
+          { "action": "action.IM-17", "prompt": { "id": "prompt.whole-scope-review" } }
+        ],
+        "skills": [{ "id": "skill.black-box-goal-adversary" }],
+        "model": { "id": "model.managed" },
+        "tools": [],
+        "driver": { "id": "driver.managed-cli" },
+        "sessionPolicy": { "freshness": "fresh-per-episode", "isolation": "isolated" }
+      },
+      "access": [
+        { "target": "Goal/Contract/test", "mode": "read" },
+        { "target": "finding artifacts", "mode": "write" }
+      ],
+      "escalationAllowed": false
+    },
+    {
+      "id": "route.review.implementation-whitebox",
+      "role": "role.implementation-reviewer",
+      "agent": { "definition": { "id": "agent.definition.managed" }, "managedProjection": "required" },
+      "resources": {
+        "rolePrompt": { "id": "role.prompt.implementation-reviewer" },
+        "actionPrompts": [
+          { "action": "action.IM-12", "prompt": { "id": "prompt.white-box-implementation-review" } },
+          { "action": "action.IM-15", "prompt": { "id": "prompt.recheck-finding" } },
+          { "action": "action.IM-17", "prompt": { "id": "prompt.whole-scope-review" } }
+        ],
+        "skills": [{ "id": "skill.white-box-implementation-review" }],
+        "model": { "id": "model.managed" },
+        "tools": [],
+        "driver": { "id": "driver.managed-cli" },
+        "sessionPolicy": { "freshness": "fresh-per-episode", "isolation": "isolated" }
+      },
+      "access": [
+        { "target": "candidate, diff and coverage", "mode": "read" },
+        { "target": "finding artifacts", "mode": "write" }
+      ],
+      "escalationAllowed": false
+    },
+    {
+      "id": "route.finding.aggregate",
+      "role": "role.finding-aggregator",
+      "agent": { "definition": { "id": "agent.definition.managed" }, "managedProjection": "required" },
+      "resources": {
+        "rolePrompt": { "id": "role.prompt.finding-aggregator" },
+        "actionPrompts": [{ "action": "action.IM-13", "prompt": { "id": "prompt.aggregate-findings" } }],
+        "skills": [],
+        "model": { "id": "model.managed" },
+        "tools": [],
+        "driver": { "id": "driver.managed-cli" },
+        "sessionPolicy": { "freshness": "fresh-per-episode", "isolation": "shared" }
+      },
+      "access": [
+        { "target": "review artifacts", "mode": "read" },
+        { "target": "aggregation artifacts", "mode": "write" }
+      ],
+      "escalationAllowed": false
+    },
+    {
+      "id": "route.delivery.custodian",
+      "role": "role.delivery-custodian",
+      "agent": { "definition": { "id": "agent.definition.managed" }, "managedProjection": "required" },
+      "resources": {
+        "rolePrompt": { "id": "role.prompt.delivery-custodian" },
+        "actionPrompts": [
+          { "action": "action.IM-02", "prompt": { "id": "prompt.preflight" } },
+          { "action": "action.IM-05", "prompt": { "id": "prompt.custody-gate" } },
+          { "action": "action.IM-11", "prompt": { "id": "prompt.custody-gate" } },
+          { "action": "action.IM-16", "prompt": { "id": "prompt.custody-gate" } },
+          { "action": "action.IM-17", "prompt": { "id": "prompt.custody-gate" } },
+          { "action": "action.IM-18", "prompt": { "id": "prompt.custody-gate" } }
+        ],
+        "skills": [{ "id": "skill.implementation-delivery-custody" }],
+        "model": { "id": "model.managed" },
+        "tools": [],
+        "driver": { "id": "driver.managed-cli" },
+        "sessionPolicy": { "freshness": "fresh-per-episode", "isolation": "shared" }
+      },
+      "access": [
+        { "target": "declared package CLI", "mode": "execute" }
+      ],
+      "escalationAllowed": false
+    }
+  ]
+}

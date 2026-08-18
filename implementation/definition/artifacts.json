@@ -1,0 +1,248 @@
+{
+  "kind": "agentops.artifacts",
+  "schemaVersion": "agentops.workflow-dsl@0.1.0",
+  "artifacts": [
+    {
+      "id": "artifact.obligation-register",
+      "name": "Obligation Register",
+      "kind": "intermediate",
+      "template": { "reference": { "id": "template.external-obligation-register" } },
+      "sections": [
+        {
+          "topic": "Obligation classification",
+          "questions": ["Which class (CONTRACT_PREREQUISITE / IMPLEMENTATION_FEASIBILITY / IMPLEMENTATION_VERIFICATION / OPERATIONAL_TUNING) preserves the upstream semantic dependency and reopen condition?"],
+          "completionCondition": "Every upstream obligation has exactly one classification with owner, blocks, evidence, and return location.",
+          "naRule": "N/A only when no upstream obligation exists."
+        }
+      ],
+      "lifecycle": { "states": ["WORKING", "FROZEN", "SUPERSEDED"], "storageKind": "RUN_WORKSPACE", "retentionClass": "DELIVERY_RECOVERABLE" },
+      "dependencyValidity": "CURRENT",
+      "producedBy": "action.IM-01",
+      "consumedBy": ["action.IM-02", "action.IM-03", "action.IM-06"]
+    },
+    {
+      "id": "artifact.project-context-snapshot",
+      "name": "Project Context Snapshot",
+      "kind": "intermediate",
+      "template": { "reference": { "id": "template.project-context-snapshot" } },
+      "sections": [
+        {
+          "topic": "Applicability scope",
+          "questions": ["Which context, scope, non-goals, trust assumptions, qualities, accepted risks and rejected mechanisms apply to Goal test/review proposals?"],
+          "completionCondition": "Locked for the Delivery; generic best practice cannot expand the frozen target.",
+          "naRule": "Not applicable only when the design declares no context."
+        }
+      ],
+      "lifecycle": { "states": ["WORKING", "FROZEN", "SUPERSEDED"], "storageKind": "RUN_WORKSPACE", "retentionClass": "DELIVERY_RECOVERABLE" },
+      "dependencyValidity": "CURRENT",
+      "producedBy": "action.IM-03",
+      "consumedBy": ["action.IM-04", "action.IM-12", "action.IM-17"]
+    },
+    {
+      "id": "artifact.goal-graph",
+      "name": "Frozen Goal Graph",
+      "kind": "intermediate",
+      "template": { "reference": { "id": "template.goal-graph" } },
+      "sections": [
+        {
+          "topic": "Goal graph and dependencies",
+          "questions": ["Which Goals cover every in-scope obligation, with dependencies, Oracle, Harness, Test Ladder and completion relation?"],
+          "completionCondition": "Every in-scope obligation mapped; Walking Skeleton path explicit; no unclassified blocker.",
+          "naRule": "Not applicable only when the design declares no Goals."
+        }
+      ],
+      "lifecycle": { "states": ["WORKING", "FROZEN", "SUPERSEDED"], "storageKind": "RUN_WORKSPACE", "retentionClass": "DELIVERY_RECOVERABLE" },
+      "dependencyValidity": "CURRENT",
+      "producedBy": "action.IM-04",
+      "consumedBy": ["action.IM-06", "action.IM-07", "action.IM-16", "action.IM-17"]
+    },
+    {
+      "id": "artifact.goal-packet",
+      "name": "Goal Packet",
+      "kind": "intermediate",
+      "template": { "reference": { "id": "template.goal-packet" } },
+      "sections": [
+        {
+          "topic": "Goal encodability",
+          "questions": ["Stable preconditions, input/event, observable result, side effects, Oracle, Harness, dependencies and completion relation?"],
+          "completionCondition": "Every Goal is READY or explicitly classified with a non-implementation blocker.",
+          "naRule": "Not applicable only when the design declares no Goals."
+        }
+      ],
+      "lifecycle": { "states": ["WORKING", "FROZEN", "SUPERSEDED"], "storageKind": "RUN_WORKSPACE", "retentionClass": "DELIVERY_RECOVERABLE" },
+      "dependencyValidity": "CURRENT",
+      "producedBy": "action.IM-03",
+      "consumedBy": ["action.IM-07", "action.IM-12"]
+    },
+    {
+      "id": "artifact.semantic-test-ladder",
+      "name": "Semantic Test Ladder",
+      "kind": "intermediate",
+      "template": { "reference": { "id": "template.test-ladder" } },
+      "sections": [
+        {
+          "topic": "Fixed ladder topics",
+          "questions": ["Interface/Harness calibration, minimum core success, remaining confirmed scenarios, boundary/error/cancellation/recovery, stub replacement, branch correctness, quality thresholds, affected regression?"],
+          "completionCondition": "Each topic is APPLICABLE, reasoned NOT_APPLICABLE, BLOCKED, or authorized DEFERRED.",
+          "naRule": "Each topic may be reasoned NOT_APPLICABLE with evidence."
+        }
+      ],
+      "lifecycle": { "states": ["WORKING", "FROZEN", "SUPERSEDED"], "storageKind": "RUN_WORKSPACE", "retentionClass": "DELIVERY_RECOVERABLE" },
+      "dependencyValidity": "CURRENT",
+      "producedBy": "action.IM-03",
+      "consumedBy": ["action.IM-07", "action.IM-11"]
+    },
+    {
+      "id": "artifact.harness-binding",
+      "name": "Harness Binding",
+      "kind": "intermediate",
+      "template": { "reference": { "id": "template.harness-binding" } },
+      "sections": [
+        {
+          "topic": "Harness admission",
+          "questions": ["Runnable, isolated, safe test harness with frozen argv and bound environment/dependency identities?"],
+          "completionCondition": "Harness passes preflight and is bound to the Delivery/Snapshot.",
+          "naRule": "Not applicable only when the design declares no harness."
+        }
+      ],
+      "lifecycle": { "states": ["WORKING", "FROZEN", "SUPERSEDED"], "storageKind": "RUN_WORKSPACE", "retentionClass": "DELIVERY_RECOVERABLE" },
+      "dependencyValidity": "CURRENT",
+      "producedBy": "action.IM-02",
+      "consumedBy": ["action.IM-02V", "action.IM-07", "action.IM-11", "action.IM-18"]
+    },
+    {
+      "id": "artifact.feasibility-evidence",
+      "name": "Feasibility Evidence",
+      "kind": "intermediate",
+      "template": {
+        "content": "# Feasibility Evidence\n\n1. Obligation identity and upstream semantic dependency\n2. Frozen Harness feasibility phase and exact argv\n3. Environment and dependency identities\n4. Bounded probe results and limitations\n5. Compatible exact binding or inconclusive state"
+      },
+      "sections": [
+        {
+          "topic": "Compatibility proof",
+          "questions": ["Does the evidence prove a conclusive compatible result with selected binding for every IMPLEMENTATION_FEASIBILITY obligation?"],
+          "completionCondition": "Every feasibility obligation has a conclusive compatible result and selected binding.",
+          "naRule": "N/A when no feasibility obligation exists."
+        }
+      ],
+      "lifecycle": { "states": ["WORKING", "VERIFIED"], "storageKind": "RUN_WORKSPACE", "retentionClass": "DELIVERY_RECOVERABLE" },
+      "dependencyValidity": "CURRENT",
+      "producedBy": "action.IM-02V",
+      "consumedBy": ["action.IM-03"]
+    },
+    {
+      "id": "artifact.test-feedback",
+      "name": "Test Feedback",
+      "kind": "intermediate",
+      "template": {
+        "content": "# Test Feedback\n\n1. Rung identity and semantic ladder topic\n2. Calibration proof (expected RED or discriminating existing-GREEN via negative fixture/mutant)\n3. Test result and exact evidence\n4. Flakiness/skip/non-discrimination markers"
+      },
+      "sections": [
+        {
+          "topic": "Discriminating power",
+          "questions": ["Does the feedback fail for the expected reason, and is it stable on an unchanged baseline?"],
+          "completionCondition": "Calibrated RED or discriminating existing-GREEN proof; no flaky/skipped/misdirected tests.",
+          "naRule": "N/A when the rung is a reasoned NOT_APPLICABLE topic."
+        }
+      ],
+      "lifecycle": { "states": ["WORKING", "CALIBRATED", "VERIFIED"], "storageKind": "RUN_WORKSPACE", "retentionClass": "DELIVERY_RECOVERABLE" },
+      "dependencyValidity": "CURRENT",
+      "producedBy": "action.IM-07",
+      "consumedBy": ["action.IM-08", "action.IM-11"]
+    },
+    {
+      "id": "artifact.review-result",
+      "name": "Review Result",
+      "kind": "intermediate",
+      "template": {
+        "content": "# Review Result\n\n1. Review scope (Goal or whole-scope) and lens\n2. Exact candidate identity\n3. Admitted Findings or REVIEW_SIGNALs\n4. Isolation/barrier evidence"
+      },
+      "sections": [
+        {
+          "topic": "Admission",
+          "questions": ["Does every Finding carry exact location, applicable authority, evidence, impact and closure condition?"],
+          "completionCondition": "Findings are admitted with complete shapes; generic best practice stays a REVIEW_SIGNAL.",
+          "naRule": "N/A when no finding was admitted."
+        }
+      ],
+      "lifecycle": { "states": ["WORKING", "REVIEWED"], "storageKind": "RUN_WORKSPACE", "retentionClass": "DELIVERY_RECOVERABLE" },
+      "dependencyValidity": "CURRENT",
+      "producedBy": "action.IM-12",
+      "consumedBy": ["action.IM-13"]
+    },
+    {
+      "id": "artifact.finding",
+      "name": "Finding",
+      "kind": "intermediate",
+      "template": {
+        "content": "# Finding\n\n1. Exact location\n2. Observed statement or omission\n3. Applicable Goal/context/upstream authority\n4. Evidence\n5. Concrete impact\n6. Severity (BLOCKING/MAJOR/MINOR/REVIEW_SIGNAL)\n7. Closure condition and source-lens disposition"
+      },
+      "sections": [
+        {
+          "topic": "Disposition",
+          "questions": ["Which source lens closes this Finding, against which exact treatment and candidate?"],
+          "completionCondition": "Every Blocking/Major Finding is CLOSED_FIXED or CLOSED_NOT_VALID by its source lens; Minor may be ACCEPTED_MINOR with rationale.",
+          "naRule": "N/A when no finding was admitted."
+        }
+      ],
+      "lifecycle": { "states": ["WORKING", "REVIEWED"], "storageKind": "RUN_WORKSPACE", "retentionClass": "DELIVERY_RECOVERABLE" },
+      "dependencyValidity": "CURRENT",
+      "producedBy": "action.IM-12",
+      "consumedBy": ["action.IM-13", "action.IM-14T", "action.IM-14I", "action.IM-15"]
+    },
+    {
+      "id": "artifact.coordination-request",
+      "name": "Coordination Request",
+      "kind": "intermediate",
+      "template": { "reference": { "id": "template.external-coordination-request" } },
+      "sections": [
+        {
+          "topic": "External gap",
+          "questions": ["Which blocker, affected Goals, expected compatible artifact and resume condition are recorded?"],
+          "completionCondition": "Only a frozen-design-delegated cross-owner Contract/design/authority gap creates a Coordination Request.",
+          "naRule": "N/A when no external gap exists."
+        }
+      ],
+      "lifecycle": { "states": ["WORKING", "FROZEN", "SUPERSEDED"], "storageKind": "RUN_WORKSPACE", "retentionClass": "DELIVERY_RECOVERABLE" },
+      "dependencyValidity": "CURRENT",
+      "producedBy": "action.IM-06",
+      "consumedBy": []
+    },
+    {
+      "id": "artifact.goal-candidate",
+      "name": "Goal Candidate",
+      "kind": "intermediate",
+      "template": { "reference": { "id": "template.candidate" } },
+      "sections": [
+        {
+          "topic": "Candidate closure",
+          "questions": ["Are all Goal rungs complete, local Findings closed, writer/scope clean, regression/coverage green, stubs authorized?"],
+          "completionCondition": "WORKING → REVIEWED → VERIFIED → COMMITTED; commit only explicit approved paths with Goal identity.",
+          "naRule": "Not applicable outside the Goal Loop."
+        }
+      ],
+      "lifecycle": { "states": ["WORKING", "REVIEWED", "VERIFIED", "COMMITTED"], "storageKind": "RUN_WORKSPACE", "retentionClass": "DELIVERY_RECOVERABLE" },
+      "dependencyValidity": "CURRENT",
+      "producedBy": "action.IM-11",
+      "consumedBy": ["action.IM-12", "action.IM-16"]
+    },
+    {
+      "id": "artifact.final-candidate",
+      "name": "Final Candidate",
+      "kind": "output",
+      "template": { "reference": { "id": "template.final-candidate" } },
+      "sections": [
+        {
+          "topic": "Terminal closure",
+          "questions": ["Is every in-scope Goal VERIFIED, are all Findings disposition-valid, did required Harness phases pass, is the worktree clean, is the run-manifest/retention disposition valid?"],
+          "completionCondition": "Exact branch/head/change-set identity and bounded verification summary recorded; no publication effect.",
+          "naRule": "Not applicable until the whole-scope regression passes."
+        }
+      ],
+      "lifecycle": { "states": ["WORKING", "REVIEWED", "VERIFIED"], "storageKind": "RUN_WORKSPACE", "retentionClass": "TERMINAL_REFERENCE" },
+      "dependencyValidity": "CURRENT",
+      "producedBy": "action.IM-18",
+      "consumedBy": []
+    }
+  ]
+}
