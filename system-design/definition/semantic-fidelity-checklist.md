@@ -58,7 +58,7 @@ Machine Definition: `workflow-package/system-design/definition/` (7 documents, `
 | WAITING_FOR_USER (3) | `wait.user-grilling-answer` (SD-02), `wait.user-brief-confirm` (SD-03), `wait.user-decision` (SD-11H); one pending decision each; stale/duplicate rejected; expiry is a deterministic policy event, never success or silent cancellation |
 | WAITING_FOR_SPIKE (2) | `wait.spike-feasibility` (SD-06), `wait.spike-design-parameter` (SD-12); exact request identity/content digest correlation; mismatched/duplicate results cannot advance |
 | Terminals | `implementation-ready` (success), `incomplete`, `cancelled`, `failed`; budget exhaustion / cancellation / non-retryable failure are runtime-enforced terminal transitions |
-| Budgets (6) | questions / research / feasibility / review / revision / decision-dialogue; `onExhaustion: incomplete`; accounting via `sum` reducer state fields; exhaustion never relaxes a Gate; numeric limits are project/runtime policy (see decision 9) |
+| Budgets (6) | questions / research / feasibility / review / revision / decision-dialogue; resource `custom` with `resourceName` per dimension + evaluator registration point (schemaRef) invoked by the Runtime; `onExhaustion: incomplete`; no numeric limits in configuration; exhaustion never relaxes a Gate (DSL-S4 revised with DSL-1) |
 | Recovery (4) | retry-continue / incomplete-resume / intervene / cleanup-retry; all `noBlindReplay: true`; INCOMPLETE records exact resume Action; FAILED/CANCELLED require a new authorized Delivery |
 
 ## 4. Artifacts, sessions, findings, human decision
@@ -82,23 +82,24 @@ Machine Definition: `workflow-package/system-design/definition/` (7 documents, `
 | --- | --- |
 | M1 | **Selectors are all deterministic**: SD has no Planner Agent; SD-05/06/10/11/11H/12/13/14 routing is Runtime evaluation of structured results (`selector.kind: deterministic`). |
 | M2 | **Dynamic return targets** (`return_action`, `resume_action`, `resume_lens`) are `state` fields (snake_case per schema pattern) + conditional edges: `cedge.sd-11` by `return_action` (SD-09/SD-13/SD-14, default failed), `cedge.sd-01r` by `evidence_return_action` (SD-05/SD-09). |
-| M3 | **SD-14/SD-15 runtime authority**: `responsibleAuthority: {kind: runtime, validator}`; no Agent Role. The schema's `allowedRoutes: minItems 1` forces a minimal declarative placeholder: `role.runtime-custodian` + `route.runtime.deterministic` (empty actionPrompts, sessionPolicy states "no Agent session; Runtime-only"). This changes no runtime-authority semantics. |
+| M3 | **SD-14/SD-15 runtime authority**: `responsibleAuthority: {kind: runtime, validator}`; no Agent Role and **no allowedRoutes** (Runtime-authority actions declare no Agent binding; DSL-2 revised). The former `role.runtime-custodian` / `route.runtime.deterministic` placeholders are removed. |
 | M4 | **SD-09 parallel barrier**: `execution.mode: parallel`, 3 branches (session-isolated, required), `join {mode: aggregator, aggregatorAction: action.sd-10, barrier: true}`; aggregation rules in `validation.aggregation` (preserve-provenance, arbiter finding-aggregator, prohibited voting/hiding risk/inflating signals/severity change/finding closure). |
 | M5 | **Wait/resume correlation**: 3 user + 2 spike waits; resumeAction == triggerAction (each recorded resume_action is its trigger Action); correlation identitySource + stale/duplicate rejection; SD-11H decision dialogue is resumable only within the admitted decision identity and evidence binding. |
 | M6 | **Handoff**: 5 `handoffs[]` all semanticOnly; `consumedHandoffs: []` (SD is the upstream producer); ids align with the Implementation Definition's consumed references. |
 | M7 | **Lowercase identities**: the meta identity pattern `^[a-z][a-z0-9._-]{0,127}$` admits only lowercase — all ids are lowercase (`action.sd-01`, `node.sd-11h`, `terminal:implementation-ready`); SD names stay in `name`/`meaning` text. |
 | M8 | **snake_case state fields** (`return_action`, `evidence_return_action`, `resume_lens`) match the design-time schema naming (revision-request, evidence-research-request). |
-| M9 | **Budget numeric limit**: DSL requires a number; workflow.md leaves the exact limit to project/runtime policy → placeholder numeric limit declared with `accounting` noting "exact limit is policy". |
+| M9 | **Budget evaluator registration point**: per the revised DSL (DSL-1/DSL-S4), each budget declares `resource: custom` + `resourceName` + an `evaluator` schemaRef (script registration point) the Runtime invokes for the budget conclusion; **no numeric limit in configuration**. The former placeholder-limit workaround is removed. |
 | M10 | **owned/referenced**: 57 owned resources with real sha256; grilling/codebase-design and model/tool/driver/agent-definition use sourceLocator + schematic sha256 with `use` noting "resolved at Package Snapshot admission; never fabricated". |
 
 ## 7. DSL gaps found during migration (feedback to `agentops.workflow-dsl@0.1.x`)
 
 | ID | Gap | Candidate fix |
 | --- | --- | --- |
-| DSL-S1 | **SD-09 recheck of only invalidated lenses**: v1 has no dynamic branch activation; declared as full 3-branch parallel (required), recheck-subset semantics recorded in action purpose + conformance (conf.recovery.evidence-return); actual execution subset is Runtime scheduling detail. | Add conditional/partial branch activation or a recheck-scope declaration. |
+| DSL-S1 (judgment authority) | **REVISED (0.1.x)**: conditional edges gained `judge` — `state` predicates or `planner` (Planner Action semantic judgment over possibly unstructured Agent output); Runtime validates the structured classification, then selects the branch. Judgment belongs to the Agent; branch structure belongs to the Workflow. | resolved by `gap-review-decisions.md` |
+| DSL-S1 (branch subset activation) | **ACCEPTED as known limitation**: SD-09 recheck of only invalidated lenses is Runtime scheduling (an optimization), not workflow semantics; full 3-branch parallel declaration stays. | recorded in spec §18.1 |
 | DSL-S2 | **Parallel action with multiple roles** (SD-09's three lenses have distinct roles): DSL `responsibleAuthority` allows a single role → nominal `role.architecture-reviewer` with per-lens roles enforced via `validation.review` + branch routes. | Allow `responsibleAuthority` (or parallel branches) to declare per-branch roles. |
-| DSL-S3 | **Dynamic wait resume targets**: the mermaid `UW → B/C/Q` by recorded resume_action; DSL `wait.resumeAction` is a fixed value → encoded as 3 separate user waits (one per trigger Action, resume == trigger), semantically equivalent. | Allow wait resumeAction to be a state-derived target. |
-| DSL-S4 | **Budget "policy limit" must be numeric** (same root as Implementation DSL-1). | Allow policy-bound limits at admission. |
+| DSL-S3 | **CLOSED as non-issue**: one wait per trigger Action (resume == trigger) is semantically equivalent to a recorded `resume_action`; dynamic post-resume routing is covered by fixed resume + conditional-edge routing at the resume point. No DSL change. | recorded in spec §18.1 |
+| DSL-S4 | ~~Budget "policy limit" must be numeric~~ **REVISED with DSL-1 (0.1.x)**: budgets use resource dimensions + evaluator registration points; no numeric limit in configuration. | resolved by `gap-review-decisions.md` |
 
 ## 8. Verification
 

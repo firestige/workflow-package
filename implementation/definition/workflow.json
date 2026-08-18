@@ -1004,5 +1004,19 @@
       },
       "mustNotWeaken": true
     }
+  ],
+  "budgets": [
+    {
+      "id": "budget.attempts",
+      "scope": "workflow",
+      "resource": "custom",
+      "resourceName": "attempts",
+      "evaluator": {
+        "path": "../scripts/budget/attempts.mjs",
+        "contentIdentity": "sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+      },
+      "onExhaustion": "incomplete",
+      "accounting": "each retry gains a new attempt identity; repeating the same failure without new diagnosis consumes budget; runtime invokes the evaluator registration point to obtain the budget conclusion; numeric limits are never configured; exhaustion never relaxes a Gate"
+    }
   ]
 }

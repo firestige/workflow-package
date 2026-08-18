@@ -14,7 +14,7 @@
     "definition": {
       "name": "system-design-workflow",
       "version": "0.3.0",
-      "contentIdentity": "sha256:04ffd1f2e7fb422e3d8a36ed6a84d2da4e9ea5726fab694b36f7e306d386e62b"
+      "contentIdentity": "sha256:1b3444606bc8323b51e65dc17f852bb38d9b8d2459e086f6a17b492d1f8566a4"
     }
   },
   "documents": {
@@ -90,14 +90,6 @@
         "path": "../roles/fresh-reader.role.md",
         "contentIdentity": "sha256:e1d079bf840a74084b70da6a4fa40f00b1a5e54b60553419c18533bc58769820",
         "use": "Fresh Reader role authority for the Fresh Reader Test"
-      },
-      {
-        "id": "resource.role-prompt.runtime-custodian",
-        "kind": "role-prompt",
-        "owner": "owned",
-        "path": "resources/runtime-custodian.role.md",
-        "contentIdentity": "sha256:afc8dc177c4e1cee5fe2bfb79173c5900ec054277e04323b85679d3e5fa7e6f9",
-        "use": "Declarative route-closure role prompt for the Runtime deterministic lifecycle authority (SD-14/SD-15); no Agent session"
       },
       {
         "id": "resource.prompt.intake-and-authority",
@@ -550,6 +542,72 @@
         },
         "contentIdentity": "sha256:ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
         "use": "Repository/authorized-source read tool for routes that read repository evidence; exact identity resolved by the future Package Snapshot (placeholder, do not fabricate)"
+      },
+      {
+        "id": "budget.evaluator.questions",
+        "kind": "cli",
+        "owner": "referenced",
+        "sourceLocator": {
+          "repository": "system-design-workflow",
+          "path": "scripts/budget/questions.mjs"
+        },
+        "contentIdentity": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "use": "budget evaluator script registration point for budget.questions; runtime invokes it to obtain the budget conclusion; script to be provided by the package (IMPLEMENTATION_REQUIRED, never fabricated)"
+      },
+      {
+        "id": "budget.evaluator.research",
+        "kind": "cli",
+        "owner": "referenced",
+        "sourceLocator": {
+          "repository": "system-design-workflow",
+          "path": "scripts/budget/research.mjs"
+        },
+        "contentIdentity": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "use": "budget evaluator script registration point for budget.research; runtime invokes it to obtain the budget conclusion; script to be provided by the package (IMPLEMENTATION_REQUIRED, never fabricated)"
+      },
+      {
+        "id": "budget.evaluator.feasibility",
+        "kind": "cli",
+        "owner": "referenced",
+        "sourceLocator": {
+          "repository": "system-design-workflow",
+          "path": "scripts/budget/feasibility.mjs"
+        },
+        "contentIdentity": "sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+        "use": "budget evaluator script registration point for budget.feasibility; runtime invokes it to obtain the budget conclusion; script to be provided by the package (IMPLEMENTATION_REQUIRED, never fabricated)"
+      },
+      {
+        "id": "budget.evaluator.review",
+        "kind": "cli",
+        "owner": "referenced",
+        "sourceLocator": {
+          "repository": "system-design-workflow",
+          "path": "scripts/budget/review.mjs"
+        },
+        "contentIdentity": "sha256:dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+        "use": "budget evaluator script registration point for budget.review; runtime invokes it to obtain the budget conclusion; script to be provided by the package (IMPLEMENTATION_REQUIRED, never fabricated)"
+      },
+      {
+        "id": "budget.evaluator.revision",
+        "kind": "cli",
+        "owner": "referenced",
+        "sourceLocator": {
+          "repository": "system-design-workflow",
+          "path": "scripts/budget/revision.mjs"
+        },
+        "contentIdentity": "sha256:eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+        "use": "budget evaluator script registration point for budget.revision; runtime invokes it to obtain the budget conclusion; script to be provided by the package (IMPLEMENTATION_REQUIRED, never fabricated)"
+      },
+      {
+        "id": "budget.evaluator.decision-dialogue",
+        "kind": "cli",
+        "owner": "referenced",
+        "sourceLocator": {
+          "repository": "system-design-workflow",
+          "path": "scripts/budget/decision-dialogue.mjs"
+        },
+        "contentIdentity": "sha256:ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+        "use": "budget evaluator script registration point for budget.decision-dialogue; runtime invokes it to obtain the budget conclusion; script to be provided by the package (IMPLEMENTATION_REQUIRED, never fabricated)"
       }
     ]
   },

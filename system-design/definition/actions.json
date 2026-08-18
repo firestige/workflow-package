@@ -9,37 +9,89 @@
       "inputSchema": {
         "type": "object",
         "properties": {
-          "intake": { "type": "string" },
-          "repository": { "type": "string" }
+          "intake": {
+            "type": "string"
+          },
+          "repository": {
+            "type": "string"
+          }
         },
-        "required": ["intake"]
+        "required": [
+          "intake"
+        ]
       },
       "resultSchema": {
         "type": "object",
         "properties": {
-          "status": { "type": "string", "enum": ["SUCCEEDED", "INCOMPLETE", "FAILED"] },
-          "authorityMap": { "type": "object" },
-          "projectContextProfile": { "type": "object" },
-          "facts": { "type": "array" },
-          "conflicts": { "type": "array" },
-          "unknowns": { "type": "array" }
+          "status": {
+            "type": "string",
+            "enum": [
+              "SUCCEEDED",
+              "INCOMPLETE",
+              "FAILED"
+            ]
+          },
+          "authorityMap": {
+            "type": "object"
+          },
+          "projectContextProfile": {
+            "type": "object"
+          },
+          "facts": {
+            "type": "array"
+          },
+          "conflicts": {
+            "type": "array"
+          },
+          "unknowns": {
+            "type": "array"
+          }
         },
-        "required": ["status"]
+        "required": [
+          "status"
+        ]
       },
-      "responsibleAuthority": { "kind": "role", "role": "role.grilling-facilitator" },
-      "allowedRoutes": ["route.facilitator.standard"],
-      "execution": { "mode": "single" },
-      "selector": { "kind": "deterministic" },
-      "allowedSuccessors": ["node.sd-02"],
+      "responsibleAuthority": {
+        "kind": "role",
+        "role": "role.grilling-facilitator"
+      },
+      "allowedRoutes": [
+        "route.facilitator.standard"
+      ],
+      "execution": {
+        "mode": "single"
+      },
+      "selector": {
+        "kind": "deterministic"
+      },
+      "allowedSuccessors": [
+        "node.sd-02"
+      ],
       "escalation": {
         "allowed": false,
         "scope": "route-within-allowed",
-        "cannotChange": ["user-question authority", "gate", "successor-set"]
+        "cannotChange": [
+          "user-question authority",
+          "gate",
+          "successor-set"
+        ]
       },
       "gate": {
-        "preconditions": [{ "field": "status", "op": "exists" }],
-        "postconditions": [{ "field": "status", "op": "exists" }],
-        "deterministic": ["validator.intake-authority"],
+        "preconditions": [
+          {
+            "field": "status",
+            "op": "exists"
+          }
+        ],
+        "postconditions": [
+          {
+            "field": "status",
+            "op": "exists"
+          }
+        ],
+        "deterministic": [
+          "validator.intake-authority"
+        ],
         "freeTextBypass": "prohibited"
       }
     },
@@ -50,38 +102,94 @@
       "inputSchema": {
         "type": "object",
         "properties": {
-          "evidenceResearchRequest": { "type": "object" }
+          "evidenceResearchRequest": {
+            "type": "object"
+          }
         },
-        "required": ["evidenceResearchRequest"]
+        "required": [
+          "evidenceResearchRequest"
+        ]
       },
       "resultSchema": {
         "type": "object",
         "properties": {
-          "status": { "type": "string", "enum": ["SUCCEEDED", "INCONCLUSIVE", "FAILED"] },
-          "sources": { "type": "array" },
-          "observations": { "type": "array" },
-          "conflicts": { "type": "array" },
-          "confidence": { "type": "string" },
-          "resolved": { "type": "boolean" }
+          "status": {
+            "type": "string",
+            "enum": [
+              "SUCCEEDED",
+              "INCONCLUSIVE",
+              "FAILED"
+            ]
+          },
+          "sources": {
+            "type": "array"
+          },
+          "observations": {
+            "type": "array"
+          },
+          "conflicts": {
+            "type": "array"
+          },
+          "confidence": {
+            "type": "string"
+          },
+          "resolved": {
+            "type": "boolean"
+          }
         },
-        "required": ["status", "resolved"]
+        "required": [
+          "status",
+          "resolved"
+        ]
       },
-      "responsibleAuthority": { "kind": "role", "role": "role.evidence-scout" },
-      "allowedRoutes": ["route.scout.evidence"],
-      "execution": { "mode": "single" },
-      "selector": { "kind": "deterministic" },
-      "allowedSuccessors": ["node.sd-05", "node.sd-09", "terminal:failed"],
+      "responsibleAuthority": {
+        "kind": "role",
+        "role": "role.evidence-scout"
+      },
+      "allowedRoutes": [
+        "route.scout.evidence"
+      ],
+      "execution": {
+        "mode": "single"
+      },
+      "selector": {
+        "kind": "deterministic"
+      },
+      "allowedSuccessors": [
+        "node.sd-05",
+        "node.sd-09",
+        "terminal:failed"
+      ],
       "escalation": {
         "allowed": false,
         "scope": "route-within-allowed",
-        "cannotChange": ["recorded resume_action", "recorded resume_lens", "gate", "successor-set"]
+        "cannotChange": [
+          "recorded resume_action",
+          "recorded resume_lens",
+          "gate",
+          "successor-set"
+        ]
       },
       "gate": {
-        "preconditions": [{ "field": "evidence_return_action", "op": "exists" }],
-        "postconditions": [
-          { "field": "evidence_return_action", "op": "in", "value": ["SD-05", "SD-09"] }
+        "preconditions": [
+          {
+            "field": "evidence_return_action",
+            "op": "exists"
+          }
         ],
-        "deterministic": ["validator.evidence-return-binding"],
+        "postconditions": [
+          {
+            "field": "evidence_return_action",
+            "op": "in",
+            "value": [
+              "SD-05",
+              "SD-09"
+            ]
+          }
+        ],
+        "deterministic": [
+          "validator.evidence-return-binding"
+        ],
         "freeTextBypass": "prohibited"
       },
       "budget": "budget.research"
@@ -93,36 +201,88 @@
       "inputSchema": {
         "type": "object",
         "properties": {
-          "intakeContext": { "type": "object" }
+          "intakeContext": {
+            "type": "object"
+          }
         },
-        "required": ["intakeContext"]
+        "required": [
+          "intakeContext"
+        ]
       },
       "resultSchema": {
         "type": "object",
         "properties": {
-          "status": { "type": "string", "enum": ["SUCCEEDED", "INCOMPLETE", "FAILED"] },
-          "routing": { "type": "string", "enum": ["brief-ready"] },
-          "workingBrief": { "type": "object" }
+          "status": {
+            "type": "string",
+            "enum": [
+              "SUCCEEDED",
+              "INCOMPLETE",
+              "FAILED"
+            ]
+          },
+          "routing": {
+            "type": "string",
+            "enum": [
+              "brief-ready"
+            ]
+          },
+          "workingBrief": {
+            "type": "object"
+          }
         },
-        "required": ["status", "routing"]
+        "required": [
+          "status",
+          "routing"
+        ]
       },
-      "responsibleAuthority": { "kind": "role", "role": "role.grilling-facilitator" },
-      "allowedRoutes": ["route.facilitator.standard"],
-      "execution": { "mode": "single" },
-      "selector": { "kind": "deterministic" },
-      "allowedSuccessors": ["node.sd-03"],
+      "responsibleAuthority": {
+        "kind": "role",
+        "role": "role.grilling-facilitator"
+      },
+      "allowedRoutes": [
+        "route.facilitator.standard"
+      ],
+      "execution": {
+        "mode": "single"
+      },
+      "selector": {
+        "kind": "deterministic"
+      },
+      "allowedSuccessors": [
+        "node.sd-03"
+      ],
       "escalation": {
         "allowed": false,
         "scope": "route-within-allowed",
-        "cannotChange": ["gate", "successor-set", "formal architecture decisions"]
+        "cannotChange": [
+          "gate",
+          "successor-set",
+          "formal architecture decisions"
+        ]
       },
       "gate": {
-        "preconditions": [{ "field": "status", "op": "exists" }],
-        "postconditions": [{ "field": "routing", "op": "eq", "value": "brief-ready" }],
-        "deterministic": ["validator.grilling-closure"],
+        "preconditions": [
+          {
+            "field": "status",
+            "op": "exists"
+          }
+        ],
+        "postconditions": [
+          {
+            "field": "routing",
+            "op": "eq",
+            "value": "brief-ready"
+          }
+        ],
+        "deterministic": [
+          "validator.grilling-closure"
+        ],
         "freeTextBypass": "prohibited"
       },
-      "waitPolicy": { "kind": "user", "wait": "wait.user-grilling-answer" },
+      "waitPolicy": {
+        "kind": "user",
+        "wait": "wait.user-grilling-answer"
+      },
       "budget": "budget.questions"
     },
     {
@@ -132,29 +292,73 @@
       "resultSchema": {
         "type": "object",
         "properties": {
-          "status": { "type": "string", "enum": ["SUCCEEDED", "INCOMPLETE", "FAILED"] },
-          "brief": { "type": "object" },
-          "frozenDigest": { "type": "string" }
+          "status": {
+            "type": "string",
+            "enum": [
+              "SUCCEEDED",
+              "INCOMPLETE",
+              "FAILED"
+            ]
+          },
+          "brief": {
+            "type": "object"
+          },
+          "frozenDigest": {
+            "type": "string"
+          }
         },
-        "required": ["status", "brief"]
+        "required": [
+          "status",
+          "brief"
+        ]
       },
-      "responsibleAuthority": { "kind": "role", "role": "role.grilling-facilitator" },
-      "allowedRoutes": ["route.facilitator.standard"],
-      "execution": { "mode": "single" },
-      "selector": { "kind": "deterministic" },
-      "allowedSuccessors": ["node.sd-04"],
+      "responsibleAuthority": {
+        "kind": "role",
+        "role": "role.grilling-facilitator"
+      },
+      "allowedRoutes": [
+        "route.facilitator.standard"
+      ],
+      "execution": {
+        "mode": "single"
+      },
+      "selector": {
+        "kind": "deterministic"
+      },
+      "allowedSuccessors": [
+        "node.sd-04"
+      ],
       "escalation": {
         "allowed": false,
         "scope": "route-within-allowed",
-        "cannotChange": ["frozen brief content", "gate", "successor-set"]
+        "cannotChange": [
+          "frozen brief content",
+          "gate",
+          "successor-set"
+        ]
       },
       "gate": {
-        "preconditions": [{ "field": "routing", "op": "exists" }],
-        "postconditions": [{ "field": "brief", "op": "exists" }],
-        "deterministic": ["validator.brief-closure-check"],
+        "preconditions": [
+          {
+            "field": "routing",
+            "op": "exists"
+          }
+        ],
+        "postconditions": [
+          {
+            "field": "brief",
+            "op": "exists"
+          }
+        ],
+        "deterministic": [
+          "validator.brief-closure-check"
+        ],
         "freeTextBypass": "prohibited"
       },
-      "waitPolicy": { "kind": "user", "wait": "wait.user-brief-confirm" }
+      "waitPolicy": {
+        "kind": "user",
+        "wait": "wait.user-brief-confirm"
+      }
     },
     {
       "id": "action.sd-04",
@@ -163,20 +367,54 @@
       "resultSchema": {
         "type": "object",
         "properties": {
-          "status": { "type": "string", "enum": ["SUCCEEDED", "FAILED"] },
-          "skeleton": { "type": "object" }
+          "status": {
+            "type": "string",
+            "enum": [
+              "SUCCEEDED",
+              "FAILED"
+            ]
+          },
+          "skeleton": {
+            "type": "object"
+          }
         },
-        "required": ["status", "skeleton"]
+        "required": [
+          "status",
+          "skeleton"
+        ]
       },
-      "responsibleAuthority": { "kind": "role", "role": "role.system-designer" },
-      "allowedRoutes": ["route.designer.standard"],
-      "execution": { "mode": "single" },
-      "selector": { "kind": "deterministic" },
-      "allowedSuccessors": ["node.sd-05"],
+      "responsibleAuthority": {
+        "kind": "role",
+        "role": "role.system-designer"
+      },
+      "allowedRoutes": [
+        "route.designer.standard"
+      ],
+      "execution": {
+        "mode": "single"
+      },
+      "selector": {
+        "kind": "deterministic"
+      },
+      "allowedSuccessors": [
+        "node.sd-05"
+      ],
       "gate": {
-        "preconditions": [{ "field": "brief", "op": "exists" }],
-        "postconditions": [{ "field": "skeleton", "op": "exists" }],
-        "deterministic": ["validator.skeleton-gate"],
+        "preconditions": [
+          {
+            "field": "brief",
+            "op": "exists"
+          }
+        ],
+        "postconditions": [
+          {
+            "field": "skeleton",
+            "op": "exists"
+          }
+        ],
+        "deterministic": [
+          "validator.skeleton-gate"
+        ],
         "freeTextBypass": "prohibited"
       }
     },
@@ -189,33 +427,86 @@
         "properties": {
           "status": {
             "type": "string",
-            "enum": ["SUCCEEDED", "NEEDS_EVIDENCE", "NEEDS_BRIEF_CHANGE", "NEEDS_REVISION", "FAILED"]
+            "enum": [
+              "SUCCEEDED",
+              "NEEDS_EVIDENCE",
+              "NEEDS_BRIEF_CHANGE",
+              "NEEDS_REVISION",
+              "FAILED"
+            ]
           },
           "routing": {
             "type": "string",
-            "enum": ["pass", "direction-fix", "evidence-gap", "brief-gap"]
+            "enum": [
+              "pass",
+              "direction-fix",
+              "evidence-gap",
+              "brief-gap"
+            ]
           },
-          "findings": { "type": "array" },
-          "review_signals": { "type": "array" }
+          "findings": {
+            "type": "array"
+          },
+          "review_signals": {
+            "type": "array"
+          }
         },
-        "required": ["status", "routing"]
+        "required": [
+          "status",
+          "routing"
+        ]
       },
-      "responsibleAuthority": { "kind": "role", "role": "role.architecture-reviewer" },
-      "allowedRoutes": ["route.reviewer.architecture"],
-      "execution": { "mode": "single" },
-      "selector": { "kind": "deterministic" },
-      "allowedSuccessors": ["node.sd-01r", "node.sd-04", "node.sd-06", "node.sd-11h", "terminal:failed"],
+      "responsibleAuthority": {
+        "kind": "role",
+        "role": "role.architecture-reviewer"
+      },
+      "allowedRoutes": [
+        "route.reviewer.architecture"
+      ],
+      "execution": {
+        "mode": "single"
+      },
+      "selector": {
+        "kind": "deterministic"
+      },
+      "allowedSuccessors": [
+        "node.sd-01r",
+        "node.sd-04",
+        "node.sd-06",
+        "node.sd-11h",
+        "terminal:failed"
+      ],
       "escalation": {
         "allowed": false,
         "scope": "route-within-allowed",
-        "cannotChange": ["gate", "successor-set", "skeleton direction write authority"]
+        "cannotChange": [
+          "gate",
+          "successor-set",
+          "skeleton direction write authority"
+        ]
       },
       "gate": {
-        "preconditions": [{ "field": "skeleton", "op": "exists" }],
-        "postconditions": [
-          { "field": "routing", "op": "in", "value": ["pass", "direction-fix", "evidence-gap", "brief-gap"] }
+        "preconditions": [
+          {
+            "field": "skeleton",
+            "op": "exists"
+          }
         ],
-        "deterministic": ["validator.finding-admission"],
+        "postconditions": [
+          {
+            "field": "routing",
+            "op": "in",
+            "value": [
+              "pass",
+              "direction-fix",
+              "evidence-gap",
+              "brief-gap"
+            ]
+          }
+        ],
+        "deterministic": [
+          "validator.finding-admission"
+        ],
         "freeTextBypass": "prohibited"
       }
     },
@@ -226,31 +517,83 @@
       "resultSchema": {
         "type": "object",
         "properties": {
-          "status": { "type": "string", "enum": ["SUCCEEDED", "INCOMPLETE", "FAILED"] },
-          "routing": { "type": "string", "enum": ["feasibility-confirmed", "invalidates-direction"] },
-          "spikeResult": { "type": "object" }
+          "status": {
+            "type": "string",
+            "enum": [
+              "SUCCEEDED",
+              "INCOMPLETE",
+              "FAILED"
+            ]
+          },
+          "routing": {
+            "type": "string",
+            "enum": [
+              "feasibility-confirmed",
+              "invalidates-direction"
+            ]
+          },
+          "spikeResult": {
+            "type": "object"
+          }
         },
-        "required": ["status", "routing"]
+        "required": [
+          "status",
+          "routing"
+        ]
       },
-      "responsibleAuthority": { "kind": "role", "role": "role.system-designer" },
-      "allowedRoutes": ["route.designer.standard"],
-      "execution": { "mode": "single" },
-      "selector": { "kind": "deterministic" },
-      "allowedSuccessors": ["node.sd-04", "node.sd-07", "terminal:failed"],
+      "responsibleAuthority": {
+        "kind": "role",
+        "role": "role.system-designer"
+      },
+      "allowedRoutes": [
+        "route.designer.standard"
+      ],
+      "execution": {
+        "mode": "single"
+      },
+      "selector": {
+        "kind": "deterministic"
+      },
+      "allowedSuccessors": [
+        "node.sd-04",
+        "node.sd-07",
+        "terminal:failed"
+      ],
       "escalation": {
         "allowed": false,
         "scope": "route-within-allowed",
-        "cannotChange": ["gate", "successor-set", "spike execution boundary"]
+        "cannotChange": [
+          "gate",
+          "successor-set",
+          "spike execution boundary"
+        ]
       },
       "gate": {
-        "preconditions": [{ "field": "skeleton", "op": "exists" }],
-        "postconditions": [
-          { "field": "routing", "op": "in", "value": ["feasibility-confirmed", "invalidates-direction"] }
+        "preconditions": [
+          {
+            "field": "skeleton",
+            "op": "exists"
+          }
         ],
-        "deterministic": ["validator.feasibility-application"],
+        "postconditions": [
+          {
+            "field": "routing",
+            "op": "in",
+            "value": [
+              "feasibility-confirmed",
+              "invalidates-direction"
+            ]
+          }
+        ],
+        "deterministic": [
+          "validator.feasibility-application"
+        ],
         "freeTextBypass": "prohibited"
       },
-      "waitPolicy": { "kind": "spike", "wait": "wait.spike-feasibility" },
+      "waitPolicy": {
+        "kind": "spike",
+        "wait": "wait.spike-feasibility"
+      },
       "budget": "budget.feasibility"
     },
     {
@@ -260,23 +603,58 @@
       "resultSchema": {
         "type": "object",
         "properties": {
-          "status": { "type": "string", "enum": ["SUCCEEDED", "INCOMPLETE", "FAILED"] },
-          "draftCheckpoints": { "type": "array" }
+          "status": {
+            "type": "string",
+            "enum": [
+              "SUCCEEDED",
+              "INCOMPLETE",
+              "FAILED"
+            ]
+          },
+          "draftCheckpoints": {
+            "type": "array"
+          }
         },
-        "required": ["status"]
+        "required": [
+          "status"
+        ]
       },
-      "responsibleAuthority": { "kind": "role", "role": "role.system-designer" },
-      "allowedRoutes": ["route.designer.standard"],
-      "execution": { "mode": "single" },
-      "selector": { "kind": "deterministic" },
-      "allowedSuccessors": ["node.sd-08"],
+      "responsibleAuthority": {
+        "kind": "role",
+        "role": "role.system-designer"
+      },
+      "allowedRoutes": [
+        "route.designer.standard"
+      ],
+      "execution": {
+        "mode": "single"
+      },
+      "selector": {
+        "kind": "deterministic"
+      },
+      "allowedSuccessors": [
+        "node.sd-08"
+      ],
       "gate": {
         "preconditions": [
-          { "field": "brief", "op": "exists" },
-          { "field": "skeleton", "op": "exists" }
+          {
+            "field": "brief",
+            "op": "exists"
+          },
+          {
+            "field": "skeleton",
+            "op": "exists"
+          }
         ],
-        "postconditions": [{ "field": "status", "op": "exists" }],
-        "deterministic": ["validator.writer-boundary"],
+        "postconditions": [
+          {
+            "field": "status",
+            "op": "exists"
+          }
+        ],
+        "deterministic": [
+          "validator.writer-boundary"
+        ],
         "freeTextBypass": "prohibited"
       }
     },
@@ -287,20 +665,54 @@
       "resultSchema": {
         "type": "object",
         "properties": {
-          "status": { "type": "string", "enum": ["SUCCEEDED", "FAILED"] },
-          "draft": { "type": "object" }
+          "status": {
+            "type": "string",
+            "enum": [
+              "SUCCEEDED",
+              "FAILED"
+            ]
+          },
+          "draft": {
+            "type": "object"
+          }
         },
-        "required": ["status", "draft"]
+        "required": [
+          "status",
+          "draft"
+        ]
       },
-      "responsibleAuthority": { "kind": "role", "role": "role.system-designer" },
-      "allowedRoutes": ["route.designer.standard"],
-      "execution": { "mode": "single" },
-      "selector": { "kind": "deterministic" },
-      "allowedSuccessors": ["node.sd-09"],
+      "responsibleAuthority": {
+        "kind": "role",
+        "role": "role.system-designer"
+      },
+      "allowedRoutes": [
+        "route.designer.standard"
+      ],
+      "execution": {
+        "mode": "single"
+      },
+      "selector": {
+        "kind": "deterministic"
+      },
+      "allowedSuccessors": [
+        "node.sd-09"
+      ],
       "gate": {
-        "preconditions": [{ "field": "routing", "op": "exists" }],
-        "postconditions": [{ "field": "draft", "op": "exists" }],
-        "deterministic": ["validator.integrate-checks"],
+        "preconditions": [
+          {
+            "field": "routing",
+            "op": "exists"
+          }
+        ],
+        "postconditions": [
+          {
+            "field": "draft",
+            "op": "exists"
+          }
+        ],
+        "deterministic": [
+          "validator.integrate-checks"
+        ],
         "freeTextBypass": "prohibited"
       }
     },
@@ -311,19 +723,32 @@
       "inputSchema": {
         "type": "object",
         "properties": {
-          "draft": { "type": "object" }
+          "draft": {
+            "type": "object"
+          }
         },
-        "required": ["draft"]
+        "required": [
+          "draft"
+        ]
       },
       "resultSchema": {
         "type": "object",
         "properties": {
-          "findings": { "type": "array" },
-          "review_signals": { "type": "array" }
+          "findings": {
+            "type": "array"
+          },
+          "review_signals": {
+            "type": "array"
+          }
         },
-        "required": ["findings"]
+        "required": [
+          "findings"
+        ]
       },
-      "responsibleAuthority": { "kind": "role", "role": "role.architecture-reviewer" },
+      "responsibleAuthority": {
+        "kind": "role",
+        "role": "role.architecture-reviewer"
+      },
       "allowedRoutes": [
         "route.reviewer.problem-solution",
         "route.reviewer.architecture",
@@ -354,17 +779,38 @@
           "barrier": true
         }
       },
-      "selector": { "kind": "deterministic" },
-      "allowedSuccessors": ["node.sd-10"],
+      "selector": {
+        "kind": "deterministic"
+      },
+      "allowedSuccessors": [
+        "node.sd-10"
+      ],
       "escalation": {
         "allowed": false,
         "scope": "route-within-allowed",
-        "cannotChange": ["lens isolation until the barrier", "gate", "successor-set"]
+        "cannotChange": [
+          "lens isolation until the barrier",
+          "gate",
+          "successor-set"
+        ]
       },
       "gate": {
-        "preconditions": [{ "field": "draft", "op": "exists" }],
-        "postconditions": [{ "field": "routing", "op": "exists" }],
-        "deterministic": ["validator.review-isolation", "validator.finding-admission"],
+        "preconditions": [
+          {
+            "field": "draft",
+            "op": "exists"
+          }
+        ],
+        "postconditions": [
+          {
+            "field": "routing",
+            "op": "exists"
+          }
+        ],
+        "deterministic": [
+          "validator.review-isolation",
+          "validator.finding-admission"
+        ],
         "freeTextBypass": "prohibited"
       },
       "budget": "budget.review"
@@ -376,26 +822,57 @@
       "inputSchema": {
         "type": "object",
         "properties": {
-          "findings": { "type": "array" }
+          "findings": {
+            "type": "array"
+          }
         }
       },
       "resultSchema": {
         "type": "object",
         "properties": {
-          "status": { "type": "string", "enum": ["SUCCEEDED", "FAILED"] },
+          "status": {
+            "type": "string",
+            "enum": [
+              "SUCCEEDED",
+              "FAILED"
+            ]
+          },
           "routing": {
             "type": "string",
-            "enum": ["evidence-gap", "brief-gap", "conflict", "skeleton-invalid", "draft-fix", "disposition-valid"]
+            "enum": [
+              "evidence-gap",
+              "brief-gap",
+              "conflict",
+              "skeleton-invalid",
+              "draft-fix",
+              "disposition-valid"
+            ]
           },
-          "mergedFindings": { "type": "array" },
-          "contradictions": { "type": "array" }
+          "mergedFindings": {
+            "type": "array"
+          },
+          "contradictions": {
+            "type": "array"
+          }
         },
-        "required": ["status", "routing"]
+        "required": [
+          "status",
+          "routing"
+        ]
       },
-      "responsibleAuthority": { "kind": "role", "role": "role.finding-aggregator" },
-      "allowedRoutes": ["route.aggregator.standard"],
-      "execution": { "mode": "single" },
-      "selector": { "kind": "deterministic" },
+      "responsibleAuthority": {
+        "kind": "role",
+        "role": "role.finding-aggregator"
+      },
+      "allowedRoutes": [
+        "route.aggregator.standard"
+      ],
+      "execution": {
+        "mode": "single"
+      },
+      "selector": {
+        "kind": "deterministic"
+      },
       "allowedSuccessors": [
         "node.sd-01r",
         "node.sd-04",
@@ -407,18 +884,38 @@
       "escalation": {
         "allowed": false,
         "scope": "route-within-allowed",
-        "cannotChange": ["voting", "finding severity", "finding closure", "gate", "successor-set"]
+        "cannotChange": [
+          "voting",
+          "finding severity",
+          "finding closure",
+          "gate",
+          "successor-set"
+        ]
       },
       "gate": {
-        "preconditions": [{ "field": "findings", "op": "exists" }],
+        "preconditions": [
+          {
+            "field": "findings",
+            "op": "exists"
+          }
+        ],
         "postconditions": [
           {
             "field": "routing",
             "op": "in",
-            "value": ["evidence-gap", "brief-gap", "conflict", "skeleton-invalid", "draft-fix", "disposition-valid"]
+            "value": [
+              "evidence-gap",
+              "brief-gap",
+              "conflict",
+              "skeleton-invalid",
+              "draft-fix",
+              "disposition-valid"
+            ]
           }
         ],
-        "deterministic": ["validator.aggregation-rules"],
+        "deterministic": [
+          "validator.aggregation-rules"
+        ],
         "freeTextBypass": "prohibited"
       }
     },
@@ -429,35 +926,91 @@
       "inputSchema": {
         "type": "object",
         "properties": {
-          "revisionRequest": { "type": "object" }
+          "revisionRequest": {
+            "type": "object"
+          }
         },
-        "required": ["revisionRequest"]
+        "required": [
+          "revisionRequest"
+        ]
       },
       "resultSchema": {
         "type": "object",
         "properties": {
-          "status": { "type": "string", "enum": ["SUCCEEDED", "FAILED"] },
-          "return_action": { "type": "string", "enum": ["SD-09", "SD-13", "SD-14"] },
-          "revisedDraft": { "type": "object" }
+          "status": {
+            "type": "string",
+            "enum": [
+              "SUCCEEDED",
+              "FAILED"
+            ]
+          },
+          "return_action": {
+            "type": "string",
+            "enum": [
+              "SD-09",
+              "SD-13",
+              "SD-14"
+            ]
+          },
+          "revisedDraft": {
+            "type": "object"
+          }
         },
-        "required": ["status", "return_action"]
+        "required": [
+          "status",
+          "return_action"
+        ]
       },
-      "responsibleAuthority": { "kind": "role", "role": "role.system-designer" },
-      "allowedRoutes": ["route.designer.standard"],
-      "execution": { "mode": "single" },
-      "selector": { "kind": "deterministic" },
-      "allowedSuccessors": ["node.sd-09", "node.sd-13", "node.sd-14", "terminal:failed"],
+      "responsibleAuthority": {
+        "kind": "role",
+        "role": "role.system-designer"
+      },
+      "allowedRoutes": [
+        "route.designer.standard"
+      ],
+      "execution": {
+        "mode": "single"
+      },
+      "selector": {
+        "kind": "deterministic"
+      },
+      "allowedSuccessors": [
+        "node.sd-09",
+        "node.sd-13",
+        "node.sd-14",
+        "terminal:failed"
+      ],
       "escalation": {
         "allowed": false,
         "scope": "route-within-allowed",
-        "cannotChange": ["own finding closure", "return_action validation", "gate", "successor-set"]
+        "cannotChange": [
+          "own finding closure",
+          "return_action validation",
+          "gate",
+          "successor-set"
+        ]
       },
       "gate": {
-        "preconditions": [{ "field": "return_action", "op": "exists" }],
-        "postconditions": [
-          { "field": "return_action", "op": "in", "value": ["SD-09", "SD-13", "SD-14"] }
+        "preconditions": [
+          {
+            "field": "return_action",
+            "op": "exists"
+          }
         ],
-        "deterministic": ["validator.revision-return-validation"],
+        "postconditions": [
+          {
+            "field": "return_action",
+            "op": "in",
+            "value": [
+              "SD-09",
+              "SD-13",
+              "SD-14"
+            ]
+          }
+        ],
+        "deterministic": [
+          "validator.revision-return-validation"
+        ],
         "freeTextBypass": "prohibited"
       },
       "budget": "budget.revision"
@@ -469,31 +1022,88 @@
       "resultSchema": {
         "type": "object",
         "properties": {
-          "status": { "type": "string", "enum": ["SUCCEEDED", "INCOMPLETE", "FAILED"] },
-          "routing": { "type": "string", "enum": ["new-brief", "direction-invalidated", "draft-decision"] },
-          "decisionRecord": { "type": "object" }
+          "status": {
+            "type": "string",
+            "enum": [
+              "SUCCEEDED",
+              "INCOMPLETE",
+              "FAILED"
+            ]
+          },
+          "routing": {
+            "type": "string",
+            "enum": [
+              "new-brief",
+              "direction-invalidated",
+              "draft-decision"
+            ]
+          },
+          "decisionRecord": {
+            "type": "object"
+          }
         },
-        "required": ["status", "routing"]
+        "required": [
+          "status",
+          "routing"
+        ]
       },
-      "responsibleAuthority": { "kind": "role", "role": "role.grilling-facilitator" },
-      "allowedRoutes": ["route.facilitator.standard", "route.facilitator.decision"],
-      "execution": { "mode": "single" },
-      "selector": { "kind": "deterministic" },
-      "allowedSuccessors": ["node.sd-03", "node.sd-04", "node.sd-11", "terminal:failed"],
+      "responsibleAuthority": {
+        "kind": "role",
+        "role": "role.grilling-facilitator"
+      },
+      "allowedRoutes": [
+        "route.facilitator.standard",
+        "route.facilitator.decision"
+      ],
+      "execution": {
+        "mode": "single"
+      },
+      "selector": {
+        "kind": "deterministic"
+      },
+      "allowedSuccessors": [
+        "node.sd-03",
+        "node.sd-04",
+        "node.sd-11",
+        "terminal:failed"
+      ],
       "escalation": {
         "allowed": false,
         "scope": "route-within-allowed",
-        "cannotChange": ["human decision authority", "decision record", "gate", "successor-set"]
+        "cannotChange": [
+          "human decision authority",
+          "decision record",
+          "gate",
+          "successor-set"
+        ]
       },
       "gate": {
-        "preconditions": [{ "field": "routing", "op": "exists" }],
-        "postconditions": [
-          { "field": "routing", "op": "in", "value": ["new-brief", "direction-invalidated", "draft-decision"] }
+        "preconditions": [
+          {
+            "field": "routing",
+            "op": "exists"
+          }
         ],
-        "deterministic": ["validator.human-decision-admission"],
+        "postconditions": [
+          {
+            "field": "routing",
+            "op": "in",
+            "value": [
+              "new-brief",
+              "direction-invalidated",
+              "draft-decision"
+            ]
+          }
+        ],
+        "deterministic": [
+          "validator.human-decision-admission"
+        ],
         "freeTextBypass": "prohibited"
       },
-      "waitPolicy": { "kind": "user", "wait": "wait.user-decision" },
+      "waitPolicy": {
+        "kind": "user",
+        "wait": "wait.user-decision"
+      },
       "budget": "budget.decision-dialogue"
     },
     {
@@ -503,32 +1113,87 @@
       "resultSchema": {
         "type": "object",
         "properties": {
-          "status": { "type": "string", "enum": ["SUCCEEDED", "INCOMPLETE", "FAILED"] },
-          "routing": { "type": "string", "enum": ["closed", "affects-design"] },
-          "designParameters": { "type": "object" },
-          "downstreamObligations": { "type": "array" }
+          "status": {
+            "type": "string",
+            "enum": [
+              "SUCCEEDED",
+              "INCOMPLETE",
+              "FAILED"
+            ]
+          },
+          "routing": {
+            "type": "string",
+            "enum": [
+              "closed",
+              "affects-design"
+            ]
+          },
+          "designParameters": {
+            "type": "object"
+          },
+          "downstreamObligations": {
+            "type": "array"
+          }
         },
-        "required": ["status", "routing"]
+        "required": [
+          "status",
+          "routing"
+        ]
       },
-      "responsibleAuthority": { "kind": "role", "role": "role.system-designer" },
-      "allowedRoutes": ["route.designer.standard"],
-      "execution": { "mode": "single" },
-      "selector": { "kind": "deterministic" },
-      "allowedSuccessors": ["node.sd-11", "node.sd-13", "terminal:failed"],
+      "responsibleAuthority": {
+        "kind": "role",
+        "role": "role.system-designer"
+      },
+      "allowedRoutes": [
+        "route.designer.standard"
+      ],
+      "execution": {
+        "mode": "single"
+      },
+      "selector": {
+        "kind": "deterministic"
+      },
+      "allowedSuccessors": [
+        "node.sd-11",
+        "node.sd-13",
+        "terminal:failed"
+      ],
       "escalation": {
         "allowed": false,
         "scope": "route-within-allowed",
-        "cannotChange": ["downstream Workflow control", "gate", "successor-set"]
+        "cannotChange": [
+          "downstream Workflow control",
+          "gate",
+          "successor-set"
+        ]
       },
       "gate": {
-        "preconditions": [{ "field": "routing", "op": "exists" }],
-        "postconditions": [
-          { "field": "routing", "op": "in", "value": ["closed", "affects-design"] }
+        "preconditions": [
+          {
+            "field": "routing",
+            "op": "exists"
+          }
         ],
-        "deterministic": ["validator.parameter-closure", "validator.downstream-obligation-completeness"],
+        "postconditions": [
+          {
+            "field": "routing",
+            "op": "in",
+            "value": [
+              "closed",
+              "affects-design"
+            ]
+          }
+        ],
+        "deterministic": [
+          "validator.parameter-closure",
+          "validator.downstream-obligation-completeness"
+        ],
         "freeTextBypass": "prohibited"
       },
-      "waitPolicy": { "kind": "spike", "wait": "wait.spike-design-parameter" }
+      "waitPolicy": {
+        "kind": "spike",
+        "wait": "wait.spike-design-parameter"
+      }
     },
     {
       "id": "action.sd-13",
@@ -537,37 +1202,93 @@
       "inputSchema": {
         "type": "object",
         "properties": {
-          "candidateDesign": { "type": "object" },
-          "readerQuestionSet": { "type": "object" }
+          "candidateDesign": {
+            "type": "object"
+          },
+          "readerQuestionSet": {
+            "type": "object"
+          }
         },
-        "required": ["candidateDesign"]
+        "required": [
+          "candidateDesign"
+        ]
       },
       "resultSchema": {
         "type": "object",
         "properties": {
-          "status": { "type": "string", "enum": ["SUCCEEDED", "FAILED"] },
-          "routing": { "type": "string", "enum": ["pass", "fresh-reader-finding"] },
-          "findings": { "type": "array" },
-          "questions": { "type": "array" }
+          "status": {
+            "type": "string",
+            "enum": [
+              "SUCCEEDED",
+              "FAILED"
+            ]
+          },
+          "routing": {
+            "type": "string",
+            "enum": [
+              "pass",
+              "fresh-reader-finding"
+            ]
+          },
+          "findings": {
+            "type": "array"
+          },
+          "questions": {
+            "type": "array"
+          }
         },
-        "required": ["status", "routing"]
+        "required": [
+          "status",
+          "routing"
+        ]
       },
-      "responsibleAuthority": { "kind": "role", "role": "role.fresh-reader" },
-      "allowedRoutes": ["route.reader.fresh"],
-      "execution": { "mode": "single" },
-      "selector": { "kind": "deterministic" },
-      "allowedSuccessors": ["node.sd-11", "node.sd-14", "terminal:failed"],
+      "responsibleAuthority": {
+        "kind": "role",
+        "role": "role.fresh-reader"
+      },
+      "allowedRoutes": [
+        "route.reader.fresh"
+      ],
+      "execution": {
+        "mode": "single"
+      },
+      "selector": {
+        "kind": "deterministic"
+      },
+      "allowedSuccessors": [
+        "node.sd-11",
+        "node.sd-14",
+        "terminal:failed"
+      ],
       "escalation": {
         "allowed": false,
         "scope": "route-within-allowed",
-        "cannotChange": ["gate", "successor-set", "reader context isolation"]
+        "cannotChange": [
+          "gate",
+          "successor-set",
+          "reader context isolation"
+        ]
       },
       "gate": {
-        "preconditions": [{ "field": "draft", "op": "exists" }],
-        "postconditions": [
-          { "field": "routing", "op": "in", "value": ["pass", "fresh-reader-finding"] }
+        "preconditions": [
+          {
+            "field": "draft",
+            "op": "exists"
+          }
         ],
-        "deterministic": ["validator.fresh-reader-boundary"],
+        "postconditions": [
+          {
+            "field": "routing",
+            "op": "in",
+            "value": [
+              "pass",
+              "fresh-reader-finding"
+            ]
+          }
+        ],
+        "deterministic": [
+          "validator.fresh-reader-boundary"
+        ],
         "freeTextBypass": "prohibited"
       }
     },
@@ -578,30 +1299,76 @@
       "inputSchema": {
         "type": "object",
         "properties": {
-          "candidate": { "type": "object" }
+          "candidate": {
+            "type": "object"
+          }
         },
-        "required": ["candidate"]
+        "required": [
+          "candidate"
+        ]
       },
       "resultSchema": {
         "type": "object",
         "properties": {
-          "status": { "type": "string", "enum": ["PASS", "FIXABLE_FAILURE", "FAILED"] },
-          "routing": { "type": "string", "enum": ["pass", "fixable-failure"] },
-          "validatorReport": { "type": "object" }
+          "status": {
+            "type": "string",
+            "enum": [
+              "PASS",
+              "FIXABLE_FAILURE",
+              "FAILED"
+            ]
+          },
+          "routing": {
+            "type": "string",
+            "enum": [
+              "pass",
+              "fixable-failure"
+            ]
+          },
+          "validatorReport": {
+            "type": "object"
+          }
         },
-        "required": ["status", "routing"]
+        "required": [
+          "status",
+          "routing"
+        ]
       },
-      "responsibleAuthority": { "kind": "runtime", "validator": "validator.final-verification" },
-      "allowedRoutes": ["route.runtime.deterministic"],
-      "execution": { "mode": "single" },
-      "selector": { "kind": "deterministic" },
-      "allowedSuccessors": ["node.sd-11", "node.sd-15", "terminal:failed"],
+      "responsibleAuthority": {
+        "kind": "runtime",
+        "validator": "validator.final-verification"
+      },
+      "execution": {
+        "mode": "single"
+      },
+      "selector": {
+        "kind": "deterministic"
+      },
+      "allowedSuccessors": [
+        "node.sd-11",
+        "node.sd-15",
+        "terminal:failed"
+      ],
       "gate": {
-        "preconditions": [{ "field": "routing", "op": "exists" }],
-        "postconditions": [
-          { "field": "routing", "op": "in", "value": ["pass", "fixable-failure"] }
+        "preconditions": [
+          {
+            "field": "routing",
+            "op": "exists"
+          }
         ],
-        "deterministic": ["validator.final-verification"],
+        "postconditions": [
+          {
+            "field": "routing",
+            "op": "in",
+            "value": [
+              "pass",
+              "fixable-failure"
+            ]
+          }
+        ],
+        "deterministic": [
+          "validator.final-verification"
+        ],
         "freeTextBypass": "prohibited"
       }
     },
@@ -612,26 +1379,68 @@
       "resultSchema": {
         "type": "object",
         "properties": {
-          "status": { "type": "string", "enum": ["CLEAN", "FAILED"] },
-          "routing": { "type": "string", "enum": ["clean"] },
-          "promotedDeliverables": { "type": "array" }
+          "status": {
+            "type": "string",
+            "enum": [
+              "CLEAN",
+              "FAILED"
+            ]
+          },
+          "routing": {
+            "type": "string",
+            "enum": [
+              "clean"
+            ]
+          },
+          "promotedDeliverables": {
+            "type": "array"
+          }
         },
-        "required": ["status", "routing"]
+        "required": [
+          "status",
+          "routing"
+        ]
       },
-      "responsibleAuthority": { "kind": "runtime", "validator": "validator.cleanup-gate" },
-      "allowedRoutes": ["route.runtime.deterministic"],
-      "execution": { "mode": "single" },
-      "selector": { "kind": "deterministic" },
-      "allowedSuccessors": ["terminal:implementation-ready"],
+      "responsibleAuthority": {
+        "kind": "runtime",
+        "validator": "validator.cleanup-gate"
+      },
+      "execution": {
+        "mode": "single"
+      },
+      "selector": {
+        "kind": "deterministic"
+      },
+      "allowedSuccessors": [
+        "terminal:implementation-ready"
+      ],
       "escalation": {
         "allowed": false,
         "scope": "route-within-allowed",
-        "cannotChange": ["gate", "successor-set", "promotion scope", "intermediate promotion"]
+        "cannotChange": [
+          "gate",
+          "successor-set",
+          "promotion scope",
+          "intermediate promotion"
+        ]
       },
       "gate": {
-        "preconditions": [{ "field": "draft", "op": "exists" }],
-        "postconditions": [{ "field": "routing", "op": "eq", "value": "clean" }],
-        "deterministic": ["validator.cleanup-gate"],
+        "preconditions": [
+          {
+            "field": "draft",
+            "op": "exists"
+          }
+        ],
+        "postconditions": [
+          {
+            "field": "routing",
+            "op": "eq",
+            "value": "clean"
+          }
+        ],
+        "deterministic": [
+          "validator.cleanup-gate"
+        ],
         "freeTextBypass": "prohibited"
       },
       "recovery": "recovery.cleanup-retry"

@@ -82,7 +82,7 @@ Machine Definition: `workflow-package/implementation/definition/` (7 documents, 
 | WAITING_FOR_USER | `wait.user-measurement` (IM-03), `wait.user-confirm` (IM-04); one decision per wait, stale/duplicate rejected |
 | WAITING_FOR_EXTERNAL | `wait.external-coordination` (IM-06 → resume IM-03), `wait.external-authority` (IM-02V → resume IM-02V) |
 | Terminals | `VERIFIED_IMPLEMENTATION_READY` (success), `INCOMPLETE` (incomplete), `CANCELLED` (cancelled), `FAILED` (failure), `DESIGN_REOPEN` (custom) |
-| Budget | `state.attempts` (sum reducer); exhaustion → `terminal:INCOMPLETE`; never relaxes a Gate; numeric limit is project/runtime policy (see M4/DSL-1) |
+| Budget | `budget.attempts` (resource custom/attempts) with an **evaluator registration point** (schemaRef) the Runtime invokes for the budget conclusion; no numeric limit in configuration; exhaustion → `terminal:INCOMPLETE`; never relaxes a Gate (see M4, DSL-1 revised) |
 | Recovery | `recovery.default` (continue when known), `recovery.incomplete-resume` (restartFromSavepoint), `recovery.intervene` (unknown); all `noBlindReplay` |
 | Design-semantic change | stops Delivery → `terminal:DESIGN_REOPEN`; no local authority substitution |
 
@@ -104,9 +104,9 @@ Machine Definition: `workflow-package/implementation/definition/` (7 documents, 
 | ID | Decision |
 | --- | --- |
 | M1 | **Dynamic return targets** ("recorded requesting Action", "recorded owning Action") are expressed as `state.returnAction` (reducer overwrite) + conditional edges per possible target. The graph stays static; the predicate selects the target. |
-| M2 | **IM-06 deterministic selector** is a pure Runtime action (`responsibleAuthority: {kind: runtime, validator: selection-checks}`); no Planner Agent. Its `allowedRoutes` is bound to `route.delivery.custodian` solely to satisfy the DSL's `minItems: 1` constraint (see DSL-2); it is never dispatched to an Agent. |
+| M2 | **IM-06 deterministic selector** is a pure Runtime action (`responsibleAuthority: {kind: runtime, validator: selection-checks}`); no Planner Agent and **no allowedRoutes** (Runtime-authority actions declare no Agent binding; DSL-2 revised). |
 | M3 | **Waits are not graph nodes**: `WAITING_FOR_USER` / `WAITING_FOR_EXTERNAL` are `waits[]` entries bound by `waitPolicy`; edges never point at waits. Resume Action is exact and may differ from the trigger Action (IM-06 → resume IM-03). |
-| M4 | **Budget exhaustion / cancellation / non-retryable failure / design-reopen** are runtime-enforced terminal transitions, not edges (workflow.md "Any active Action may enter…"), matching DSL §6.4. |
+| M4 | **Budget exhaustion / cancellation / non-retryable failure / design-reopen** are runtime-enforced terminal transitions, not edges (workflow.md "Any active Action may enter…"), matching DSL §6.4. Budget declares `budget.attempts` (custom dimension attempts) with an evaluator registration point; the numeric limit is project/runtime policy bound at admission, never configured (DSL-1 revised). |
 | M5 | **IM-12/IM-17 parallel reviews** use `execution.mode: parallel` with `join.barrier`; IM-17 adds a third (custodian CLI) branch with `isolation: shared`. |
 | M6 | **Gates are deterministic validators**: CLI checks, writer policy, coverage, calibration and disposition rules are referenced as content-addressed validators; Agent free text cannot satisfy them (`freeTextBypass: prohibited`). |
 | M7 | **Contract availability / missing Contract** is a wait (external), not a hard failure: only dependent Goals block (M3 + consumedHandoffs). |
@@ -117,8 +117,8 @@ Machine Definition: `workflow-package/implementation/definition/` (7 documents, 
 
 | ID | Gap | Candidate fix |
 | --- | --- | --- |
-| DSL-1 | `budget.limit` is a required number, but workflow semantics leave the numeric limit to project/runtime policy (workflow.md §10). The Definition therefore omits `budgets[]` and expresses exhaustion semantics via `terminal:INCOMPLETE` + attempt accounting. | Allow `limit` to be a policy reference or make `budgets[]` entries policy-bindable at admission. |
-| DSL-2 | A pure deterministic action (`responsibleAuthority.kind: runtime`) still requires `allowedRoutes` with `minItems: 1`, even though no Agent route exists (IM-06). | Allow `allowedRoutes` to be empty/omitted for runtime-authority actions. |
+| DSL-1 | ~~`budget.limit` is a required number~~ **REVISED (0.1.x)**: budgets now use resource dimensions (`time|tokens|context|custom`) + an evaluator registration point (schemaRef) invoked by the Runtime; no numeric limit in configuration. `budget.attempts` added back. | resolved by `gap-review-decisions.md` |
+| DSL-2 | ~~Runtime actions still require `allowedRoutes` minItems 1~~ **REVISED (0.1.x)**: Runtime-authority actions declare no `allowedRoutes`; IM-06 no longer binds a placeholder route. | resolved by `gap-review-decisions.md` |
 
 ## 7. Verification
 

@@ -898,55 +898,79 @@
       "id": "budget.questions",
       "scope": "action",
       "action": "action.sd-02",
-      "resource": "iterations",
-      "limit": 20,
+      "resource": "custom",
+      "resourceName": "question-turns",
+      "evaluator": {
+        "path": "../scripts/budget/questions.mjs",
+        "contentIdentity": "sha256:ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+      },
       "onExhaustion": "incomplete",
-      "accounting": "each grilling question consumed adds to state.grilling_questions (sum reducer); the exact limit is project/runtime policy; exhaustion enters terminal:INCOMPLETE without lowering the grilling closure standard and never relaxes a Gate"
+      "accounting": "each grilling question consumed adds to state.grilling_questions (sum reducer); the exact limit is project/runtime policy; exhaustion enters terminal:INCOMPLETE without lowering the grilling closure standard and never relaxes a Gate; runtime invokes the evaluator registration point to obtain the budget conclusion; numeric limits are never configured; exhaustion never relaxes a Gate"
     },
     {
       "id": "budget.research",
       "scope": "action",
       "action": "action.sd-01r",
-      "resource": "attempts",
-      "limit": 5,
+      "resource": "custom",
+      "resourceName": "research-requests",
+      "evaluator": {
+        "path": "../scripts/budget/research.mjs",
+        "contentIdentity": "sha256:ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+      },
       "onExhaustion": "incomplete",
-      "accounting": "each research attempt adds to state.research_attempts (sum reducer); the exact limit is project/runtime policy; exhaustion enters terminal:INCOMPLETE and never relaxes a Gate"
+      "accounting": "each research attempt adds to state.research_attempts (sum reducer); the exact limit is project/runtime policy; exhaustion enters terminal:INCOMPLETE and never relaxes a Gate; runtime invokes the evaluator registration point to obtain the budget conclusion; numeric limits are never configured; exhaustion never relaxes a Gate"
     },
     {
       "id": "budget.feasibility",
       "scope": "action",
       "action": "action.sd-06",
-      "resource": "iterations",
-      "limit": 3,
+      "resource": "custom",
+      "resourceName": "feasibility-probes",
+      "evaluator": {
+        "path": "../scripts/budget/feasibility.mjs",
+        "contentIdentity": "sha256:ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+      },
       "onExhaustion": "incomplete",
-      "accounting": "each feasibility iteration adds to state.feasibility_iterations (sum reducer); the exact limit is project/runtime policy; exhaustion enters terminal:INCOMPLETE and never relaxes a Gate"
+      "accounting": "each feasibility iteration adds to state.feasibility_iterations (sum reducer); the exact limit is project/runtime policy; exhaustion enters terminal:INCOMPLETE and never relaxes a Gate; runtime invokes the evaluator registration point to obtain the budget conclusion; numeric limits are never configured; exhaustion never relaxes a Gate"
     },
     {
       "id": "budget.review",
       "scope": "action",
       "action": "action.sd-09",
-      "resource": "iterations",
-      "limit": 3,
+      "resource": "custom",
+      "resourceName": "review-rounds",
+      "evaluator": {
+        "path": "../scripts/budget/review.mjs",
+        "contentIdentity": "sha256:ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+      },
       "onExhaustion": "incomplete",
-      "accounting": "each review iteration adds to state.review_iterations (sum reducer); the exact limit is project/runtime policy; exhaustion enters terminal:INCOMPLETE and never relaxes a Gate"
+      "accounting": "each review iteration adds to state.review_iterations (sum reducer); the exact limit is project/runtime policy; exhaustion enters terminal:INCOMPLETE and never relaxes a Gate; runtime invokes the evaluator registration point to obtain the budget conclusion; numeric limits are never configured; exhaustion never relaxes a Gate"
     },
     {
       "id": "budget.revision",
       "scope": "action",
       "action": "action.sd-11",
-      "resource": "iterations",
-      "limit": 5,
+      "resource": "custom",
+      "resourceName": "revision-iterations",
+      "evaluator": {
+        "path": "../scripts/budget/revision.mjs",
+        "contentIdentity": "sha256:ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+      },
       "onExhaustion": "incomplete",
-      "accounting": "each targeted revision adds to state.revision_count (sum reducer); the exact limit is project/runtime policy; exhaustion enters terminal:INCOMPLETE and never relaxes a Gate"
+      "accounting": "each targeted revision adds to state.revision_count (sum reducer); the exact limit is project/runtime policy; exhaustion enters terminal:INCOMPLETE and never relaxes a Gate; runtime invokes the evaluator registration point to obtain the budget conclusion; numeric limits are never configured; exhaustion never relaxes a Gate"
     },
     {
       "id": "budget.decision-dialogue",
       "scope": "action",
       "action": "action.sd-11h",
-      "resource": "iterations",
-      "limit": 10,
+      "resource": "custom",
+      "resourceName": "dialogue-turns",
+      "evaluator": {
+        "path": "../scripts/budget/decision-dialogue.mjs",
+        "contentIdentity": "sha256:ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+      },
       "onExhaustion": "incomplete",
-      "accounting": "each decision dialogue turn adds to state.decision_turns (sum reducer); the exact limit is project/runtime policy; exhaustion enters terminal:INCOMPLETE and never relaxes a Gate"
+      "accounting": "each decision dialogue turn adds to state.decision_turns (sum reducer); the exact limit is project/runtime policy; exhaustion enters terminal:INCOMPLETE and never relaxes a Gate; runtime invokes the evaluator registration point to obtain the budget conclusion; numeric limits are never configured; exhaustion never relaxes a Gate"
     }
   ],
   "recovery": [

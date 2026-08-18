@@ -14,7 +14,7 @@
     "definition": {
       "name": "implementation-workflow",
       "version": "0.3.0",
-      "contentIdentity": "sha256:388c8678ba7e8b8f541fa604f1150437784367ad0c64955218f020f30a4b8e18"
+      "contentIdentity": "sha256:294beec71ab27350f2a24ce6abbd7504da22ac6b14717794841ef8918e5b5d43"
     }
   },
   "documents": {
@@ -828,6 +828,17 @@
         },
         "contentIdentity": "sha256:eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
         "use": "repository read tool for intake/research/feasibility routes; exact identity resolved at Package Snapshot admission"
+      },
+      {
+        "id": "budget.evaluator.attempts",
+        "kind": "cli",
+        "owner": "referenced",
+        "sourceLocator": {
+          "repository": "implementation-workflow",
+          "path": "scripts/budget/attempts.mjs"
+        },
+        "contentIdentity": "sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+        "use": "budget evaluator script registration point for budget.attempts; runtime invokes it to obtain the budget conclusion; script to be provided by the package (IMPLEMENTATION_REQUIRED, never fabricated)"
       }
     ]
   },

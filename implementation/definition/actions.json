@@ -9,32 +9,72 @@
       "inputSchema": {
         "type": "object",
         "properties": {
-          "request": { "type": "string" },
-          "repository": { "type": "string" },
-          "upstreamDesign": { "type": "object" }
+          "request": {
+            "type": "string"
+          },
+          "repository": {
+            "type": "string"
+          },
+          "upstreamDesign": {
+            "type": "object"
+          }
         },
-        "required": ["request"]
+        "required": [
+          "request"
+        ]
       },
       "resultSchema": {
         "type": "object",
         "properties": {
-          "authorityBound": { "type": "boolean" },
-          "designIdentityExact": { "type": "boolean" },
-          "obligationRegisterBound": { "type": "boolean" },
-          "derivableFactMissing": { "type": "boolean" },
-          "blockers": { "type": "array", "items": { "type": "string" } }
+          "authorityBound": {
+            "type": "boolean"
+          },
+          "designIdentityExact": {
+            "type": "boolean"
+          },
+          "obligationRegisterBound": {
+            "type": "boolean"
+          },
+          "derivableFactMissing": {
+            "type": "boolean"
+          },
+          "blockers": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
         },
-        "required": ["authorityBound", "designIdentityExact", "obligationRegisterBound", "derivableFactMissing"]
+        "required": [
+          "authorityBound",
+          "designIdentityExact",
+          "obligationRegisterBound",
+          "derivableFactMissing"
+        ]
       },
-      "responsibleAuthority": { "kind": "role", "role": "role.goal-facilitator" },
-      "allowedRoutes": ["route.goal.facilitator"],
-      "execution": { "mode": "single" },
-      "selector": { "kind": "deterministic" },
-      "allowedSuccessors": ["node.IM-02", "node.IM-01R"],
+      "responsibleAuthority": {
+        "kind": "role",
+        "role": "role.goal-facilitator"
+      },
+      "allowedRoutes": [
+        "route.goal.facilitator"
+      ],
+      "execution": {
+        "mode": "single"
+      },
+      "selector": {
+        "kind": "deterministic"
+      },
+      "allowedSuccessors": [
+        "node.IM-02",
+        "node.IM-01R"
+      ],
       "gate": {
         "preconditions": [],
         "postconditions": [],
-        "deterministic": ["validator.intake-checks"],
+        "deterministic": [
+          "validator.intake-checks"
+        ],
         "freeTextBypass": "prohibited"
       }
     },
@@ -45,29 +85,61 @@
       "inputSchema": {
         "type": "object",
         "properties": {
-          "requestId": { "type": "string" },
-          "requestingAction": { "type": "string" }
+          "requestId": {
+            "type": "string"
+          },
+          "requestingAction": {
+            "type": "string"
+          }
         },
-        "required": ["requestId", "requestingAction"]
+        "required": [
+          "requestId",
+          "requestingAction"
+        ]
       },
       "resultSchema": {
         "type": "object",
         "properties": {
-          "sources": { "type": "array", "items": { "type": "string" } },
-          "observation": { "type": "string" },
-          "resolved": { "type": "boolean" }
+          "sources": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "observation": {
+            "type": "string"
+          },
+          "resolved": {
+            "type": "boolean"
+          }
         },
-        "required": ["resolved"]
+        "required": [
+          "resolved"
+        ]
       },
-      "responsibleAuthority": { "kind": "role", "role": "role.evidence-scout" },
-      "allowedRoutes": ["route.evidence.scout"],
-      "execution": { "mode": "single" },
-      "selector": { "kind": "deterministic" },
-      "allowedSuccessors": ["node.IM-01", "node.IM-03"],
+      "responsibleAuthority": {
+        "kind": "role",
+        "role": "role.evidence-scout"
+      },
+      "allowedRoutes": [
+        "route.evidence.scout"
+      ],
+      "execution": {
+        "mode": "single"
+      },
+      "selector": {
+        "kind": "deterministic"
+      },
+      "allowedSuccessors": [
+        "node.IM-01",
+        "node.IM-03"
+      ],
       "gate": {
         "preconditions": [],
         "postconditions": [],
-        "deterministic": ["validator.intake-checks"],
+        "deterministic": [
+          "validator.intake-checks"
+        ],
         "freeTextBypass": "prohibited"
       }
     },
@@ -75,27 +147,65 @@
       "id": "action.IM-02",
       "name": "Implementation Preflight",
       "purpose": "Check clean worktree, design status/identity, project-native build/test/coverage/static commands, safe test isolation, obligation classification completeness, Contract availability facts, and tool/permission availability for admitted feasibility checks.",
-      "inputSchema": { "type": "object", "properties": { "design": { "type": "object" } } },
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "design": {
+            "type": "object"
+          }
+        }
+      },
       "resultSchema": {
         "type": "object",
         "properties": {
-          "passed": { "type": "boolean" },
-          "feasibilityObligations": { "type": "integer" },
-          "harnessBinding": { "type": "object" },
-          "contractAvailability": { "type": "object" },
-          "blockers": { "type": "array", "items": { "type": "string" } }
+          "passed": {
+            "type": "boolean"
+          },
+          "feasibilityObligations": {
+            "type": "integer"
+          },
+          "harnessBinding": {
+            "type": "object"
+          },
+          "contractAvailability": {
+            "type": "object"
+          },
+          "blockers": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
         },
-        "required": ["passed", "feasibilityObligations"]
+        "required": [
+          "passed",
+          "feasibilityObligations"
+        ]
       },
-      "responsibleAuthority": { "kind": "role", "role": "role.delivery-custodian" },
-      "allowedRoutes": ["route.delivery.custodian"],
-      "execution": { "mode": "single" },
-      "selector": { "kind": "deterministic" },
-      "allowedSuccessors": ["node.IM-02V", "node.IM-03"],
+      "responsibleAuthority": {
+        "kind": "role",
+        "role": "role.delivery-custodian"
+      },
+      "allowedRoutes": [
+        "route.delivery.custodian"
+      ],
+      "execution": {
+        "mode": "single"
+      },
+      "selector": {
+        "kind": "deterministic"
+      },
+      "allowedSuccessors": [
+        "node.IM-02V",
+        "node.IM-03"
+      ],
       "gate": {
         "preconditions": [],
         "postconditions": [],
-        "deterministic": ["validator.preflight-checks", "validator.cli-checks"],
+        "deterministic": [
+          "validator.preflight-checks",
+          "validator.cli-checks"
+        ],
         "freeTextBypass": "prohibited"
       }
     },
@@ -103,28 +213,74 @@
       "id": "action.IM-02V",
       "name": "Implementation Feasibility Validation",
       "purpose": "Resolve implementation-owned version/SDK/substrate questions before Goal freeze with bounded probes in the ignored run workspace and exact argv; never makes architecture decisions or writes repository deliverables.",
-      "inputSchema": { "type": "object", "properties": { "obligations": { "type": "array" }, "harness": { "type": "object" } } },
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "obligations": {
+            "type": "array"
+          },
+          "harness": {
+            "type": "object"
+          }
+        }
+      },
       "resultSchema": {
         "type": "object",
         "properties": {
-          "allCalibrated": { "type": "boolean" },
-          "pendingWithProgress": { "type": "boolean" },
-          "externalUnavailable": { "type": "boolean" },
-          "reopen": { "type": "boolean" },
-          "evidence": { "type": "array", "items": { "type": "string" } }
+          "allCalibrated": {
+            "type": "boolean"
+          },
+          "pendingWithProgress": {
+            "type": "boolean"
+          },
+          "externalUnavailable": {
+            "type": "boolean"
+          },
+          "reopen": {
+            "type": "boolean"
+          },
+          "evidence": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
         },
-        "required": ["allCalibrated", "pendingWithProgress", "externalUnavailable", "reopen"]
+        "required": [
+          "allCalibrated",
+          "pendingWithProgress",
+          "externalUnavailable",
+          "reopen"
+        ]
       },
-      "responsibleAuthority": { "kind": "role", "role": "role.implementation-feasibility-validator" },
-      "allowedRoutes": ["route.feasibility.validator"],
-      "execution": { "mode": "single" },
-      "selector": { "kind": "deterministic" },
-      "allowedSuccessors": ["node.IM-03", "node.IM-02V", "terminal:DESIGN_REOPEN"],
-      "waitPolicy": { "kind": "external", "wait": "wait.external-authority" },
+      "responsibleAuthority": {
+        "kind": "role",
+        "role": "role.implementation-feasibility-validator"
+      },
+      "allowedRoutes": [
+        "route.feasibility.validator"
+      ],
+      "execution": {
+        "mode": "single"
+      },
+      "selector": {
+        "kind": "deterministic"
+      },
+      "allowedSuccessors": [
+        "node.IM-03",
+        "node.IM-02V",
+        "terminal:DESIGN_REOPEN"
+      ],
+      "waitPolicy": {
+        "kind": "external",
+        "wait": "wait.external-authority"
+      },
       "gate": {
         "preconditions": [],
         "postconditions": [],
-        "deterministic": ["validator.feasibility-checks"],
+        "deterministic": [
+          "validator.feasibility-checks"
+        ],
         "freeTextBypass": "prohibited"
       }
     },
@@ -132,28 +288,70 @@
       "id": "action.IM-03",
       "name": "Adaptive Grilling and Goal Classification",
       "purpose": "Derive Project Context Snapshot, Goal Packets, dependencies, completion boundary, semantic Test Ladders and classified blockers; ask one decision at a time and investigate facts first.",
-      "inputSchema": { "type": "object", "properties": { "design": { "type": "object" }, "preflight": { "type": "object" } } },
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "design": {
+            "type": "object"
+          },
+          "preflight": {
+            "type": "object"
+          }
+        }
+      },
       "resultSchema": {
         "type": "object",
         "properties": {
-          "allClassified": { "type": "boolean" },
-          "needsUser": { "type": "boolean" },
-          "ambiguity": { "type": "boolean" },
-          "projectContextSnapshot": { "type": "object" },
-          "goalPackets": { "type": "array", "items": { "type": "object" } }
+          "allClassified": {
+            "type": "boolean"
+          },
+          "needsUser": {
+            "type": "boolean"
+          },
+          "ambiguity": {
+            "type": "boolean"
+          },
+          "projectContextSnapshot": {
+            "type": "object"
+          },
+          "goalPackets": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          }
         },
-        "required": ["allClassified", "needsUser"]
+        "required": [
+          "allClassified",
+          "needsUser"
+        ]
       },
-      "responsibleAuthority": { "kind": "role", "role": "role.goal-facilitator" },
-      "allowedRoutes": ["route.goal.facilitator"],
-      "execution": { "mode": "single" },
-      "selector": { "kind": "deterministic" },
-      "allowedSuccessors": ["node.IM-04"],
-      "waitPolicy": { "kind": "user", "wait": "wait.user-measurement" },
+      "responsibleAuthority": {
+        "kind": "role",
+        "role": "role.goal-facilitator"
+      },
+      "allowedRoutes": [
+        "route.goal.facilitator"
+      ],
+      "execution": {
+        "mode": "single"
+      },
+      "selector": {
+        "kind": "deterministic"
+      },
+      "allowedSuccessors": [
+        "node.IM-04"
+      ],
+      "waitPolicy": {
+        "kind": "user",
+        "wait": "wait.user-measurement"
+      },
       "gate": {
         "preconditions": [],
         "postconditions": [],
-        "deterministic": ["validator.grilling-checks"],
+        "deterministic": [
+          "validator.grilling-checks"
+        ],
         "freeTextBypass": "prohibited"
       }
     },
@@ -161,26 +359,62 @@
       "id": "action.IM-04",
       "name": "Confirm and Freeze Goal Graph",
       "purpose": "Facilitator prepares; human confirms; executor persists the exact frozen artifacts. Every upstream obligation mapped; no unresolved user decision remains.",
-      "inputSchema": { "type": "object", "properties": { "goalGraphProposal": { "type": "object" } } },
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "goalGraphProposal": {
+            "type": "object"
+          }
+        }
+      },
       "resultSchema": {
         "type": "object",
         "properties": {
-          "frozen": { "type": "boolean" },
-          "correctionRequired": { "type": "boolean" },
-          "goals": { "type": "array", "items": { "type": "object" } }
+          "frozen": {
+            "type": "boolean"
+          },
+          "correctionRequired": {
+            "type": "boolean"
+          },
+          "goals": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          }
         },
-        "required": ["frozen", "correctionRequired"]
+        "required": [
+          "frozen",
+          "correctionRequired"
+        ]
       },
-      "responsibleAuthority": { "kind": "role", "role": "role.goal-facilitator" },
-      "allowedRoutes": ["route.goal.facilitator"],
-      "execution": { "mode": "single" },
-      "selector": { "kind": "deterministic" },
-      "allowedSuccessors": ["node.IM-03", "node.IM-05"],
-      "waitPolicy": { "kind": "user", "wait": "wait.user-confirm" },
+      "responsibleAuthority": {
+        "kind": "role",
+        "role": "role.goal-facilitator"
+      },
+      "allowedRoutes": [
+        "route.goal.facilitator"
+      ],
+      "execution": {
+        "mode": "single"
+      },
+      "selector": {
+        "kind": "deterministic"
+      },
+      "allowedSuccessors": [
+        "node.IM-03",
+        "node.IM-05"
+      ],
+      "waitPolicy": {
+        "kind": "user",
+        "wait": "wait.user-confirm"
+      },
       "gate": {
         "preconditions": [],
         "postconditions": [],
-        "deterministic": ["validator.goal-graph-checks"],
+        "deterministic": [
+          "validator.goal-graph-checks"
+        ],
         "freeTextBypass": "prohibited"
       }
     },
@@ -188,25 +422,54 @@
       "id": "action.IM-05",
       "name": "Activate Feature Branch",
       "purpose": "Require a clean baseline, create a new feature branch and record the baseline commit; never auto-stash, reset, merge or reuse a conflicting branch.",
-      "inputSchema": { "type": "object", "properties": { "baseline": { "type": "string" } } },
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "baseline": {
+            "type": "string"
+          }
+        }
+      },
       "resultSchema": {
         "type": "object",
         "properties": {
-          "activated": { "type": "boolean" },
-          "branch": { "type": "string" },
-          "baselineCommit": { "type": "string" }
+          "activated": {
+            "type": "boolean"
+          },
+          "branch": {
+            "type": "string"
+          },
+          "baselineCommit": {
+            "type": "string"
+          }
         },
-        "required": ["activated"]
+        "required": [
+          "activated"
+        ]
       },
-      "responsibleAuthority": { "kind": "role", "role": "role.delivery-custodian" },
-      "allowedRoutes": ["route.delivery.custodian"],
-      "execution": { "mode": "single" },
-      "selector": { "kind": "deterministic" },
-      "allowedSuccessors": ["node.IM-06"],
+      "responsibleAuthority": {
+        "kind": "role",
+        "role": "role.delivery-custodian"
+      },
+      "allowedRoutes": [
+        "route.delivery.custodian"
+      ],
+      "execution": {
+        "mode": "single"
+      },
+      "selector": {
+        "kind": "deterministic"
+      },
+      "allowedSuccessors": [
+        "node.IM-06"
+      ],
       "gate": {
         "preconditions": [],
         "postconditions": [],
-        "deterministic": ["validator.branch-checks", "validator.cli-checks"],
+        "deterministic": [
+          "validator.branch-checks",
+          "validator.cli-checks"
+        ],
         "freeTextBypass": "prohibited"
       }
     },
@@ -214,28 +477,63 @@
       "id": "action.IM-06",
       "name": "Select Ready Goal and Rung",
       "purpose": "Deterministic Workflow selector: Harness prerequisite, then minimum end-to-end Walking Skeleton, then topological Goal/Test Ladder order; Implementer preference cannot choose the next Goal.",
-      "inputSchema": { "type": "object", "properties": { "goalGraph": { "type": "object" } } },
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "goalGraph": {
+            "type": "object"
+          }
+        }
+      },
       "resultSchema": {
         "type": "object",
         "properties": {
-          "goalRungReady": { "type": "boolean" },
-          "allGoalsCommitted": { "type": "boolean" },
-          "missingContract": { "type": "boolean" },
-          "selectedGoal": { "type": "string" },
-          "selectedRung": { "type": "string" }
+          "goalRungReady": {
+            "type": "boolean"
+          },
+          "allGoalsCommitted": {
+            "type": "boolean"
+          },
+          "missingContract": {
+            "type": "boolean"
+          },
+          "selectedGoal": {
+            "type": "string"
+          },
+          "selectedRung": {
+            "type": "string"
+          }
         },
-        "required": ["goalRungReady", "allGoalsCommitted", "missingContract"]
+        "required": [
+          "goalRungReady",
+          "allGoalsCommitted",
+          "missingContract"
+        ]
       },
-      "responsibleAuthority": { "kind": "runtime", "validator": "validator.selection-checks" },
-      "allowedRoutes": ["route.delivery.custodian"],
-      "execution": { "mode": "single" },
-      "selector": { "kind": "deterministic" },
-      "allowedSuccessors": ["node.IM-07", "node.IM-17"],
-      "waitPolicy": { "kind": "external", "wait": "wait.external-coordination" },
+      "responsibleAuthority": {
+        "kind": "runtime",
+        "validator": "validator.selection-checks"
+      },
+      "execution": {
+        "mode": "single"
+      },
+      "selector": {
+        "kind": "deterministic"
+      },
+      "allowedSuccessors": [
+        "node.IM-07",
+        "node.IM-17"
+      ],
+      "waitPolicy": {
+        "kind": "external",
+        "wait": "wait.external-coordination"
+      },
       "gate": {
         "preconditions": [],
         "postconditions": [],
-        "deterministic": ["validator.selection-checks"],
+        "deterministic": [
+          "validator.selection-checks"
+        ],
         "freeTextBypass": "prohibited"
       }
     },
@@ -243,25 +541,62 @@
       "id": "action.IM-07",
       "name": "Materialize and Calibrate Tests",
       "purpose": "Turn the current semantic rung into black-box tests and prove discriminating power; current behavior must fail for the expected reason, or existing-green must be challenged by a negative fixture or controlled mutant.",
-      "inputSchema": { "type": "object", "properties": { "goal": { "type": "object" }, "rung": { "type": "object" } } },
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "goal": {
+            "type": "object"
+          },
+          "rung": {
+            "type": "object"
+          }
+        }
+      },
       "resultSchema": {
         "type": "object",
         "properties": {
-          "calibrated": { "type": "boolean" },
-          "ambiguity": { "type": "boolean" },
-          "tests": { "type": "array", "items": { "type": "object" } }
+          "calibrated": {
+            "type": "boolean"
+          },
+          "ambiguity": {
+            "type": "boolean"
+          },
+          "tests": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          }
         },
-        "required": ["calibrated", "ambiguity"]
+        "required": [
+          "calibrated",
+          "ambiguity"
+        ]
       },
-      "responsibleAuthority": { "kind": "role", "role": "role.test-designer" },
-      "allowedRoutes": ["route.test.designer.blackbox"],
-      "execution": { "mode": "single" },
-      "selector": { "kind": "deterministic" },
-      "allowedSuccessors": ["node.IM-08", "node.IM-03"],
+      "responsibleAuthority": {
+        "kind": "role",
+        "role": "role.test-designer"
+      },
+      "allowedRoutes": [
+        "route.test.designer.blackbox"
+      ],
+      "execution": {
+        "mode": "single"
+      },
+      "selector": {
+        "kind": "deterministic"
+      },
+      "allowedSuccessors": [
+        "node.IM-08",
+        "node.IM-03"
+      ],
       "gate": {
         "preconditions": [],
         "postconditions": [],
-        "deterministic": ["validator.calibration-checks", "validator.writer-policy"],
+        "deterministic": [
+          "validator.calibration-checks",
+          "validator.writer-policy"
+        ],
         "freeTextBypass": "prohibited"
       }
     },
@@ -269,25 +604,59 @@
       "id": "action.IM-08",
       "name": "Evolve Prototype to Green",
       "purpose": "Make the smallest production-code change that turns the calibrated RED into GREEN; no formal test, fixture, Harness, coverage or writer-policy changes; diagnostic probes stay ignored and non-authoritative.",
-      "inputSchema": { "type": "object", "properties": { "redFeedback": { "type": "object" } } },
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "redFeedback": {
+            "type": "object"
+          }
+        }
+      },
       "resultSchema": {
         "type": "object",
         "properties": {
-          "expectedRedProgress": { "type": "boolean" },
-          "green": { "type": "boolean" },
-          "changedPaths": { "type": "array", "items": { "type": "string" } }
+          "expectedRedProgress": {
+            "type": "boolean"
+          },
+          "green": {
+            "type": "boolean"
+          },
+          "changedPaths": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
         },
-        "required": ["expectedRedProgress", "green"]
+        "required": [
+          "expectedRedProgress",
+          "green"
+        ]
       },
-      "responsibleAuthority": { "kind": "role", "role": "role.implementer" },
-      "allowedRoutes": ["route.implementation.standard"],
-      "execution": { "mode": "single" },
-      "selector": { "kind": "deterministic" },
-      "allowedSuccessors": ["node.IM-08", "node.IM-09"],
+      "responsibleAuthority": {
+        "kind": "role",
+        "role": "role.implementer"
+      },
+      "allowedRoutes": [
+        "route.implementation.standard"
+      ],
+      "execution": {
+        "mode": "single"
+      },
+      "selector": {
+        "kind": "deterministic"
+      },
+      "allowedSuccessors": [
+        "node.IM-08",
+        "node.IM-09"
+      ],
       "gate": {
         "preconditions": [],
         "postconditions": [],
-        "deterministic": ["validator.evolve-checks", "validator.writer-policy"],
+        "deterministic": [
+          "validator.evolve-checks",
+          "validator.writer-policy"
+        ],
         "freeTextBypass": "prohibited"
       }
     },
@@ -295,25 +664,62 @@
       "id": "action.IM-09",
       "name": "Close Structural Coverage",
       "purpose": "Classify changed branches and add assertions for behavior-relevant branches in a code-aware fresh session; new/modified behavior-bearing branches require 100% coverage plus branch-specific assertions; historical coverage cannot regress.",
-      "inputSchema": { "type": "object", "properties": { "diff": { "type": "object" }, "coverageMap": { "type": "object" } } },
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "diff": {
+            "type": "object"
+          },
+          "coverageMap": {
+            "type": "object"
+          }
+        }
+      },
       "resultSchema": {
         "type": "object",
         "properties": {
-          "branchRedIntroduced": { "type": "boolean" },
-          "branchesClosed": { "type": "boolean" },
-          "exclusions": { "type": "array", "items": { "type": "object" } }
+          "branchRedIntroduced": {
+            "type": "boolean"
+          },
+          "branchesClosed": {
+            "type": "boolean"
+          },
+          "exclusions": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          }
         },
-        "required": ["branchRedIntroduced", "branchesClosed"]
+        "required": [
+          "branchRedIntroduced",
+          "branchesClosed"
+        ]
       },
-      "responsibleAuthority": { "kind": "role", "role": "role.test-designer" },
-      "allowedRoutes": ["route.test.designer.structural"],
-      "execution": { "mode": "single" },
-      "selector": { "kind": "deterministic" },
-      "allowedSuccessors": ["node.IM-08", "node.IM-10"],
+      "responsibleAuthority": {
+        "kind": "role",
+        "role": "role.test-designer"
+      },
+      "allowedRoutes": [
+        "route.test.designer.structural"
+      ],
+      "execution": {
+        "mode": "single"
+      },
+      "selector": {
+        "kind": "deterministic"
+      },
+      "allowedSuccessors": [
+        "node.IM-08",
+        "node.IM-10"
+      ],
       "gate": {
         "preconditions": [],
         "postconditions": [],
-        "deterministic": ["validator.coverage-checks", "validator.writer-policy"],
+        "deterministic": [
+          "validator.coverage-checks",
+          "validator.writer-policy"
+        ],
         "freeTextBypass": "prohibited"
       }
     },
@@ -321,25 +727,59 @@
       "id": "action.IM-10",
       "name": "Bounded Refactor and Hardening",
       "purpose": "Improve the current prototype without changing frozen behavior; no speculative abstraction, future feature, generic machinery or unrelated cleanup; NO_REFACTOR_NEEDED is valid.",
-      "inputSchema": { "type": "object", "properties": { "greenCandidate": { "type": "object" } } },
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "greenCandidate": {
+            "type": "object"
+          }
+        }
+      },
       "resultSchema": {
         "type": "object",
         "properties": {
-          "regression": { "type": "boolean" },
-          "noRefactorOrGreen": { "type": "boolean" },
-          "changedPaths": { "type": "array", "items": { "type": "string" } }
+          "regression": {
+            "type": "boolean"
+          },
+          "noRefactorOrGreen": {
+            "type": "boolean"
+          },
+          "changedPaths": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
         },
-        "required": ["regression", "noRefactorOrGreen"]
+        "required": [
+          "regression",
+          "noRefactorOrGreen"
+        ]
       },
-      "responsibleAuthority": { "kind": "role", "role": "role.implementer" },
-      "allowedRoutes": ["route.implementation.standard"],
-      "execution": { "mode": "single" },
-      "selector": { "kind": "deterministic" },
-      "allowedSuccessors": ["node.IM-08", "node.IM-11"],
+      "responsibleAuthority": {
+        "kind": "role",
+        "role": "role.implementer"
+      },
+      "allowedRoutes": [
+        "route.implementation.standard"
+      ],
+      "execution": {
+        "mode": "single"
+      },
+      "selector": {
+        "kind": "deterministic"
+      },
+      "allowedSuccessors": [
+        "node.IM-08",
+        "node.IM-11"
+      ],
       "gate": {
         "preconditions": [],
         "postconditions": [],
-        "deterministic": ["validator.refactor-checks", "validator.writer-policy"],
+        "deterministic": [
+          "validator.refactor-checks",
+          "validator.writer-policy"
+        ],
         "freeTextBypass": "prohibited"
       }
     },
@@ -347,26 +787,63 @@
       "id": "action.IM-11",
       "name": "Verify Rung",
       "purpose": "Check current tests, affected regression, writer policy, stub ledger and Action evidence against one Git baseline; random rerun to obtain GREEN is prohibited.",
-      "inputSchema": { "type": "object", "properties": { "candidate": { "type": "object" } } },
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "candidate": {
+            "type": "object"
+          }
+        }
+      },
       "resultSchema": {
         "type": "object",
         "properties": {
-          "anotherRung": { "type": "boolean" },
-          "verified": { "type": "boolean" },
-          "invalidFeedback": { "type": "boolean" },
-          "returnAction": { "type": "string" }
+          "anotherRung": {
+            "type": "boolean"
+          },
+          "verified": {
+            "type": "boolean"
+          },
+          "invalidFeedback": {
+            "type": "boolean"
+          },
+          "returnAction": {
+            "type": "string"
+          }
         },
-        "required": ["anotherRung", "verified", "invalidFeedback"]
+        "required": [
+          "anotherRung",
+          "verified",
+          "invalidFeedback"
+        ]
       },
-      "responsibleAuthority": { "kind": "role", "role": "role.delivery-custodian" },
-      "allowedRoutes": ["route.delivery.custodian"],
-      "execution": { "mode": "single" },
-      "selector": { "kind": "deterministic" },
-      "allowedSuccessors": ["node.IM-07", "node.IM-08", "node.IM-09", "node.IM-10", "node.IM-12"],
+      "responsibleAuthority": {
+        "kind": "role",
+        "role": "role.delivery-custodian"
+      },
+      "allowedRoutes": [
+        "route.delivery.custodian"
+      ],
+      "execution": {
+        "mode": "single"
+      },
+      "selector": {
+        "kind": "deterministic"
+      },
+      "allowedSuccessors": [
+        "node.IM-07",
+        "node.IM-08",
+        "node.IM-09",
+        "node.IM-10",
+        "node.IM-12"
+      ],
       "gate": {
         "preconditions": [],
         "postconditions": [],
-        "deterministic": ["validator.rung-verify", "validator.cli-checks"],
+        "deterministic": [
+          "validator.rung-verify",
+          "validator.cli-checks"
+        ],
         "freeTextBypass": "prohibited"
       }
     },
@@ -374,31 +851,70 @@
       "id": "action.IM-12",
       "name": "Independent Goal Review",
       "purpose": "Two fresh isolated sessions (black-box Goal Adversary and white-box Implementation Reviewer) start from the same Goal candidate and remain isolated until the barrier closes.",
-      "inputSchema": { "type": "object", "properties": { "goalCandidate": { "type": "object" } } },
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "goalCandidate": {
+            "type": "object"
+          }
+        }
+      },
       "resultSchema": {
         "type": "object",
         "properties": {
-          "barrierReached": { "type": "boolean" },
-          "findings": { "type": "array", "items": { "type": "object" } }
+          "barrierReached": {
+            "type": "boolean"
+          },
+          "findings": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          }
         },
-        "required": ["barrierReached"]
+        "required": [
+          "barrierReached"
+        ]
       },
-      "responsibleAuthority": { "kind": "role", "role": "role.goal-adversary" },
-      "allowedRoutes": ["route.review.goal-blackbox", "route.review.implementation-whitebox"],
+      "responsibleAuthority": {
+        "kind": "role",
+        "role": "role.goal-adversary"
+      },
+      "allowedRoutes": [
+        "route.review.goal-blackbox",
+        "route.review.implementation-whitebox"
+      ],
       "execution": {
         "mode": "parallel",
         "branches": [
-          { "route": "route.review.goal-blackbox", "isolation": "session-isolated", "required": true },
-          { "route": "route.review.implementation-whitebox", "isolation": "session-isolated", "required": true }
+          {
+            "route": "route.review.goal-blackbox",
+            "isolation": "session-isolated",
+            "required": true
+          },
+          {
+            "route": "route.review.implementation-whitebox",
+            "isolation": "session-isolated",
+            "required": true
+          }
         ],
-        "join": { "mode": "all", "barrier": true }
+        "join": {
+          "mode": "all",
+          "barrier": true
+        }
       },
-      "selector": { "kind": "deterministic" },
-      "allowedSuccessors": ["node.IM-13"],
+      "selector": {
+        "kind": "deterministic"
+      },
+      "allowedSuccessors": [
+        "node.IM-13"
+      ],
       "gate": {
         "preconditions": [],
         "postconditions": [],
-        "deterministic": ["validator.review-isolation"],
+        "deterministic": [
+          "validator.review-isolation"
+        ],
         "freeTextBypass": "prohibited"
       }
     },
@@ -406,24 +922,63 @@
       "id": "action.IM-13",
       "name": "Aggregate and Route Findings",
       "purpose": "Preserve provenance, merge clear common causes, detect conflicts and route each Finding; never votes, never changes severity, never edits tests/code and never closes Findings.",
-      "inputSchema": { "type": "object", "properties": { "reviewResults": { "type": "array", "items": { "type": "object" } } } },
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "reviewResults": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          }
+        }
+      },
       "resultSchema": {
         "type": "object",
         "properties": {
-          "finding": { "type": "string", "enum": ["none", "test", "implementation"] },
-          "routedFindings": { "type": "array", "items": { "type": "object" } }
+          "finding": {
+            "type": "string",
+            "enum": [
+              "none",
+              "test",
+              "implementation"
+            ]
+          },
+          "routedFindings": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          }
         },
-        "required": ["finding"]
+        "required": [
+          "finding"
+        ]
       },
-      "responsibleAuthority": { "kind": "role", "role": "role.finding-aggregator" },
-      "allowedRoutes": ["route.finding.aggregate"],
-      "execution": { "mode": "single" },
-      "selector": { "kind": "deterministic" },
-      "allowedSuccessors": ["node.IM-16", "node.IM-14T", "node.IM-14I"],
+      "responsibleAuthority": {
+        "kind": "role",
+        "role": "role.finding-aggregator"
+      },
+      "allowedRoutes": [
+        "route.finding.aggregate"
+      ],
+      "execution": {
+        "mode": "single"
+      },
+      "selector": {
+        "kind": "deterministic"
+      },
+      "allowedSuccessors": [
+        "node.IM-16",
+        "node.IM-14T",
+        "node.IM-14I"
+      ],
       "gate": {
         "preconditions": [],
         "postconditions": [],
-        "deterministic": ["validator.aggregation-rules"],
+        "deterministic": [
+          "validator.aggregation-rules"
+        ],
         "freeTextBypass": "prohibited"
       }
     },
@@ -431,17 +986,52 @@
       "id": "action.IM-14T",
       "name": "Test-side Targeted Resolution",
       "purpose": "Test Designer may add or repair feedback strictly within the frozen Goal; any requested semantic expansion stops this Delivery.",
-      "inputSchema": { "type": "object", "properties": { "finding": { "type": "object" }, "treatment": { "type": "object" } } },
-      "resultSchema": { "type": "object", "properties": { "treatmentRecorded": { "type": "boolean" } }, "required": ["treatmentRecorded"] },
-      "responsibleAuthority": { "kind": "role", "role": "role.test-designer" },
-      "allowedRoutes": ["route.test.designer.blackbox", "route.test.designer.structural"],
-      "execution": { "mode": "single" },
-      "selector": { "kind": "deterministic" },
-      "allowedSuccessors": ["node.IM-15"],
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "finding": {
+            "type": "object"
+          },
+          "treatment": {
+            "type": "object"
+          }
+        }
+      },
+      "resultSchema": {
+        "type": "object",
+        "properties": {
+          "treatmentRecorded": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "treatmentRecorded"
+        ]
+      },
+      "responsibleAuthority": {
+        "kind": "role",
+        "role": "role.test-designer"
+      },
+      "allowedRoutes": [
+        "route.test.designer.blackbox",
+        "route.test.designer.structural"
+      ],
+      "execution": {
+        "mode": "single"
+      },
+      "selector": {
+        "kind": "deterministic"
+      },
+      "allowedSuccessors": [
+        "node.IM-15"
+      ],
       "gate": {
         "preconditions": [],
         "postconditions": [],
-        "deterministic": ["validator.resolution-checks", "validator.writer-policy"],
+        "deterministic": [
+          "validator.resolution-checks",
+          "validator.writer-policy"
+        ],
         "freeTextBypass": "prohibited"
       }
     },
@@ -449,17 +1039,51 @@
       "id": "action.IM-14I",
       "name": "Implementation-side Targeted Resolution",
       "purpose": "Implementer may modify production code only, within the frozen Goal; negative feedback order is failing executable test, deterministic rule, then structured semantic recheck.",
-      "inputSchema": { "type": "object", "properties": { "finding": { "type": "object" }, "treatment": { "type": "object" } } },
-      "resultSchema": { "type": "object", "properties": { "treatmentRecorded": { "type": "boolean" } }, "required": ["treatmentRecorded"] },
-      "responsibleAuthority": { "kind": "role", "role": "role.implementer" },
-      "allowedRoutes": ["route.implementation.standard"],
-      "execution": { "mode": "single" },
-      "selector": { "kind": "deterministic" },
-      "allowedSuccessors": ["node.IM-15"],
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "finding": {
+            "type": "object"
+          },
+          "treatment": {
+            "type": "object"
+          }
+        }
+      },
+      "resultSchema": {
+        "type": "object",
+        "properties": {
+          "treatmentRecorded": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "treatmentRecorded"
+        ]
+      },
+      "responsibleAuthority": {
+        "kind": "role",
+        "role": "role.implementer"
+      },
+      "allowedRoutes": [
+        "route.implementation.standard"
+      ],
+      "execution": {
+        "mode": "single"
+      },
+      "selector": {
+        "kind": "deterministic"
+      },
+      "allowedSuccessors": [
+        "node.IM-15"
+      ],
       "gate": {
         "preconditions": [],
         "postconditions": [],
-        "deterministic": ["validator.resolution-checks", "validator.writer-policy"],
+        "deterministic": [
+          "validator.resolution-checks",
+          "validator.writer-policy"
+        ],
         "freeTextBypass": "prohibited"
       }
     },
@@ -467,25 +1091,64 @@
       "id": "action.IM-15",
       "name": "Independent Recheck",
       "purpose": "The original Finding lens closes its Finding against the exact treatment and new candidate in a fresh session; Implementer/Aggregator cannot close it; the Finding records its review scope and return Action.",
-      "inputSchema": { "type": "object", "properties": { "finding": { "type": "object" }, "treatment": { "type": "object" }, "candidate": { "type": "object" } } },
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "finding": {
+            "type": "object"
+          },
+          "treatment": {
+            "type": "object"
+          },
+          "candidate": {
+            "type": "object"
+          }
+        }
+      },
       "resultSchema": {
         "type": "object",
         "properties": {
-          "findingOpen": { "type": "boolean" },
-          "goalScopeFindingClosed": { "type": "boolean" },
-          "wholeScopeFindingClosed": { "type": "boolean" }
+          "findingOpen": {
+            "type": "boolean"
+          },
+          "goalScopeFindingClosed": {
+            "type": "boolean"
+          },
+          "wholeScopeFindingClosed": {
+            "type": "boolean"
+          }
         },
-        "required": ["findingOpen", "goalScopeFindingClosed", "wholeScopeFindingClosed"]
+        "required": [
+          "findingOpen",
+          "goalScopeFindingClosed",
+          "wholeScopeFindingClosed"
+        ]
       },
-      "responsibleAuthority": { "kind": "role", "role": "role.goal-adversary" },
-      "allowedRoutes": ["route.review.goal-blackbox", "route.review.implementation-whitebox"],
-      "execution": { "mode": "single" },
-      "selector": { "kind": "deterministic" },
-      "allowedSuccessors": ["node.IM-13", "node.IM-16", "node.IM-17"],
+      "responsibleAuthority": {
+        "kind": "role",
+        "role": "role.goal-adversary"
+      },
+      "allowedRoutes": [
+        "route.review.goal-blackbox",
+        "route.review.implementation-whitebox"
+      ],
+      "execution": {
+        "mode": "single"
+      },
+      "selector": {
+        "kind": "deterministic"
+      },
+      "allowedSuccessors": [
+        "node.IM-13",
+        "node.IM-16",
+        "node.IM-17"
+      ],
       "gate": {
         "preconditions": [],
         "postconditions": [],
-        "deterministic": ["validator.recheck-checks"],
+        "deterministic": [
+          "validator.recheck-checks"
+        ],
         "freeTextBypass": "prohibited"
       }
     },
@@ -493,17 +1156,51 @@
       "id": "action.IM-16",
       "name": "Verify and Commit Goal",
       "purpose": "Check all Goal rungs complete, local Findings closed, writer/scope clean, focused/affected regression/coverage green, no unauthorized stubs; commit only explicit approved paths with Goal identity.",
-      "inputSchema": { "type": "object", "properties": { "goal": { "type": "object" }, "candidate": { "type": "object" } } },
-      "resultSchema": { "type": "object", "properties": { "verifiedGoalCommitted": { "type": "boolean" } }, "required": ["verifiedGoalCommitted"] },
-      "responsibleAuthority": { "kind": "role", "role": "role.delivery-custodian" },
-      "allowedRoutes": ["route.delivery.custodian"],
-      "execution": { "mode": "single" },
-      "selector": { "kind": "deterministic" },
-      "allowedSuccessors": ["node.IM-06"],
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "goal": {
+            "type": "object"
+          },
+          "candidate": {
+            "type": "object"
+          }
+        }
+      },
+      "resultSchema": {
+        "type": "object",
+        "properties": {
+          "verifiedGoalCommitted": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "verifiedGoalCommitted"
+        ]
+      },
+      "responsibleAuthority": {
+        "kind": "role",
+        "role": "role.delivery-custodian"
+      },
+      "allowedRoutes": [
+        "route.delivery.custodian"
+      ],
+      "execution": {
+        "mode": "single"
+      },
+      "selector": {
+        "kind": "deterministic"
+      },
+      "allowedSuccessors": [
+        "node.IM-06"
+      ],
       "gate": {
         "preconditions": [],
         "postconditions": [],
-        "deterministic": ["validator.goal-commit-checks", "validator.cli-checks"],
+        "deterministic": [
+          "validator.goal-commit-checks",
+          "validator.cli-checks"
+        ],
         "freeTextBypass": "prohibited"
       }
     },
@@ -511,32 +1208,81 @@
       "id": "action.IM-17",
       "name": "Whole-scope Regression and Review",
       "purpose": "Test cross-Goal composition, shared state, final Project Context applicability, mapped implementation-verification obligations and full regression against the complete branch with both independent review lenses plus the Delivery Custodian CLI.",
-      "inputSchema": { "type": "object", "properties": { "branch": { "type": "object" }, "goalCommits": { "type": "array", "items": { "type": "string" } } } },
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "branch": {
+            "type": "object"
+          },
+          "goalCommits": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
       "resultSchema": {
         "type": "object",
         "properties": {
-          "passed": { "type": "boolean" },
-          "wholeScopeFindingAdmitted": { "type": "boolean" }
+          "passed": {
+            "type": "boolean"
+          },
+          "wholeScopeFindingAdmitted": {
+            "type": "boolean"
+          }
         },
-        "required": ["passed", "wholeScopeFindingAdmitted"]
+        "required": [
+          "passed",
+          "wholeScopeFindingAdmitted"
+        ]
       },
-      "responsibleAuthority": { "kind": "role", "role": "role.goal-adversary" },
-      "allowedRoutes": ["route.review.goal-blackbox", "route.review.implementation-whitebox", "route.delivery.custodian"],
+      "responsibleAuthority": {
+        "kind": "role",
+        "role": "role.goal-adversary"
+      },
+      "allowedRoutes": [
+        "route.review.goal-blackbox",
+        "route.review.implementation-whitebox",
+        "route.delivery.custodian"
+      ],
       "execution": {
         "mode": "parallel",
         "branches": [
-          { "route": "route.review.goal-blackbox", "isolation": "session-isolated", "required": true },
-          { "route": "route.review.implementation-whitebox", "isolation": "session-isolated", "required": true },
-          { "route": "route.delivery.custodian", "isolation": "shared", "required": true }
+          {
+            "route": "route.review.goal-blackbox",
+            "isolation": "session-isolated",
+            "required": true
+          },
+          {
+            "route": "route.review.implementation-whitebox",
+            "isolation": "session-isolated",
+            "required": true
+          },
+          {
+            "route": "route.delivery.custodian",
+            "isolation": "shared",
+            "required": true
+          }
         ],
-        "join": { "mode": "all", "barrier": true }
+        "join": {
+          "mode": "all",
+          "barrier": true
+        }
       },
-      "selector": { "kind": "deterministic" },
-      "allowedSuccessors": ["node.IM-13", "node.IM-18"],
+      "selector": {
+        "kind": "deterministic"
+      },
+      "allowedSuccessors": [
+        "node.IM-13",
+        "node.IM-18"
+      ],
       "gate": {
         "preconditions": [],
         "postconditions": [],
-        "deterministic": ["validator.whole-scope-checks"],
+        "deterministic": [
+          "validator.whole-scope-checks"
+        ],
         "freeTextBypass": "prohibited"
       }
     },
@@ -544,26 +1290,63 @@
       "id": "action.IM-18",
       "name": "Freeze Candidate and Clean",
       "purpose": "Delivery Custodian verifies every in-scope Goal VERIFIED, all Findings disposition-valid, required Harness phases pass, no unauthorized stub/debug artifact, worktree clean, exact run-manifest/retention disposition valid; removes only eligible run-workspace copies; no push/PR/merge/deploy.",
-      "inputSchema": { "type": "object", "properties": { "candidate": { "type": "object" } } },
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "candidate": {
+            "type": "object"
+          }
+        }
+      },
       "resultSchema": {
         "type": "object",
         "properties": {
-          "passed": { "type": "boolean" },
-          "branchHead": { "type": "string" },
-          "changeSet": { "type": "array", "items": { "type": "string" } },
-          "tuningHandoffs": { "type": "array", "items": { "type": "object" } }
+          "passed": {
+            "type": "boolean"
+          },
+          "branchHead": {
+            "type": "string"
+          },
+          "changeSet": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "tuningHandoffs": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          }
         },
-        "required": ["passed"]
+        "required": [
+          "passed"
+        ]
       },
-      "responsibleAuthority": { "kind": "role", "role": "role.delivery-custodian" },
-      "allowedRoutes": ["route.delivery.custodian"],
-      "execution": { "mode": "single" },
-      "selector": { "kind": "deterministic" },
-      "allowedSuccessors": ["terminal:VERIFIED_IMPLEMENTATION_READY"],
+      "responsibleAuthority": {
+        "kind": "role",
+        "role": "role.delivery-custodian"
+      },
+      "allowedRoutes": [
+        "route.delivery.custodian"
+      ],
+      "execution": {
+        "mode": "single"
+      },
+      "selector": {
+        "kind": "deterministic"
+      },
+      "allowedSuccessors": [
+        "terminal:VERIFIED_IMPLEMENTATION_READY"
+      ],
       "gate": {
         "preconditions": [],
         "postconditions": [],
-        "deterministic": ["validator.final-checks", "validator.cli-checks"],
+        "deterministic": [
+          "validator.final-checks",
+          "validator.cli-checks"
+        ],
         "freeTextBypass": "prohibited"
       }
     }

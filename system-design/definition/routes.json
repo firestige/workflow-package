@@ -5,222 +5,522 @@
     {
       "id": "route.facilitator.standard",
       "role": "role.grilling-facilitator",
-      "agent": { "definition": { "id": "resource.agent-definition.managed" }, "managedProjection": "required" },
+      "agent": {
+        "definition": {
+          "id": "resource.agent-definition.managed"
+        },
+        "managedProjection": "required"
+      },
       "resources": {
-        "rolePrompt": { "id": "resource.role-prompt.grilling-facilitator" },
+        "rolePrompt": {
+          "id": "resource.role-prompt.grilling-facilitator"
+        },
         "actionPrompts": [
-          { "action": "action.sd-01", "prompt": { "id": "resource.prompt.intake-and-authority" } },
-          { "action": "action.sd-02", "prompt": { "id": "resource.prompt.adaptive-grilling" } }
+          {
+            "action": "action.sd-01",
+            "prompt": {
+              "id": "resource.prompt.intake-and-authority"
+            }
+          },
+          {
+            "action": "action.sd-02",
+            "prompt": {
+              "id": "resource.prompt.adaptive-grilling"
+            }
+          }
         ],
-        "skills": [ { "id": "resource.skill.grilling" } ],
-        "model": { "id": "resource.model.managed" },
-        "tools": [ { "id": "resource.tool.repo-read" } ],
-        "driver": { "id": "resource.driver.managed-cli" },
-        "sessionPolicy": { "freshness": "fresh-per-episode", "isolation": "shared" }
+        "skills": [
+          {
+            "id": "resource.skill.grilling"
+          }
+        ],
+        "model": {
+          "id": "resource.model.managed"
+        },
+        "tools": [
+          {
+            "id": "resource.tool.repo-read"
+          }
+        ],
+        "driver": {
+          "id": "resource.driver.managed-cli"
+        },
+        "sessionPolicy": {
+          "freshness": "fresh-per-episode",
+          "isolation": "shared"
+        }
       },
       "access": [
-        { "target": "repository", "mode": "read" },
-        { "target": "ignored run-workspace Brief", "mode": "write" }
+        {
+          "target": "repository",
+          "mode": "read"
+        },
+        {
+          "target": "ignored run-workspace Brief",
+          "mode": "write"
+        }
       ],
       "escalationAllowed": false
     },
     {
       "id": "route.scout.evidence",
       "role": "role.evidence-scout",
-      "agent": { "definition": { "id": "resource.agent-definition.managed" }, "managedProjection": "required" },
+      "agent": {
+        "definition": {
+          "id": "resource.agent-definition.managed"
+        },
+        "managedProjection": "required"
+      },
       "resources": {
-        "rolePrompt": { "id": "resource.role-prompt.evidence-scout" },
+        "rolePrompt": {
+          "id": "resource.role-prompt.evidence-scout"
+        },
         "actionPrompts": [
-          { "action": "action.sd-01r", "prompt": { "id": "resource.prompt.evidence-research" } }
+          {
+            "action": "action.sd-01r",
+            "prompt": {
+              "id": "resource.prompt.evidence-research"
+            }
+          }
         ],
         "skills": [],
-        "model": { "id": "resource.model.managed" },
-        "tools": [ { "id": "resource.tool.repo-read" } ],
-        "driver": { "id": "resource.driver.managed-cli" },
-        "sessionPolicy": { "freshness": "fresh-per-episode", "isolation": "isolated" }
+        "model": {
+          "id": "resource.model.managed"
+        },
+        "tools": [
+          {
+            "id": "resource.tool.repo-read"
+          }
+        ],
+        "driver": {
+          "id": "resource.driver.managed-cli"
+        },
+        "sessionPolicy": {
+          "freshness": "fresh-per-episode",
+          "isolation": "isolated"
+        }
       },
       "access": [
-        { "target": "repository and authorized sources", "mode": "read" },
-        { "target": "evidence research result artifact", "mode": "write" }
+        {
+          "target": "repository and authorized sources",
+          "mode": "read"
+        },
+        {
+          "target": "evidence research result artifact",
+          "mode": "write"
+        }
       ],
       "escalationAllowed": false
     },
     {
       "id": "route.designer.standard",
       "role": "role.system-designer",
-      "agent": { "definition": { "id": "resource.agent-definition.managed" }, "managedProjection": "required" },
+      "agent": {
+        "definition": {
+          "id": "resource.agent-definition.managed"
+        },
+        "managedProjection": "required"
+      },
       "resources": {
-        "rolePrompt": { "id": "resource.role-prompt.system-designer" },
+        "rolePrompt": {
+          "id": "resource.role-prompt.system-designer"
+        },
         "actionPrompts": [
-          { "action": "action.sd-04", "prompt": { "id": "resource.prompt.produce-skeleton" } },
-          { "action": "action.sd-06", "prompt": { "id": "resource.prompt.prepare-spike-request" } },
-          { "action": "action.sd-06", "prompt": { "id": "resource.prompt.apply-spike-result" } },
-          { "action": "action.sd-07", "prompt": { "id": "resource.prompt.expand-system-design" } },
-          { "action": "action.sd-08", "prompt": { "id": "resource.prompt.integrate-draft" } },
-          { "action": "action.sd-11", "prompt": { "id": "resource.prompt.targeted-revision" } },
-          { "action": "action.sd-12", "prompt": { "id": "resource.prompt.classify-downstream-handoffs" } }
+          {
+            "action": "action.sd-04",
+            "prompt": {
+              "id": "resource.prompt.produce-skeleton"
+            }
+          },
+          {
+            "action": "action.sd-06",
+            "prompt": {
+              "id": "resource.prompt.prepare-spike-request"
+            }
+          },
+          {
+            "action": "action.sd-06",
+            "prompt": {
+              "id": "resource.prompt.apply-spike-result"
+            }
+          },
+          {
+            "action": "action.sd-07",
+            "prompt": {
+              "id": "resource.prompt.expand-system-design"
+            }
+          },
+          {
+            "action": "action.sd-08",
+            "prompt": {
+              "id": "resource.prompt.integrate-draft"
+            }
+          },
+          {
+            "action": "action.sd-11",
+            "prompt": {
+              "id": "resource.prompt.targeted-revision"
+            }
+          },
+          {
+            "action": "action.sd-12",
+            "prompt": {
+              "id": "resource.prompt.classify-downstream-handoffs"
+            }
+          }
         ],
         "skills": [
-          { "id": "resource.skill.system-design-authoring" },
-          { "id": "resource.skill.codebase-design" }
+          {
+            "id": "resource.skill.system-design-authoring"
+          },
+          {
+            "id": "resource.skill.codebase-design"
+          }
         ],
-        "model": { "id": "resource.model.managed" },
-        "tools": [ { "id": "resource.tool.repo-read" } ],
-        "driver": { "id": "resource.driver.managed-cli" },
-        "sessionPolicy": { "freshness": "fresh-per-episode", "isolation": "isolated", "resumeRule": "fresh after Brief freeze; resumable working Draft checkpoints only, never Git deliverables" }
+        "model": {
+          "id": "resource.model.managed"
+        },
+        "tools": [
+          {
+            "id": "resource.tool.repo-read"
+          }
+        ],
+        "driver": {
+          "id": "resource.driver.managed-cli"
+        },
+        "sessionPolicy": {
+          "freshness": "fresh-per-episode",
+          "isolation": "isolated",
+          "resumeRule": "fresh after Brief freeze; resumable working Draft checkpoints only, never Git deliverables"
+        }
       },
       "access": [
-        { "target": "repository", "mode": "read" },
-        { "target": "ignored run-workspace Skeleton/Draft/checkpoint/revision artifacts", "mode": "write" }
+        {
+          "target": "repository",
+          "mode": "read"
+        },
+        {
+          "target": "ignored run-workspace Skeleton/Draft/checkpoint/revision artifacts",
+          "mode": "write"
+        }
       ],
       "escalationAllowed": false
     },
     {
       "id": "route.reviewer.architecture",
       "role": "role.architecture-reviewer",
-      "agent": { "definition": { "id": "resource.agent-definition.managed" }, "managedProjection": "required" },
+      "agent": {
+        "definition": {
+          "id": "resource.agent-definition.managed"
+        },
+        "managedProjection": "required"
+      },
       "resources": {
-        "rolePrompt": { "id": "resource.role-prompt.architecture-reviewer" },
+        "rolePrompt": {
+          "id": "resource.role-prompt.architecture-reviewer"
+        },
         "actionPrompts": [
-          { "action": "action.sd-05", "prompt": { "id": "resource.prompt.architecture-direction-review" } },
-          { "action": "action.sd-09", "prompt": { "id": "resource.prompt.architecture-review" } }
+          {
+            "action": "action.sd-05",
+            "prompt": {
+              "id": "resource.prompt.architecture-direction-review"
+            }
+          },
+          {
+            "action": "action.sd-09",
+            "prompt": {
+              "id": "resource.prompt.architecture-review"
+            }
+          }
         ],
         "skills": [
-          { "id": "resource.skill.architecture-review" },
-          { "id": "resource.skill.codebase-design" }
+          {
+            "id": "resource.skill.architecture-review"
+          },
+          {
+            "id": "resource.skill.codebase-design"
+          }
         ],
-        "model": { "id": "resource.model.managed" },
-        "tools": [ { "id": "resource.tool.repo-read" } ],
-        "driver": { "id": "resource.driver.managed-cli" },
-        "sessionPolicy": { "freshness": "fresh-per-episode", "isolation": "isolated", "resumeRule": "recheck starts fresh with the original Finding, treatment, new Draft and evidence" }
+        "model": {
+          "id": "resource.model.managed"
+        },
+        "tools": [
+          {
+            "id": "resource.tool.repo-read"
+          }
+        ],
+        "driver": {
+          "id": "resource.driver.managed-cli"
+        },
+        "sessionPolicy": {
+          "freshness": "fresh-per-episode",
+          "isolation": "isolated",
+          "resumeRule": "recheck starts fresh with the original Finding, treatment, new Draft and evidence"
+        }
       },
       "access": [
-        { "target": "candidate Brief/Skeleton/Draft and repository", "mode": "read" },
-        { "target": "review finding artifacts", "mode": "write" }
+        {
+          "target": "candidate Brief/Skeleton/Draft and repository",
+          "mode": "read"
+        },
+        {
+          "target": "review finding artifacts",
+          "mode": "write"
+        }
       ],
       "escalationAllowed": false
     },
     {
       "id": "route.reviewer.problem-solution",
       "role": "role.problem-solution-reviewer",
-      "agent": { "definition": { "id": "resource.agent-definition.managed" }, "managedProjection": "required" },
+      "agent": {
+        "definition": {
+          "id": "resource.agent-definition.managed"
+        },
+        "managedProjection": "required"
+      },
       "resources": {
-        "rolePrompt": { "id": "resource.role-prompt.problem-solution-reviewer" },
+        "rolePrompt": {
+          "id": "resource.role-prompt.problem-solution-reviewer"
+        },
         "actionPrompts": [
-          { "action": "action.sd-09", "prompt": { "id": "resource.prompt.problem-solution-review" } }
+          {
+            "action": "action.sd-09",
+            "prompt": {
+              "id": "resource.prompt.problem-solution-review"
+            }
+          }
         ],
-        "skills": [ { "id": "resource.skill.problem-solution-review" } ],
-        "model": { "id": "resource.model.managed" },
-        "tools": [ { "id": "resource.tool.repo-read" } ],
-        "driver": { "id": "resource.driver.managed-cli" },
-        "sessionPolicy": { "freshness": "fresh-per-episode", "isolation": "isolated", "resumeRule": "recheck starts fresh with the original Finding, treatment, new Draft and evidence" }
+        "skills": [
+          {
+            "id": "resource.skill.problem-solution-review"
+          }
+        ],
+        "model": {
+          "id": "resource.model.managed"
+        },
+        "tools": [
+          {
+            "id": "resource.tool.repo-read"
+          }
+        ],
+        "driver": {
+          "id": "resource.driver.managed-cli"
+        },
+        "sessionPolicy": {
+          "freshness": "fresh-per-episode",
+          "isolation": "isolated",
+          "resumeRule": "recheck starts fresh with the original Finding, treatment, new Draft and evidence"
+        }
       },
       "access": [
-        { "target": "candidate Brief/Draft", "mode": "read" },
-        { "target": "review finding artifacts", "mode": "write" }
+        {
+          "target": "candidate Brief/Draft",
+          "mode": "read"
+        },
+        {
+          "target": "review finding artifacts",
+          "mode": "write"
+        }
       ],
       "escalationAllowed": false
     },
     {
       "id": "route.reviewer.quality",
       "role": "role.quality-reviewer",
-      "agent": { "definition": { "id": "resource.agent-definition.managed" }, "managedProjection": "required" },
+      "agent": {
+        "definition": {
+          "id": "resource.agent-definition.managed"
+        },
+        "managedProjection": "required"
+      },
       "resources": {
-        "rolePrompt": { "id": "resource.role-prompt.quality-reviewer" },
+        "rolePrompt": {
+          "id": "resource.role-prompt.quality-reviewer"
+        },
         "actionPrompts": [
-          { "action": "action.sd-09", "prompt": { "id": "resource.prompt.quality-acceptance-review" } }
+          {
+            "action": "action.sd-09",
+            "prompt": {
+              "id": "resource.prompt.quality-acceptance-review"
+            }
+          }
         ],
-        "skills": [ { "id": "resource.skill.quality-acceptance-review" } ],
-        "model": { "id": "resource.model.managed" },
-        "tools": [ { "id": "resource.tool.repo-read" } ],
-        "driver": { "id": "resource.driver.managed-cli" },
-        "sessionPolicy": { "freshness": "fresh-per-episode", "isolation": "isolated", "resumeRule": "recheck starts fresh with the original Finding, treatment, new Draft and evidence" }
+        "skills": [
+          {
+            "id": "resource.skill.quality-acceptance-review"
+          }
+        ],
+        "model": {
+          "id": "resource.model.managed"
+        },
+        "tools": [
+          {
+            "id": "resource.tool.repo-read"
+          }
+        ],
+        "driver": {
+          "id": "resource.driver.managed-cli"
+        },
+        "sessionPolicy": {
+          "freshness": "fresh-per-episode",
+          "isolation": "isolated",
+          "resumeRule": "recheck starts fresh with the original Finding, treatment, new Draft and evidence"
+        }
       },
       "access": [
-        { "target": "candidate Brief/Draft and evidence", "mode": "read" },
-        { "target": "review finding artifacts", "mode": "write" }
+        {
+          "target": "candidate Brief/Draft and evidence",
+          "mode": "read"
+        },
+        {
+          "target": "review finding artifacts",
+          "mode": "write"
+        }
       ],
       "escalationAllowed": false
     },
     {
       "id": "route.aggregator.standard",
       "role": "role.finding-aggregator",
-      "agent": { "definition": { "id": "resource.agent-definition.managed" }, "managedProjection": "required" },
+      "agent": {
+        "definition": {
+          "id": "resource.agent-definition.managed"
+        },
+        "managedProjection": "required"
+      },
       "resources": {
-        "rolePrompt": { "id": "resource.role-prompt.finding-aggregator" },
+        "rolePrompt": {
+          "id": "resource.role-prompt.finding-aggregator"
+        },
         "actionPrompts": [
-          { "action": "action.sd-10", "prompt": { "id": "resource.prompt.aggregate-findings" } }
+          {
+            "action": "action.sd-10",
+            "prompt": {
+              "id": "resource.prompt.aggregate-findings"
+            }
+          }
         ],
         "skills": [],
-        "model": { "id": "resource.model.managed" },
+        "model": {
+          "id": "resource.model.managed"
+        },
         "tools": [],
-        "driver": { "id": "resource.driver.managed-cli" },
-        "sessionPolicy": { "freshness": "fresh-per-episode", "isolation": "shared" }
+        "driver": {
+          "id": "resource.driver.managed-cli"
+        },
+        "sessionPolicy": {
+          "freshness": "fresh-per-episode",
+          "isolation": "shared"
+        }
       },
       "access": [
-        { "target": "review artifacts", "mode": "read" },
-        { "target": "aggregation/disposition result artifact", "mode": "write" }
+        {
+          "target": "review artifacts",
+          "mode": "read"
+        },
+        {
+          "target": "aggregation/disposition result artifact",
+          "mode": "write"
+        }
       ],
       "escalationAllowed": false
     },
     {
       "id": "route.facilitator.decision",
       "role": "role.grilling-facilitator",
-      "agent": { "definition": { "id": "resource.agent-definition.managed" }, "managedProjection": "required" },
+      "agent": {
+        "definition": {
+          "id": "resource.agent-definition.managed"
+        },
+        "managedProjection": "required"
+      },
       "resources": {
-        "rolePrompt": { "id": "resource.role-prompt.grilling-facilitator" },
+        "rolePrompt": {
+          "id": "resource.role-prompt.grilling-facilitator"
+        },
         "actionPrompts": [
-          { "action": "action.sd-11h", "prompt": { "id": "resource.prompt.human-decision-dialogue" } }
+          {
+            "action": "action.sd-11h",
+            "prompt": {
+              "id": "resource.prompt.human-decision-dialogue"
+            }
+          }
         ],
-        "skills": [ { "id": "resource.skill.grilling" } ],
-        "model": { "id": "resource.model.managed" },
+        "skills": [
+          {
+            "id": "resource.skill.grilling"
+          }
+        ],
+        "model": {
+          "id": "resource.model.managed"
+        },
         "tools": [],
-        "driver": { "id": "resource.driver.managed-cli" },
-        "sessionPolicy": { "freshness": "resumable-within-admitted-dialogue", "isolation": "isolated", "resumeRule": "resumable only within the same admitted decision identity and evidence binding; exploratory replies are never final decisions" }
+        "driver": {
+          "id": "resource.driver.managed-cli"
+        },
+        "sessionPolicy": {
+          "freshness": "resumable-within-admitted-dialogue",
+          "isolation": "isolated",
+          "resumeRule": "resumable only within the same admitted decision identity and evidence binding; exploratory replies are never final decisions"
+        }
       },
       "access": [
-        { "target": "evidence", "mode": "read" },
-        { "target": "decision artifacts", "mode": "write" }
+        {
+          "target": "evidence",
+          "mode": "read"
+        },
+        {
+          "target": "decision artifacts",
+          "mode": "write"
+        }
       ],
       "escalationAllowed": false
     },
     {
       "id": "route.reader.fresh",
       "role": "role.fresh-reader",
-      "agent": { "definition": { "id": "resource.agent-definition.managed" }, "managedProjection": "required" },
+      "agent": {
+        "definition": {
+          "id": "resource.agent-definition.managed"
+        },
+        "managedProjection": "required"
+      },
       "resources": {
-        "rolePrompt": { "id": "resource.role-prompt.fresh-reader" },
+        "rolePrompt": {
+          "id": "resource.role-prompt.fresh-reader"
+        },
         "actionPrompts": [
-          { "action": "action.sd-13", "prompt": { "id": "resource.prompt.fresh-reader-test" } }
+          {
+            "action": "action.sd-13",
+            "prompt": {
+              "id": "resource.prompt.fresh-reader-test"
+            }
+          }
         ],
         "skills": [],
-        "model": { "id": "resource.model.managed" },
+        "model": {
+          "id": "resource.model.managed"
+        },
         "tools": [],
-        "driver": { "id": "resource.driver.managed-cli" },
-        "sessionPolicy": { "freshness": "fresh-per-episode", "isolation": "isolated", "resumeRule": "context-isolated fresh session; no grilling transcript or hidden author/reviewer context" }
+        "driver": {
+          "id": "resource.driver.managed-cli"
+        },
+        "sessionPolicy": {
+          "freshness": "fresh-per-episode",
+          "isolation": "isolated",
+          "resumeRule": "context-isolated fresh session; no grilling transcript or hidden author/reviewer context"
+        }
       },
       "access": [
-        { "target": "candidate Design and Brief-derived question set", "mode": "read" },
-        { "target": "reader question/finding artifacts", "mode": "write" }
-      ],
-      "escalationAllowed": false
-    },
-    {
-      "id": "route.runtime.deterministic",
-      "role": "role.runtime-custodian",
-      "agent": { "definition": { "id": "resource.agent-definition.managed" }, "managedProjection": "required" },
-      "resources": {
-        "rolePrompt": { "id": "resource.role-prompt.runtime-custodian" },
-        "actionPrompts": [],
-        "skills": [],
-        "model": { "id": "resource.model.managed" },
-        "tools": [],
-        "driver": { "id": "resource.driver.managed-cli" },
-        "sessionPolicy": { "freshness": "fresh-per-episode", "isolation": "isolated", "resumeRule": "no Agent session; Runtime-only deterministic execution of SD-14/SD-15" }
-      },
-      "access": [
-        { "target": "candidate Design, lifecycle state and Git candidate set", "mode": "read" },
-        { "target": "repository deliverable via approved manifest and ignored run-workspace cleanup", "mode": "write" }
+        {
+          "target": "candidate Design and Brief-derived question set",
+          "mode": "read"
+        },
+        {
+          "target": "reader question/finding artifacts",
+          "mode": "write"
+        }
       ],
       "escalationAllowed": false
     }

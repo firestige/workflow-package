@@ -7,9 +7,19 @@
       "name": "Grilling Facilitator",
       "responsibility": "Forms shared understanding before formal system architecture begins: investigates derivable facts before asking the user, asks one question at a time and follows the most important unresolved branch, uses the System Design Brief topics as coverage rather than a questionnaire, and owns working Brief synthesis and Brief Change Request facilitation. Never makes formal architecture decisions, closes Findings, or advances workflow state.",
       "authorityBoundary": {
-        "concerns": ["responsibility", "mission", "method", "write-permission", "data", "session"],
+        "concerns": [
+          "responsibility",
+          "mission",
+          "method",
+          "write-permission",
+          "data",
+          "session"
+        ],
         "writePermissions": [
-          { "target": "ignored run-workspace working Brief, Brief Change Request and decision artifacts", "scope": "write" }
+          {
+            "target": "ignored run-workspace working Brief, Brief Change Request and decision artifacts",
+            "scope": "write"
+          }
         ],
         "prohibited": [
           "making formal architecture decisions",
@@ -20,16 +30,26 @@
           "advancing workflow state or choosing successors beyond the declared set"
         ]
       },
-      "independence": { "isolation": "shared", "barrier": false }
+      "independence": {
+        "isolation": "shared",
+        "barrier": false
+      }
     },
     {
       "id": "role.evidence-scout",
       "name": "Evidence Scout",
       "responsibility": "Resolves one derivable factual gap without restarting Intake/Grilling or asking the user; returns only to the recorded requester (SD-05 direction review or the affected SD-09 review lens) before aggregation resumes.",
       "authorityBoundary": {
-        "concerns": ["responsibility", "method", "data"],
+        "concerns": [
+          "responsibility",
+          "method",
+          "data"
+        ],
         "writePermissions": [
-          { "target": "evidence research result artifact", "scope": "write" }
+          {
+            "target": "evidence research result artifact",
+            "scope": "write"
+          }
         ],
         "prohibited": [
           "changing the recorded resume_action or resume_lens",
@@ -39,16 +59,28 @@
           "choosing a successor outside the recorded requester"
         ]
       },
-      "independence": { "isolation": "shared", "barrier": false }
+      "independence": {
+        "isolation": "shared",
+        "barrier": false
+      }
     },
     {
       "id": "role.system-designer",
       "name": "System Designer",
       "responsibility": "Single writer for the System Design: produces the Skeleton, expands and integrates the Draft, consumes validated Revision Requests, prepares design-owned Spike requests, applies valid Spike results, and classifies downstream handoffs. Runs in a session that does not inherit hidden grilling context.",
       "authorityBoundary": {
-        "concerns": ["responsibility", "mission", "method", "write-permission", "data"],
+        "concerns": [
+          "responsibility",
+          "mission",
+          "method",
+          "write-permission",
+          "data"
+        ],
         "writePermissions": [
-          { "target": "ignored run-workspace Skeleton, Draft checkpoints, integrated Draft and revision artifacts", "scope": "write" }
+          {
+            "target": "ignored run-workspace Skeleton, Draft checkpoints, integrated Draft and revision artifacts",
+            "scope": "write"
+          }
         ],
         "prohibited": [
           "mutating the frozen Brief",
@@ -58,16 +90,26 @@
           "executing Spikes inside a Skill"
         ]
       },
-      "independence": { "isolation": "shared", "barrier": false }
+      "independence": {
+        "isolation": "shared",
+        "barrier": false
+      }
     },
     {
       "id": "role.architecture-reviewer",
       "name": "Architecture Reviewer",
       "responsibility": "Challenges the Skeleton before expensive expansion and runs the architecture lens of the final review; fresh read-only sessions; suspicious smells become Findings only after project-specific impact is evidenced.",
       "authorityBoundary": {
-        "concerns": ["responsibility", "method", "data"],
+        "concerns": [
+          "responsibility",
+          "method",
+          "data"
+        ],
         "writePermissions": [
-          { "target": "review finding artifacts and REVIEW_SIGNAL records", "scope": "write" }
+          {
+            "target": "review finding artifacts and REVIEW_SIGNAL records",
+            "scope": "write"
+          }
         ],
         "prohibited": [
           "writing the Brief, Skeleton or Draft",
@@ -87,9 +129,16 @@
       "name": "Problem-Solution Reviewer",
       "responsibility": "Runs the problem-solution lens of the final review: Brief/scenario/scope-to-design traceability; fresh read-only sessions; findings require project-specific impact evidence.",
       "authorityBoundary": {
-        "concerns": ["responsibility", "method", "data"],
+        "concerns": [
+          "responsibility",
+          "method",
+          "data"
+        ],
         "writePermissions": [
-          { "target": "review finding artifacts and REVIEW_SIGNAL records", "scope": "write" }
+          {
+            "target": "review finding artifacts and REVIEW_SIGNAL records",
+            "scope": "write"
+          }
         ],
         "prohibited": [
           "writing the Brief, Skeleton or Draft",
@@ -109,9 +158,16 @@
       "name": "Quality & Acceptance Reviewer",
       "responsibility": "Runs the quality and acceptance lens of the final review: contextual NFR, under/over-design, risk, thresholds, Spikes and evidence; fresh read-only sessions; findings require project-specific impact evidence.",
       "authorityBoundary": {
-        "concerns": ["responsibility", "method", "data"],
+        "concerns": [
+          "responsibility",
+          "method",
+          "data"
+        ],
         "writePermissions": [
-          { "target": "review finding artifacts and REVIEW_SIGNAL records", "scope": "write" }
+          {
+            "target": "review finding artifacts and REVIEW_SIGNAL records",
+            "scope": "write"
+          }
         ],
         "prohibited": [
           "writing the Brief, Skeleton or Draft",
@@ -131,9 +187,16 @@
       "name": "Finding Aggregator",
       "responsibility": "Aggregates and triages Findings behind the review barrier: merges corroborating Findings while preserving provenance, relates common causes, identifies contradictions, and routes by evidence and affected stage. Holds no technical decision authority.",
       "authorityBoundary": {
-        "concerns": ["responsibility", "data", "write-permission"],
+        "concerns": [
+          "responsibility",
+          "data",
+          "write-permission"
+        ],
         "writePermissions": [
-          { "target": "aggregation/disposition result artifact", "scope": "write" }
+          {
+            "target": "aggregation/disposition result artifact",
+            "scope": "write"
+          }
         ],
         "prohibited": [
           "deciding by majority",
@@ -143,16 +206,26 @@
           "closing Findings"
         ]
       },
-      "independence": { "isolation": "shared", "barrier": false }
+      "independence": {
+        "isolation": "shared",
+        "barrier": false
+      }
     },
     {
       "id": "role.fresh-reader",
       "name": "Fresh Reader",
       "responsibility": "Reads the candidate Design in a context-isolated session and tests whether a downstream implementer can understand problem, decomposition, flows, ownership, constraints, quality mechanisms, parameter status and acceptance; finds ambiguity and hidden assumptions but does not reopen architecture based on preference.",
       "authorityBoundary": {
-        "concerns": ["responsibility", "method", "data"],
+        "concerns": [
+          "responsibility",
+          "method",
+          "data"
+        ],
         "writePermissions": [
-          { "target": "fresh reader question set and finding artifacts", "scope": "write" }
+          {
+            "target": "fresh reader question set and finding artifacts",
+            "scope": "write"
+          }
         ],
         "prohibited": [
           "receiving grilling transcripts or hidden author/reviewer context",
@@ -166,26 +239,6 @@
         "barrier": true,
         "sharedRawEvidenceOnly": true
       }
-    },
-    {
-      "id": "role.runtime-custodian",
-      "name": "Runtime Custodian",
-      "responsibility": "Declarative route-closure role for the Runtime's deterministic lifecycle authority (SD-14 final verification and SD-15 freeze/promote/clean). Not an Agent Role: no Agent session, no Skill, no design judgment; executes only the declared deterministic validators and lifecycle rules.",
-      "authorityBoundary": {
-        "concerns": ["gate", "terminal", "data", "write-permission"],
-        "writePermissions": [
-          { "target": "repository deliverable (final Design and explicitly requested formal companions) via approved manifest", "scope": "promote" },
-          { "target": "ignored run workspace cleanup (Brief/Skeleton/Draft/revision/review/question/aggregation/verification/freeze files)", "scope": "delete" }
-        ],
-        "prohibited": [
-          "judging architecture quality or project appropriateness",
-          "relaxing a Gate",
-          "promoting intermediate artifacts",
-          "creating docs/**/workflow-artifacts/ paths or tracking run-workspace artifacts in Git",
-          "reporting IMPLEMENTATION_READY while verification or cleanup fails"
-        ]
-      },
-      "independence": { "isolation": "shared", "barrier": false }
     }
   ]
 }
