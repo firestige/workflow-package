@@ -95,11 +95,11 @@ Machine Definition: `workflow-package/system-design/definition/` (7 documents, `
 
 | ID | Gap | Candidate fix |
 | --- | --- | --- |
-| DSL-S1 (judgment authority) | **REVISED (0.1.x)**: conditional edges gained `judge` — `state` predicates or `planner` (Planner Action semantic judgment over possibly unstructured Agent output); Runtime validates the structured classification, then selects the branch. Judgment belongs to the Agent; branch structure belongs to the Workflow. | resolved by `gap-review-decisions.md` |
+| DSL-S1 (judgment authority) | **REVISED (0.1.x)**: conditional edges gained `judge` — `state` predicates or `planner` (Planner Action semantic judgment over possibly unstructured Agent output); Runtime validates the structured classification, then selects the branch. Judgment belongs to the Agent; branch structure belongs to the Workflow. | resolved by the 0.1.x Contract revision (git history) |
 | DSL-S1 (branch subset activation) | **ACCEPTED as known limitation**: SD-09 recheck of only invalidated lenses is Runtime scheduling (an optimization), not workflow semantics; full 3-branch parallel declaration stays. | recorded in spec §18.1 |
 | DSL-S2 | **Parallel action with multiple roles** (SD-09's three lenses have distinct roles): DSL `responsibleAuthority` allows a single role → nominal `role.architecture-reviewer` with per-lens roles enforced via `validation.review` + branch routes. | Allow `responsibleAuthority` (or parallel branches) to declare per-branch roles. |
 | DSL-S3 | **CLOSED as non-issue**: one wait per trigger Action (resume == trigger) is semantically equivalent to a recorded `resume_action`; dynamic post-resume routing is covered by fixed resume + conditional-edge routing at the resume point. No DSL change. | recorded in spec §18.1 |
-| DSL-S4 | ~~Budget "policy limit" must be numeric~~ **REVISED with DSL-1 (0.1.x)**: budgets use resource dimensions + evaluator registration points; no numeric limit in configuration. | resolved by `gap-review-decisions.md` |
+| DSL-S4 | ~~Budget "policy limit" must be numeric~~ **REVISED with DSL-1 (0.1.x)**: budgets use resource dimensions + evaluator registration points; no numeric limit in configuration. | resolved by the 0.1.x Contract revision (git history) |
 
 ## 8. Verification
 

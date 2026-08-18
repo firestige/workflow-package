@@ -117,8 +117,8 @@ Machine Definition: `workflow-package/implementation/definition/` (7 documents, 
 
 | ID | Gap | Candidate fix |
 | --- | --- | --- |
-| DSL-1 | ~~`budget.limit` is a required number~~ **REVISED (0.1.x)**: budgets now use resource dimensions (`time|tokens|context|custom`) + an evaluator registration point (schemaRef) invoked by the Runtime; no numeric limit in configuration. `budget.attempts` added back. | resolved by `gap-review-decisions.md` |
-| DSL-2 | ~~Runtime actions still require `allowedRoutes` minItems 1~~ **REVISED (0.1.x)**: Runtime-authority actions declare no `allowedRoutes`; IM-06 no longer binds a placeholder route. | resolved by `gap-review-decisions.md` |
+| DSL-1 | ~~`budget.limit` is a required number~~ **REVISED (0.1.x)**: budgets now use resource dimensions (`time|tokens|context|custom`) + an evaluator registration point (schemaRef) invoked by the Runtime; no numeric limit in configuration. `budget.attempts` added back. | resolved by the 0.1.x Contract revision (git history) |
+| DSL-2 | ~~Runtime actions still require `allowedRoutes` minItems 1~~ **REVISED (0.1.x)**: Runtime-authority actions declare no `allowedRoutes`; IM-06 no longer binds a placeholder route. | resolved by the 0.1.x Contract revision (git history) |
 
 ## 7. Verification
 
