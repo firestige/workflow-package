@@ -8,7 +8,7 @@
 | `IM-CONF-R-002` | Budget exhaustion | diagnostic loop remains RED | exhaust Action budget | persist `INCOMPLETE`; renewal resumes same content identity |
 | `IM-CONF-R-003` | Human measurement wait | one unresolved measurement decision exists | enter `WAITING_FOR_USER`, then receive response | accept only correlated response; resume IM-03 or stop on design change |
 | `IM-CONF-R-004` | External coordination wait | frozen design delegates a missing artifact | publish request, then receive external result | compatible identity resumes classification; conflict stops Delivery |
-| `IM-CONF-R-005` | Goal commit recovery | G1 commit succeeded; G2 not selected | interrupt after IM-16 | resume from exact G1 commit and select next Goal |
+| `IM-CONF-R-005` | Goal commit recovery | contract.gate.1 commit succeeded; contract.gate.2 not selected | interrupt after IM-16 | resume from exact contract.gate.1 commit and select next Goal |
 | `IM-CONF-R-006` | Ambiguous custody effect | branch/commit acknowledgement is lost | retry requested | reconcile Git facts before any effect; never duplicate blindly |
 | `IM-CONF-R-007` | Cancel and failure | active or waiting Delivery exists | explicit cancellation or non-retryable failure | exact terminal state; no success/publication; safe retention cleanup |
 | `IM-CONF-R-008` | Missing/corrupt Artifact | checkpoint references an unavailable or digest-mismatched Artifact | resume Delivery | fail closed to reconciliation/`INCOMPLETE`; never select “latest” file |
@@ -37,7 +37,7 @@ Persist an exact Coordination Request for a design-delegated missing Contract/De
 
 ## `IM-CONF-R-005` Goal commit recovery
 
-After IM-16 commits Goal `G1`, interrupt before selecting `G2`. Resume from the exact `G1` commit as baseline and never replay `G1` production mutation.
+After IM-16 commits Goal `contract.gate.1`, interrupt before selecting `contract.gate.2`. Resume from the exact `contract.gate.1` commit as baseline and never replay `contract.gate.1` production mutation.
 
 ## `IM-CONF-R-006` Lost/failed custody effect
 

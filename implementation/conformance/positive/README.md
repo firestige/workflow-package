@@ -28,7 +28,7 @@ The Goal receives one green commit; final status is `VERIFIED_IMPLEMENTATION_REA
 
 ## `IM-CONF-P-002` Multi-Goal Walking Skeleton
 
-Given Harness Goal `G0`, core vertical Goal `G1`, and collaborator Goals `G2/G3`, prove topological selection, a minimum end-to-end path, Contract-bound stubs, sequential production writes, stub replacement, per-Goal commits and final whole-scope regression.
+Given Harness Goal `G0`, core vertical Goal `contract.gate.1`, and collaborator Goals `contract.gate.2/contract.gate.3`, prove topological selection, a minimum end-to-end path, Contract-bound stubs, sequential production writes, stub replacement, per-Goal commits and final whole-scope regression.
 
 ## `IM-CONF-P-003` Existing-green calibration
 
