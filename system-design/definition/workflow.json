@@ -902,7 +902,7 @@
       "resourceName": "question-turns",
       "evaluator": {
         "path": "../scripts/budget/questions.mjs",
-        "contentIdentity": "sha256:ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+        "contentIdentity": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
       },
       "onExhaustion": "incomplete",
       "accounting": "each grilling question consumed adds to state.grilling_questions (sum reducer); the exact limit is project/runtime policy; exhaustion enters terminal:INCOMPLETE without lowering the grilling closure standard and never relaxes a Gate; runtime invokes the evaluator registration point to obtain the budget conclusion; numeric limits are never configured; exhaustion never relaxes a Gate"
@@ -915,7 +915,7 @@
       "resourceName": "research-requests",
       "evaluator": {
         "path": "../scripts/budget/research.mjs",
-        "contentIdentity": "sha256:ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+        "contentIdentity": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
       },
       "onExhaustion": "incomplete",
       "accounting": "each research attempt adds to state.research_attempts (sum reducer); the exact limit is project/runtime policy; exhaustion enters terminal:INCOMPLETE and never relaxes a Gate; runtime invokes the evaluator registration point to obtain the budget conclusion; numeric limits are never configured; exhaustion never relaxes a Gate"
@@ -928,7 +928,7 @@
       "resourceName": "feasibility-probes",
       "evaluator": {
         "path": "../scripts/budget/feasibility.mjs",
-        "contentIdentity": "sha256:ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+        "contentIdentity": "sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
       },
       "onExhaustion": "incomplete",
       "accounting": "each feasibility iteration adds to state.feasibility_iterations (sum reducer); the exact limit is project/runtime policy; exhaustion enters terminal:INCOMPLETE and never relaxes a Gate; runtime invokes the evaluator registration point to obtain the budget conclusion; numeric limits are never configured; exhaustion never relaxes a Gate"
@@ -941,7 +941,7 @@
       "resourceName": "review-rounds",
       "evaluator": {
         "path": "../scripts/budget/review.mjs",
-        "contentIdentity": "sha256:ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+        "contentIdentity": "sha256:dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
       },
       "onExhaustion": "incomplete",
       "accounting": "each review iteration adds to state.review_iterations (sum reducer); the exact limit is project/runtime policy; exhaustion enters terminal:INCOMPLETE and never relaxes a Gate; runtime invokes the evaluator registration point to obtain the budget conclusion; numeric limits are never configured; exhaustion never relaxes a Gate"
@@ -954,7 +954,7 @@
       "resourceName": "revision-iterations",
       "evaluator": {
         "path": "../scripts/budget/revision.mjs",
-        "contentIdentity": "sha256:ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+        "contentIdentity": "sha256:eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
       },
       "onExhaustion": "incomplete",
       "accounting": "each targeted revision adds to state.revision_count (sum reducer); the exact limit is project/runtime policy; exhaustion enters terminal:INCOMPLETE and never relaxes a Gate; runtime invokes the evaluator registration point to obtain the budget conclusion; numeric limits are never configured; exhaustion never relaxes a Gate"

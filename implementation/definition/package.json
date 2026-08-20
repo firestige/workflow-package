@@ -176,7 +176,7 @@
         "kind": "conformance",
         "owner": "owned",
         "path": "../conformance/positive/README.md",
-        "contentIdentity": "sha256:17fd695cc36d534df9f77f54dfa6fa7099add5d6296895e0545cda73c8c7a03a",
+        "contentIdentity": "sha256:dd4a99b6d95e8c8faa12fc7bc9998e1af0bac9a10fb268da4cefa7985236a61b",
         "use": "conformance resource at conformance/positive/README.md"
       },
       {
@@ -184,7 +184,7 @@
         "kind": "conformance",
         "owner": "owned",
         "path": "../conformance/recovery/README.md",
-        "contentIdentity": "sha256:432d22d7b9dbf29897355633de701011fcafdf0df93f408e7e2f9da7f0836421",
+        "contentIdentity": "sha256:1aeea1b627d37c6829ad22574042fbc6396bed173fa206a0d1a8f53bd454889e",
         "use": "conformance resource at conformance/recovery/README.md"
       },
       {
@@ -258,14 +258,6 @@
         "path": "../prompts/actions/evolve-prototype.prompt.md",
         "contentIdentity": "sha256:407628332155a6919c39ce36b057bde579dd9326a0f12031fd31438abbc38bb7",
         "use": "action-prompt resource at prompts/actions/evolve-prototype.prompt.md"
-      },
-      {
-        "id": "prompt.external-coordination",
-        "kind": "action-prompt",
-        "owner": "owned",
-        "path": "../prompts/actions/external-coordination.prompt.md",
-        "contentIdentity": "sha256:ddfb745cc0b494915ef23dc7c8f89dc86b4f186e0efb0ed0a9e74de9cab00efe",
-        "use": "action-prompt resource at prompts/actions/external-coordination.prompt.md"
       },
       {
         "id": "prompt.implementation-resolution",
