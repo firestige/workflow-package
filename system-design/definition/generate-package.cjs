@@ -81,13 +81,13 @@ const referenced = [
     'Shared adaptive grilling method used by the facilitator routes; method-only, no control-flow authority; exact content identity resolved by the future Package Snapshot (placeholder, do not fabricate)'],
   ['resource.skill.codebase-design', 'skill', 'workflow-package', '.agents/skills/codebase-design/SKILL.md', 'b',
     'Shared codebase-design method (Module/Interface/Seam/Depth/Leverage/Locality) used when structure is in scope; exact content identity resolved by the future Package Snapshot (placeholder, do not fabricate)'],
-  ['resource.agent-definition.managed', 'agent-definition', 'agent-ops-ledger', 'agents/managed-agent-definition.yaml', 'c',
+  ['resource.agent-definition.managed', 'agent-definition', 'workflow-self-recursive', 'agents/managed-agent-definition.yaml', 'c',
     'Managed agent definition projected through the declared Driver; exact identity resolved by the future Package Snapshot (placeholder, do not fabricate)'],
-  ['resource.model.managed', 'model', 'agent-ops-ledger', 'bindings/managed-model.yaml', 'd',
+  ['resource.model.managed', 'model', 'workflow-self-recursive', 'bindings/managed-model.yaml', 'd',
     'Managed model binding with declared capability/cost class; exact identity resolved by the future Package Snapshot (placeholder, do not fabricate)'],
-  ['resource.driver.managed-cli', 'driver', 'agent-ops-ledger', 'bindings/managed-cli-driver.yaml', 'e',
+  ['resource.driver.managed-cli', 'driver', 'workflow-self-recursive', 'bindings/managed-cli-driver.yaml', 'e',
     'Managed CLI Driver projecting the frozen route, never ambient defaults; exact identity resolved by the future Package Snapshot (placeholder, do not fabricate)'],
-  ['resource.tool.repo-read', 'tool', 'agent-ops-ledger', 'tools/repo-read.yaml', 'f',
+  ['resource.tool.repo-read', 'tool', 'workflow-self-recursive', 'tools/repo-read.yaml', 'f',
     'Repository/authorized-source read tool for routes that read repository evidence; exact identity resolved by the future Package Snapshot (placeholder, do not fabricate)']
 ];
 

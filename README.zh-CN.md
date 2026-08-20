@@ -2,7 +2,7 @@
 
 [English](README.md) | 中文
 
-workflow-package 存放 Agent Ops Ledger 所执行的版本化 Workflow Package。每个 Package 都是 owner 声明的、版本化的闭合组合：Workflow Definition 与其 Actions、Role routes、Prompts、Skills、模型、工具、Drivers、schemas、validators 和 conformance 资源共同构成。它是源码组件的划分（Workflow 定义与资源的家），而不是两个产品 System 之一。
+workflow-package 存放 workflow-self-recursive 所执行的版本化 Workflow Package。每个 Package 都是 owner 声明的、版本化的闭合组合：Workflow Definition 与其 Actions、Role routes、Prompts、Skills、模型、工具、Drivers、schemas、validators 和 conformance 资源共同构成。它是源码组件的划分（Workflow 定义与资源的家），而不是两个产品 System 之一。
 
 首个发行版包含两个逻辑 Workflow：
 
@@ -11,7 +11,7 @@ workflow-package 存放 Agent Ops Ledger 所执行的版本化 Workflow Package�
 
 ## Developer preview
 
-本仓库是 Agent Ops Ledger 架构优先开发者预览版的一部分，适用于个人或小团队的可信本地环境。当前以 design-time 模型发布 Workflow 定义与资源；Workflow Contract 与机器可读 Runtime DSL 尚未发布，因此 Package 通过 `UNMANAGED_SIMULATION` 与 package 自带的 CLI gates 验证。**后续会有破坏兼容性的变更。**
+本仓库是 workflow-self-recursive 架构优先开发者预览版的一部分，适用于个人或小团队的可信本地环境。当前以 design-time 模型发布 Workflow 定义与资源；Workflow Contract 与机器可读 Runtime DSL 尚未发布，因此 Package 通过 `UNMANAGED_SIMULATION` 与 package 自带的 CLI gates 验证。**后续会有破坏兼容性的变更。**
 
 ## 结构
 
@@ -24,7 +24,7 @@ workflow-package 存放 Agent Ops Ledger 所执行的版本化 Workflow Package�
 
 ## 获取源码
 
-本仓库通常作为 [Agent Ops Ledger](https://github.com/firestige/workflow-self-recursive) 的 submodule 使用：
+本仓库通常作为 [workflow-self-recursive](https://github.com/firestige/workflow-self-recursive) 的 submodule 使用：
 
 ```sh
 git clone --recurse-submodules https://github.com/firestige/workflow-self-recursive.git
