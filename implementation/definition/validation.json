@@ -1,6 +1,6 @@
 {
   "kind": "agentops.validation",
-  "schemaVersion": "agentops.workflow-dsl@0.1.0",
+  "schemaVersion": "agentops.workflow-dsl@1.0.0",
   "validators": [
     { "id": "validator.intake-checks", "purpose": "Intake binds exact frozen design identity, authority order and working Obligation Register; derivable facts investigated rather than converted into questions; no ambient design/current-file substitution; non-ready or contradictory design fails closed.", "input": "intake result and state", "output": "pass/fail", "deterministic": true },
     { "id": "validator.preflight-checks", "purpose": "Preflight verifies clean worktree, design status/identity, project-native build/test/coverage/static commands, safe test isolation, obligation classification completeness, Contract availability facts and tool/permission availability; unsafe/unclassified/unmeasurable conditions cannot be waived by an Agent.", "input": "preflight result and repository state", "output": "pass/fail", "deterministic": true },

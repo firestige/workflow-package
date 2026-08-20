@@ -1,12 +1,12 @@
 {
   "kind": "agentops.workflow-definition",
-  "schemaVersion": "agentops.workflow-dsl@0.1.0",
+  "schemaVersion": "agentops.workflow-dsl@1.0.0",
   "workflow": {
     "id": "implementation-workflow",
     "name": "Implementation Workflow",
     "version": "0.3.0",
     "purpose": "Turns one exact frozen, implementation-authorizing design into a VERIFIED_IMPLEMENTATION_READY feature-branch candidate through Goal Graph, Test Ladder and evolutionary TDD; preserves every upstream obligation semantic while owning its own lifecycle classification, Actions, Gates and terminal effects.",
-    "contractVersion": "agentops.workflow-dsl@0.1.0"
+    "contractVersion": "agentops.workflow-dsl@1.0.0"
   },
   "state": {
     "fields": [

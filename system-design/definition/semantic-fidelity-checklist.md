@@ -1,6 +1,6 @@
 # System Design Workflow Definition — Semantic Fidelity Checklist
 
-Machine Definition: `workflow-package/system-design/definition/` (7 documents, `agentops.workflow-dsl@0.1.0`). Source of truth: `workflow.md` (§2 Action graph, §4 Action catalog; the mermaid diagram never overrides the catalog). Status: `DESIGN_REFERENCE`, verified by `tools/check-example.cjs` → **PASS**.
+Machine Definition: `workflow-package/system-design/definition/` (7 documents, `agentops.workflow-dsl@1.0.0`). Source of truth: `workflow.md` (§2 Action graph, §4 Action catalog; the mermaid diagram never overrides the catalog). Status: `DESIGN_REFERENCE`, verified by `tools/check-example.cjs` → **PASS**.
 
 ## 1. Action catalog (§2 + §4) → `actions.json`
 

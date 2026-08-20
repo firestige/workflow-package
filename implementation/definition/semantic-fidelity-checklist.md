@@ -1,6 +1,6 @@
 # Implementation Workflow Definition — Semantic Fidelity Checklist
 
-Machine Definition: `workflow-package/implementation/definition/` (7 documents, `agentops.workflow-dsl@0.1.0`). Source of truth: `workflow.md` (transition authority §3; the diagram in `execution-guide.md` never overrides it). Status: `DESIGN_REFERENCE`, verified by `tools/check-example.cjs` → **PASS**.
+Machine Definition: `workflow-package/implementation/definition/` (7 documents, `agentops.workflow-dsl@1.0.0`). Source of truth: `workflow.md` (transition authority §3; the diagram in `execution-guide.md` never overrides it). Status: `DESIGN_REFERENCE`, verified by `tools/check-example.cjs` → **PASS**.
 
 ## 1. Action catalog (§4 of workflow.md) → `actions.json`
 

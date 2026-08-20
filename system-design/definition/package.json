@@ -1,6 +1,6 @@
 {
   "kind": "agentops.package",
-  "schemaVersion": "agentops.workflow-dsl@0.1.0",
+  "schemaVersion": "agentops.workflow-dsl@1.0.0",
   "package": {
     "name": "system-design-workflow",
     "version": "0.3.0",
@@ -14,7 +14,7 @@
     "definition": {
       "name": "system-design-workflow",
       "version": "0.3.0",
-      "contentIdentity": "sha256:1b9888420fe3bdd30e13cc1344bec7b8aae74e6af6930e292e0905c169c353c3"
+      "contentIdentity": "sha256:ebd395ef9c34428b0293272c3567c4e0f659dc7e9c3f50648050f3b1113b79df"
     }
   },
   "documents": {
@@ -472,7 +472,7 @@
         "kind": "documentation",
         "owner": "owned",
         "path": "../README.md",
-        "contentIdentity": "sha256:82b40d5d7f317f91d1df8f9eb59339a4e3830789b83ad4d0c42b4e866dfdfe13",
+        "contentIdentity": "sha256:fef801a3b8e40364caed44b382a556f8b6a85dd706a3808e0800b7dbdd54f895",
         "use": "Package-level design-time reference documentation"
       }
     ],
@@ -629,7 +629,7 @@
     "deterministic validator CLI for SD-14/SD-15 (checks defined under validators/README.md)"
   ],
   "compatibility": {
-    "minContractVersion": "0.1.0",
-    "maxContractVersion": "0.1.0"
+    "minContractVersion": "1.0.0",
+    "maxContractVersion": "1.0.0"
   }
 }
