@@ -1,6 +1,6 @@
 {
   "kind": "agentops.routes",
-  "schemaVersion": "agentops.workflow-dsl@0.1.0",
+  "schemaVersion": "agentops.workflow-dsl@1.0.0",
   "routes": [
     {
       "id": "route.goal.facilitator",
@@ -135,9 +135,9 @@
       "resources": {
         "rolePrompt": { "id": "role.prompt.goal-adversary" },
         "actionPrompts": [
-          { "action": "action.IM-12", "prompt": { "id": "prompt.black-box-goal-review" } },
-          { "action": "action.IM-15", "prompt": { "id": "prompt.recheck-finding" } },
-          { "action": "action.IM-17", "prompt": { "id": "prompt.whole-scope-review" } }
+          {"action":"action.IM-12.blackbox","prompt":{"id":"prompt.black-box-goal-review"}},
+          {"action":"action.IM-15.blackbox","prompt":{"id":"prompt.recheck-finding"}},
+          {"action":"action.IM-17.blackbox","prompt":{"id":"prompt.whole-scope-review"}}
         ],
         "skills": [{ "id": "skill.black-box-goal-adversary" }],
         "model": { "id": "model.managed" },
@@ -158,9 +158,9 @@
       "resources": {
         "rolePrompt": { "id": "role.prompt.implementation-reviewer" },
         "actionPrompts": [
-          { "action": "action.IM-12", "prompt": { "id": "prompt.white-box-implementation-review" } },
-          { "action": "action.IM-15", "prompt": { "id": "prompt.recheck-finding" } },
-          { "action": "action.IM-17", "prompt": { "id": "prompt.whole-scope-review" } }
+          {"action":"action.IM-12.whitebox","prompt":{"id":"prompt.white-box-implementation-review"}},
+          {"action":"action.IM-15.whitebox","prompt":{"id":"prompt.recheck-finding"}},
+          {"action":"action.IM-17.whitebox","prompt":{"id":"prompt.whole-scope-review"}}
         ],
         "skills": [{ "id": "skill.white-box-implementation-review" }],
         "model": { "id": "model.managed" },
@@ -204,7 +204,7 @@
           { "action": "action.IM-05", "prompt": { "id": "prompt.custody-gate" } },
           { "action": "action.IM-11", "prompt": { "id": "prompt.custody-gate" } },
           { "action": "action.IM-16", "prompt": { "id": "prompt.custody-gate" } },
-          { "action": "action.IM-17", "prompt": { "id": "prompt.custody-gate" } },
+          {"action":"action.IM-17.custodian","prompt":{"id":"prompt.custody-gate"}},
           { "action": "action.IM-18", "prompt": { "id": "prompt.custody-gate" } }
         ],
         "skills": [{ "id": "skill.implementation-delivery-custody" }],

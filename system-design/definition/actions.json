@@ -1,6 +1,6 @@
 {
   "kind": "agentops.actions",
-  "schemaVersion": "agentops.workflow-dsl@0.1.0",
+  "schemaVersion": "agentops.workflow-dsl@1.0.0",
   "actions": [
     {
       "id": "action.sd-01",
@@ -58,15 +58,6 @@
       "allowedRoutes": [
         "route.facilitator.standard"
       ],
-      "execution": {
-        "mode": "single"
-      },
-      "selector": {
-        "kind": "deterministic"
-      },
-      "allowedSuccessors": [
-        "node.sd-02"
-      ],
       "escalation": {
         "allowed": false,
         "scope": "route-within-allowed",
@@ -77,22 +68,10 @@
         ]
       },
       "gate": {
-        "preconditions": [
-          {
-            "field": "status",
-            "op": "exists"
-          }
-        ],
-        "postconditions": [
-          {
-            "field": "status",
-            "op": "exists"
-          }
-        ],
+        "freeTextBypass": "prohibited",
         "deterministic": [
           "validator.intake-authority"
-        ],
-        "freeTextBypass": "prohibited"
+        ]
       }
     },
     {
@@ -135,11 +114,20 @@
           },
           "resolved": {
             "type": "boolean"
+          },
+          "evidence_return_action": {
+            "type": "string",
+            "enum": [
+              "SD-05",
+              "SD-09",
+              "unmatched"
+            ]
           }
         },
         "required": [
           "status",
-          "resolved"
+          "resolved",
+          "evidence_return_action"
         ]
       },
       "responsibleAuthority": {
@@ -148,17 +136,6 @@
       },
       "allowedRoutes": [
         "route.scout.evidence"
-      ],
-      "execution": {
-        "mode": "single"
-      },
-      "selector": {
-        "kind": "deterministic"
-      },
-      "allowedSuccessors": [
-        "node.sd-05",
-        "node.sd-09",
-        "terminal:failed"
       ],
       "escalation": {
         "allowed": false,
@@ -171,28 +148,11 @@
         ]
       },
       "gate": {
-        "preconditions": [
-          {
-            "field": "evidence_return_action",
-            "op": "exists"
-          }
-        ],
-        "postconditions": [
-          {
-            "field": "evidence_return_action",
-            "op": "in",
-            "value": [
-              "SD-05",
-              "SD-09"
-            ]
-          }
-        ],
+        "freeTextBypass": "prohibited",
         "deterministic": [
           "validator.evidence-return-binding"
-        ],
-        "freeTextBypass": "prohibited"
-      },
-      "budget": "budget.research"
+        ]
+      }
     },
     {
       "id": "action.sd-02",
@@ -223,7 +183,9 @@
           "routing": {
             "type": "string",
             "enum": [
-              "brief-ready"
+              "continue",
+              "wait-user",
+              "unmatched"
             ]
           },
           "workingBrief": {
@@ -242,15 +204,6 @@
       "allowedRoutes": [
         "route.facilitator.standard"
       ],
-      "execution": {
-        "mode": "single"
-      },
-      "selector": {
-        "kind": "deterministic"
-      },
-      "allowedSuccessors": [
-        "node.sd-03"
-      ],
       "escalation": {
         "allowed": false,
         "scope": "route-within-allowed",
@@ -261,29 +214,11 @@
         ]
       },
       "gate": {
-        "preconditions": [
-          {
-            "field": "status",
-            "op": "exists"
-          }
-        ],
-        "postconditions": [
-          {
-            "field": "routing",
-            "op": "eq",
-            "value": "brief-ready"
-          }
-        ],
+        "freeTextBypass": "prohibited",
         "deterministic": [
           "validator.grilling-closure"
-        ],
-        "freeTextBypass": "prohibited"
-      },
-      "waitPolicy": {
-        "kind": "user",
-        "wait": "wait.user-grilling-answer"
-      },
-      "budget": "budget.questions"
+        ]
+      }
     },
     {
       "id": "action.sd-03",
@@ -305,11 +240,20 @@
           },
           "frozenDigest": {
             "type": "string"
+          },
+          "routing": {
+            "type": "string",
+            "enum": [
+              "continue",
+              "wait-user",
+              "unmatched"
+            ]
           }
         },
         "required": [
           "status",
-          "brief"
+          "brief",
+          "routing"
         ]
       },
       "responsibleAuthority": {
@@ -318,15 +262,6 @@
       },
       "allowedRoutes": [
         "route.facilitator.standard"
-      ],
-      "execution": {
-        "mode": "single"
-      },
-      "selector": {
-        "kind": "deterministic"
-      },
-      "allowedSuccessors": [
-        "node.sd-04"
       ],
       "escalation": {
         "allowed": false,
@@ -338,26 +273,10 @@
         ]
       },
       "gate": {
-        "preconditions": [
-          {
-            "field": "routing",
-            "op": "exists"
-          }
-        ],
-        "postconditions": [
-          {
-            "field": "brief",
-            "op": "exists"
-          }
-        ],
+        "freeTextBypass": "prohibited",
         "deterministic": [
           "validator.brief-closure-check"
-        ],
-        "freeTextBypass": "prohibited"
-      },
-      "waitPolicy": {
-        "kind": "user",
-        "wait": "wait.user-brief-confirm"
+        ]
       }
     },
     {
@@ -390,32 +309,11 @@
       "allowedRoutes": [
         "route.designer.standard"
       ],
-      "execution": {
-        "mode": "single"
-      },
-      "selector": {
-        "kind": "deterministic"
-      },
-      "allowedSuccessors": [
-        "node.sd-05"
-      ],
       "gate": {
-        "preconditions": [
-          {
-            "field": "brief",
-            "op": "exists"
-          }
-        ],
-        "postconditions": [
-          {
-            "field": "skeleton",
-            "op": "exists"
-          }
-        ],
+        "freeTextBypass": "prohibited",
         "deterministic": [
           "validator.skeleton-gate"
-        ],
-        "freeTextBypass": "prohibited"
+        ]
       }
     },
     {
@@ -441,7 +339,8 @@
               "pass",
               "direction-fix",
               "evidence-gap",
-              "brief-gap"
+              "brief-gap",
+              "unmatched"
             ]
           },
           "findings": {
@@ -463,19 +362,6 @@
       "allowedRoutes": [
         "route.reviewer.architecture"
       ],
-      "execution": {
-        "mode": "single"
-      },
-      "selector": {
-        "kind": "deterministic"
-      },
-      "allowedSuccessors": [
-        "node.sd-01r",
-        "node.sd-04",
-        "node.sd-06",
-        "node.sd-11h",
-        "terminal:failed"
-      ],
       "escalation": {
         "allowed": false,
         "scope": "route-within-allowed",
@@ -486,28 +372,10 @@
         ]
       },
       "gate": {
-        "preconditions": [
-          {
-            "field": "skeleton",
-            "op": "exists"
-          }
-        ],
-        "postconditions": [
-          {
-            "field": "routing",
-            "op": "in",
-            "value": [
-              "pass",
-              "direction-fix",
-              "evidence-gap",
-              "brief-gap"
-            ]
-          }
-        ],
+        "freeTextBypass": "prohibited",
         "deterministic": [
           "validator.finding-admission"
-        ],
-        "freeTextBypass": "prohibited"
+        ]
       }
     },
     {
@@ -529,7 +397,9 @@
             "type": "string",
             "enum": [
               "feasibility-confirmed",
-              "invalidates-direction"
+              "invalidates-direction",
+              "wait-spike",
+              "unmatched"
             ]
           },
           "spikeResult": {
@@ -548,17 +418,6 @@
       "allowedRoutes": [
         "route.designer.standard"
       ],
-      "execution": {
-        "mode": "single"
-      },
-      "selector": {
-        "kind": "deterministic"
-      },
-      "allowedSuccessors": [
-        "node.sd-04",
-        "node.sd-07",
-        "terminal:failed"
-      ],
       "escalation": {
         "allowed": false,
         "scope": "route-within-allowed",
@@ -569,32 +428,11 @@
         ]
       },
       "gate": {
-        "preconditions": [
-          {
-            "field": "skeleton",
-            "op": "exists"
-          }
-        ],
-        "postconditions": [
-          {
-            "field": "routing",
-            "op": "in",
-            "value": [
-              "feasibility-confirmed",
-              "invalidates-direction"
-            ]
-          }
-        ],
+        "freeTextBypass": "prohibited",
         "deterministic": [
           "validator.feasibility-application"
-        ],
-        "freeTextBypass": "prohibited"
-      },
-      "waitPolicy": {
-        "kind": "spike",
-        "wait": "wait.spike-feasibility"
-      },
-      "budget": "budget.feasibility"
+        ]
+      }
     },
     {
       "id": "action.sd-07",
@@ -626,36 +464,11 @@
       "allowedRoutes": [
         "route.designer.standard"
       ],
-      "execution": {
-        "mode": "single"
-      },
-      "selector": {
-        "kind": "deterministic"
-      },
-      "allowedSuccessors": [
-        "node.sd-08"
-      ],
       "gate": {
-        "preconditions": [
-          {
-            "field": "brief",
-            "op": "exists"
-          },
-          {
-            "field": "skeleton",
-            "op": "exists"
-          }
-        ],
-        "postconditions": [
-          {
-            "field": "status",
-            "op": "exists"
-          }
-        ],
+        "freeTextBypass": "prohibited",
         "deterministic": [
           "validator.writer-boundary"
-        ],
-        "freeTextBypass": "prohibited"
+        ]
       }
     },
     {
@@ -688,38 +501,70 @@
       "allowedRoutes": [
         "route.designer.standard"
       ],
-      "execution": {
-        "mode": "single"
-      },
-      "selector": {
-        "kind": "deterministic"
-      },
-      "allowedSuccessors": [
-        "node.sd-09"
-      ],
       "gate": {
-        "preconditions": [
-          {
-            "field": "routing",
-            "op": "exists"
-          }
-        ],
-        "postconditions": [
-          {
-            "field": "draft",
-            "op": "exists"
-          }
-        ],
+        "freeTextBypass": "prohibited",
         "deterministic": [
           "validator.integrate-checks"
-        ],
-        "freeTextBypass": "prohibited"
+        ]
       }
     },
     {
-      "id": "action.sd-09",
-      "name": "SD-09 Parallel Independent Adversarial Review",
-      "purpose": "Run three mutually isolated adversarial lenses (Problem-Solution, Architecture, Quality & Acceptance) over the same admitted Draft lineage; the lenses cannot see each other's analysis before the review barrier closes; each emits admitted Findings or non-blocking REVIEW_SIGNALs; results are not votes. The first pass runs all three lenses behind the barrier; later recheck runs only lenses whose exact review evidence was invalidated (independence and fresh-session rules still apply). The three lens roles share responsibility; each branch runs under its own lens role declared in validation.review; the action-level authority is declared as the architecture lens role.",
+      "id": "action.sd-09.problem-solution",
+      "name": "SD-09 Problem-Solution Review",
+      "purpose": "Review the admitted Draft only through the isolated Problem-Solution lens: test problem framing, scope, stakeholder need and solution fitness; emit this lens's immutable Findings or non-blocking REVIEW_SIGNALs without seeing other lens conclusions, aggregating results, voting or changing another lens's authority.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "draft": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "draft"
+        ]
+      },
+      "resultSchema": {
+        "type": "object",
+        "properties": {
+          "findings": {
+            "type": "array"
+          },
+          "review_signals": {
+            "type": "array"
+          }
+        },
+        "required": [
+          "findings"
+        ]
+      },
+      "responsibleAuthority": {
+        "kind": "role",
+        "role": "role.problem-solution-reviewer"
+      },
+      "allowedRoutes": [
+        "route.reviewer.problem-solution"
+      ],
+      "escalation": {
+        "allowed": false,
+        "scope": "route-within-allowed",
+        "cannotChange": [
+          "lens isolation until the barrier",
+          "gate",
+          "successor-set"
+        ]
+      },
+      "gate": {
+        "freeTextBypass": "prohibited",
+        "deterministic": [
+          "validator.review-isolation",
+          "validator.finding-admission"
+        ]
+      }
+    },
+    {
+      "id": "action.sd-09.architecture",
+      "name": "SD-09 Architecture Review",
+      "purpose": "Review the admitted Draft only through the isolated Architecture lens: challenge boundaries, responsibilities, dependency direction, state ownership and architecture fitness; emit this lens's immutable Findings or non-blocking REVIEW_SIGNALs without seeing other lens conclusions, aggregating results, voting or changing another lens's authority.",
       "inputSchema": {
         "type": "object",
         "properties": {
@@ -750,40 +595,7 @@
         "role": "role.architecture-reviewer"
       },
       "allowedRoutes": [
-        "route.reviewer.problem-solution",
-        "route.reviewer.architecture",
-        "route.reviewer.quality"
-      ],
-      "execution": {
-        "mode": "parallel",
-        "branches": [
-          {
-            "route": "route.reviewer.problem-solution",
-            "isolation": "session-isolated",
-            "required": true
-          },
-          {
-            "route": "route.reviewer.architecture",
-            "isolation": "session-isolated",
-            "required": true
-          },
-          {
-            "route": "route.reviewer.quality",
-            "isolation": "session-isolated",
-            "required": true
-          }
-        ],
-        "join": {
-          "mode": "aggregator",
-          "aggregatorAction": "action.sd-10",
-          "barrier": true
-        }
-      },
-      "selector": {
-        "kind": "deterministic"
-      },
-      "allowedSuccessors": [
-        "node.sd-10"
+        "route.reviewer.architecture"
       ],
       "escalation": {
         "allowed": false,
@@ -795,25 +607,65 @@
         ]
       },
       "gate": {
-        "preconditions": [
-          {
-            "field": "draft",
-            "op": "exists"
-          }
-        ],
-        "postconditions": [
-          {
-            "field": "routing",
-            "op": "exists"
-          }
-        ],
+        "freeTextBypass": "prohibited",
         "deterministic": [
           "validator.review-isolation",
           "validator.finding-admission"
-        ],
-        "freeTextBypass": "prohibited"
+        ]
+      }
+    },
+    {
+      "id": "action.sd-09.quality-acceptance",
+      "name": "SD-09 Quality and Acceptance Review",
+      "purpose": "Review the admitted Draft only through the isolated Quality and Acceptance lens: challenge quality mechanisms, scenarios, acceptance evidence and operational fitness; emit this lens's immutable Findings or non-blocking REVIEW_SIGNALs without seeing other lens conclusions, aggregating results, voting or changing another lens's authority.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "draft": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "draft"
+        ]
       },
-      "budget": "budget.review"
+      "resultSchema": {
+        "type": "object",
+        "properties": {
+          "findings": {
+            "type": "array"
+          },
+          "review_signals": {
+            "type": "array"
+          }
+        },
+        "required": [
+          "findings"
+        ]
+      },
+      "responsibleAuthority": {
+        "kind": "role",
+        "role": "role.quality-reviewer"
+      },
+      "allowedRoutes": [
+        "route.reviewer.quality"
+      ],
+      "escalation": {
+        "allowed": false,
+        "scope": "route-within-allowed",
+        "cannotChange": [
+          "lens isolation until the barrier",
+          "gate",
+          "successor-set"
+        ]
+      },
+      "gate": {
+        "freeTextBypass": "prohibited",
+        "deterministic": [
+          "validator.review-isolation",
+          "validator.finding-admission"
+        ]
+      }
     },
     {
       "id": "action.sd-10",
@@ -845,7 +697,8 @@
               "conflict",
               "skeleton-invalid",
               "draft-fix",
-              "disposition-valid"
+              "disposition-valid",
+              "unmatched"
             ]
           },
           "mergedFindings": {
@@ -867,20 +720,6 @@
       "allowedRoutes": [
         "route.aggregator.standard"
       ],
-      "execution": {
-        "mode": "single"
-      },
-      "selector": {
-        "kind": "deterministic"
-      },
-      "allowedSuccessors": [
-        "node.sd-01r",
-        "node.sd-04",
-        "node.sd-11",
-        "node.sd-11h",
-        "node.sd-12",
-        "terminal:failed"
-      ],
       "escalation": {
         "allowed": false,
         "scope": "route-within-allowed",
@@ -893,30 +732,10 @@
         ]
       },
       "gate": {
-        "preconditions": [
-          {
-            "field": "findings",
-            "op": "exists"
-          }
-        ],
-        "postconditions": [
-          {
-            "field": "routing",
-            "op": "in",
-            "value": [
-              "evidence-gap",
-              "brief-gap",
-              "conflict",
-              "skeleton-invalid",
-              "draft-fix",
-              "disposition-valid"
-            ]
-          }
-        ],
+        "freeTextBypass": "prohibited",
         "deterministic": [
           "validator.aggregation-rules"
-        ],
-        "freeTextBypass": "prohibited"
+        ]
       }
     },
     {
@@ -949,7 +768,8 @@
             "enum": [
               "SD-09",
               "SD-13",
-              "SD-14"
+              "SD-14",
+              "unmatched"
             ]
           },
           "revisedDraft": {
@@ -968,18 +788,6 @@
       "allowedRoutes": [
         "route.designer.standard"
       ],
-      "execution": {
-        "mode": "single"
-      },
-      "selector": {
-        "kind": "deterministic"
-      },
-      "allowedSuccessors": [
-        "node.sd-09",
-        "node.sd-13",
-        "node.sd-14",
-        "terminal:failed"
-      ],
       "escalation": {
         "allowed": false,
         "scope": "route-within-allowed",
@@ -991,29 +799,11 @@
         ]
       },
       "gate": {
-        "preconditions": [
-          {
-            "field": "return_action",
-            "op": "exists"
-          }
-        ],
-        "postconditions": [
-          {
-            "field": "return_action",
-            "op": "in",
-            "value": [
-              "SD-09",
-              "SD-13",
-              "SD-14"
-            ]
-          }
-        ],
+        "freeTextBypass": "prohibited",
         "deterministic": [
           "validator.revision-return-validation"
-        ],
-        "freeTextBypass": "prohibited"
-      },
-      "budget": "budget.revision"
+        ]
+      }
     },
     {
       "id": "action.sd-11h",
@@ -1035,7 +825,9 @@
             "enum": [
               "new-brief",
               "direction-invalidated",
-              "draft-decision"
+              "draft-decision",
+              "wait-user",
+              "unmatched"
             ]
           },
           "decisionRecord": {
@@ -1055,18 +847,6 @@
         "route.facilitator.standard",
         "route.facilitator.decision"
       ],
-      "execution": {
-        "mode": "single"
-      },
-      "selector": {
-        "kind": "deterministic"
-      },
-      "allowedSuccessors": [
-        "node.sd-03",
-        "node.sd-04",
-        "node.sd-11",
-        "terminal:failed"
-      ],
       "escalation": {
         "allowed": false,
         "scope": "route-within-allowed",
@@ -1078,33 +858,11 @@
         ]
       },
       "gate": {
-        "preconditions": [
-          {
-            "field": "routing",
-            "op": "exists"
-          }
-        ],
-        "postconditions": [
-          {
-            "field": "routing",
-            "op": "in",
-            "value": [
-              "new-brief",
-              "direction-invalidated",
-              "draft-decision"
-            ]
-          }
-        ],
+        "freeTextBypass": "prohibited",
         "deterministic": [
           "validator.human-decision-admission"
-        ],
-        "freeTextBypass": "prohibited"
-      },
-      "waitPolicy": {
-        "kind": "user",
-        "wait": "wait.user-decision"
-      },
-      "budget": "budget.decision-dialogue"
+        ]
+      }
     },
     {
       "id": "action.sd-12",
@@ -1125,7 +883,9 @@
             "type": "string",
             "enum": [
               "closed",
-              "affects-design"
+              "affects-design",
+              "wait-spike",
+              "unmatched"
             ]
           },
           "designParameters": {
@@ -1147,17 +907,6 @@
       "allowedRoutes": [
         "route.designer.standard"
       ],
-      "execution": {
-        "mode": "single"
-      },
-      "selector": {
-        "kind": "deterministic"
-      },
-      "allowedSuccessors": [
-        "node.sd-11",
-        "node.sd-13",
-        "terminal:failed"
-      ],
       "escalation": {
         "allowed": false,
         "scope": "route-within-allowed",
@@ -1168,31 +917,11 @@
         ]
       },
       "gate": {
-        "preconditions": [
-          {
-            "field": "routing",
-            "op": "exists"
-          }
-        ],
-        "postconditions": [
-          {
-            "field": "routing",
-            "op": "in",
-            "value": [
-              "closed",
-              "affects-design"
-            ]
-          }
-        ],
+        "freeTextBypass": "prohibited",
         "deterministic": [
           "validator.parameter-closure",
           "validator.downstream-obligation-completeness"
-        ],
-        "freeTextBypass": "prohibited"
-      },
-      "waitPolicy": {
-        "kind": "spike",
-        "wait": "wait.spike-design-parameter"
+        ]
       }
     },
     {
@@ -1227,7 +956,8 @@
             "type": "string",
             "enum": [
               "pass",
-              "fresh-reader-finding"
+              "fresh-reader-finding",
+              "unmatched"
             ]
           },
           "findings": {
@@ -1249,17 +979,6 @@
       "allowedRoutes": [
         "route.reader.fresh"
       ],
-      "execution": {
-        "mode": "single"
-      },
-      "selector": {
-        "kind": "deterministic"
-      },
-      "allowedSuccessors": [
-        "node.sd-11",
-        "node.sd-14",
-        "terminal:failed"
-      ],
       "escalation": {
         "allowed": false,
         "scope": "route-within-allowed",
@@ -1270,26 +989,10 @@
         ]
       },
       "gate": {
-        "preconditions": [
-          {
-            "field": "draft",
-            "op": "exists"
-          }
-        ],
-        "postconditions": [
-          {
-            "field": "routing",
-            "op": "in",
-            "value": [
-              "pass",
-              "fresh-reader-finding"
-            ]
-          }
-        ],
+        "freeTextBypass": "prohibited",
         "deterministic": [
           "validator.fresh-reader-boundary"
-        ],
-        "freeTextBypass": "prohibited"
+        ]
       }
     },
     {
@@ -1322,7 +1025,8 @@
             "type": "string",
             "enum": [
               "pass",
-              "fixable-failure"
+              "fixable-failure",
+              "unmatched"
             ]
           },
           "validatorReport": {
@@ -1338,38 +1042,11 @@
         "kind": "runtime",
         "validator": "validator.final-verification"
       },
-      "execution": {
-        "mode": "single"
-      },
-      "selector": {
-        "kind": "deterministic"
-      },
-      "allowedSuccessors": [
-        "node.sd-11",
-        "node.sd-15",
-        "terminal:failed"
-      ],
       "gate": {
-        "preconditions": [
-          {
-            "field": "routing",
-            "op": "exists"
-          }
-        ],
-        "postconditions": [
-          {
-            "field": "routing",
-            "op": "in",
-            "value": [
-              "pass",
-              "fixable-failure"
-            ]
-          }
-        ],
+        "freeTextBypass": "prohibited",
         "deterministic": [
           "validator.final-verification"
-        ],
-        "freeTextBypass": "prohibited"
+        ]
       }
     },
     {
@@ -1405,15 +1082,6 @@
         "kind": "runtime",
         "validator": "validator.cleanup-gate"
       },
-      "execution": {
-        "mode": "single"
-      },
-      "selector": {
-        "kind": "deterministic"
-      },
-      "allowedSuccessors": [
-        "terminal:implementation-ready"
-      ],
       "escalation": {
         "allowed": false,
         "scope": "route-within-allowed",
@@ -1425,25 +1093,11 @@
         ]
       },
       "gate": {
-        "preconditions": [
-          {
-            "field": "draft",
-            "op": "exists"
-          }
-        ],
-        "postconditions": [
-          {
-            "field": "routing",
-            "op": "eq",
-            "value": "clean"
-          }
-        ],
+        "freeTextBypass": "prohibited",
         "deterministic": [
           "validator.cleanup-gate"
-        ],
-        "freeTextBypass": "prohibited"
-      },
-      "recovery": "recovery.cleanup-retry"
+        ]
+      }
     }
   ]
 }

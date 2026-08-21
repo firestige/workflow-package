@@ -1,6 +1,6 @@
 {
   "kind": "agentops.routes",
-  "schemaVersion": "agentops.workflow-dsl@0.1.0",
+  "schemaVersion": "agentops.workflow-dsl@1.0.0",
   "routes": [
     {
       "id": "route.facilitator.standard",
@@ -227,7 +227,7 @@
             }
           },
           {
-            "action": "action.sd-09",
+            "action": "action.sd-09.architecture",
             "prompt": {
               "id": "resource.prompt.architecture-review"
             }
@@ -285,7 +285,7 @@
         },
         "actionPrompts": [
           {
-            "action": "action.sd-09",
+            "action": "action.sd-09.problem-solution",
             "prompt": {
               "id": "resource.prompt.problem-solution-review"
             }
@@ -340,7 +340,7 @@
         },
         "actionPrompts": [
           {
-            "action": "action.sd-09",
+            "action": "action.sd-09.quality-acceptance",
             "prompt": {
               "id": "resource.prompt.quality-acceptance-review"
             }

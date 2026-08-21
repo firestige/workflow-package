@@ -12,7 +12,7 @@
 | Design version | `0.3.0-design` |
 | Design status | `CONFIRMED` |
 | Governing model | [`docs/workflow-composition-model.md`](../../docs/workflow-composition-model.md) |
-| Workflow authority | [`workflow.md`](workflow.md) until a versioned Runtime DSL is published; the machine-readable Definition under [`definition/`](definition/) is the candidate translation per [`agentops.workflow-dsl@0.1.0`](../../docs/contracts/workflow/workflow-definition-dsl.md) (Contract `REVIEW_CANDIDATE`, not published) |
+| Workflow authority | [`workflow.md`](workflow.md) until a versioned Runtime DSL is published; the machine-readable Definition under [`definition/`](definition/) is the candidate translation per [`agentops.workflow-dsl@1.0.0`](../../docs/contracts/workflow/workflow-definition-dsl.md) (Contract `REVIEW_CANDIDATE`, not published) |
 | Initial validation mode | `UNMANAGED_SIMULATION` with package-owned CLI Gates |
 
 ## 核心原则

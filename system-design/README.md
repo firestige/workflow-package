@@ -4,7 +4,7 @@
 
 本目录维护 System Design Workflow 的流程定义及其自建资源。它把简短、模糊的设计请求转化为一份可进入实现的 `IMPLEMENTATION_READY` System Design。执行期间保留需求共识、设计推导、独立审查、人工决定和版本演进的完整 lineage；完成时把必要结论吸收到最终 Design，并清理不再有交付价值的过程文件。
 
-当前状态为 **design-time reference package**：[`workflow.md`](workflow.md) 是流程语义的唯一来源；在 Workflow Contract 与机器可读 DSL 发布前，本目录不提供伪可执行的 `workflow.yaml` 或 `package.yaml`。符合 [`agentops.workflow-dsl@0.1.0`](../../docs/contracts/workflow/workflow-definition-dsl.md) 的机器可读 Definition 候选翻译见 [`definition/`](definition/)（Contract `REVIEW_CANDIDATE`，未发布，`DESIGN_REFERENCE`）。
+当前状态为 **design-time reference package**：[`workflow.md`](workflow.md) 是流程语义的唯一来源；在 Workflow Contract 与机器可读 DSL 发布前，本目录不提供伪可执行的 `workflow.yaml` 或 `package.yaml`。符合 [`agentops.workflow-dsl@1.0.0`](../../docs/contracts/workflow/workflow-definition-dsl.md) 的机器可读 Definition 候选翻译见 [`definition/`](definition/)（Contract `REVIEW_CANDIDATE`，未发布，`DESIGN_REFERENCE`）。
 
 | Field | Value |
 | --- | --- |

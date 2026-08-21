@@ -1,6 +1,6 @@
 {
   "kind": "agentops.validation",
-  "schemaVersion": "agentops.workflow-dsl@0.1.0",
+  "schemaVersion": "agentops.workflow-dsl@1.0.0",
   "validators": [
     {
       "id": "validator.intake-authority",
@@ -132,15 +132,13 @@
   "aggregation": [
     {
       "id": "aggregation.sd09",
-      "scope": "action.sd-09",
+      "parallelNode": "node.sd-09",
+      "aggregatorAction": "action.sd-10",
       "rule": "preserve-provenance",
-      "arbiter": "role.finding-aggregator",
       "prohibited": [
         "voting",
-        "hiding risk",
-        "inflating signals",
-        "changing severity without returning to the source Reviewer",
-        "closing Findings"
+        "authority inheritance",
+        "finding closure"
       ]
     }
   ],
@@ -148,190 +146,110 @@
     {
       "id": "review.architecture-direction",
       "lens": "architecture-direction",
-      "role": "role.architecture-reviewer",
+      "action": "action.sd-05",
       "isolation": "session-isolated",
-      "barrier": true,
-      "admission": { "findingShape": "artifact.review-finding" }
+      "admission": {
+        "findingShape": "artifact.review-finding"
+      }
     },
     {
       "id": "review.problem-solution",
       "lens": "problem-solution",
-      "role": "role.problem-solution-reviewer",
+      "action": "action.sd-09.problem-solution",
       "isolation": "session-isolated",
-      "barrier": true,
-      "admission": { "findingShape": "artifact.review-finding" }
+      "admission": {
+        "findingShape": "artifact.review-finding.problem-solution"
+      }
     },
     {
       "id": "review.architecture",
       "lens": "architecture",
-      "role": "role.architecture-reviewer",
+      "action": "action.sd-09.architecture",
       "isolation": "session-isolated",
-      "barrier": true,
-      "admission": { "findingShape": "artifact.review-finding" }
+      "admission": {
+        "findingShape": "artifact.review-finding.architecture"
+      }
     },
     {
       "id": "review.quality-acceptance",
       "lens": "quality-acceptance",
-      "role": "role.quality-reviewer",
+      "action": "action.sd-09.quality-acceptance",
       "isolation": "session-isolated",
-      "barrier": true,
-      "admission": { "findingShape": "artifact.review-finding" }
+      "admission": {
+        "findingShape": "artifact.review-finding.quality-acceptance"
+      }
     }
   ],
   "conformance": [
     {
-      "id": "conf.positive.main-path",
+      "id": "conf.system-design.positive",
       "class": "positive",
-      "scenario": "Intake → adaptive grilling → Brief confirmed and frozen → Skeleton → architecture direction review pass → feasibility confirmed (no Spike) → progressive expansion → integrated Draft → three-lens parallel review (isolated, barrier) → aggregation routes disposition-valid → parameters closed, handoffs classified → Fresh Reader pass → deterministic verification pass → freeze/promote/clean → IMPLEMENTATION_READY.",
-      "preconditions": "One-sentence Intake; project authority available; all derivable facts resolvable from the repository.",
-      "expected": "Frozen, self-contained final Design bound to exact Git/artifact identity; session artifacts cleaned; IMPLEMENTATION_READY reported only after the cleanup Gate succeeds."
+      "meaning": "A declared closed branch is selected.",
+      "input": {
+        "operation": "planner-classification",
+        "branches": [
+          "branch.accept",
+          "branch.revise"
+        ],
+        "outcome": "branch",
+        "returnedBranch": "branch.accept",
+        "fallback": "question",
+        "budgetRemaining": 1
+      },
+      "trace": [
+        {
+          "event": "classification-selected",
+          "branch": "branch.accept"
+        }
+      ],
+      "oracle": {
+        "disposition": "BRANCH",
+        "branch": "branch.accept"
+      }
     },
     {
-      "id": "conf.positive.grilling-adaptive",
-      "class": "positive",
-      "scenario": "A one-sentence Intake is expanded through adaptive grilling into a confirmed, navigable Brief without a prepared questionnaire; a solution hypothesis exposes a hidden trade-off and the Brief records the user preference without making an architecture decision.",
-      "preconditions": "Intake context and authority map available.",
-      "expected": "Working Brief covers the fixed topics; unknowns classified; no design-significant ambiguity remains unclassified or ownerless."
-    },
-    {
-      "id": "conf.positive.spike-confirms-direction",
-      "class": "positive",
-      "scenario": "Skeleton review identifies an architecture-feasibility Spike; SD-06 publishes the Spike Request, WAITING_FOR_SPIKE resumes with a conclusive correlated result, feasibility is confirmed, and SD-06 proceeds directly to SD-07 without an artificial Draft Revision Request.",
-      "preconditions": "Exact Spike Request identity/content digest; matching conclusive result.",
-      "expected": "Feasibility confirmed; progression to expansion; no artificial Review Finding created."
-    },
-    {
-      "id": "conf.positive.brief-change",
-      "class": "positive",
-      "scenario": "A Brief gap during SD-05 creates a Brief Change Request, a fresh local-grilling session confirms Brief v2, and invalidation propagates through the transitive closure of affected identities while unrelated design content is revalidated rather than rewritten.",
-      "preconditions": "Frozen Brief v1; Brief Change Request admitted.",
-      "expected": "Brief v2 frozen; dependants deterministically invalidated; unaffected content rebound through revalidation records."
-    },
-    {
-      "id": "conf.positive.finding-closure",
-      "class": "positive",
-      "scenario": "An admitted Finding is rechecked by the corresponding review lens in a fresh session with the original Finding, treatment, new Draft and evidence, and is closed by that lens; the Designer did not close its own Finding; a Minor is ACCEPTED_MINOR by its source lens with a reasoned statement.",
-      "preconditions": "Finding admitted by a lens; Designer submitted treatment and new Draft.",
-      "expected": "Finding closed by the corresponding lens; no Design-authority Finding closure."
-    },
-    {
-      "id": "conf.positive.handoff",
-      "class": "positive",
-      "scenario": "An unresolved implementation-version question does not alter Module boundaries or mechanisms; SD-12 records an owner-complete downstream obligation and the Design reaches IMPLEMENTATION_READY without claiming that the version evidence passed.",
-      "preconditions": "Design-owned parameters closed; downstream obligations owner-complete with return location and reopen condition.",
-      "expected": "IMPLEMENTATION_READY with explicit downstream handoffs; no unexecuted evidence reported as passed."
-    },
-    {
-      "id": "conf.negative.route",
+      "id": "conf.system-design.negative",
       "class": "negative",
-      "scenario": "An Action is executed on a route not declared in its allowedRoutes, or an ambient/default Agent is substituted for a missing binding.",
-      "preconditions": "Route or substitution outside the declared set.",
-      "expected": "Activation fails closed and records drift evidence; state does not advance."
+      "meaning": "A deterministic classifier failure fails closed.",
+      "input": {
+        "operation": "planner-classification",
+        "branches": [
+          "branch.accept",
+          "branch.revise"
+        ],
+        "outcome": "nonretryable-failure",
+        "fallback": "interrupt",
+        "budgetRemaining": 1
+      },
+      "trace": [
+        {
+          "event": "failed",
+          "reason": "nonretryable"
+        }
+      ],
+      "oracle": {
+        "disposition": "FAILED"
+      }
     },
     {
-      "id": "conf.negative.authority",
-      "class": "negative",
-      "scenario": "A Skill or Artifact text claims transition-selection or terminal authority, or a later instruction layer expands an earlier layer's boundary.",
-      "preconditions": "Declared authority boundary violation.",
-      "expected": "Static conflict fails closed at admission; conflicts are never resolved by Driver-implicit priority."
-    },
-    {
-      "id": "conf.negative.wait-correlation",
-      "class": "negative",
-      "scenario": "A Wait resumes from an uncorrelated user answer or Spike result whose correlation identity differs from the pending wait.",
-      "preconditions": "Correlation identity differs from the pending wait-request-id.",
-      "expected": "No resume; wait persists; stale/mismatched answers have no effect; no state advance."
-    },
-    {
-      "id": "conf.negative.spike-mismatch",
-      "class": "negative",
-      "scenario": "A Spike result does not match the exact request identity/content digest, or a duplicate result arrives.",
-      "preconditions": "Result identity/digest mismatch or duplicate result.",
-      "expected": "Mismatched or duplicate results cannot advance state; the Spike wait persists."
-    },
-    {
-      "id": "conf.negative.budget",
-      "class": "negative",
-      "scenario": "Budget is exhausted and the Workflow claims completion with unresolved topics or Findings.",
-      "preconditions": "Budget exhausted (e.g., budget.review).",
-      "expected": "terminal:INCOMPLETE with exact state preserved; never success; no Gate relaxed."
-    },
-    {
-      "id": "conf.negative.cancel",
-      "class": "negative",
-      "scenario": "A cancellation is recorded as INCOMPLETE or success, or a non-retryable failure is retried with ambient replacement resources.",
-      "preconditions": "Cancellation or non-retryable failure recorded with wrong terminal.",
-      "expected": "CANCELLED preserves lineage and cannot be reported as INCOMPLETE or success; FAILED cannot be converted to INCOMPLETE for silent substitution."
-    },
-    {
-      "id": "conf.negative.return-action",
-      "class": "negative",
-      "scenario": "SD-11 defaults every Revision Request to SD-09, or returns to a lens whose review evidence was not invalidated.",
-      "preconditions": "return_action not selected from the invalidated validation evidence.",
-      "expected": "Runtime return-action validation rejects it; state does not advance."
-    },
-    {
-      "id": "conf.negative.voting",
-      "class": "negative",
-      "scenario": "The Aggregator closes Findings, chooses a majority opinion, or changes severity without returning to the source Reviewer.",
-      "preconditions": "Aggregation authority overreach.",
-      "expected": "validator.aggregation-rules fails; aggregation result rejected."
-    },
-    {
-      "id": "conf.negative.cleanup",
-      "class": "negative",
-      "scenario": "A Brief, Skeleton, Draft, treatment, review result, question set, validator report or freeze manifest is added under a tracked repository path or docs/**/workflow-artifacts/, or the final Design links to a session artifact that cleanup will delete.",
-      "preconditions": "Workflow intermediate in the Git index/worktree or required link to a run-workspace intermediate.",
-      "expected": "SD-15 cleanup Gate fails pre-terminal; IMPLEMENTATION_READY is never reported."
-    },
-    {
-      "id": "conf.negative.human-admission",
-      "class": "negative",
-      "scenario": "An evidence-resolvable difference is escalated to the user, or a question/exploratory statement in the Decision Dialogue is interpreted as a final decision.",
-      "preconditions": "Six Human Decision Admission conditions not all true, or no explicit Decision Record.",
-      "expected": "validator.human-decision-admission rejects it; no Decision Record may be frozen."
-    },
-    {
-      "id": "conf.recovery.retry",
+      "id": "conf.system-design.recovery",
       "class": "recovery",
-      "scenario": "A retryable Agent/Driver execution failure occurs on an active Action.",
-      "preconditions": "Retryable failure; checkpoint binding identities re-resolved before recovery.",
-      "expected": "A new attempt identity on the same Action with budget accounting; artifact/checkpoint identity preserved; blind replay forbidden."
-    },
-    {
-      "id": "conf.recovery.incomplete-resume",
-      "class": "recovery",
-      "scenario": "Budget exhaustion or missing external authority enters INCOMPLETE, and a later authorized continuation resumes the same admitted state.",
-      "preconditions": "INCOMPLETE records current artifact identities, closed topics, unresolved issues, remaining Findings/Spikes, stop reason, resume Action and required input/budget.",
-      "expected": "Resumption from recorded state (restartFromSavepoint); no Gate relaxed; never recovered by committing intermediate artifacts."
-    },
-    {
-      "id": "conf.recovery.wait-expiry",
-      "class": "recovery",
-      "scenario": "A user or Spike Wait expires; renewal/retry remains admitted, so the Runtime resumes the recorded Action to publish the same or a new versioned request; otherwise expiry enters resumable INCOMPLETE with the pending request.",
-      "preconditions": "Wait expiry as a deterministic policy event.",
-      "expected": "Renewal through the recorded Action while policy permits; otherwise INCOMPLETE with the pending request; expiry is never success and never silent cancellation."
-    },
-    {
-      "id": "conf.recovery.evidence-return",
-      "class": "recovery",
-      "scenario": "Evidence research returns to the exact SD-05 or SD-09 requester; when returning to SD-09, only the affected lens re-runs in a fresh session before aggregation resumes.",
-      "preconditions": "Recorded resume_action and resume_lens bound to the request.",
-      "expected": "Research returns only to the recorded requester; SD-09 recheck covers only the invalidated lens; grilling is not restarted."
-    },
-    {
-      "id": "conf.recovery.cleanup-retry",
-      "class": "recovery",
-      "scenario": "SD-15 cleanup fails after promotion.",
-      "preconditions": "Cleanup failure detected by validator.cleanup-gate.",
-      "expected": "The Workflow remains pre-terminal and retries bounded cleanup; IMPLEMENTATION_READY is never reported with intermediates in the Git candidate set."
-    },
-    {
-      "id": "conf.recovery.cancelled",
-      "class": "recovery",
-      "scenario": "Explicit user cancellation from a user or Spike Wait, or during an active non-Wait Action.",
-      "preconditions": "Explicit cancellation signal; latest durable run-workspace lineage recorded.",
-      "expected": "Durable CANCELLED preserving required lineage per retention policy (not in Git); never reported as completion."
+      "meaning": "A stale Wait answer does not resume the Definition.",
+      "input": {
+        "operation": "wait-correlation",
+        "pendingId": "wait.current",
+        "answerId": "wait.stale",
+        "duplicate": false
+      },
+      "trace": [
+        {
+          "event": "wait-rejected",
+          "reason": "correlation-mismatch"
+        }
+      ],
+      "oracle": {
+        "disposition": "WAIT_PENDING"
+      }
     }
   ]
 }

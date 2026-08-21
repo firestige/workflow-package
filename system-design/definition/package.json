@@ -1,6 +1,6 @@
 {
   "kind": "agentops.package",
-  "schemaVersion": "agentops.workflow-dsl@0.1.0",
+  "schemaVersion": "agentops.workflow-dsl@1.0.0",
   "package": {
     "name": "system-design-workflow",
     "version": "0.3.0",
@@ -14,8 +14,9 @@
     "definition": {
       "name": "system-design-workflow",
       "version": "0.3.0",
-      "contentIdentity": "sha256:1b9888420fe3bdd30e13cc1344bec7b8aae74e6af6930e292e0905c169c353c3"
-    }
+      "contentIdentity": "sha256:ce0c6e79cba68d1fa1a1eab25aaebb183fa64a5d6b4fe8d3e9012afb61a5bcc8"
+    },
+    "digest": "sha256:d76683b4a7454781ded91f056d585248eeb5116ccfd7c47cade6a6da5e5e2222"
   },
   "documents": {
     "workflow": "workflow.json",
@@ -90,6 +91,14 @@
         "path": "../roles/fresh-reader.role.md",
         "contentIdentity": "sha256:e1d079bf840a74084b70da6a4fa40f00b1a5e54b60553419c18533bc58769820",
         "use": "Fresh Reader role authority for the Fresh Reader Test"
+      },
+      {
+        "id": "resource.documentation.runtime-custodian",
+        "kind": "documentation",
+        "owner": "owned",
+        "path": "resources/runtime-custodian.role.md",
+        "contentIdentity": "sha256:61acbc40dbb3c60669e6b142458135e14cfff4a5c428b9cacc1fe89212e5b811",
+        "use": "Deterministic lifecycle boundary for SD-14/SD-15; not an Agent Role and grants no Route authority"
       },
       {
         "id": "resource.prompt.intake-and-authority",
@@ -169,7 +178,7 @@
         "owner": "owned",
         "path": "../prompts/actions/architecture-review.prompt.md",
         "contentIdentity": "sha256:48ce1f6175a48afb9e0419b8cc69a02c0673719bd86bde1356747cea55bca084",
-        "use": "action.sd-09 architecture lens mission"
+        "use": "action.sd-09.architecture mission"
       },
       {
         "id": "resource.prompt.problem-solution-review",
@@ -177,7 +186,7 @@
         "owner": "owned",
         "path": "../prompts/actions/problem-solution-review.prompt.md",
         "contentIdentity": "sha256:8383968480c20928604e3b372a17a0976278a9e62bf566110011701279fec9d7",
-        "use": "action.sd-09 problem-solution lens mission"
+        "use": "action.sd-09.problem-solution mission"
       },
       {
         "id": "resource.prompt.quality-acceptance-review",
@@ -185,7 +194,7 @@
         "owner": "owned",
         "path": "../prompts/actions/quality-acceptance-review.prompt.md",
         "contentIdentity": "sha256:327dd7f142e2d682383a1faac86a725ba5b2f26ba56eb8eb48fabfbb9489f31e",
-        "use": "action.sd-09 quality-acceptance lens mission"
+        "use": "action.sd-09.quality-acceptance mission"
       },
       {
         "id": "resource.prompt.aggregate-findings",
@@ -472,7 +481,7 @@
         "kind": "documentation",
         "owner": "owned",
         "path": "../README.md",
-        "contentIdentity": "sha256:82b40d5d7f317f91d1df8f9eb59339a4e3830789b83ad4d0c42b4e866dfdfe13",
+        "contentIdentity": "sha256:fef801a3b8e40364caed44b382a556f8b6a85dd706a3808e0800b7dbdd54f895",
         "use": "Package-level design-time reference documentation"
       }
     ],
@@ -552,7 +561,7 @@
           "path": "scripts/budget/questions.mjs"
         },
         "contentIdentity": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-        "use": "budget evaluator script registration point for budget.questions; runtime invokes it to obtain the budget conclusion; script to be provided by the package (IMPLEMENTATION_REQUIRED, never fabricated)"
+        "use": "Declared evaluator registration point for budget.questions; implementation is outside this Definition"
       },
       {
         "id": "budget.evaluator.research",
@@ -563,7 +572,7 @@
           "path": "scripts/budget/research.mjs"
         },
         "contentIdentity": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
-        "use": "budget evaluator script registration point for budget.research; runtime invokes it to obtain the budget conclusion; script to be provided by the package (IMPLEMENTATION_REQUIRED, never fabricated)"
+        "use": "Declared evaluator registration point for budget.research; implementation is outside this Definition"
       },
       {
         "id": "budget.evaluator.feasibility",
@@ -574,7 +583,7 @@
           "path": "scripts/budget/feasibility.mjs"
         },
         "contentIdentity": "sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
-        "use": "budget evaluator script registration point for budget.feasibility; runtime invokes it to obtain the budget conclusion; script to be provided by the package (IMPLEMENTATION_REQUIRED, never fabricated)"
+        "use": "Declared evaluator registration point for budget.feasibility; implementation is outside this Definition"
       },
       {
         "id": "budget.evaluator.review",
@@ -585,7 +594,7 @@
           "path": "scripts/budget/review.mjs"
         },
         "contentIdentity": "sha256:dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
-        "use": "budget evaluator script registration point for budget.review; runtime invokes it to obtain the budget conclusion; script to be provided by the package (IMPLEMENTATION_REQUIRED, never fabricated)"
+        "use": "Declared evaluator registration point for budget.review; implementation is outside this Definition"
       },
       {
         "id": "budget.evaluator.revision",
@@ -596,7 +605,7 @@
           "path": "scripts/budget/revision.mjs"
         },
         "contentIdentity": "sha256:eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-        "use": "budget evaluator script registration point for budget.revision; runtime invokes it to obtain the budget conclusion; script to be provided by the package (IMPLEMENTATION_REQUIRED, never fabricated)"
+        "use": "Declared evaluator registration point for budget.revision; implementation is outside this Definition"
       },
       {
         "id": "budget.evaluator.decision-dialogue",
@@ -607,7 +616,7 @@
           "path": "scripts/budget/decision-dialogue.mjs"
         },
         "contentIdentity": "sha256:ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
-        "use": "budget evaluator script registration point for budget.decision-dialogue; runtime invokes it to obtain the budget conclusion; script to be provided by the package (IMPLEMENTATION_REQUIRED, never fabricated)"
+        "use": "Declared evaluator registration point for budget.decision-dialogue; implementation is outside this Definition"
       }
     ]
   },
@@ -629,7 +638,7 @@
     "deterministic validator CLI for SD-14/SD-15 (checks defined under validators/README.md)"
   ],
   "compatibility": {
-    "minContractVersion": "0.1.0",
-    "maxContractVersion": "0.1.0"
+    "minContractVersion": "1.0.0",
+    "maxContractVersion": "1.0.0"
   }
 }

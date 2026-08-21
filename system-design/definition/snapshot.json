@@ -1,0 +1,615 @@
+{
+  "kind": "agentops.workflow-package-snapshot",
+  "schemaVersion": "agentops.workflow-dsl@1.0.0",
+  "snapshot": {
+    "id": "snapshot.system-design-workflow",
+    "package": {
+      "name": "system-design-workflow",
+      "version": "0.3.0",
+      "digest": "sha256:d76683b4a7454781ded91f056d585248eeb5116ccfd7c47cade6a6da5e5e2222"
+    },
+    "definition": {
+      "id": "system-design-workflow",
+      "version": "0.3.0",
+      "contentIdentity": "sha256:ce0c6e79cba68d1fa1a1eab25aaebb183fa64a5d6b4fe8d3e9012afb61a5bcc8"
+    },
+    "documents": [
+      {
+        "kind": "workflow",
+        "contentIdentity": "sha256:ce0c6e79cba68d1fa1a1eab25aaebb183fa64a5d6b4fe8d3e9012afb61a5bcc8"
+      },
+      {
+        "kind": "actions",
+        "contentIdentity": "sha256:2e3e8da944f77154f3439a0fbbffdaa24c3192f84d3367eafe0dd0a8cfee7ed1"
+      },
+      {
+        "kind": "roles",
+        "contentIdentity": "sha256:09647f1baa14be027cc21aa3b74959c0d33fab92f6b3440a9aeecfb599b6cab3"
+      },
+      {
+        "kind": "routes",
+        "contentIdentity": "sha256:51315764d7898b03f45f9c60d06917c87778d3bd7fbd432ca2a22c841d37df39"
+      },
+      {
+        "kind": "artifacts",
+        "contentIdentity": "sha256:06d30898d60df28bffb23e5510fafbc1d4af465f8f7a08f925917108692ef9f7"
+      },
+      {
+        "kind": "validation",
+        "contentIdentity": "sha256:cef8454d8589f14f39d78ef12c5652bc478e00b0c4cc6d030827210f9ac77538"
+      }
+    ],
+    "resources": [
+      {
+        "id": "resource.role-prompt.grilling-facilitator",
+        "owner": "owned",
+        "contentIdentity": "sha256:acbcfd7c06f247625ae9df06593b9d382c5fea83f80a8c177a791c1a61840418"
+      },
+      {
+        "id": "resource.role-prompt.evidence-scout",
+        "owner": "owned",
+        "contentIdentity": "sha256:2451f85457e1c0de9eeede4469b2d8eda4ee4ff93d03b490376c94d764b9a81f"
+      },
+      {
+        "id": "resource.role-prompt.system-designer",
+        "owner": "owned",
+        "contentIdentity": "sha256:193b5b2524018cd6f3c3cbaa5fa8ffc890977026d5627bf188c8fb54818818e7"
+      },
+      {
+        "id": "resource.role-prompt.architecture-reviewer",
+        "owner": "owned",
+        "contentIdentity": "sha256:9903ff5229bd4393fd5f04a74c7d10ea88806931551b5f737c1f3f72dcae5a18"
+      },
+      {
+        "id": "resource.role-prompt.problem-solution-reviewer",
+        "owner": "owned",
+        "contentIdentity": "sha256:0833a227cf9b2d8a36606ff815ca1646fc5b91477edddfc0d8f4c88929cec9df"
+      },
+      {
+        "id": "resource.role-prompt.quality-reviewer",
+        "owner": "owned",
+        "contentIdentity": "sha256:2105381b78b7f0ffebf34d44401b038bd7c1863b526fc44ab5bbb2428dba55ff"
+      },
+      {
+        "id": "resource.role-prompt.finding-aggregator",
+        "owner": "owned",
+        "contentIdentity": "sha256:9c9f031dc53a53cb9044157986882c1fdf958d7728ad92b9744b95645c0cae52"
+      },
+      {
+        "id": "resource.role-prompt.fresh-reader",
+        "owner": "owned",
+        "contentIdentity": "sha256:e1d079bf840a74084b70da6a4fa40f00b1a5e54b60553419c18533bc58769820"
+      },
+      {
+        "id": "resource.documentation.runtime-custodian",
+        "owner": "owned",
+        "contentIdentity": "sha256:61acbc40dbb3c60669e6b142458135e14cfff4a5c428b9cacc1fe89212e5b811"
+      },
+      {
+        "id": "resource.prompt.intake-and-authority",
+        "owner": "owned",
+        "contentIdentity": "sha256:2410ae27d4f3ce8e7ad7bc081465041b4f8c373f295234fc244b6fe8ec6210ab"
+      },
+      {
+        "id": "resource.prompt.adaptive-grilling",
+        "owner": "owned",
+        "contentIdentity": "sha256:af19e9cd5716346770f80034ac4bf2bec9bd71883d799e1d7d96e56a6f08fcf2"
+      },
+      {
+        "id": "resource.prompt.evidence-research",
+        "owner": "owned",
+        "contentIdentity": "sha256:33858dcc4f4224e0b14fca3e88819e2b305aa5f36dcf370fc55035802164e52a"
+      },
+      {
+        "id": "resource.prompt.produce-skeleton",
+        "owner": "owned",
+        "contentIdentity": "sha256:581ea01d4ee2511bfdbf65ace357f61f1b74c7d468b14577818ed11e52b1a34c"
+      },
+      {
+        "id": "resource.prompt.prepare-spike-request",
+        "owner": "owned",
+        "contentIdentity": "sha256:5dfdb7c78320559b10bb3b194fcf030e1231a8fcfef95ef651a5193c49fd8d44"
+      },
+      {
+        "id": "resource.prompt.apply-spike-result",
+        "owner": "owned",
+        "contentIdentity": "sha256:98b6a9b65f8e10a5b409cf12fdb531e45f8778eba325e6f6ab25714efeb45321"
+      },
+      {
+        "id": "resource.prompt.expand-system-design",
+        "owner": "owned",
+        "contentIdentity": "sha256:c75fd8c889fb557134f5d91f8110fbcfd3597ce07a70344f24afe6e4dd0f3ce3"
+      },
+      {
+        "id": "resource.prompt.integrate-draft",
+        "owner": "owned",
+        "contentIdentity": "sha256:eb5003d890bb0d9e6d4031f37ac0827b34952503512b10f0675c47f671b5513d"
+      },
+      {
+        "id": "resource.prompt.architecture-direction-review",
+        "owner": "owned",
+        "contentIdentity": "sha256:40bb043509fdc3eed84c9b8ec5ecd96bb572408add886ac061204a8aaa6f8b8f"
+      },
+      {
+        "id": "resource.prompt.architecture-review",
+        "owner": "owned",
+        "contentIdentity": "sha256:48ce1f6175a48afb9e0419b8cc69a02c0673719bd86bde1356747cea55bca084"
+      },
+      {
+        "id": "resource.prompt.problem-solution-review",
+        "owner": "owned",
+        "contentIdentity": "sha256:8383968480c20928604e3b372a17a0976278a9e62bf566110011701279fec9d7"
+      },
+      {
+        "id": "resource.prompt.quality-acceptance-review",
+        "owner": "owned",
+        "contentIdentity": "sha256:327dd7f142e2d682383a1faac86a725ba5b2f26ba56eb8eb48fabfbb9489f31e"
+      },
+      {
+        "id": "resource.prompt.aggregate-findings",
+        "owner": "owned",
+        "contentIdentity": "sha256:9d59101b03f404a3c79f03f22b0f6c04557fcc7bcc429ca421b1bd784d846fb7"
+      },
+      {
+        "id": "resource.prompt.targeted-revision",
+        "owner": "owned",
+        "contentIdentity": "sha256:cc912c16a30e3931c9006bc40cec491902a805ae7e9215f22f0966da42e3e318"
+      },
+      {
+        "id": "resource.prompt.human-decision-dialogue",
+        "owner": "owned",
+        "contentIdentity": "sha256:789c6641f5ba40d7c0c99b3a7e2d369902e0153ada1b903e5bd3c98726be199a"
+      },
+      {
+        "id": "resource.prompt.classify-downstream-handoffs",
+        "owner": "owned",
+        "contentIdentity": "sha256:68bdafdec4949c91e19f979cc641141bd67f22e5fbc38025b9a57e1e252ea476"
+      },
+      {
+        "id": "resource.prompt.fresh-reader-test",
+        "owner": "owned",
+        "contentIdentity": "sha256:211a2767423df9b9a624acc921b98996e8f4d32507408d81c2d8be3fe382cc19"
+      },
+      {
+        "id": "resource.skill.system-design-authoring",
+        "owner": "owned",
+        "contentIdentity": "sha256:330ee6bad63604c7c8bee456fa7a0cd0b273277d6d5cc7dcd685fdaf8a5f8a23"
+      },
+      {
+        "id": "resource.skill.architecture-review",
+        "owner": "owned",
+        "contentIdentity": "sha256:26cd742f3ff539b75c1d14adda772d45a9d4439f0b017441b864ba4b3205c40e"
+      },
+      {
+        "id": "resource.skill.problem-solution-review",
+        "owner": "owned",
+        "contentIdentity": "sha256:5c85191c698a5282731ddcb78dd19c5c8458e91f4836459dbb9706123188bcdb"
+      },
+      {
+        "id": "resource.skill.quality-acceptance-review",
+        "owner": "owned",
+        "contentIdentity": "sha256:1cdbe298b10847bd18de53772d3b0e637d86cbb4ce3b4b7bfd30c0e3187b1e7e"
+      },
+      {
+        "id": "resource.template.system-design-brief",
+        "owner": "owned",
+        "contentIdentity": "sha256:8fb188e9a6f04470bdc58bbb4615b0c597c087914b511d0ad87c177386fe6b30"
+      },
+      {
+        "id": "resource.template.system-design-skeleton",
+        "owner": "owned",
+        "contentIdentity": "sha256:2b57b643b4236123ede0df2d1abd4a685797bb59495e791f7984516350318466"
+      },
+      {
+        "id": "resource.template.system-design-document",
+        "owner": "owned",
+        "contentIdentity": "sha256:1ceaafe8d79322a24dde087e8beada62b4149934328dd131acab72991ac1e58b"
+      },
+      {
+        "id": "resource.template.brief-change-request",
+        "owner": "owned",
+        "contentIdentity": "sha256:0199e10852dfa5d1d5a664194bfeee7ff352ee28ef67bed4b01253feb86fc4a6"
+      },
+      {
+        "id": "resource.template.evidence-research-request",
+        "owner": "owned",
+        "contentIdentity": "sha256:dfdd31d9824e984dc17aa794e9e3cc95c0854deb49fecf5303f92dbfcabe1e22"
+      },
+      {
+        "id": "resource.template.spike-request",
+        "owner": "owned",
+        "contentIdentity": "sha256:c047b898323bf566bd9150511b3c0b585c118dfb6221e48a2059930773f7d619"
+      },
+      {
+        "id": "resource.template.spike-result",
+        "owner": "owned",
+        "contentIdentity": "sha256:8c8ca2271fd0e023213191ad30e191496efee1350a1f02ed174bf3ea35df39f3"
+      },
+      {
+        "id": "resource.template.human-decision-request",
+        "owner": "owned",
+        "contentIdentity": "sha256:3170e9785c140dfab1f07f318fbd6ef2037ad3fc4694a44f37ed2f0eca79b443"
+      },
+      {
+        "id": "resource.template.human-decision-record",
+        "owner": "owned",
+        "contentIdentity": "sha256:ea89e823531bf3264843e38d1f4f54d54c430e89d8acd73608268a289badd5e4"
+      },
+      {
+        "id": "resource.schema.action-result",
+        "owner": "owned",
+        "contentIdentity": "sha256:68c34e2b794f07c3fbab7052b71b3a85bd83ef0721aa1b7c9bd0977da85d0f22"
+      },
+      {
+        "id": "resource.schema.review-finding",
+        "owner": "owned",
+        "contentIdentity": "sha256:739dcc9f37ffe515e47021d9d8f1556b60df4d0a8bd05c34c37b0105be2ddbbc"
+      },
+      {
+        "id": "resource.schema.artifact-dependency",
+        "owner": "owned",
+        "contentIdentity": "sha256:557c930c8c47830858437df77ce73e9f7dbf415b15758be1d04c5c3f3592f35d"
+      },
+      {
+        "id": "resource.schema.artifact-status",
+        "owner": "owned",
+        "contentIdentity": "sha256:7210d7a12ffd8c2dc10a9a10f9b22099da0ea030c8330888528cd95faf2446b9"
+      },
+      {
+        "id": "resource.schema.acceptance-trace",
+        "owner": "owned",
+        "contentIdentity": "sha256:6d88cce81ad012cb33b33f67eb8fe32820fadb86838cdfe02d631aae142e4d2a"
+      },
+      {
+        "id": "resource.schema.revision-request",
+        "owner": "owned",
+        "contentIdentity": "sha256:f16e3495b4773c6f2d6a10262cac84a535120e617b4975799da169e74ffb67c3"
+      },
+      {
+        "id": "resource.schema.spike-result",
+        "owner": "owned",
+        "contentIdentity": "sha256:96768b8fab86d817a8d129d8cff4ace0d7c8e55f0d78042d44bb4bf6103a2ee1"
+      },
+      {
+        "id": "resource.schema.reader-question",
+        "owner": "owned",
+        "contentIdentity": "sha256:5603e0ab22a211165db1b9487fe20b3ebfd90dac9b7094728924e843d66fc436"
+      },
+      {
+        "id": "resource.schema.workflow-control",
+        "owner": "owned",
+        "contentIdentity": "sha256:69794a7b8103e53bd45c4325c2a332223b2114b423140926a220a6f70b432976"
+      },
+      {
+        "id": "resource.schema.evidence-research-request",
+        "owner": "owned",
+        "contentIdentity": "sha256:cac59fea025f4126069131d937d2d672a0bd5c81852d21aca12336fdcb42a5dc"
+      },
+      {
+        "id": "resource.schema.downstream-obligation",
+        "owner": "owned",
+        "contentIdentity": "sha256:81284fba21d5624575afaacf3196f5b784c22a37dc148877f5593044308d7c84"
+      },
+      {
+        "id": "resource.validators.readme",
+        "owner": "owned",
+        "contentIdentity": "sha256:0d642afa849e4f55f85ad2d5574415763ea2438a64216b14f5d8c99bcdff15fc"
+      },
+      {
+        "id": "resource.conformance.positive",
+        "owner": "owned",
+        "contentIdentity": "sha256:69b0255159bbfd93a6f4e0157ab2278f81c809eb03591bd3a59362bed0079bf3"
+      },
+      {
+        "id": "resource.conformance.negative",
+        "owner": "owned",
+        "contentIdentity": "sha256:f0cac704fd33c16bc6517cb0334102fb2f1ce3ffb9af49aa47d7350581c5a6ab"
+      },
+      {
+        "id": "resource.conformance.recovery",
+        "owner": "owned",
+        "contentIdentity": "sha256:a1f0986b69cf474b3eb8a15c1e71eb8e9923911db7b01412589dcd7923e40bea"
+      },
+      {
+        "id": "resource.workflow-definition-source",
+        "owner": "owned",
+        "contentIdentity": "sha256:6317aacf628c5ac67ddf1f2488bf727c6b1ccc1d39652f615f970fca1ad13786"
+      },
+      {
+        "id": "resource.routes-catalog",
+        "owner": "owned",
+        "contentIdentity": "sha256:579b50a27ea35abcae1c6bd615ec0f4e7356f2197f3fa8013ff6ebb090510900"
+      },
+      {
+        "id": "resource.package-readme",
+        "owner": "owned",
+        "contentIdentity": "sha256:fef801a3b8e40364caed44b382a556f8b6a85dd706a3808e0800b7dbdd54f895"
+      },
+      {
+        "id": "resource.skill.grilling",
+        "owner": "referenced",
+        "contentIdentity": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      },
+      {
+        "id": "resource.skill.codebase-design",
+        "owner": "referenced",
+        "contentIdentity": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+      },
+      {
+        "id": "resource.agent-definition.managed",
+        "owner": "referenced",
+        "contentIdentity": "sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+      },
+      {
+        "id": "resource.model.managed",
+        "owner": "referenced",
+        "contentIdentity": "sha256:dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
+      },
+      {
+        "id": "resource.driver.managed-cli",
+        "owner": "referenced",
+        "contentIdentity": "sha256:eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+      },
+      {
+        "id": "resource.tool.repo-read",
+        "owner": "referenced",
+        "contentIdentity": "sha256:ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+      },
+      {
+        "id": "budget.evaluator.questions",
+        "owner": "referenced",
+        "contentIdentity": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      },
+      {
+        "id": "budget.evaluator.research",
+        "owner": "referenced",
+        "contentIdentity": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+      },
+      {
+        "id": "budget.evaluator.feasibility",
+        "owner": "referenced",
+        "contentIdentity": "sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+      },
+      {
+        "id": "budget.evaluator.review",
+        "owner": "referenced",
+        "contentIdentity": "sha256:dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
+      },
+      {
+        "id": "budget.evaluator.revision",
+        "owner": "referenced",
+        "contentIdentity": "sha256:eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+      },
+      {
+        "id": "budget.evaluator.decision-dialogue",
+        "owner": "referenced",
+        "contentIdentity": "sha256:ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+      }
+    ],
+    "routeBindings": [
+      {
+        "action": "action.sd-01",
+        "role": "role.grilling-facilitator",
+        "route": "route.facilitator.standard"
+      },
+      {
+        "action": "action.sd-01r",
+        "role": "role.evidence-scout",
+        "route": "route.scout.evidence"
+      },
+      {
+        "action": "action.sd-02",
+        "role": "role.grilling-facilitator",
+        "route": "route.facilitator.standard"
+      },
+      {
+        "action": "action.sd-03",
+        "role": "role.grilling-facilitator",
+        "route": "route.facilitator.standard"
+      },
+      {
+        "action": "action.sd-04",
+        "role": "role.system-designer",
+        "route": "route.designer.standard"
+      },
+      {
+        "action": "action.sd-05",
+        "role": "role.architecture-reviewer",
+        "route": "route.reviewer.architecture"
+      },
+      {
+        "action": "action.sd-06",
+        "role": "role.system-designer",
+        "route": "route.designer.standard"
+      },
+      {
+        "action": "action.sd-07",
+        "role": "role.system-designer",
+        "route": "route.designer.standard"
+      },
+      {
+        "action": "action.sd-08",
+        "role": "role.system-designer",
+        "route": "route.designer.standard"
+      },
+      {
+        "action": "action.sd-09.problem-solution",
+        "role": "role.problem-solution-reviewer",
+        "route": "route.reviewer.problem-solution"
+      },
+      {
+        "action": "action.sd-09.architecture",
+        "role": "role.architecture-reviewer",
+        "route": "route.reviewer.architecture"
+      },
+      {
+        "action": "action.sd-09.quality-acceptance",
+        "role": "role.quality-reviewer",
+        "route": "route.reviewer.quality"
+      },
+      {
+        "action": "action.sd-10",
+        "role": "role.finding-aggregator",
+        "route": "route.aggregator.standard"
+      },
+      {
+        "action": "action.sd-11",
+        "role": "role.system-designer",
+        "route": "route.designer.standard"
+      },
+      {
+        "action": "action.sd-11h",
+        "role": "role.grilling-facilitator",
+        "route": "route.facilitator.standard"
+      },
+      {
+        "action": "action.sd-11h",
+        "role": "role.grilling-facilitator",
+        "route": "route.facilitator.decision"
+      },
+      {
+        "action": "action.sd-12",
+        "role": "role.system-designer",
+        "route": "route.designer.standard"
+      },
+      {
+        "action": "action.sd-13",
+        "role": "role.fresh-reader",
+        "route": "route.reader.fresh"
+      }
+    ],
+    "graph": {
+      "nodes": [
+        "node.sd-01",
+        "node.sd-02",
+        "node.sd-03",
+        "node.sd-04",
+        "node.sd-05",
+        "node.sd-01r",
+        "node.sd-06",
+        "node.sd-07",
+        "node.sd-08",
+        "node.sd-09",
+        "node.sd-11",
+        "node.sd-11h",
+        "node.sd-12",
+        "node.sd-13",
+        "node.sd-14",
+        "node.sd-15",
+        "node.wait.user-grilling-answer",
+        "node.wait-renewal.user-grilling-answer",
+        "node.wait.user-brief-confirm",
+        "node.wait-renewal.user-brief-confirm",
+        "node.wait.user-decision",
+        "node.wait-renewal.user-decision",
+        "node.wait.spike-feasibility",
+        "node.wait-renewal.spike-feasibility",
+        "node.wait.spike-design-parameter",
+        "node.wait-renewal.spike-design-parameter"
+      ],
+      "eventEdges": [
+        "event.node.sd-01.cancelled",
+        "event.node.sd-01.nonretryable-failure",
+        "event.node.sd-02.cancelled",
+        "event.node.sd-02.nonretryable-failure",
+        "event.node.sd-02.budget-exhausted",
+        "event.node.sd-03.cancelled",
+        "event.node.sd-03.nonretryable-failure",
+        "event.node.sd-04.cancelled",
+        "event.node.sd-04.nonretryable-failure",
+        "event.node.sd-05.cancelled",
+        "event.node.sd-05.nonretryable-failure",
+        "event.node.sd-01r.cancelled",
+        "event.node.sd-01r.nonretryable-failure",
+        "event.node.sd-01r.budget-exhausted",
+        "event.node.sd-06.cancelled",
+        "event.node.sd-06.nonretryable-failure",
+        "event.node.sd-06.budget-exhausted",
+        "event.node.sd-07.cancelled",
+        "event.node.sd-07.nonretryable-failure",
+        "event.node.sd-08.cancelled",
+        "event.node.sd-08.nonretryable-failure",
+        "event.node.sd-09.cancelled",
+        "event.node.sd-09.nonretryable-failure",
+        "event.node.sd-09.budget-exhausted",
+        "event.node.sd-11.cancelled",
+        "event.node.sd-11.nonretryable-failure",
+        "event.node.sd-11.budget-exhausted",
+        "event.node.sd-11h.cancelled",
+        "event.node.sd-11h.nonretryable-failure",
+        "event.node.sd-11h.budget-exhausted",
+        "event.node.sd-12.cancelled",
+        "event.node.sd-12.nonretryable-failure",
+        "event.node.sd-13.cancelled",
+        "event.node.sd-13.nonretryable-failure",
+        "event.node.sd-14.cancelled",
+        "event.node.sd-14.nonretryable-failure",
+        "event.node.sd-15.cancelled",
+        "event.node.sd-15.nonretryable-failure",
+        "event.node.wait.user-grilling-answer.cancelled",
+        "event.node.wait.user-grilling-answer.wait-expired",
+        "event.node.wait.user-grilling-answer.continuation-invalid",
+        "event.node.wait-renewal.user-grilling-answer.cancelled",
+        "event.node.wait-renewal.user-grilling-answer.nonretryable-failure",
+        "event.node.wait-renewal.user-grilling-answer.budget-exhausted",
+        "event.node.wait.user-brief-confirm.cancelled",
+        "event.node.wait.user-brief-confirm.wait-expired",
+        "event.node.wait.user-brief-confirm.continuation-invalid",
+        "event.node.wait-renewal.user-brief-confirm.cancelled",
+        "event.node.wait-renewal.user-brief-confirm.nonretryable-failure",
+        "event.node.wait-renewal.user-brief-confirm.budget-exhausted",
+        "event.node.wait.user-decision.cancelled",
+        "event.node.wait.user-decision.wait-expired",
+        "event.node.wait.user-decision.continuation-invalid",
+        "event.node.wait-renewal.user-decision.cancelled",
+        "event.node.wait-renewal.user-decision.nonretryable-failure",
+        "event.node.wait-renewal.user-decision.budget-exhausted",
+        "event.node.wait.spike-feasibility.cancelled",
+        "event.node.wait.spike-feasibility.wait-expired",
+        "event.node.wait.spike-feasibility.continuation-invalid",
+        "event.node.wait-renewal.spike-feasibility.cancelled",
+        "event.node.wait-renewal.spike-feasibility.nonretryable-failure",
+        "event.node.wait-renewal.spike-feasibility.budget-exhausted",
+        "event.node.wait.spike-design-parameter.cancelled",
+        "event.node.wait.spike-design-parameter.wait-expired",
+        "event.node.wait.spike-design-parameter.continuation-invalid",
+        "event.node.wait-renewal.spike-design-parameter.cancelled",
+        "event.node.wait-renewal.spike-design-parameter.nonretryable-failure",
+        "event.node.wait-renewal.spike-design-parameter.budget-exhausted"
+      ],
+      "terminals": [
+        "implementation-ready",
+        "incomplete",
+        "cancelled",
+        "failed"
+      ],
+      "continuationBindings": [
+        "delivery",
+        "snapshot",
+        "graphNode",
+        "action",
+        "attempt",
+        "inputBindings",
+        "artifactBindings",
+        "branchResults",
+        "budgets",
+        "pendingWait"
+      ]
+    },
+    "authority": {
+      "order": [
+        "workflow_action",
+        "role_prompt",
+        "action_prompt",
+        "skill",
+        "artifact_user"
+      ],
+      "mergeProof": "sha256:0aecd7f115b0c1c6a43cd167d56d7865a11a720855500a9bc537d58037287350"
+    },
+    "resolutionProof": {
+      "noAmbientFallback": true,
+      "allBindingsExact": true
+    },
+    "digest": "sha256:11b521a03a166294b100e891c47534b0b00fe03f3cebf24a844b0b93b38c6f9b"
+  }
+}

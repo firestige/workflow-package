@@ -1,6 +1,6 @@
 {
   "kind": "agentops.artifacts",
-  "schemaVersion": "agentops.workflow-dsl@0.1.0",
+  "schemaVersion": "agentops.workflow-dsl@1.0.0",
   "artifacts": [
     {
       "id": "artifact.intake-context",
@@ -12,25 +12,34 @@
       "sections": [
         {
           "topic": "Authority and facts",
-          "questions": ["Which authorities were scanned, and which facts were derived rather than asked?"],
+          "questions": [
+            "Which authorities were scanned, and which facts were derived rather than asked?"
+          ],
           "completionCondition": "Derivable facts were investigated rather than converted into user questions."
         }
       ],
       "lifecycle": {
-        "states": ["WORKING", "SUPERSEDED"],
+        "states": [
+          "WORKING",
+          "SUPERSEDED"
+        ],
         "storageKind": "RUN_WORKSPACE",
         "retentionClass": "DELIVERY_RECOVERABLE"
       },
       "dependencyValidity": "CURRENT",
       "producedBy": "action.sd-01",
-      "consumedBy": ["action.sd-02"]
+      "consumedBy": [
+        "action.sd-02"
+      ]
     },
     {
       "id": "artifact.brief",
       "name": "System Design Brief",
       "kind": "intermediate",
       "template": {
-        "reference": { "id": "resource.template.system-design-brief" }
+        "reference": {
+          "id": "resource.template.system-design-brief"
+        }
       },
       "sections": [
         {
@@ -45,20 +54,34 @@
         }
       ],
       "lifecycle": {
-        "states": ["WORKING", "CONFIRMED", "SUPERSEDED"],
+        "states": [
+          "WORKING",
+          "CONFIRMED",
+          "SUPERSEDED"
+        ],
         "storageKind": "RUN_WORKSPACE",
         "retentionClass": "DELIVERY_RECOVERABLE"
       },
       "dependencyValidity": "CURRENT",
       "producedBy": "action.sd-02",
-      "consumedBy": ["action.sd-03", "action.sd-04", "action.sd-05", "action.sd-09", "action.sd-13"]
+      "consumedBy": [
+        "action.sd-03",
+        "action.sd-04",
+        "action.sd-05",
+        "action.sd-09.problem-solution",
+        "action.sd-09.architecture",
+        "action.sd-09.quality-acceptance",
+        "action.sd-13"
+      ]
     },
     {
       "id": "artifact.skeleton",
       "name": "System Design Skeleton",
       "kind": "intermediate",
       "template": {
-        "reference": { "id": "resource.template.system-design-skeleton" }
+        "reference": {
+          "id": "resource.template.system-design-skeleton"
+        }
       },
       "sections": [
         {
@@ -72,20 +95,29 @@
         }
       ],
       "lifecycle": {
-        "states": ["WORKING", "SKELETON_CONFIRMED", "SUPERSEDED"],
+        "states": [
+          "WORKING",
+          "SKELETON_CONFIRMED",
+          "SUPERSEDED"
+        ],
         "storageKind": "RUN_WORKSPACE",
         "retentionClass": "DELIVERY_RECOVERABLE"
       },
       "dependencyValidity": "CURRENT",
       "producedBy": "action.sd-04",
-      "consumedBy": ["action.sd-05", "action.sd-06"]
+      "consumedBy": [
+        "action.sd-05",
+        "action.sd-06"
+      ]
     },
     {
       "id": "artifact.draft",
       "name": "Working System Design Draft",
       "kind": "intermediate",
       "template": {
-        "reference": { "id": "resource.template.system-design-document" }
+        "reference": {
+          "id": "resource.template.system-design-document"
+        }
       },
       "sections": [
         {
@@ -98,20 +130,32 @@
         }
       ],
       "lifecycle": {
-        "states": ["WORKING", "DESIGN_REVIEWED", "SUPERSEDED"],
+        "states": [
+          "WORKING",
+          "DESIGN_REVIEWED",
+          "SUPERSEDED"
+        ],
         "storageKind": "RUN_WORKSPACE",
         "retentionClass": "DELIVERY_RECOVERABLE"
       },
       "dependencyValidity": "CURRENT",
       "producedBy": "action.sd-08",
-      "consumedBy": ["action.sd-09", "action.sd-11", "action.sd-13"]
+      "consumedBy": [
+        "action.sd-09.problem-solution",
+        "action.sd-09.architecture",
+        "action.sd-09.quality-acceptance",
+        "action.sd-11",
+        "action.sd-13"
+      ]
     },
     {
       "id": "artifact.final-design",
       "name": "Final System Design",
       "kind": "output",
       "template": {
-        "reference": { "id": "resource.template.system-design-document" }
+        "reference": {
+          "id": "resource.template.system-design-document"
+        }
       },
       "sections": [
         {
@@ -125,7 +169,12 @@
         }
       ],
       "lifecycle": {
-        "states": ["WORKING", "DESIGN_REVIEWED", "IMPLEMENTATION_READY", "SUPERSEDED"],
+        "states": [
+          "WORKING",
+          "DESIGN_REVIEWED",
+          "IMPLEMENTATION_READY",
+          "SUPERSEDED"
+        ],
         "storageKind": "REPOSITORY_DELIVERABLE",
         "retentionClass": "REPOSITORY_DELIVERABLE"
       },
@@ -138,7 +187,9 @@
       "name": "Evidence Research Request",
       "kind": "intermediate",
       "template": {
-        "reference": { "id": "resource.template.evidence-research-request" }
+        "reference": {
+          "id": "resource.template.evidence-research-request"
+        }
       },
       "sections": [
         {
@@ -152,13 +203,19 @@
         }
       ],
       "lifecycle": {
-        "states": ["WORKING", "RESOLVED", "SUPERSEDED"],
+        "states": [
+          "WORKING",
+          "RESOLVED",
+          "SUPERSEDED"
+        ],
         "storageKind": "RUN_WORKSPACE",
         "retentionClass": "DELIVERY_RECOVERABLE"
       },
       "dependencyValidity": "CURRENT",
       "producedBy": "action.sd-10",
-      "consumedBy": ["action.sd-01r"]
+      "consumedBy": [
+        "action.sd-01r"
+      ]
     },
     {
       "id": "artifact.evidence-research-result",
@@ -170,37 +227,56 @@
       "sections": [
         {
           "topic": "Return binding",
-          "questions": ["Does the result return only to the recorded requester (SD-05 or the affected SD-09 lens)?"],
+          "questions": [
+            "Does the result return only to the recorded requester (SD-05 or the affected SD-09 lens)?"
+          ],
           "completionCondition": "The Evidence Scout did not change the recorded resume_action or resume_lens.",
           "naRule": "resume_lens applies only when returning to SD-09."
         }
       ],
       "lifecycle": {
-        "states": ["WORKING", "RESOLVED", "SUPERSEDED"],
+        "states": [
+          "WORKING",
+          "RESOLVED",
+          "SUPERSEDED"
+        ],
         "storageKind": "RUN_WORKSPACE",
         "retentionClass": "DELIVERY_RECOVERABLE"
       },
       "dependencyValidity": "CURRENT",
       "producedBy": "action.sd-01r",
-      "consumedBy": ["action.sd-05", "action.sd-09"]
+      "consumedBy": [
+        "action.sd-05",
+        "action.sd-09.problem-solution",
+        "action.sd-09.architecture",
+        "action.sd-09.quality-acceptance"
+      ]
     },
     {
       "id": "artifact.spike-request",
       "name": "Spike Request",
       "kind": "intermediate",
       "template": {
-        "reference": { "id": "resource.template.spike-request" }
+        "reference": {
+          "id": "resource.template.spike-request"
+        }
       },
       "sections": [
         {
           "topic": "Exact request contract",
-          "questions": ["Does the request bind the exact question, environment, method and evidence requirements?"],
+          "questions": [
+            "Does the request bind the exact question, environment, method and evidence requirements?"
+          ],
           "completionCondition": "The Spike Request carries an exact request identity and content digest; class is architecture-feasibility or design-owned-parameter.",
           "naRule": "Implementation feasibility, implementation verification, Contract publication and runtime tuning are downstream obligations, not SD-06/SD-12 Spike classes."
         }
       ],
       "lifecycle": {
-        "states": ["WORKING", "PUBLISHED", "SUPERSEDED"],
+        "states": [
+          "WORKING",
+          "PUBLISHED",
+          "SUPERSEDED"
+        ],
         "storageKind": "RUN_WORKSPACE",
         "retentionClass": "EXTERNAL_AUTHORITY"
       },
@@ -213,7 +289,9 @@
       "name": "Spike Result",
       "kind": "intermediate",
       "template": {
-        "reference": { "id": "resource.template.spike-result" }
+        "reference": {
+          "id": "resource.template.spike-result"
+        }
       },
       "sections": [
         {
@@ -227,20 +305,30 @@
         }
       ],
       "lifecycle": {
-        "states": ["WORKING", "VALIDATED", "APPLIED", "SUPERSEDED"],
+        "states": [
+          "WORKING",
+          "VALIDATED",
+          "APPLIED",
+          "SUPERSEDED"
+        ],
         "storageKind": "RUN_WORKSPACE",
         "retentionClass": "DELIVERY_RECOVERABLE"
       },
       "dependencyValidity": "CURRENT",
       "producedBy": "action.sd-06",
-      "consumedBy": ["action.sd-06", "action.sd-12"]
+      "consumedBy": [
+        "action.sd-06",
+        "action.sd-12"
+      ]
     },
     {
       "id": "artifact.human-decision-request",
       "name": "Human Decision Request",
       "kind": "intermediate",
       "template": {
-        "reference": { "id": "resource.template.human-decision-request" }
+        "reference": {
+          "id": "resource.template.human-decision-request"
+        }
       },
       "sections": [
         {
@@ -255,7 +343,11 @@
         }
       ],
       "lifecycle": {
-        "states": ["WORKING", "ADMITTED", "SUPERSEDED"],
+        "states": [
+          "WORKING",
+          "ADMITTED",
+          "SUPERSEDED"
+        ],
         "storageKind": "RUN_WORKSPACE",
         "retentionClass": "EXTERNAL_AUTHORITY"
       },
@@ -268,24 +360,34 @@
       "name": "Human Decision Record",
       "kind": "intermediate",
       "template": {
-        "reference": { "id": "resource.template.human-decision-record" }
+        "reference": {
+          "id": "resource.template.human-decision-record"
+        }
       },
       "sections": [
         {
           "topic": "Explicit final decision",
-          "questions": ["Was the decision confirmed explicitly by the human owner after questions and new options were allowed?"],
+          "questions": [
+            "Was the decision confirmed explicitly by the human owner after questions and new options were allowed?"
+          ],
           "completionCondition": "An explicit Human Decision Record exists; exploratory replies were never interpreted as decisions.",
           "naRule": "No record may be frozen from a question or exploratory statement."
         }
       ],
       "lifecycle": {
-        "states": ["WORKING", "CONFIRMED", "SUPERSEDED"],
+        "states": [
+          "WORKING",
+          "CONFIRMED",
+          "SUPERSEDED"
+        ],
         "storageKind": "RUN_WORKSPACE",
         "retentionClass": "DELIVERY_RECOVERABLE"
       },
       "dependencyValidity": "CURRENT",
       "producedBy": "action.sd-11h",
-      "consumedBy": ["action.sd-11"]
+      "consumedBy": [
+        "action.sd-11"
+      ]
     },
     {
       "id": "artifact.review-finding",
@@ -305,13 +407,123 @@
         }
       ],
       "lifecycle": {
-        "states": ["WORKING", "ADMITTED", "CLOSED", "SUPERSEDED"],
+        "states": [
+          "WORKING",
+          "ADMITTED",
+          "CLOSED",
+          "SUPERSEDED"
+        ],
         "storageKind": "RUN_WORKSPACE",
         "retentionClass": "DELIVERY_RECOVERABLE"
       },
       "dependencyValidity": "CURRENT",
-      "producedBy": "action.sd-09",
-      "consumedBy": ["action.sd-10", "action.sd-11"]
+      "producedBy": "action.sd-05",
+      "consumedBy": [
+        "action.sd-10",
+        "action.sd-11"
+      ]
+    },
+    {
+      "id": "artifact.review-finding.problem-solution",
+      "name": "Review Finding — review.problem-solution",
+      "kind": "intermediate",
+      "template": {
+        "content": "# Review Finding\n\n1. finding_id (stable)\n2. lens (PROBLEM_SOLUTION | ARCHITECTURE | QUALITY_ACCEPTANCE | FRESH_READER)\n3. draft_binding (exact content digest reviewed)\n4. location (design identity/section/diagram)\n5. observation (exact statement, omission or contradiction)\n6. applicable_requirement (Brief/project/design authority identity)\n7. evidence\n8. project_impact (concrete impact in the confirmed context)\n9. resolution_direction (bounded recommendation, not an edit)\n10. severity (BLOCKING | MAJOR | MINOR)\n11. confidence and uncertainty reason\n12. status (OPEN | CLOSED_FIXED | CLOSED_NOT_VALID | ACCEPTED_MINOR)\n13. provenance (Reviewer route/session/result identity)\n\nA REVIEW_SIGNAL records location, observed signal, investigation performed and why admission evidence is currently insufficient; it is not a Finding, cannot block, cannot trigger Human Decision, and must not be counted as reported risk."
+      },
+      "sections": [
+        {
+          "topic": "Finding admission",
+          "questions": [
+            "Does the Finding carry exact location, observation, applicable requirement, evidence, concrete impact, project-specific relevance, resolution direction, severity and confidence?"
+          ],
+          "completionCondition": "Severity/disposition is decided by the source lens; the Aggregator and Designer may propose disposition but cannot apply it; only the corresponding review lens can close a Finding in a fresh session against the original Finding, treatment, new Draft and evidence.",
+          "naRule": "N/A only when no Finding was admitted; REVIEW_SIGNALs are never admitted as Findings."
+        }
+      ],
+      "lifecycle": {
+        "states": [
+          "WORKING",
+          "ADMITTED",
+          "CLOSED",
+          "SUPERSEDED"
+        ],
+        "storageKind": "RUN_WORKSPACE",
+        "retentionClass": "DELIVERY_RECOVERABLE"
+      },
+      "dependencyValidity": "CURRENT",
+      "producedBy": "action.sd-09.problem-solution",
+      "consumedBy": [
+        "action.sd-10",
+        "action.sd-11"
+      ]
+    },
+    {
+      "id": "artifact.review-finding.architecture",
+      "name": "Review Finding — review.architecture",
+      "kind": "intermediate",
+      "template": {
+        "content": "# Review Finding\n\n1. finding_id (stable)\n2. lens (PROBLEM_SOLUTION | ARCHITECTURE | QUALITY_ACCEPTANCE | FRESH_READER)\n3. draft_binding (exact content digest reviewed)\n4. location (design identity/section/diagram)\n5. observation (exact statement, omission or contradiction)\n6. applicable_requirement (Brief/project/design authority identity)\n7. evidence\n8. project_impact (concrete impact in the confirmed context)\n9. resolution_direction (bounded recommendation, not an edit)\n10. severity (BLOCKING | MAJOR | MINOR)\n11. confidence and uncertainty reason\n12. status (OPEN | CLOSED_FIXED | CLOSED_NOT_VALID | ACCEPTED_MINOR)\n13. provenance (Reviewer route/session/result identity)\n\nA REVIEW_SIGNAL records location, observed signal, investigation performed and why admission evidence is currently insufficient; it is not a Finding, cannot block, cannot trigger Human Decision, and must not be counted as reported risk."
+      },
+      "sections": [
+        {
+          "topic": "Finding admission",
+          "questions": [
+            "Does the Finding carry exact location, observation, applicable requirement, evidence, concrete impact, project-specific relevance, resolution direction, severity and confidence?"
+          ],
+          "completionCondition": "Severity/disposition is decided by the source lens; the Aggregator and Designer may propose disposition but cannot apply it; only the corresponding review lens can close a Finding in a fresh session against the original Finding, treatment, new Draft and evidence.",
+          "naRule": "N/A only when no Finding was admitted; REVIEW_SIGNALs are never admitted as Findings."
+        }
+      ],
+      "lifecycle": {
+        "states": [
+          "WORKING",
+          "ADMITTED",
+          "CLOSED",
+          "SUPERSEDED"
+        ],
+        "storageKind": "RUN_WORKSPACE",
+        "retentionClass": "DELIVERY_RECOVERABLE"
+      },
+      "dependencyValidity": "CURRENT",
+      "producedBy": "action.sd-09.architecture",
+      "consumedBy": [
+        "action.sd-10",
+        "action.sd-11"
+      ]
+    },
+    {
+      "id": "artifact.review-finding.quality-acceptance",
+      "name": "Review Finding — review.quality-acceptance",
+      "kind": "intermediate",
+      "template": {
+        "content": "# Review Finding\n\n1. finding_id (stable)\n2. lens (PROBLEM_SOLUTION | ARCHITECTURE | QUALITY_ACCEPTANCE | FRESH_READER)\n3. draft_binding (exact content digest reviewed)\n4. location (design identity/section/diagram)\n5. observation (exact statement, omission or contradiction)\n6. applicable_requirement (Brief/project/design authority identity)\n7. evidence\n8. project_impact (concrete impact in the confirmed context)\n9. resolution_direction (bounded recommendation, not an edit)\n10. severity (BLOCKING | MAJOR | MINOR)\n11. confidence and uncertainty reason\n12. status (OPEN | CLOSED_FIXED | CLOSED_NOT_VALID | ACCEPTED_MINOR)\n13. provenance (Reviewer route/session/result identity)\n\nA REVIEW_SIGNAL records location, observed signal, investigation performed and why admission evidence is currently insufficient; it is not a Finding, cannot block, cannot trigger Human Decision, and must not be counted as reported risk."
+      },
+      "sections": [
+        {
+          "topic": "Finding admission",
+          "questions": [
+            "Does the Finding carry exact location, observation, applicable requirement, evidence, concrete impact, project-specific relevance, resolution direction, severity and confidence?"
+          ],
+          "completionCondition": "Severity/disposition is decided by the source lens; the Aggregator and Designer may propose disposition but cannot apply it; only the corresponding review lens can close a Finding in a fresh session against the original Finding, treatment, new Draft and evidence.",
+          "naRule": "N/A only when no Finding was admitted; REVIEW_SIGNALs are never admitted as Findings."
+        }
+      ],
+      "lifecycle": {
+        "states": [
+          "WORKING",
+          "ADMITTED",
+          "CLOSED",
+          "SUPERSEDED"
+        ],
+        "storageKind": "RUN_WORKSPACE",
+        "retentionClass": "DELIVERY_RECOVERABLE"
+      },
+      "dependencyValidity": "CURRENT",
+      "producedBy": "action.sd-09.quality-acceptance",
+      "consumedBy": [
+        "action.sd-10",
+        "action.sd-11"
+      ]
     },
     {
       "id": "artifact.revision-request",
@@ -323,19 +535,32 @@
       "sections": [
         {
           "topic": "Return action validation",
-          "questions": ["Is return_action consistent with the origin type and the invalidated validation evidence?"],
+          "questions": [
+            "Is return_action consistent with the origin type and the invalidated validation evidence?"
+          ],
           "completionCondition": "Runtime validates return_action against origin and invalidation state; SD-11 may not default every request to SD-09; non-Finding corrections retain their origin identity without an artificial Review Finding.",
           "naRule": "A validator failure is never wrapped in an artificial Review Finding."
         }
       ],
       "lifecycle": {
-        "states": ["WORKING", "VALIDATED", "CONSUMED", "SUPERSEDED"],
+        "states": [
+          "WORKING",
+          "VALIDATED",
+          "CONSUMED",
+          "SUPERSEDED"
+        ],
         "storageKind": "RUN_WORKSPACE",
         "retentionClass": "DELIVERY_RECOVERABLE"
       },
       "dependencyValidity": "CURRENT",
       "producedBy": "action.sd-11",
-      "consumedBy": ["action.sd-09", "action.sd-13", "action.sd-14"]
+      "consumedBy": [
+        "action.sd-09.problem-solution",
+        "action.sd-09.architecture",
+        "action.sd-09.quality-acceptance",
+        "action.sd-13",
+        "action.sd-14"
+      ]
     },
     {
       "id": "artifact.aggregation",
@@ -347,19 +572,27 @@
       "sections": [
         {
           "topic": "Provenance and routing",
-          "questions": ["Were corroborating Findings merged while preserving provenance, and was routing chosen by evidence and affected stage?"],
+          "questions": [
+            "Were corroborating Findings merged while preserving provenance, and was routing chosen by evidence and affected stage?"
+          ],
           "completionCondition": "The aggregation result preserves provenance and routes within the declared successor set.",
           "naRule": "N/A only when no Finding was admitted."
         }
       ],
       "lifecycle": {
-        "states": ["WORKING", "ROUTED", "SUPERSEDED"],
+        "states": [
+          "WORKING",
+          "ROUTED",
+          "SUPERSEDED"
+        ],
         "storageKind": "RUN_WORKSPACE",
         "retentionClass": "DELIVERY_RECOVERABLE"
       },
       "dependencyValidity": "CURRENT",
       "producedBy": "action.sd-10",
-      "consumedBy": ["action.sd-12"]
+      "consumedBy": [
+        "action.sd-12"
+      ]
     },
     {
       "id": "artifact.reader-question-set",
@@ -371,12 +604,18 @@
       "sections": [
         {
           "topic": "Comprehension, not preference",
-          "questions": ["Can a downstream implementer reconstruct the design from the Design alone?"],
+          "questions": [
+            "Can a downstream implementer reconstruct the design from the Design alone?"
+          ],
           "completionCondition": "The question set tests comprehension of problem, decomposition, flows, ownership, constraints, quality mechanisms, parameter status and acceptance; it does not test architecture preference."
         }
       ],
       "lifecycle": {
-        "states": ["WORKING", "EXECUTED", "SUPERSEDED"],
+        "states": [
+          "WORKING",
+          "EXECUTED",
+          "SUPERSEDED"
+        ],
         "storageKind": "RUN_WORKSPACE",
         "retentionClass": "DELIVERY_RECOVERABLE"
       },
