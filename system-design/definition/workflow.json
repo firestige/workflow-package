@@ -13,32 +13,27 @@
       {
         "name": "status",
         "type": "string",
-        "reducer": "overwrite",
         "required": true,
         "description": "Lifecycle marker written by each Action result; last write wins."
       },
       {
         "name": "routing",
         "type": "string",
-        "reducer": "overwrite",
         "description": "Per-Action routing result consumed by the graph's conditional edges; overwritten by the most recent Action result."
       },
       {
         "name": "return_action",
         "type": "string",
-        "reducer": "overwrite",
         "description": "SD-11 validated return_action (SD-09 | SD-13 | SD-14) selected from the invalidated validation evidence of the Revision Request; Runtime validates it against origin and invalidation state; SD-09 is not the unconditional default."
       },
       {
         "name": "evidence_return_action",
         "type": "string",
-        "reducer": "overwrite",
         "description": "Recorded resume_action of the Evidence Research Request (SD-05 | SD-09); Runtime persists the return binding, the Evidence Scout cannot change it."
       },
       {
         "name": "resume_lens",
         "type": "string",
-        "reducer": "overwrite",
         "description": "Affected SD-09 lens (PROBLEM_SOLUTION | ARCHITECTURE | QUALITY_ACCEPTANCE) recorded when evidence research returns to SD-09; research resumes only that fresh recheck before aggregation resumes."
       },
       {
@@ -47,7 +42,6 @@
         "items": {
           "type": "object"
         },
-        "reducer": "append",
         "description": "Admitted review Findings appended across review iterations; severity/disposition is decided by the source lens and never overwritten."
       },
       {
@@ -56,74 +50,62 @@
         "items": {
           "type": "object"
         },
-        "reducer": "append",
         "description": "Non-blocking REVIEW_SIGNAL records; never counted as Findings, never block, never trigger Human Decision admission."
       },
       {
         "name": "aggregation",
         "type": "object",
-        "reducer": "overwrite",
-        "description": "SD-10 aggregation result: { routing, mergedFindings, contradictions }; the routing value drives the conditional edges of node.sd-10."
+        "description": "SD-10 aggregation result: { routing, mergedFindings, contradictions }; the routing value drives node.sd-09 after its explicit aggregator join."
       },
       {
         "name": "brief",
         "type": "artifactRef",
-        "reducer": "overwrite",
         "description": "Immutable Confirmed Design Brief artifact reference with run-workspace content digest and topic identities."
       },
       {
         "name": "skeleton",
         "type": "artifactRef",
-        "reducer": "overwrite",
         "description": "Confirmed System Design Skeleton artifact reference; architecture direction and technical feasibility closed."
       },
       {
         "name": "draft",
         "type": "artifactRef",
-        "reducer": "overwrite",
         "description": "Versioned complete Draft artifact reference in the ignored run workspace, suitable for independent review."
       },
       {
         "name": "design",
         "type": "artifactRef",
-        "reducer": "overwrite",
         "description": "Final System Design candidate bound at SD-15 to the exact content and dependency closure in Workflow state."
       },
       {
         "name": "grilling_questions",
         "type": "integer",
-        "reducer": "sum",
-        "description": "Budget accounting for grilling questions (budget.questions); accumulated with the sum reducer."
+        "description": "Observed grilling-question count for budget.questions; its evaluator owns accounting and State declares no merge reducer."
       },
       {
         "name": "research_attempts",
         "type": "integer",
-        "reducer": "sum",
-        "description": "Budget accounting for evidence research attempts (budget.research); accumulated with the sum reducer."
+        "description": "Observed evidence-research attempt count for budget.research; its evaluator owns accounting and State declares no merge reducer."
       },
       {
         "name": "feasibility_iterations",
         "type": "integer",
-        "reducer": "sum",
-        "description": "Budget accounting for architecture-feasibility iterations (budget.feasibility); accumulated with the sum reducer."
+        "description": "Observed architecture-feasibility iteration count for budget.feasibility; its evaluator owns accounting and State declares no merge reducer."
       },
       {
         "name": "review_iterations",
         "type": "integer",
-        "reducer": "sum",
-        "description": "Budget accounting for review iterations (budget.review); accumulated with the sum reducer."
+        "description": "Observed review iteration count for budget.review; its evaluator owns accounting and State declares no merge reducer."
       },
       {
         "name": "revision_count",
         "type": "integer",
-        "reducer": "sum",
-        "description": "Budget accounting for targeted revisions (budget.revision); accumulated with the sum reducer."
+        "description": "Observed targeted-revision count for budget.revision; its evaluator owns accounting and State declares no merge reducer."
       },
       {
         "name": "decision_turns",
         "type": "integer",
-        "reducer": "sum",
-        "description": "Budget accounting for human decision dialogue turns (budget.decision-dialogue); accumulated with the sum reducer."
+        "description": "Observed decision-dialogue turn count for budget.decision-dialogue; its evaluator owns accounting and State declares no merge reducer."
       }
     ]
   },
@@ -132,168 +114,695 @@
     "nodes": [
       {
         "id": "node.sd-01",
+        "kind": "action",
         "action": "action.sd-01",
         "checkpoint": {
           "mode": "always",
           "bindings": [
             "delivery",
             "snapshot",
-            "actionAttempt",
-            "manifestRevision",
-            "gitTree"
+            "graphNode",
+            "action",
+            "attempt",
+            "inputBindings",
+            "artifactBindings",
+            "branchResults",
+            "budgets",
+            "pendingWait"
           ]
         }
       },
       {
         "id": "node.sd-02",
+        "kind": "action",
         "action": "action.sd-02",
         "checkpoint": {
           "mode": "always",
           "bindings": [
             "delivery",
             "snapshot",
-            "actionAttempt",
-            "manifestRevision",
-            "gitTree",
-            "pendingWait",
+            "graphNode",
+            "action",
+            "attempt",
+            "inputBindings",
+            "artifactBindings",
+            "branchResults",
             "budgets",
-            "artifactVersions"
+            "pendingWait"
           ]
-        }
+        },
+        "routing": {
+          "kind": "deterministic",
+          "output": "routing",
+          "cases": [
+            {
+              "value": "continue",
+              "target": "node.sd-03"
+            },
+            {
+              "value": "wait-user",
+              "target": "node.wait.user-grilling-answer"
+            },
+            {
+              "value": "unmatched",
+              "target": "terminal:failed"
+            }
+          ]
+        },
+        "budget": "budget.questions"
       },
       {
         "id": "node.sd-03",
+        "kind": "action",
         "action": "action.sd-03",
         "checkpoint": {
           "mode": "always",
           "bindings": [
             "delivery",
             "snapshot",
-            "actionAttempt",
-            "manifestRevision",
-            "gitTree",
-            "pendingWait",
+            "graphNode",
+            "action",
+            "attempt",
+            "inputBindings",
+            "artifactBindings",
+            "branchResults",
             "budgets",
-            "artifactVersions"
+            "pendingWait"
+          ]
+        },
+        "routing": {
+          "kind": "deterministic",
+          "output": "routing",
+          "cases": [
+            {
+              "value": "continue",
+              "target": "node.sd-04"
+            },
+            {
+              "value": "wait-user",
+              "target": "node.wait.user-brief-confirm"
+            },
+            {
+              "value": "unmatched",
+              "target": "terminal:failed"
+            }
           ]
         }
       },
       {
         "id": "node.sd-04",
+        "kind": "action",
         "action": "action.sd-04"
       },
       {
         "id": "node.sd-05",
-        "action": "action.sd-05"
+        "kind": "action",
+        "action": "action.sd-05",
+        "routing": {
+          "kind": "deterministic",
+          "output": "routing",
+          "cases": [
+            {
+              "value": "pass",
+              "target": "node.sd-06"
+            },
+            {
+              "value": "direction-fix",
+              "target": "node.sd-04"
+            },
+            {
+              "value": "evidence-gap",
+              "target": "node.sd-01r"
+            },
+            {
+              "value": "brief-gap",
+              "target": "node.sd-11h"
+            },
+            {
+              "value": "unmatched",
+              "target": "terminal:failed"
+            }
+          ]
+        }
       },
       {
         "id": "node.sd-01r",
+        "kind": "action",
         "action": "action.sd-01r",
         "checkpoint": {
           "mode": "always",
           "bindings": [
             "delivery",
             "snapshot",
-            "actionAttempt",
-            "manifestRevision",
-            "gitTree",
-            "budgets"
+            "graphNode",
+            "action",
+            "attempt",
+            "inputBindings",
+            "artifactBindings",
+            "branchResults",
+            "budgets",
+            "pendingWait"
           ]
-        }
+        },
+        "routing": {
+          "kind": "deterministic",
+          "output": "evidence_return_action",
+          "cases": [
+            {
+              "value": "SD-05",
+              "target": "node.sd-05"
+            },
+            {
+              "value": "SD-09",
+              "target": "node.sd-09"
+            },
+            {
+              "value": "unmatched",
+              "target": "terminal:failed"
+            }
+          ]
+        },
+        "budget": "budget.research"
       },
       {
         "id": "node.sd-06",
+        "kind": "action",
         "action": "action.sd-06",
         "checkpoint": {
           "mode": "always",
           "bindings": [
             "delivery",
             "snapshot",
-            "actionAttempt",
-            "manifestRevision",
-            "gitTree",
-            "pendingWait",
+            "graphNode",
+            "action",
+            "attempt",
+            "inputBindings",
+            "artifactBindings",
+            "branchResults",
             "budgets",
-            "artifactVersions"
+            "pendingWait"
           ]
-        }
+        },
+        "routing": {
+          "kind": "deterministic",
+          "output": "routing",
+          "cases": [
+            {
+              "value": "feasibility-confirmed",
+              "target": "node.sd-07"
+            },
+            {
+              "value": "invalidates-direction",
+              "target": "node.sd-04"
+            },
+            {
+              "value": "wait-spike",
+              "target": "node.wait.spike-feasibility"
+            },
+            {
+              "value": "unmatched",
+              "target": "terminal:failed"
+            }
+          ]
+        },
+        "budget": "budget.feasibility"
       },
       {
         "id": "node.sd-07",
+        "kind": "action",
         "action": "action.sd-07"
       },
       {
         "id": "node.sd-08",
+        "kind": "action",
         "action": "action.sd-08"
       },
       {
         "id": "node.sd-09",
-        "action": "action.sd-09"
-      },
-      {
-        "id": "node.sd-10",
-        "action": "action.sd-10"
+        "kind": "parallel",
+        "branches": [
+          {
+            "id": "branch.sd-09.problem-solution",
+            "action": "action.sd-09.problem-solution",
+            "required": true
+          },
+          {
+            "id": "branch.sd-09.architecture",
+            "action": "action.sd-09.architecture",
+            "required": true
+          },
+          {
+            "id": "branch.sd-09.quality-acceptance",
+            "action": "action.sd-09.quality-acceptance",
+            "required": true
+          }
+        ],
+        "maxConcurrency": 3,
+        "join": {
+          "kind": "aggregator",
+          "action": "action.sd-10"
+        },
+        "checkpoint": {
+          "mode": "always",
+          "bindings": [
+            "delivery",
+            "snapshot",
+            "graphNode",
+            "action",
+            "attempt",
+            "inputBindings",
+            "artifactBindings",
+            "branchResults",
+            "budgets",
+            "pendingWait"
+          ]
+        },
+        "routing": {
+          "kind": "deterministic",
+          "output": "routing",
+          "cases": [
+            {
+              "value": "evidence-gap",
+              "target": "node.sd-01r"
+            },
+            {
+              "value": "brief-gap",
+              "target": "node.sd-11h"
+            },
+            {
+              "value": "conflict",
+              "target": "node.sd-11h"
+            },
+            {
+              "value": "skeleton-invalid",
+              "target": "node.sd-04"
+            },
+            {
+              "value": "draft-fix",
+              "target": "node.sd-11"
+            },
+            {
+              "value": "disposition-valid",
+              "target": "node.sd-12"
+            },
+            {
+              "value": "unmatched",
+              "target": "terminal:failed"
+            }
+          ]
+        },
+        "budget": "budget.review"
       },
       {
         "id": "node.sd-11",
-        "action": "action.sd-11"
+        "kind": "action",
+        "action": "action.sd-11",
+        "routing": {
+          "kind": "deterministic",
+          "output": "return_action",
+          "cases": [
+            {
+              "value": "SD-09",
+              "target": "node.sd-09"
+            },
+            {
+              "value": "SD-13",
+              "target": "node.sd-13"
+            },
+            {
+              "value": "SD-14",
+              "target": "node.sd-14"
+            },
+            {
+              "value": "unmatched",
+              "target": "terminal:failed"
+            }
+          ]
+        },
+        "budget": "budget.revision"
       },
       {
         "id": "node.sd-11h",
+        "kind": "action",
         "action": "action.sd-11h",
         "checkpoint": {
           "mode": "always",
           "bindings": [
             "delivery",
             "snapshot",
-            "actionAttempt",
-            "manifestRevision",
-            "gitTree",
-            "pendingWait",
+            "graphNode",
+            "action",
+            "attempt",
+            "inputBindings",
+            "artifactBindings",
+            "branchResults",
             "budgets",
-            "artifactVersions"
+            "pendingWait"
           ]
-        }
+        },
+        "routing": {
+          "kind": "deterministic",
+          "output": "routing",
+          "cases": [
+            {
+              "value": "new-brief",
+              "target": "node.sd-03"
+            },
+            {
+              "value": "direction-invalidated",
+              "target": "node.sd-04"
+            },
+            {
+              "value": "draft-decision",
+              "target": "node.sd-11"
+            },
+            {
+              "value": "wait-user",
+              "target": "node.wait.user-decision"
+            },
+            {
+              "value": "unmatched",
+              "target": "terminal:failed"
+            }
+          ]
+        },
+        "budget": "budget.decision-dialogue"
       },
       {
         "id": "node.sd-12",
+        "kind": "action",
         "action": "action.sd-12",
         "checkpoint": {
           "mode": "always",
           "bindings": [
             "delivery",
             "snapshot",
-            "actionAttempt",
-            "manifestRevision",
-            "gitTree",
-            "pendingWait",
+            "graphNode",
+            "action",
+            "attempt",
+            "inputBindings",
+            "artifactBindings",
+            "branchResults",
             "budgets",
-            "artifactVersions"
+            "pendingWait"
+          ]
+        },
+        "routing": {
+          "kind": "deterministic",
+          "output": "routing",
+          "cases": [
+            {
+              "value": "closed",
+              "target": "node.sd-13"
+            },
+            {
+              "value": "affects-design",
+              "target": "node.sd-11"
+            },
+            {
+              "value": "wait-spike",
+              "target": "node.wait.spike-design-parameter"
+            },
+            {
+              "value": "unmatched",
+              "target": "terminal:failed"
+            }
           ]
         }
       },
       {
         "id": "node.sd-13",
-        "action": "action.sd-13"
+        "kind": "action",
+        "action": "action.sd-13",
+        "routing": {
+          "kind": "deterministic",
+          "output": "routing",
+          "cases": [
+            {
+              "value": "pass",
+              "target": "node.sd-14"
+            },
+            {
+              "value": "fresh-reader-finding",
+              "target": "node.sd-11"
+            },
+            {
+              "value": "unmatched",
+              "target": "terminal:failed"
+            }
+          ]
+        }
       },
       {
         "id": "node.sd-14",
-        "action": "action.sd-14"
+        "kind": "action",
+        "action": "action.sd-14",
+        "routing": {
+          "kind": "deterministic",
+          "output": "routing",
+          "cases": [
+            {
+              "value": "pass",
+              "target": "node.sd-15"
+            },
+            {
+              "value": "fixable-failure",
+              "target": "node.sd-11"
+            },
+            {
+              "value": "unmatched",
+              "target": "terminal:failed"
+            }
+          ]
+        }
       },
       {
         "id": "node.sd-15",
+        "kind": "action",
         "action": "action.sd-15",
         "checkpoint": {
           "mode": "always",
           "bindings": [
             "delivery",
             "snapshot",
-            "actionAttempt",
-            "manifestRevision",
-            "gitTree",
+            "graphNode",
+            "action",
+            "attempt",
+            "inputBindings",
+            "artifactBindings",
+            "branchResults",
             "budgets",
-            "artifactVersions",
-            "lastProgress"
+            "pendingWait"
+          ]
+        }
+      },
+      {
+        "id": "node.wait.user-grilling-answer",
+        "kind": "wait",
+        "wait": "wait.user-grilling-answer",
+        "checkpoint": {
+          "mode": "on-wait",
+          "bindings": [
+            "delivery",
+            "snapshot",
+            "graphNode",
+            "action",
+            "attempt",
+            "inputBindings",
+            "artifactBindings",
+            "branchResults",
+            "budgets",
+            "pendingWait"
+          ]
+        },
+        "continuationSource": true
+      },
+      {
+        "id": "node.wait-renewal.user-grilling-answer",
+        "kind": "wait-renewal",
+        "wait": "wait.user-grilling-answer",
+        "maxRenewals": 1,
+        "checkpoint": {
+          "mode": "always",
+          "bindings": [
+            "delivery",
+            "snapshot",
+            "graphNode",
+            "action",
+            "attempt",
+            "inputBindings",
+            "artifactBindings",
+            "branchResults",
+            "budgets",
+            "pendingWait"
+          ]
+        }
+      },
+      {
+        "id": "node.wait.user-brief-confirm",
+        "kind": "wait",
+        "wait": "wait.user-brief-confirm",
+        "checkpoint": {
+          "mode": "on-wait",
+          "bindings": [
+            "delivery",
+            "snapshot",
+            "graphNode",
+            "action",
+            "attempt",
+            "inputBindings",
+            "artifactBindings",
+            "branchResults",
+            "budgets",
+            "pendingWait"
+          ]
+        },
+        "continuationSource": true
+      },
+      {
+        "id": "node.wait-renewal.user-brief-confirm",
+        "kind": "wait-renewal",
+        "wait": "wait.user-brief-confirm",
+        "maxRenewals": 1,
+        "checkpoint": {
+          "mode": "always",
+          "bindings": [
+            "delivery",
+            "snapshot",
+            "graphNode",
+            "action",
+            "attempt",
+            "inputBindings",
+            "artifactBindings",
+            "branchResults",
+            "budgets",
+            "pendingWait"
+          ]
+        }
+      },
+      {
+        "id": "node.wait.user-decision",
+        "kind": "wait",
+        "wait": "wait.user-decision",
+        "checkpoint": {
+          "mode": "on-wait",
+          "bindings": [
+            "delivery",
+            "snapshot",
+            "graphNode",
+            "action",
+            "attempt",
+            "inputBindings",
+            "artifactBindings",
+            "branchResults",
+            "budgets",
+            "pendingWait"
+          ]
+        },
+        "continuationSource": true
+      },
+      {
+        "id": "node.wait-renewal.user-decision",
+        "kind": "wait-renewal",
+        "wait": "wait.user-decision",
+        "maxRenewals": 1,
+        "checkpoint": {
+          "mode": "always",
+          "bindings": [
+            "delivery",
+            "snapshot",
+            "graphNode",
+            "action",
+            "attempt",
+            "inputBindings",
+            "artifactBindings",
+            "branchResults",
+            "budgets",
+            "pendingWait"
+          ]
+        }
+      },
+      {
+        "id": "node.wait.spike-feasibility",
+        "kind": "wait",
+        "wait": "wait.spike-feasibility",
+        "checkpoint": {
+          "mode": "on-wait",
+          "bindings": [
+            "delivery",
+            "snapshot",
+            "graphNode",
+            "action",
+            "attempt",
+            "inputBindings",
+            "artifactBindings",
+            "branchResults",
+            "budgets",
+            "pendingWait"
+          ]
+        },
+        "continuationSource": true
+      },
+      {
+        "id": "node.wait-renewal.spike-feasibility",
+        "kind": "wait-renewal",
+        "wait": "wait.spike-feasibility",
+        "maxRenewals": 1,
+        "checkpoint": {
+          "mode": "always",
+          "bindings": [
+            "delivery",
+            "snapshot",
+            "graphNode",
+            "action",
+            "attempt",
+            "inputBindings",
+            "artifactBindings",
+            "branchResults",
+            "budgets",
+            "pendingWait"
+          ]
+        }
+      },
+      {
+        "id": "node.wait.spike-design-parameter",
+        "kind": "wait",
+        "wait": "wait.spike-design-parameter",
+        "checkpoint": {
+          "mode": "on-wait",
+          "bindings": [
+            "delivery",
+            "snapshot",
+            "graphNode",
+            "action",
+            "attempt",
+            "inputBindings",
+            "artifactBindings",
+            "branchResults",
+            "budgets",
+            "pendingWait"
+          ]
+        },
+        "continuationSource": true
+      },
+      {
+        "id": "node.wait-renewal.spike-design-parameter",
+        "kind": "wait-renewal",
+        "wait": "wait.spike-design-parameter",
+        "maxRenewals": 1,
+        "checkpoint": {
+          "mode": "always",
+          "bindings": [
+            "delivery",
+            "snapshot",
+            "graphNode",
+            "action",
+            "attempt",
+            "inputBindings",
+            "artifactBindings",
+            "branchResults",
+            "budgets",
+            "pendingWait"
           ]
         }
       }
@@ -303,21 +812,6 @@
         "id": "edge.sd-01-sd-02",
         "from": "node.sd-01",
         "to": "node.sd-02"
-      },
-      {
-        "id": "edge.sd-02-sd-03",
-        "from": "node.sd-02",
-        "to": "node.sd-03",
-        "condition": {
-          "field": "routing",
-          "op": "eq",
-          "value": "brief-ready"
-        }
-      },
-      {
-        "id": "edge.sd-03-sd-04",
-        "from": "node.sd-03",
-        "to": "node.sd-04"
       },
       {
         "id": "edge.sd-04-sd-05",
@@ -335,292 +829,419 @@
         "to": "node.sd-09"
       },
       {
-        "id": "edge.sd-09-sd-10",
-        "from": "node.sd-09",
-        "to": "node.sd-10"
-      },
-      {
         "id": "edge.sd-15-implementation-ready",
         "from": "node.sd-15",
-        "to": "terminal:implementation-ready",
-        "condition": {
-          "field": "routing",
-          "op": "eq",
-          "value": "clean"
-        }
+        "to": "terminal:implementation-ready"
       }
     ],
-    "conditionalEdges": [
+    "eventEdges": [
       {
-        "id": "cedge.sd-05",
-        "source": "node.sd-05",
-        "conditions": [
-          {
-            "when": {
-              "field": "routing",
-              "op": "eq",
-              "value": "pass"
-            },
-            "target": "node.sd-06"
-          },
-          {
-            "when": {
-              "field": "routing",
-              "op": "eq",
-              "value": "direction-fix"
-            },
-            "target": "node.sd-04"
-          },
-          {
-            "when": {
-              "field": "routing",
-              "op": "eq",
-              "value": "evidence-gap"
-            },
-            "target": "node.sd-01r"
-          },
-          {
-            "when": {
-              "field": "routing",
-              "op": "eq",
-              "value": "brief-gap"
-            },
-            "target": "node.sd-11h"
-          }
-        ],
-        "default": "terminal:failed"
+        "id": "event.node.sd-01.cancelled",
+        "from": "node.sd-01",
+        "event": "cancelled",
+        "to": "terminal:cancelled"
       },
       {
-        "id": "cedge.sd-01r",
-        "source": "node.sd-01r",
-        "conditions": [
-          {
-            "when": {
-              "field": "evidence_return_action",
-              "op": "eq",
-              "value": "SD-05"
-            },
-            "target": "node.sd-05"
-          },
-          {
-            "when": {
-              "field": "evidence_return_action",
-              "op": "eq",
-              "value": "SD-09"
-            },
-            "target": "node.sd-09"
-          }
-        ],
-        "default": "terminal:failed"
+        "id": "event.node.sd-01.nonretryable-failure",
+        "from": "node.sd-01",
+        "event": "nonretryable-failure",
+        "to": "terminal:failed"
       },
       {
-        "id": "cedge.sd-06",
-        "source": "node.sd-06",
-        "conditions": [
-          {
-            "when": {
-              "field": "routing",
-              "op": "eq",
-              "value": "feasibility-confirmed"
-            },
-            "target": "node.sd-07"
-          },
-          {
-            "when": {
-              "field": "routing",
-              "op": "eq",
-              "value": "invalidates-direction"
-            },
-            "target": "node.sd-04"
-          }
-        ],
-        "default": "terminal:failed"
+        "id": "event.node.sd-02.cancelled",
+        "from": "node.sd-02",
+        "event": "cancelled",
+        "to": "terminal:cancelled"
       },
       {
-        "id": "cedge.sd-10",
-        "source": "node.sd-10",
-        "conditions": [
-          {
-            "when": {
-              "field": "routing",
-              "op": "eq",
-              "value": "evidence-gap"
-            },
-            "target": "node.sd-01r"
-          },
-          {
-            "when": {
-              "field": "routing",
-              "op": "eq",
-              "value": "brief-gap"
-            },
-            "target": "node.sd-11h"
-          },
-          {
-            "when": {
-              "field": "routing",
-              "op": "eq",
-              "value": "conflict"
-            },
-            "target": "node.sd-11h"
-          },
-          {
-            "when": {
-              "field": "routing",
-              "op": "eq",
-              "value": "skeleton-invalid"
-            },
-            "target": "node.sd-04"
-          },
-          {
-            "when": {
-              "field": "routing",
-              "op": "eq",
-              "value": "draft-fix"
-            },
-            "target": "node.sd-11"
-          },
-          {
-            "when": {
-              "field": "routing",
-              "op": "eq",
-              "value": "disposition-valid"
-            },
-            "target": "node.sd-12"
-          }
-        ],
-        "default": "terminal:failed"
+        "id": "event.node.sd-02.nonretryable-failure",
+        "from": "node.sd-02",
+        "event": "nonretryable-failure",
+        "to": "terminal:failed"
       },
       {
-        "id": "cedge.sd-11",
-        "source": "node.sd-11",
-        "conditions": [
-          {
-            "when": {
-              "field": "return_action",
-              "op": "eq",
-              "value": "SD-09"
-            },
-            "target": "node.sd-09"
-          },
-          {
-            "when": {
-              "field": "return_action",
-              "op": "eq",
-              "value": "SD-13"
-            },
-            "target": "node.sd-13"
-          },
-          {
-            "when": {
-              "field": "return_action",
-              "op": "eq",
-              "value": "SD-14"
-            },
-            "target": "node.sd-14"
-          }
-        ],
-        "default": "terminal:failed"
+        "id": "event.node.sd-02.budget-exhausted",
+        "from": "node.sd-02",
+        "event": "budget-exhausted",
+        "to": "terminal:incomplete"
       },
       {
-        "id": "cedge.sd-11h",
-        "source": "node.sd-11h",
-        "conditions": [
-          {
-            "when": {
-              "field": "routing",
-              "op": "eq",
-              "value": "new-brief"
-            },
-            "target": "node.sd-03"
-          },
-          {
-            "when": {
-              "field": "routing",
-              "op": "eq",
-              "value": "direction-invalidated"
-            },
-            "target": "node.sd-04"
-          },
-          {
-            "when": {
-              "field": "routing",
-              "op": "eq",
-              "value": "draft-decision"
-            },
-            "target": "node.sd-11"
-          }
-        ],
-        "default": "terminal:failed"
+        "id": "event.node.sd-03.cancelled",
+        "from": "node.sd-03",
+        "event": "cancelled",
+        "to": "terminal:cancelled"
       },
       {
-        "id": "cedge.sd-12",
-        "source": "node.sd-12",
-        "conditions": [
-          {
-            "when": {
-              "field": "routing",
-              "op": "eq",
-              "value": "closed"
-            },
-            "target": "node.sd-13"
-          },
-          {
-            "when": {
-              "field": "routing",
-              "op": "eq",
-              "value": "affects-design"
-            },
-            "target": "node.sd-11"
-          }
-        ],
-        "default": "terminal:failed"
+        "id": "event.node.sd-03.nonretryable-failure",
+        "from": "node.sd-03",
+        "event": "nonretryable-failure",
+        "to": "terminal:failed"
       },
       {
-        "id": "cedge.sd-13",
-        "source": "node.sd-13",
-        "conditions": [
-          {
-            "when": {
-              "field": "routing",
-              "op": "eq",
-              "value": "pass"
-            },
-            "target": "node.sd-14"
-          },
-          {
-            "when": {
-              "field": "routing",
-              "op": "eq",
-              "value": "fresh-reader-finding"
-            },
-            "target": "node.sd-11"
-          }
-        ],
-        "default": "terminal:failed"
+        "id": "event.node.sd-04.cancelled",
+        "from": "node.sd-04",
+        "event": "cancelled",
+        "to": "terminal:cancelled"
       },
       {
-        "id": "cedge.sd-14",
-        "source": "node.sd-14",
-        "conditions": [
-          {
-            "when": {
-              "field": "routing",
-              "op": "eq",
-              "value": "pass"
-            },
-            "target": "node.sd-15"
-          },
-          {
-            "when": {
-              "field": "routing",
-              "op": "eq",
-              "value": "fixable-failure"
-            },
-            "target": "node.sd-11"
-          }
-        ],
-        "default": "terminal:failed"
+        "id": "event.node.sd-04.nonretryable-failure",
+        "from": "node.sd-04",
+        "event": "nonretryable-failure",
+        "to": "terminal:failed"
+      },
+      {
+        "id": "event.node.sd-05.cancelled",
+        "from": "node.sd-05",
+        "event": "cancelled",
+        "to": "terminal:cancelled"
+      },
+      {
+        "id": "event.node.sd-05.nonretryable-failure",
+        "from": "node.sd-05",
+        "event": "nonretryable-failure",
+        "to": "terminal:failed"
+      },
+      {
+        "id": "event.node.sd-01r.cancelled",
+        "from": "node.sd-01r",
+        "event": "cancelled",
+        "to": "terminal:cancelled"
+      },
+      {
+        "id": "event.node.sd-01r.nonretryable-failure",
+        "from": "node.sd-01r",
+        "event": "nonretryable-failure",
+        "to": "terminal:failed"
+      },
+      {
+        "id": "event.node.sd-01r.budget-exhausted",
+        "from": "node.sd-01r",
+        "event": "budget-exhausted",
+        "to": "terminal:incomplete"
+      },
+      {
+        "id": "event.node.sd-06.cancelled",
+        "from": "node.sd-06",
+        "event": "cancelled",
+        "to": "terminal:cancelled"
+      },
+      {
+        "id": "event.node.sd-06.nonretryable-failure",
+        "from": "node.sd-06",
+        "event": "nonretryable-failure",
+        "to": "terminal:failed"
+      },
+      {
+        "id": "event.node.sd-06.budget-exhausted",
+        "from": "node.sd-06",
+        "event": "budget-exhausted",
+        "to": "terminal:incomplete"
+      },
+      {
+        "id": "event.node.sd-07.cancelled",
+        "from": "node.sd-07",
+        "event": "cancelled",
+        "to": "terminal:cancelled"
+      },
+      {
+        "id": "event.node.sd-07.nonretryable-failure",
+        "from": "node.sd-07",
+        "event": "nonretryable-failure",
+        "to": "terminal:failed"
+      },
+      {
+        "id": "event.node.sd-08.cancelled",
+        "from": "node.sd-08",
+        "event": "cancelled",
+        "to": "terminal:cancelled"
+      },
+      {
+        "id": "event.node.sd-08.nonretryable-failure",
+        "from": "node.sd-08",
+        "event": "nonretryable-failure",
+        "to": "terminal:failed"
+      },
+      {
+        "id": "event.node.sd-09.cancelled",
+        "from": "node.sd-09",
+        "event": "cancelled",
+        "to": "terminal:cancelled"
+      },
+      {
+        "id": "event.node.sd-09.nonretryable-failure",
+        "from": "node.sd-09",
+        "event": "nonretryable-failure",
+        "to": "terminal:failed"
+      },
+      {
+        "id": "event.node.sd-09.budget-exhausted",
+        "from": "node.sd-09",
+        "event": "budget-exhausted",
+        "to": "terminal:incomplete"
+      },
+      {
+        "id": "event.node.sd-11.cancelled",
+        "from": "node.sd-11",
+        "event": "cancelled",
+        "to": "terminal:cancelled"
+      },
+      {
+        "id": "event.node.sd-11.nonretryable-failure",
+        "from": "node.sd-11",
+        "event": "nonretryable-failure",
+        "to": "terminal:failed"
+      },
+      {
+        "id": "event.node.sd-11.budget-exhausted",
+        "from": "node.sd-11",
+        "event": "budget-exhausted",
+        "to": "terminal:incomplete"
+      },
+      {
+        "id": "event.node.sd-11h.cancelled",
+        "from": "node.sd-11h",
+        "event": "cancelled",
+        "to": "terminal:cancelled"
+      },
+      {
+        "id": "event.node.sd-11h.nonretryable-failure",
+        "from": "node.sd-11h",
+        "event": "nonretryable-failure",
+        "to": "terminal:failed"
+      },
+      {
+        "id": "event.node.sd-11h.budget-exhausted",
+        "from": "node.sd-11h",
+        "event": "budget-exhausted",
+        "to": "terminal:incomplete"
+      },
+      {
+        "id": "event.node.sd-12.cancelled",
+        "from": "node.sd-12",
+        "event": "cancelled",
+        "to": "terminal:cancelled"
+      },
+      {
+        "id": "event.node.sd-12.nonretryable-failure",
+        "from": "node.sd-12",
+        "event": "nonretryable-failure",
+        "to": "terminal:failed"
+      },
+      {
+        "id": "event.node.sd-13.cancelled",
+        "from": "node.sd-13",
+        "event": "cancelled",
+        "to": "terminal:cancelled"
+      },
+      {
+        "id": "event.node.sd-13.nonretryable-failure",
+        "from": "node.sd-13",
+        "event": "nonretryable-failure",
+        "to": "terminal:failed"
+      },
+      {
+        "id": "event.node.sd-14.cancelled",
+        "from": "node.sd-14",
+        "event": "cancelled",
+        "to": "terminal:cancelled"
+      },
+      {
+        "id": "event.node.sd-14.nonretryable-failure",
+        "from": "node.sd-14",
+        "event": "nonretryable-failure",
+        "to": "terminal:failed"
+      },
+      {
+        "id": "event.node.sd-15.cancelled",
+        "from": "node.sd-15",
+        "event": "cancelled",
+        "to": "terminal:cancelled"
+      },
+      {
+        "id": "event.node.sd-15.nonretryable-failure",
+        "from": "node.sd-15",
+        "event": "nonretryable-failure",
+        "to": "terminal:failed"
+      },
+      {
+        "id": "event.node.wait.user-grilling-answer.cancelled",
+        "from": "node.wait.user-grilling-answer",
+        "event": "cancelled",
+        "to": "terminal:cancelled"
+      },
+      {
+        "id": "event.node.wait.user-grilling-answer.wait-expired",
+        "from": "node.wait.user-grilling-answer",
+        "event": "wait-expired",
+        "to": "node.wait-renewal.user-grilling-answer"
+      },
+      {
+        "id": "event.node.wait.user-grilling-answer.continuation-invalid",
+        "from": "node.wait.user-grilling-answer",
+        "event": "continuation-invalid",
+        "to": "terminal:failed"
+      },
+      {
+        "id": "event.node.wait-renewal.user-grilling-answer.cancelled",
+        "from": "node.wait-renewal.user-grilling-answer",
+        "event": "cancelled",
+        "to": "terminal:cancelled"
+      },
+      {
+        "id": "event.node.wait-renewal.user-grilling-answer.nonretryable-failure",
+        "from": "node.wait-renewal.user-grilling-answer",
+        "event": "nonretryable-failure",
+        "to": "terminal:failed"
+      },
+      {
+        "id": "event.node.wait-renewal.user-grilling-answer.budget-exhausted",
+        "from": "node.wait-renewal.user-grilling-answer",
+        "event": "budget-exhausted",
+        "to": "terminal:incomplete"
+      },
+      {
+        "id": "event.node.wait.user-brief-confirm.cancelled",
+        "from": "node.wait.user-brief-confirm",
+        "event": "cancelled",
+        "to": "terminal:cancelled"
+      },
+      {
+        "id": "event.node.wait.user-brief-confirm.wait-expired",
+        "from": "node.wait.user-brief-confirm",
+        "event": "wait-expired",
+        "to": "node.wait-renewal.user-brief-confirm"
+      },
+      {
+        "id": "event.node.wait.user-brief-confirm.continuation-invalid",
+        "from": "node.wait.user-brief-confirm",
+        "event": "continuation-invalid",
+        "to": "terminal:failed"
+      },
+      {
+        "id": "event.node.wait-renewal.user-brief-confirm.cancelled",
+        "from": "node.wait-renewal.user-brief-confirm",
+        "event": "cancelled",
+        "to": "terminal:cancelled"
+      },
+      {
+        "id": "event.node.wait-renewal.user-brief-confirm.nonretryable-failure",
+        "from": "node.wait-renewal.user-brief-confirm",
+        "event": "nonretryable-failure",
+        "to": "terminal:failed"
+      },
+      {
+        "id": "event.node.wait-renewal.user-brief-confirm.budget-exhausted",
+        "from": "node.wait-renewal.user-brief-confirm",
+        "event": "budget-exhausted",
+        "to": "terminal:incomplete"
+      },
+      {
+        "id": "event.node.wait.user-decision.cancelled",
+        "from": "node.wait.user-decision",
+        "event": "cancelled",
+        "to": "terminal:cancelled"
+      },
+      {
+        "id": "event.node.wait.user-decision.wait-expired",
+        "from": "node.wait.user-decision",
+        "event": "wait-expired",
+        "to": "node.wait-renewal.user-decision"
+      },
+      {
+        "id": "event.node.wait.user-decision.continuation-invalid",
+        "from": "node.wait.user-decision",
+        "event": "continuation-invalid",
+        "to": "terminal:failed"
+      },
+      {
+        "id": "event.node.wait-renewal.user-decision.cancelled",
+        "from": "node.wait-renewal.user-decision",
+        "event": "cancelled",
+        "to": "terminal:cancelled"
+      },
+      {
+        "id": "event.node.wait-renewal.user-decision.nonretryable-failure",
+        "from": "node.wait-renewal.user-decision",
+        "event": "nonretryable-failure",
+        "to": "terminal:failed"
+      },
+      {
+        "id": "event.node.wait-renewal.user-decision.budget-exhausted",
+        "from": "node.wait-renewal.user-decision",
+        "event": "budget-exhausted",
+        "to": "terminal:incomplete"
+      },
+      {
+        "id": "event.node.wait.spike-feasibility.cancelled",
+        "from": "node.wait.spike-feasibility",
+        "event": "cancelled",
+        "to": "terminal:cancelled"
+      },
+      {
+        "id": "event.node.wait.spike-feasibility.wait-expired",
+        "from": "node.wait.spike-feasibility",
+        "event": "wait-expired",
+        "to": "node.wait-renewal.spike-feasibility"
+      },
+      {
+        "id": "event.node.wait.spike-feasibility.continuation-invalid",
+        "from": "node.wait.spike-feasibility",
+        "event": "continuation-invalid",
+        "to": "terminal:failed"
+      },
+      {
+        "id": "event.node.wait-renewal.spike-feasibility.cancelled",
+        "from": "node.wait-renewal.spike-feasibility",
+        "event": "cancelled",
+        "to": "terminal:cancelled"
+      },
+      {
+        "id": "event.node.wait-renewal.spike-feasibility.nonretryable-failure",
+        "from": "node.wait-renewal.spike-feasibility",
+        "event": "nonretryable-failure",
+        "to": "terminal:failed"
+      },
+      {
+        "id": "event.node.wait-renewal.spike-feasibility.budget-exhausted",
+        "from": "node.wait-renewal.spike-feasibility",
+        "event": "budget-exhausted",
+        "to": "terminal:incomplete"
+      },
+      {
+        "id": "event.node.wait.spike-design-parameter.cancelled",
+        "from": "node.wait.spike-design-parameter",
+        "event": "cancelled",
+        "to": "terminal:cancelled"
+      },
+      {
+        "id": "event.node.wait.spike-design-parameter.wait-expired",
+        "from": "node.wait.spike-design-parameter",
+        "event": "wait-expired",
+        "to": "node.wait-renewal.spike-design-parameter"
+      },
+      {
+        "id": "event.node.wait.spike-design-parameter.continuation-invalid",
+        "from": "node.wait.spike-design-parameter",
+        "event": "continuation-invalid",
+        "to": "terminal:failed"
+      },
+      {
+        "id": "event.node.wait-renewal.spike-design-parameter.cancelled",
+        "from": "node.wait-renewal.spike-design-parameter",
+        "event": "cancelled",
+        "to": "terminal:cancelled"
+      },
+      {
+        "id": "event.node.wait-renewal.spike-design-parameter.nonretryable-failure",
+        "from": "node.wait-renewal.spike-design-parameter",
+        "event": "nonretryable-failure",
+        "to": "terminal:failed"
+      },
+      {
+        "id": "event.node.wait-renewal.spike-design-parameter.budget-exhausted",
+        "from": "node.wait-renewal.spike-design-parameter",
+        "event": "budget-exhausted",
+        "to": "terminal:incomplete"
       }
     ],
     "terminals": [
@@ -659,8 +1280,6 @@
       "id": "wait.user-grilling-answer",
       "kind": "user",
       "purpose": "WAITING_FOR_USER during adaptive grilling: persists the pending question identity, evidence binding and dialogue history; only a correlated answer bound to the same question identity may resume the same working Brief.",
-      "triggerAction": "action.sd-02",
-      "resumeAction": "action.sd-02",
       "resumeSchema": {
         "type": "object",
         "properties": {
@@ -680,18 +1299,12 @@
         "identitySource": "wait-request-id (pending question identity)",
         "staleRejected": true,
         "duplicateRejected": true
-      },
-      "expiry": {
-        "policy": "renewal allowed through the recorded Action; otherwise resumable INCOMPLETE with the pending request; never success and never silent cancellation",
-        "renewalAllowed": true
       }
     },
     {
       "id": "wait.user-brief-confirm",
       "kind": "user",
       "purpose": "WAITING_FOR_USER until explicit whole-Brief confirmation: Runtime persists the wait, validates identity and freezes the artifact; an answer bound to another Brief version cannot freeze this version; follow-up remains allowed until explicit confirmation.",
-      "triggerAction": "action.sd-03",
-      "resumeAction": "action.sd-03",
       "resumeSchema": {
         "type": "object",
         "properties": {
@@ -710,18 +1323,12 @@
         "identitySource": "wait-request-id (exact Brief version identity)",
         "staleRejected": true,
         "duplicateRejected": true
-      },
-      "expiry": {
-        "policy": "renewal allowed through the recorded Action; otherwise resumable INCOMPLETE with the pending request; never success and never silent cancellation",
-        "renewalAllowed": true
       }
     },
     {
       "id": "wait.user-decision",
       "kind": "user",
       "purpose": "WAITING_FOR_USER for the multi-turn Human Decision Dialogue: persists the pending decision identity, evidence binding, dialogue history and exact resume_action; resumable only within the same admitted decision identity and evidence binding; questions and exploratory replies are never interpreted as final decisions; exit only with an explicit Human Decision Record.",
-      "triggerAction": "action.sd-11h",
-      "resumeAction": "action.sd-11h",
       "resumeSchema": {
         "type": "object",
         "properties": {
@@ -754,18 +1361,12 @@
         "identitySource": "decision-request-id (exact admitted decision identity)",
         "staleRejected": true,
         "duplicateRejected": true
-      },
-      "expiry": {
-        "policy": "renewal allowed through the recorded Action while policy/budget permits; otherwise resumable INCOMPLETE with the pending request; never success and never silent cancellation",
-        "renewalAllowed": true
       }
     },
     {
       "id": "wait.spike-feasibility",
       "kind": "spike",
       "purpose": "WAITING_FOR_SPIKE for architecture-feasibility evidence: persists the exact Spike Request identity and content digest, external execution correlation, deadline Gate and exact resume_action; mismatched or duplicate results cannot advance state; a valid result is validated against its exact request, environment, method and evidence binding before being applied.",
-      "triggerAction": "action.sd-06",
-      "resumeAction": "action.sd-06",
       "resumeSchema": {
         "type": "object",
         "properties": {
@@ -820,18 +1421,12 @@
         "identitySource": "spike-request-id + request content digest",
         "staleRejected": true,
         "duplicateRejected": true
-      },
-      "expiry": {
-        "policy": "deadline Gate: renewal resumes the recorded Action to publish the same or a new versioned request while permitted; otherwise resumable INCOMPLETE with the pending request; never success and never silent cancellation",
-        "renewalAllowed": true
       }
     },
     {
       "id": "wait.spike-design-parameter",
       "kind": "spike",
       "purpose": "WAITING_FOR_SPIKE for design-owned parameter evidence: persists the exact Spike Request identity and content digest, external execution correlation, deadline Gate and exact resume_action; mismatched or duplicate results cannot advance state; only a result whose request, environment, method and evidence satisfy the request contract may close the parameter.",
-      "triggerAction": "action.sd-12",
-      "resumeAction": "action.sd-12",
       "resumeSchema": {
         "type": "object",
         "properties": {
@@ -886,121 +1481,89 @@
         "identitySource": "spike-request-id + request content digest",
         "staleRejected": true,
         "duplicateRejected": true
-      },
-      "expiry": {
-        "policy": "deadline Gate: renewal resumes the recorded Action to publish the same or a new versioned request while permitted; otherwise resumable INCOMPLETE with the pending request; never success and never silent cancellation",
-        "renewalAllowed": true
       }
     }
   ],
   "budgets": [
     {
       "id": "budget.questions",
-      "scope": "action",
-      "action": "action.sd-02",
       "resource": "custom",
-      "resourceName": "question-turns",
       "evaluator": {
         "path": "../scripts/budget/questions.mjs",
         "contentIdentity": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
       },
-      "onExhaustion": "incomplete",
-      "accounting": "each grilling question consumed adds to state.grilling_questions (sum reducer); the exact limit is project/runtime policy; exhaustion enters terminal:INCOMPLETE without lowering the grilling closure standard and never relaxes a Gate; runtime invokes the evaluator registration point to obtain the budget conclusion; numeric limits are never configured; exhaustion never relaxes a Gate"
+      "resourceName": "question-turns",
+      "accounting": "the declared evaluator accounts for each consumed grilling question using the observed state.grilling_questions value; exhaustion never lowers the grilling closure standard or relaxes a Gate"
     },
     {
       "id": "budget.research",
-      "scope": "action",
-      "action": "action.sd-01r",
       "resource": "custom",
-      "resourceName": "research-requests",
       "evaluator": {
         "path": "../scripts/budget/research.mjs",
         "contentIdentity": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
       },
-      "onExhaustion": "incomplete",
-      "accounting": "each research attempt adds to state.research_attempts (sum reducer); the exact limit is project/runtime policy; exhaustion enters terminal:INCOMPLETE and never relaxes a Gate; runtime invokes the evaluator registration point to obtain the budget conclusion; numeric limits are never configured; exhaustion never relaxes a Gate"
+      "resourceName": "research-requests",
+      "accounting": "the declared evaluator accounts for each evidence-research attempt using the observed state.research_attempts value; exhaustion never relaxes a Gate"
     },
     {
       "id": "budget.feasibility",
-      "scope": "action",
-      "action": "action.sd-06",
       "resource": "custom",
-      "resourceName": "feasibility-probes",
       "evaluator": {
         "path": "../scripts/budget/feasibility.mjs",
         "contentIdentity": "sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
       },
-      "onExhaustion": "incomplete",
-      "accounting": "each feasibility iteration adds to state.feasibility_iterations (sum reducer); the exact limit is project/runtime policy; exhaustion enters terminal:INCOMPLETE and never relaxes a Gate; runtime invokes the evaluator registration point to obtain the budget conclusion; numeric limits are never configured; exhaustion never relaxes a Gate"
+      "resourceName": "feasibility-probes",
+      "accounting": "the declared evaluator accounts for each feasibility iteration using the observed state.feasibility_iterations value; exhaustion never relaxes a Gate"
     },
     {
       "id": "budget.review",
-      "scope": "action",
-      "action": "action.sd-09",
       "resource": "custom",
-      "resourceName": "review-rounds",
       "evaluator": {
         "path": "../scripts/budget/review.mjs",
         "contentIdentity": "sha256:dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
       },
-      "onExhaustion": "incomplete",
-      "accounting": "each review iteration adds to state.review_iterations (sum reducer); the exact limit is project/runtime policy; exhaustion enters terminal:INCOMPLETE and never relaxes a Gate; runtime invokes the evaluator registration point to obtain the budget conclusion; numeric limits are never configured; exhaustion never relaxes a Gate"
+      "resourceName": "review-rounds",
+      "accounting": "the declared evaluator accounts for each review iteration using the observed state.review_iterations value; exhaustion never relaxes a Gate"
     },
     {
       "id": "budget.revision",
-      "scope": "action",
-      "action": "action.sd-11",
       "resource": "custom",
-      "resourceName": "revision-iterations",
       "evaluator": {
         "path": "../scripts/budget/revision.mjs",
         "contentIdentity": "sha256:eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
       },
-      "onExhaustion": "incomplete",
-      "accounting": "each targeted revision adds to state.revision_count (sum reducer); the exact limit is project/runtime policy; exhaustion enters terminal:INCOMPLETE and never relaxes a Gate; runtime invokes the evaluator registration point to obtain the budget conclusion; numeric limits are never configured; exhaustion never relaxes a Gate"
+      "resourceName": "revision-iterations",
+      "accounting": "the declared evaluator accounts for each targeted revision using the observed state.revision_count value; exhaustion never relaxes a Gate"
     },
     {
       "id": "budget.decision-dialogue",
-      "scope": "action",
-      "action": "action.sd-11h",
       "resource": "custom",
-      "resourceName": "dialogue-turns",
       "evaluator": {
         "path": "../scripts/budget/decision-dialogue.mjs",
         "contentIdentity": "sha256:ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
       },
-      "onExhaustion": "incomplete",
-      "accounting": "each decision dialogue turn adds to state.decision_turns (sum reducer); the exact limit is project/runtime policy; exhaustion enters terminal:INCOMPLETE and never relaxes a Gate; runtime invokes the evaluator registration point to obtain the budget conclusion; numeric limits are never configured; exhaustion never relaxes a Gate"
+      "resourceName": "dialogue-turns",
+      "accounting": "the declared evaluator accounts for each decision-dialogue turn using the observed state.decision_turns value; exhaustion never relaxes a Gate"
     }
   ],
   "recovery": [
     {
       "id": "recovery.retry-continue",
-      "scope": "workflow",
       "mode": "continue",
       "noBlindReplay": true
     },
     {
       "id": "recovery.incomplete-resume",
-      "scope": "workflow",
-      "mode": "restartFromSavepoint",
+      "mode": "checkpoint-recovery",
       "noBlindReplay": true
     },
     {
       "id": "recovery.intervene",
-      "scope": "workflow",
       "mode": "intervene",
-      "condition": {
-        "field": "status",
-        "op": "eq",
-        "value": "uncertain"
-      },
       "noBlindReplay": true
     },
     {
       "id": "recovery.cleanup-retry",
-      "scope": "action",
-      "action": "action.sd-15",
       "mode": "continue",
       "noBlindReplay": true
     }

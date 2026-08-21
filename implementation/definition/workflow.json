@@ -13,86 +13,72 @@
       {
         "name": "design",
         "type": "object",
-        "reducer": "overwrite",
         "required": true,
         "description": "Frozen upstream design binding: identity, content identity, IMPLEMENTATION_READY status, scope, referenced Contracts and obligations. A design-semantic change stops the Delivery."
       },
       {
         "name": "intake",
         "type": "object",
-        "reducer": "overwrite",
         "description": "IM-01 result: authorityBound, designIdentityExact, obligationRegisterBound, derivableFactMissing, blockers."
       },
       {
         "name": "obligationRegister",
         "type": "object",
-        "reducer": "merge",
         "description": "Classified upstream obligations (CONTRACT_PREREQUISITE / IMPLEMENTATION_FEASIBILITY / IMPLEMENTATION_VERIFICATION / OPERATIONAL_TUNING) with preserved semantic dependency and reopen condition."
       },
       {
         "name": "preflight",
         "type": "object",
-        "reducer": "overwrite",
         "description": "IM-02 result: passed, feasibilityObligations (count), harnessBinding, contractAvailability facts, blockers."
       },
       {
         "name": "feasibility",
         "type": "object",
-        "reducer": "overwrite",
         "description": "IM-02V result: allCalibrated, pendingWithProgress, externalUnavailable, reopen, evidence identity."
       },
       {
         "name": "grilling",
         "type": "object",
-        "reducer": "overwrite",
         "description": "IM-03 result: allClassified, needsUser, ambiguity, projectContextSnapshot, goalPackets."
       },
       {
         "name": "goalGraph",
         "type": "object",
-        "reducer": "overwrite",
         "description": "IM-04 result: frozen (bool), correctionRequired (bool), goals, dependencies, ladders, completion relation."
       },
       {
         "name": "branch",
         "type": "object",
-        "reducer": "overwrite",
         "description": "IM-05 result: activated (bool), baseline identity, feature branch identity."
       },
       {
         "name": "selection",
         "type": "object",
-        "reducer": "overwrite",
         "description": "IM-06 deterministic selector result: goalRungReady, allGoalsCommitted, missingContract, selected goal/rung or exact wait/terminal proposal."
       },
       {
         "name": "currentGoal",
         "type": "string",
-        "reducer": "overwrite",
         "description": "Exact loop position: current Goal id."
       },
       {
         "name": "currentRung",
         "type": "string",
-        "reducer": "overwrite",
         "description": "Exact loop position: current Test Ladder rung id."
       },
       {
         "name": "ladder",
         "type": "object",
-        "reducer": "overwrite",
         "description": "Test Ladder feedback for the current rung: calibrated, ambiguity, expectedRedProgress, green, branchRedIntroduced, branchesClosed, regression, noRefactorOrGreen, anotherRung, verified, invalidFeedback."
       },
       {
         "name": "returnAction",
         "type": "string",
-        "reducer": "overwrite",
         "description": "Recorded owning Action for dynamic returns: IM-01R returns to its recorded requester; IM-11 invalid feedback returns to the recorded owning Action; SD-style return_action routing."
       },
       {
         "name": "review",
         "type": "object",
-        "reducer": "overwrite",
         "description": "Review state: barrierReached, finding (none|test|implementation), findingOpen, goalScopeFindingClosed, wholeScopeFindingClosed."
       },
       {
@@ -123,50 +109,42 @@
             "scope"
           ]
         },
-        "reducer": "append",
         "description": "Admitted review findings; appended, never overwritten; dispositions closed only by the source lens."
       },
       {
         "name": "commit",
         "type": "object",
-        "reducer": "overwrite",
         "description": "IM-16 result: verifiedGoalCommitted (bool), Goal commit identity, new baseline."
       },
       {
         "name": "regressionWhole",
         "type": "object",
-        "reducer": "overwrite",
         "description": "IM-17 result: passed (bool), wholeScopeFindingAdmitted (bool), regression evidence."
       },
       {
         "name": "terminalGate",
         "type": "object",
-        "reducer": "overwrite",
         "description": "IM-18 result: passed (bool), final candidate identity, verification summary, operational-tuning handoffs."
       },
       {
         "name": "attempts",
         "type": "integer",
-        "reducer": "sum",
         "required": true,
         "description": "Attempt accounting: each retry gains a new attempt identity; repeating the same failure without new diagnosis consumes budget; numeric limit is project/runtime policy and never relaxes a Gate."
       },
       {
         "name": "gitBaseline",
         "type": "string",
-        "reducer": "keepFirst",
         "description": "Clean starting baseline; never auto-stash/reset/merge."
       },
       {
         "name": "currentTree",
         "type": "string",
-        "reducer": "overwrite",
         "description": "Current candidate Git tree identity for checkpoint binding."
       },
       {
         "name": "status",
         "type": "string",
-        "reducer": "overwrite",
         "required": true,
         "description": "Lifecycle marker; 'unknown' triggers the intervention recovery path."
       }
@@ -177,541 +155,1304 @@
     "nodes": [
       {
         "id": "node.IM-01",
+        "kind": "action",
         "action": "action.IM-01",
         "checkpoint": {
           "mode": "always",
           "bindings": [
             "delivery",
             "snapshot",
-            "actionAttempt",
-            "manifestRevision",
-            "gitTree"
+            "graphNode",
+            "action",
+            "attempt",
+            "inputBindings",
+            "artifactBindings",
+            "branchResults",
+            "budgets",
+            "pendingWait"
+          ]
+        },
+        "routing": {
+          "kind": "deterministic",
+          "output": "routing",
+          "cases": [
+            {
+              "value": "intake-preflight",
+              "target": "node.IM-02"
+            },
+            {
+              "value": "intake-research",
+              "target": "node.IM-01R"
+            },
+            {
+              "value": "unmatched",
+              "target": "terminal:FAILED"
+            }
+          ]
+        },
+        "budget": "budget.attempts"
+      },
+      {
+        "id": "node.IM-01R",
+        "kind": "action",
+        "action": "action.IM-01R",
+        "routing": {
+          "kind": "deterministic",
+          "output": "routing",
+          "cases": [
+            {
+              "value": "research-intake",
+              "target": "node.IM-01"
+            },
+            {
+              "value": "research-grilling",
+              "target": "node.IM-03"
+            },
+            {
+              "value": "unmatched",
+              "target": "terminal:FAILED"
+            }
+          ]
+        },
+        "budget": "budget.attempts"
+      },
+      {
+        "id": "node.IM-02",
+        "kind": "action",
+        "action": "action.IM-02",
+        "routing": {
+          "kind": "deterministic",
+          "output": "routing",
+          "cases": [
+            {
+              "value": "preflight-feasibility",
+              "target": "node.IM-02V"
+            },
+            {
+              "value": "preflight-grilling",
+              "target": "node.IM-03"
+            },
+            {
+              "value": "unmatched",
+              "target": "terminal:FAILED"
+            }
+          ]
+        },
+        "budget": "budget.attempts"
+      },
+      {
+        "id": "node.IM-02V",
+        "kind": "action",
+        "action": "action.IM-02V",
+        "routing": {
+          "kind": "deterministic",
+          "output": "routing",
+          "cases": [
+            {
+              "value": "feasibility-grilling",
+              "target": "node.IM-03"
+            },
+            {
+              "value": "feasibility-self",
+              "target": "node.IM-02V"
+            },
+            {
+              "value": "feasibility-reopen",
+              "target": "terminal:DESIGN_REOPEN"
+            },
+            {
+              "value": "wait-external",
+              "target": "node.wait.external-authority"
+            },
+            {
+              "value": "unmatched",
+              "target": "terminal:FAILED"
+            }
+          ]
+        },
+        "budget": "budget.attempts"
+      },
+      {
+        "id": "node.IM-03",
+        "kind": "action",
+        "action": "action.IM-03",
+        "routing": {
+          "kind": "deterministic",
+          "output": "routing",
+          "cases": [
+            {
+              "value": "continue",
+              "target": "node.IM-04"
+            },
+            {
+              "value": "wait-user",
+              "target": "node.wait.user-measurement"
+            },
+            {
+              "value": "unmatched",
+              "target": "terminal:FAILED"
+            }
+          ]
+        },
+        "budget": "budget.attempts"
+      },
+      {
+        "id": "node.IM-04",
+        "kind": "action",
+        "action": "action.IM-04",
+        "routing": {
+          "kind": "deterministic",
+          "output": "routing",
+          "cases": [
+            {
+              "value": "confirm-grilling",
+              "target": "node.IM-03"
+            },
+            {
+              "value": "confirm-branch",
+              "target": "node.IM-05"
+            },
+            {
+              "value": "wait-user",
+              "target": "node.wait.user-confirm"
+            },
+            {
+              "value": "unmatched",
+              "target": "terminal:FAILED"
+            }
+          ]
+        },
+        "budget": "budget.attempts"
+      },
+      {
+        "id": "node.IM-05",
+        "kind": "action",
+        "action": "action.IM-05",
+        "budget": "budget.attempts"
+      },
+      {
+        "id": "node.IM-06",
+        "kind": "action",
+        "action": "action.IM-06",
+        "routing": {
+          "kind": "deterministic",
+          "output": "routing",
+          "cases": [
+            {
+              "value": "select-calibrate",
+              "target": "node.IM-07"
+            },
+            {
+              "value": "select-whole",
+              "target": "node.IM-17"
+            },
+            {
+              "value": "wait-external",
+              "target": "node.wait.external-coordination"
+            },
+            {
+              "value": "unmatched",
+              "target": "terminal:FAILED"
+            }
+          ]
+        },
+        "budget": "budget.attempts"
+      },
+      {
+        "id": "node.IM-07",
+        "kind": "action",
+        "action": "action.IM-07",
+        "routing": {
+          "kind": "deterministic",
+          "output": "routing",
+          "cases": [
+            {
+              "value": "calibrate-evolve",
+              "target": "node.IM-08"
+            },
+            {
+              "value": "calibrate-grilling",
+              "target": "node.IM-03"
+            },
+            {
+              "value": "unmatched",
+              "target": "terminal:FAILED"
+            }
+          ]
+        },
+        "budget": "budget.attempts"
+      },
+      {
+        "id": "node.IM-08",
+        "kind": "action",
+        "action": "action.IM-08",
+        "routing": {
+          "kind": "deterministic",
+          "output": "routing",
+          "cases": [
+            {
+              "value": "evolve-self",
+              "target": "node.IM-08"
+            },
+            {
+              "value": "evolve-close",
+              "target": "node.IM-09"
+            },
+            {
+              "value": "unmatched",
+              "target": "terminal:FAILED"
+            }
+          ]
+        },
+        "budget": "budget.attempts"
+      },
+      {
+        "id": "node.IM-09",
+        "kind": "action",
+        "action": "action.IM-09",
+        "routing": {
+          "kind": "deterministic",
+          "output": "routing",
+          "cases": [
+            {
+              "value": "close-evolve",
+              "target": "node.IM-08"
+            },
+            {
+              "value": "close-refactor",
+              "target": "node.IM-10"
+            },
+            {
+              "value": "unmatched",
+              "target": "terminal:FAILED"
+            }
+          ]
+        },
+        "budget": "budget.attempts"
+      },
+      {
+        "id": "node.IM-10",
+        "kind": "action",
+        "action": "action.IM-10",
+        "routing": {
+          "kind": "deterministic",
+          "output": "routing",
+          "cases": [
+            {
+              "value": "refactor-evolve",
+              "target": "node.IM-08"
+            },
+            {
+              "value": "refactor-verify",
+              "target": "node.IM-11"
+            },
+            {
+              "value": "unmatched",
+              "target": "terminal:FAILED"
+            }
+          ]
+        },
+        "budget": "budget.attempts"
+      },
+      {
+        "id": "node.IM-11",
+        "kind": "action",
+        "action": "action.IM-11",
+        "routing": {
+          "kind": "deterministic",
+          "output": "routing",
+          "cases": [
+            {
+              "value": "verify-calibrate",
+              "target": "node.IM-07"
+            },
+            {
+              "value": "verify-review",
+              "target": "node.IM-12"
+            },
+            {
+              "value": "verify-return07",
+              "target": "node.IM-07"
+            },
+            {
+              "value": "verify-return08",
+              "target": "node.IM-08"
+            },
+            {
+              "value": "verify-return09",
+              "target": "node.IM-09"
+            },
+            {
+              "value": "verify-return10",
+              "target": "node.IM-10"
+            },
+            {
+              "value": "unmatched",
+              "target": "terminal:FAILED"
+            }
+          ]
+        },
+        "budget": "budget.attempts"
+      },
+      {
+        "id": "node.IM-12",
+        "kind": "parallel",
+        "branches": [
+          {
+            "id": "branch.IM-12.blackbox",
+            "action": "action.IM-12.blackbox",
+            "required": true
+          },
+          {
+            "id": "branch.IM-12.whitebox",
+            "action": "action.IM-12.whitebox",
+            "required": true
+          }
+        ],
+        "maxConcurrency": 2,
+        "join": {
+          "kind": "aggregator",
+          "action": "action.IM-13"
+        },
+        "checkpoint": {
+          "mode": "always",
+          "bindings": [
+            "delivery",
+            "snapshot",
+            "graphNode",
+            "action",
+            "attempt",
+            "inputBindings",
+            "artifactBindings",
+            "branchResults",
+            "budgets",
+            "pendingWait"
+          ]
+        },
+        "routing": {
+          "kind": "deterministic",
+          "output": "finding",
+          "cases": [
+            {
+              "value": "none",
+              "target": "node.IM-16"
+            },
+            {
+              "value": "test",
+              "target": "node.IM-14T"
+            },
+            {
+              "value": "implementation",
+              "target": "node.IM-14I"
+            }
+          ]
+        },
+        "budget": "budget.attempts"
+      },
+      {
+        "id": "node.IM-13",
+        "kind": "action",
+        "action": "action.IM-13",
+        "routing": {
+          "kind": "deterministic",
+          "output": "routing",
+          "cases": [
+            {
+              "value": "aggregate-commit",
+              "target": "node.IM-16"
+            },
+            {
+              "value": "aggregate-resolveTest",
+              "target": "node.IM-14T"
+            },
+            {
+              "value": "aggregate-resolveImpl",
+              "target": "node.IM-14I"
+            },
+            {
+              "value": "unmatched",
+              "target": "terminal:FAILED"
+            }
+          ]
+        },
+        "budget": "budget.attempts"
+      },
+      {
+        "id": "node.IM-14T",
+        "kind": "action",
+        "action": "action.IM-14T",
+        "budget": "budget.attempts"
+      },
+      {
+        "id": "node.IM-14I",
+        "kind": "action",
+        "action": "action.IM-14I",
+        "budget": "budget.attempts"
+      },
+      {
+        "id": "node.IM-15.blackbox",
+        "kind": "action",
+        "action": "action.IM-15.blackbox",
+        "routing": {
+          "kind": "deterministic",
+          "output": "routing",
+          "cases": [
+            {
+              "value": "recheck-aggregate",
+              "target": "node.IM-13"
+            },
+            {
+              "value": "recheck-commit",
+              "target": "node.IM-16"
+            },
+            {
+              "value": "recheck-whole",
+              "target": "node.IM-17"
+            },
+            {
+              "value": "unmatched",
+              "target": "terminal:FAILED"
+            }
+          ]
+        },
+        "budget": "budget.attempts"
+      },
+      {
+        "id": "node.IM-15.whitebox",
+        "kind": "action",
+        "action": "action.IM-15.whitebox",
+        "routing": {
+          "kind": "deterministic",
+          "output": "routing",
+          "cases": [
+            {
+              "value": "recheck-aggregate",
+              "target": "node.IM-13"
+            },
+            {
+              "value": "recheck-commit",
+              "target": "node.IM-16"
+            },
+            {
+              "value": "recheck-whole",
+              "target": "node.IM-17"
+            },
+            {
+              "value": "unmatched",
+              "target": "terminal:FAILED"
+            }
+          ]
+        },
+        "budget": "budget.attempts"
+      },
+      {
+        "id": "node.IM-16",
+        "kind": "action",
+        "action": "action.IM-16",
+        "budget": "budget.attempts"
+      },
+      {
+        "id": "node.IM-17",
+        "kind": "parallel",
+        "branches": [
+          {
+            "id": "branch.IM-17.blackbox",
+            "action": "action.IM-17.blackbox",
+            "required": true
+          },
+          {
+            "id": "branch.IM-17.whitebox",
+            "action": "action.IM-17.whitebox",
+            "required": true
+          },
+          {
+            "id": "branch.IM-17.custodian",
+            "action": "action.IM-17.custodian",
+            "required": true
+          }
+        ],
+        "maxConcurrency": 3,
+        "join": {
+          "kind": "aggregator",
+          "action": "action.IM-13"
+        },
+        "checkpoint": {
+          "mode": "always",
+          "bindings": [
+            "delivery",
+            "snapshot",
+            "graphNode",
+            "action",
+            "attempt",
+            "inputBindings",
+            "artifactBindings",
+            "branchResults",
+            "budgets",
+            "pendingWait"
+          ]
+        },
+        "routing": {
+          "kind": "deterministic",
+          "output": "finding",
+          "cases": [
+            {
+              "value": "none",
+              "target": "node.IM-18"
+            },
+            {
+              "value": "test",
+              "target": "node.IM-14T"
+            },
+            {
+              "value": "implementation",
+              "target": "node.IM-14I"
+            }
+          ]
+        },
+        "budget": "budget.attempts"
+      },
+      {
+        "id": "node.IM-18",
+        "kind": "action",
+        "action": "action.IM-18",
+        "budget": "budget.attempts"
+      },
+      {
+        "id": "node.wait.user-measurement",
+        "kind": "wait",
+        "wait": "wait.user-measurement",
+        "checkpoint": {
+          "mode": "on-wait",
+          "bindings": [
+            "delivery",
+            "snapshot",
+            "graphNode",
+            "action",
+            "attempt",
+            "inputBindings",
+            "artifactBindings",
+            "branchResults",
+            "budgets",
+            "pendingWait"
+          ]
+        },
+        "continuationSource": true
+      },
+      {
+        "id": "node.wait-renewal.user-measurement",
+        "kind": "wait-renewal",
+        "wait": "wait.user-measurement",
+        "maxRenewals": 1,
+        "checkpoint": {
+          "mode": "always",
+          "bindings": [
+            "delivery",
+            "snapshot",
+            "graphNode",
+            "action",
+            "attempt",
+            "inputBindings",
+            "artifactBindings",
+            "branchResults",
+            "budgets",
+            "pendingWait"
           ]
         }
       },
       {
-        "id": "node.IM-01R",
-        "action": "action.IM-01R"
+        "id": "node.wait.user-confirm",
+        "kind": "wait",
+        "wait": "wait.user-confirm",
+        "checkpoint": {
+          "mode": "on-wait",
+          "bindings": [
+            "delivery",
+            "snapshot",
+            "graphNode",
+            "action",
+            "attempt",
+            "inputBindings",
+            "artifactBindings",
+            "branchResults",
+            "budgets",
+            "pendingWait"
+          ]
+        },
+        "continuationSource": true
       },
       {
-        "id": "node.IM-02",
-        "action": "action.IM-02"
+        "id": "node.wait-renewal.user-confirm",
+        "kind": "wait-renewal",
+        "wait": "wait.user-confirm",
+        "maxRenewals": 1,
+        "checkpoint": {
+          "mode": "always",
+          "bindings": [
+            "delivery",
+            "snapshot",
+            "graphNode",
+            "action",
+            "attempt",
+            "inputBindings",
+            "artifactBindings",
+            "branchResults",
+            "budgets",
+            "pendingWait"
+          ]
+        }
       },
       {
-        "id": "node.IM-02V",
-        "action": "action.IM-02V"
+        "id": "node.wait.external-coordination",
+        "kind": "wait",
+        "wait": "wait.external-coordination",
+        "checkpoint": {
+          "mode": "on-wait",
+          "bindings": [
+            "delivery",
+            "snapshot",
+            "graphNode",
+            "action",
+            "attempt",
+            "inputBindings",
+            "artifactBindings",
+            "branchResults",
+            "budgets",
+            "pendingWait"
+          ]
+        },
+        "continuationSource": true
       },
       {
-        "id": "node.IM-03",
-        "action": "action.IM-03"
+        "id": "node.wait-renewal.external-coordination",
+        "kind": "wait-renewal",
+        "wait": "wait.external-coordination",
+        "maxRenewals": 1,
+        "checkpoint": {
+          "mode": "always",
+          "bindings": [
+            "delivery",
+            "snapshot",
+            "graphNode",
+            "action",
+            "attempt",
+            "inputBindings",
+            "artifactBindings",
+            "branchResults",
+            "budgets",
+            "pendingWait"
+          ]
+        }
       },
       {
-        "id": "node.IM-04",
-        "action": "action.IM-04"
+        "id": "node.wait.external-authority",
+        "kind": "wait",
+        "wait": "wait.external-authority",
+        "checkpoint": {
+          "mode": "on-wait",
+          "bindings": [
+            "delivery",
+            "snapshot",
+            "graphNode",
+            "action",
+            "attempt",
+            "inputBindings",
+            "artifactBindings",
+            "branchResults",
+            "budgets",
+            "pendingWait"
+          ]
+        },
+        "continuationSource": true
       },
       {
-        "id": "node.IM-05",
-        "action": "action.IM-05"
-      },
-      {
-        "id": "node.IM-06",
-        "action": "action.IM-06"
-      },
-      {
-        "id": "node.IM-07",
-        "action": "action.IM-07"
-      },
-      {
-        "id": "node.IM-08",
-        "action": "action.IM-08"
-      },
-      {
-        "id": "node.IM-09",
-        "action": "action.IM-09"
-      },
-      {
-        "id": "node.IM-10",
-        "action": "action.IM-10"
-      },
-      {
-        "id": "node.IM-11",
-        "action": "action.IM-11"
-      },
-      {
-        "id": "node.IM-12",
-        "action": "action.IM-12"
-      },
-      {
-        "id": "node.IM-13",
-        "action": "action.IM-13"
-      },
-      {
-        "id": "node.IM-14T",
-        "action": "action.IM-14T"
-      },
-      {
-        "id": "node.IM-14I",
-        "action": "action.IM-14I"
-      },
-      {
-        "id": "node.IM-15",
-        "action": "action.IM-15"
-      },
-      {
-        "id": "node.IM-16",
-        "action": "action.IM-16"
-      },
-      {
-        "id": "node.IM-17",
-        "action": "action.IM-17"
-      },
-      {
-        "id": "node.IM-18",
-        "action": "action.IM-18"
+        "id": "node.wait-renewal.external-authority",
+        "kind": "wait-renewal",
+        "wait": "wait.external-authority",
+        "maxRenewals": 1,
+        "checkpoint": {
+          "mode": "always",
+          "bindings": [
+            "delivery",
+            "snapshot",
+            "graphNode",
+            "action",
+            "attempt",
+            "inputBindings",
+            "artifactBindings",
+            "branchResults",
+            "budgets",
+            "pendingWait"
+          ]
+        }
       }
     ],
     "edges": [
       {
-        "id": "e.intake.preflight",
-        "from": "node.IM-01",
-        "to": "node.IM-02",
-        "condition": {
-          "allOf": [
-            {
-              "field": "intake.authorityBound",
-              "op": "eq",
-              "value": true
-            },
-            {
-              "field": "intake.designIdentityExact",
-              "op": "eq",
-              "value": true
-            },
-            {
-              "field": "intake.obligationRegisterBound",
-              "op": "eq",
-              "value": true
-            }
-          ]
-        }
-      },
-      {
-        "id": "e.intake.research",
-        "from": "node.IM-01",
-        "to": "node.IM-01R",
-        "condition": {
-          "field": "intake.derivableFactMissing",
-          "op": "eq",
-          "value": true
-        }
-      },
-      {
-        "id": "e.research.intake",
-        "from": "node.IM-01R",
-        "to": "node.IM-01",
-        "condition": {
-          "field": "returnAction",
-          "op": "eq",
-          "value": "IM-01"
-        }
-      },
-      {
-        "id": "e.research.grilling",
-        "from": "node.IM-01R",
-        "to": "node.IM-03",
-        "condition": {
-          "field": "returnAction",
-          "op": "eq",
-          "value": "IM-03"
-        }
-      },
-      {
-        "id": "e.preflight.feasibility",
-        "from": "node.IM-02",
-        "to": "node.IM-02V",
-        "condition": {
-          "allOf": [
-            {
-              "field": "preflight.passed",
-              "op": "eq",
-              "value": true
-            },
-            {
-              "field": "preflight.feasibilityObligations",
-              "op": "gt",
-              "value": 0
-            }
-          ]
-        }
-      },
-      {
-        "id": "e.preflight.grilling",
-        "from": "node.IM-02",
-        "to": "node.IM-03",
-        "condition": {
-          "allOf": [
-            {
-              "field": "preflight.passed",
-              "op": "eq",
-              "value": true
-            },
-            {
-              "field": "preflight.feasibilityObligations",
-              "op": "eq",
-              "value": 0
-            }
-          ]
-        }
-      },
-      {
-        "id": "e.feasibility.grilling",
-        "from": "node.IM-02V",
-        "to": "node.IM-03",
-        "condition": {
-          "field": "feasibility.allCalibrated",
-          "op": "eq",
-          "value": true
-        }
-      },
-      {
-        "id": "e.feasibility.self",
-        "from": "node.IM-02V",
-        "to": "node.IM-02V",
-        "condition": {
-          "field": "feasibility.pendingWithProgress",
-          "op": "eq",
-          "value": true
-        }
-      },
-      {
-        "id": "e.feasibility.reopen",
-        "from": "node.IM-02V",
-        "to": "terminal:DESIGN_REOPEN",
-        "condition": {
-          "field": "feasibility.reopen",
-          "op": "eq",
-          "value": true
-        }
-      },
-      {
-        "id": "e.grilling.confirm",
-        "from": "node.IM-03",
-        "to": "node.IM-04",
-        "condition": {
-          "field": "grilling.allClassified",
-          "op": "eq",
-          "value": true
-        }
-      },
-      {
-        "id": "e.confirm.grilling",
-        "from": "node.IM-04",
-        "to": "node.IM-03",
-        "condition": {
-          "field": "goalGraph.correctionRequired",
-          "op": "eq",
-          "value": true
-        }
-      },
-      {
-        "id": "e.confirm.branch",
-        "from": "node.IM-04",
-        "to": "node.IM-05",
-        "condition": {
-          "field": "goalGraph.frozen",
-          "op": "eq",
-          "value": true
-        }
-      },
-      {
         "id": "e.branch.select",
         "from": "node.IM-05",
-        "to": "node.IM-06",
-        "condition": {
-          "field": "branch.activated",
-          "op": "eq",
-          "value": true
-        }
-      },
-      {
-        "id": "e.select.calibrate",
-        "from": "node.IM-06",
-        "to": "node.IM-07",
-        "condition": {
-          "field": "selection.goalRungReady",
-          "op": "eq",
-          "value": true
-        }
-      },
-      {
-        "id": "e.select.whole",
-        "from": "node.IM-06",
-        "to": "node.IM-17",
-        "condition": {
-          "field": "selection.allGoalsCommitted",
-          "op": "eq",
-          "value": true
-        }
-      },
-      {
-        "id": "e.calibrate.evolve",
-        "from": "node.IM-07",
-        "to": "node.IM-08",
-        "condition": {
-          "field": "ladder.calibrated",
-          "op": "eq",
-          "value": true
-        }
-      },
-      {
-        "id": "e.calibrate.grilling",
-        "from": "node.IM-07",
-        "to": "node.IM-03",
-        "condition": {
-          "field": "ladder.ambiguity",
-          "op": "eq",
-          "value": true
-        }
-      },
-      {
-        "id": "e.evolve.self",
-        "from": "node.IM-08",
-        "to": "node.IM-08",
-        "condition": {
-          "field": "ladder.expectedRedProgress",
-          "op": "eq",
-          "value": true
-        }
-      },
-      {
-        "id": "e.evolve.close",
-        "from": "node.IM-08",
-        "to": "node.IM-09",
-        "condition": {
-          "field": "ladder.green",
-          "op": "eq",
-          "value": true
-        }
-      },
-      {
-        "id": "e.close.evolve",
-        "from": "node.IM-09",
-        "to": "node.IM-08",
-        "condition": {
-          "field": "ladder.branchRedIntroduced",
-          "op": "eq",
-          "value": true
-        }
-      },
-      {
-        "id": "e.close.refactor",
-        "from": "node.IM-09",
-        "to": "node.IM-10",
-        "condition": {
-          "field": "ladder.branchesClosed",
-          "op": "eq",
-          "value": true
-        }
-      },
-      {
-        "id": "e.refactor.evolve",
-        "from": "node.IM-10",
-        "to": "node.IM-08",
-        "condition": {
-          "field": "ladder.regression",
-          "op": "eq",
-          "value": true
-        }
-      },
-      {
-        "id": "e.refactor.verify",
-        "from": "node.IM-10",
-        "to": "node.IM-11",
-        "condition": {
-          "field": "ladder.noRefactorOrGreen",
-          "op": "eq",
-          "value": true
-        }
-      },
-      {
-        "id": "e.verify.calibrate",
-        "from": "node.IM-11",
-        "to": "node.IM-07",
-        "condition": {
-          "field": "ladder.anotherRung",
-          "op": "eq",
-          "value": true
-        }
-      },
-      {
-        "id": "e.verify.review",
-        "from": "node.IM-11",
-        "to": "node.IM-12",
-        "condition": {
-          "field": "ladder.verified",
-          "op": "eq",
-          "value": true
-        }
-      },
-      {
-        "id": "e.verify.return07",
-        "from": "node.IM-11",
-        "to": "node.IM-07",
-        "condition": {
-          "field": "returnAction",
-          "op": "eq",
-          "value": "IM-07"
-        }
-      },
-      {
-        "id": "e.verify.return08",
-        "from": "node.IM-11",
-        "to": "node.IM-08",
-        "condition": {
-          "field": "returnAction",
-          "op": "eq",
-          "value": "IM-08"
-        }
-      },
-      {
-        "id": "e.verify.return09",
-        "from": "node.IM-11",
-        "to": "node.IM-09",
-        "condition": {
-          "field": "returnAction",
-          "op": "eq",
-          "value": "IM-09"
-        }
-      },
-      {
-        "id": "e.verify.return10",
-        "from": "node.IM-11",
-        "to": "node.IM-10",
-        "condition": {
-          "field": "returnAction",
-          "op": "eq",
-          "value": "IM-10"
-        }
-      },
-      {
-        "id": "e.review.aggregate",
-        "from": "node.IM-12",
-        "to": "node.IM-13",
-        "condition": {
-          "field": "review.barrierReached",
-          "op": "eq",
-          "value": true
-        }
-      },
-      {
-        "id": "e.aggregate.commit",
-        "from": "node.IM-13",
-        "to": "node.IM-16",
-        "condition": {
-          "field": "review.finding",
-          "op": "eq",
-          "value": "none"
-        }
-      },
-      {
-        "id": "e.aggregate.resolveTest",
-        "from": "node.IM-13",
-        "to": "node.IM-14T",
-        "condition": {
-          "field": "review.finding",
-          "op": "eq",
-          "value": "test"
-        }
-      },
-      {
-        "id": "e.aggregate.resolveImpl",
-        "from": "node.IM-13",
-        "to": "node.IM-14I",
-        "condition": {
-          "field": "review.finding",
-          "op": "eq",
-          "value": "implementation"
-        }
+        "to": "node.IM-06"
       },
       {
         "id": "e.resolveTest.recheck",
         "from": "node.IM-14T",
-        "to": "node.IM-15"
+        "to": "node.IM-15.blackbox"
       },
       {
         "id": "e.resolveImpl.recheck",
         "from": "node.IM-14I",
-        "to": "node.IM-15"
-      },
-      {
-        "id": "e.recheck.aggregate",
-        "from": "node.IM-15",
-        "to": "node.IM-13",
-        "condition": {
-          "field": "review.findingOpen",
-          "op": "eq",
-          "value": true
-        }
-      },
-      {
-        "id": "e.recheck.commit",
-        "from": "node.IM-15",
-        "to": "node.IM-16",
-        "condition": {
-          "field": "review.goalScopeFindingClosed",
-          "op": "eq",
-          "value": true
-        }
-      },
-      {
-        "id": "e.recheck.whole",
-        "from": "node.IM-15",
-        "to": "node.IM-17",
-        "condition": {
-          "field": "review.wholeScopeFindingClosed",
-          "op": "eq",
-          "value": true
-        }
+        "to": "node.IM-15.whitebox"
       },
       {
         "id": "e.commit.select",
         "from": "node.IM-16",
-        "to": "node.IM-06",
-        "condition": {
-          "field": "commit.verifiedGoalCommitted",
-          "op": "eq",
-          "value": true
-        }
-      },
-      {
-        "id": "e.whole.aggregate",
-        "from": "node.IM-17",
-        "to": "node.IM-13",
-        "condition": {
-          "field": "regressionWhole.wholeScopeFindingAdmitted",
-          "op": "eq",
-          "value": true
-        }
-      },
-      {
-        "id": "e.whole.final",
-        "from": "node.IM-17",
-        "to": "node.IM-18",
-        "condition": {
-          "field": "regressionWhole.passed",
-          "op": "eq",
-          "value": true
-        }
+        "to": "node.IM-06"
       },
       {
         "id": "e.final.success",
         "from": "node.IM-18",
-        "to": "terminal:VERIFIED_IMPLEMENTATION_READY",
-        "condition": {
-          "field": "terminalGate.passed",
-          "op": "eq",
-          "value": true
-        }
+        "to": "terminal:VERIFIED_IMPLEMENTATION_READY"
+      }
+    ],
+    "eventEdges": [
+      {
+        "id": "event.node.IM-01.cancelled",
+        "from": "node.IM-01",
+        "event": "cancelled",
+        "to": "terminal:CANCELLED"
+      },
+      {
+        "id": "event.node.IM-01.nonretryable-failure",
+        "from": "node.IM-01",
+        "event": "nonretryable-failure",
+        "to": "terminal:FAILED"
+      },
+      {
+        "id": "event.node.IM-01.budget-exhausted",
+        "from": "node.IM-01",
+        "event": "budget-exhausted",
+        "to": "terminal:INCOMPLETE"
+      },
+      {
+        "id": "event.node.IM-01R.cancelled",
+        "from": "node.IM-01R",
+        "event": "cancelled",
+        "to": "terminal:CANCELLED"
+      },
+      {
+        "id": "event.node.IM-01R.nonretryable-failure",
+        "from": "node.IM-01R",
+        "event": "nonretryable-failure",
+        "to": "terminal:FAILED"
+      },
+      {
+        "id": "event.node.IM-01R.budget-exhausted",
+        "from": "node.IM-01R",
+        "event": "budget-exhausted",
+        "to": "terminal:INCOMPLETE"
+      },
+      {
+        "id": "event.node.IM-02.cancelled",
+        "from": "node.IM-02",
+        "event": "cancelled",
+        "to": "terminal:CANCELLED"
+      },
+      {
+        "id": "event.node.IM-02.nonretryable-failure",
+        "from": "node.IM-02",
+        "event": "nonretryable-failure",
+        "to": "terminal:FAILED"
+      },
+      {
+        "id": "event.node.IM-02.budget-exhausted",
+        "from": "node.IM-02",
+        "event": "budget-exhausted",
+        "to": "terminal:INCOMPLETE"
+      },
+      {
+        "id": "event.node.IM-02V.cancelled",
+        "from": "node.IM-02V",
+        "event": "cancelled",
+        "to": "terminal:CANCELLED"
+      },
+      {
+        "id": "event.node.IM-02V.nonretryable-failure",
+        "from": "node.IM-02V",
+        "event": "nonretryable-failure",
+        "to": "terminal:FAILED"
+      },
+      {
+        "id": "event.node.IM-02V.budget-exhausted",
+        "from": "node.IM-02V",
+        "event": "budget-exhausted",
+        "to": "terminal:INCOMPLETE"
+      },
+      {
+        "id": "event.node.IM-03.cancelled",
+        "from": "node.IM-03",
+        "event": "cancelled",
+        "to": "terminal:CANCELLED"
+      },
+      {
+        "id": "event.node.IM-03.nonretryable-failure",
+        "from": "node.IM-03",
+        "event": "nonretryable-failure",
+        "to": "terminal:FAILED"
+      },
+      {
+        "id": "event.node.IM-03.budget-exhausted",
+        "from": "node.IM-03",
+        "event": "budget-exhausted",
+        "to": "terminal:INCOMPLETE"
+      },
+      {
+        "id": "event.node.IM-04.cancelled",
+        "from": "node.IM-04",
+        "event": "cancelled",
+        "to": "terminal:CANCELLED"
+      },
+      {
+        "id": "event.node.IM-04.nonretryable-failure",
+        "from": "node.IM-04",
+        "event": "nonretryable-failure",
+        "to": "terminal:FAILED"
+      },
+      {
+        "id": "event.node.IM-04.budget-exhausted",
+        "from": "node.IM-04",
+        "event": "budget-exhausted",
+        "to": "terminal:INCOMPLETE"
+      },
+      {
+        "id": "event.node.IM-05.cancelled",
+        "from": "node.IM-05",
+        "event": "cancelled",
+        "to": "terminal:CANCELLED"
+      },
+      {
+        "id": "event.node.IM-05.nonretryable-failure",
+        "from": "node.IM-05",
+        "event": "nonretryable-failure",
+        "to": "terminal:FAILED"
+      },
+      {
+        "id": "event.node.IM-05.budget-exhausted",
+        "from": "node.IM-05",
+        "event": "budget-exhausted",
+        "to": "terminal:INCOMPLETE"
+      },
+      {
+        "id": "event.node.IM-06.cancelled",
+        "from": "node.IM-06",
+        "event": "cancelled",
+        "to": "terminal:CANCELLED"
+      },
+      {
+        "id": "event.node.IM-06.nonretryable-failure",
+        "from": "node.IM-06",
+        "event": "nonretryable-failure",
+        "to": "terminal:FAILED"
+      },
+      {
+        "id": "event.node.IM-06.budget-exhausted",
+        "from": "node.IM-06",
+        "event": "budget-exhausted",
+        "to": "terminal:INCOMPLETE"
+      },
+      {
+        "id": "event.node.IM-07.cancelled",
+        "from": "node.IM-07",
+        "event": "cancelled",
+        "to": "terminal:CANCELLED"
+      },
+      {
+        "id": "event.node.IM-07.nonretryable-failure",
+        "from": "node.IM-07",
+        "event": "nonretryable-failure",
+        "to": "terminal:FAILED"
+      },
+      {
+        "id": "event.node.IM-07.budget-exhausted",
+        "from": "node.IM-07",
+        "event": "budget-exhausted",
+        "to": "terminal:INCOMPLETE"
+      },
+      {
+        "id": "event.node.IM-08.cancelled",
+        "from": "node.IM-08",
+        "event": "cancelled",
+        "to": "terminal:CANCELLED"
+      },
+      {
+        "id": "event.node.IM-08.nonretryable-failure",
+        "from": "node.IM-08",
+        "event": "nonretryable-failure",
+        "to": "terminal:FAILED"
+      },
+      {
+        "id": "event.node.IM-08.budget-exhausted",
+        "from": "node.IM-08",
+        "event": "budget-exhausted",
+        "to": "terminal:INCOMPLETE"
+      },
+      {
+        "id": "event.node.IM-09.cancelled",
+        "from": "node.IM-09",
+        "event": "cancelled",
+        "to": "terminal:CANCELLED"
+      },
+      {
+        "id": "event.node.IM-09.nonretryable-failure",
+        "from": "node.IM-09",
+        "event": "nonretryable-failure",
+        "to": "terminal:FAILED"
+      },
+      {
+        "id": "event.node.IM-09.budget-exhausted",
+        "from": "node.IM-09",
+        "event": "budget-exhausted",
+        "to": "terminal:INCOMPLETE"
+      },
+      {
+        "id": "event.node.IM-10.cancelled",
+        "from": "node.IM-10",
+        "event": "cancelled",
+        "to": "terminal:CANCELLED"
+      },
+      {
+        "id": "event.node.IM-10.nonretryable-failure",
+        "from": "node.IM-10",
+        "event": "nonretryable-failure",
+        "to": "terminal:FAILED"
+      },
+      {
+        "id": "event.node.IM-10.budget-exhausted",
+        "from": "node.IM-10",
+        "event": "budget-exhausted",
+        "to": "terminal:INCOMPLETE"
+      },
+      {
+        "id": "event.node.IM-11.cancelled",
+        "from": "node.IM-11",
+        "event": "cancelled",
+        "to": "terminal:CANCELLED"
+      },
+      {
+        "id": "event.node.IM-11.nonretryable-failure",
+        "from": "node.IM-11",
+        "event": "nonretryable-failure",
+        "to": "terminal:FAILED"
+      },
+      {
+        "id": "event.node.IM-11.budget-exhausted",
+        "from": "node.IM-11",
+        "event": "budget-exhausted",
+        "to": "terminal:INCOMPLETE"
+      },
+      {
+        "id": "event.node.IM-12.cancelled",
+        "from": "node.IM-12",
+        "event": "cancelled",
+        "to": "terminal:CANCELLED"
+      },
+      {
+        "id": "event.node.IM-12.nonretryable-failure",
+        "from": "node.IM-12",
+        "event": "nonretryable-failure",
+        "to": "terminal:FAILED"
+      },
+      {
+        "id": "event.node.IM-12.budget-exhausted",
+        "from": "node.IM-12",
+        "event": "budget-exhausted",
+        "to": "terminal:INCOMPLETE"
+      },
+      {
+        "id": "event.node.IM-13.cancelled",
+        "from": "node.IM-13",
+        "event": "cancelled",
+        "to": "terminal:CANCELLED"
+      },
+      {
+        "id": "event.node.IM-13.nonretryable-failure",
+        "from": "node.IM-13",
+        "event": "nonretryable-failure",
+        "to": "terminal:FAILED"
+      },
+      {
+        "id": "event.node.IM-13.budget-exhausted",
+        "from": "node.IM-13",
+        "event": "budget-exhausted",
+        "to": "terminal:INCOMPLETE"
+      },
+      {
+        "id": "event.node.IM-14T.cancelled",
+        "from": "node.IM-14T",
+        "event": "cancelled",
+        "to": "terminal:CANCELLED"
+      },
+      {
+        "id": "event.node.IM-14T.nonretryable-failure",
+        "from": "node.IM-14T",
+        "event": "nonretryable-failure",
+        "to": "terminal:FAILED"
+      },
+      {
+        "id": "event.node.IM-14T.budget-exhausted",
+        "from": "node.IM-14T",
+        "event": "budget-exhausted",
+        "to": "terminal:INCOMPLETE"
+      },
+      {
+        "id": "event.node.IM-14I.cancelled",
+        "from": "node.IM-14I",
+        "event": "cancelled",
+        "to": "terminal:CANCELLED"
+      },
+      {
+        "id": "event.node.IM-14I.nonretryable-failure",
+        "from": "node.IM-14I",
+        "event": "nonretryable-failure",
+        "to": "terminal:FAILED"
+      },
+      {
+        "id": "event.node.IM-14I.budget-exhausted",
+        "from": "node.IM-14I",
+        "event": "budget-exhausted",
+        "to": "terminal:INCOMPLETE"
+      },
+      {
+        "id": "event.node.IM-15.blackbox.cancelled",
+        "from": "node.IM-15.blackbox",
+        "event": "cancelled",
+        "to": "terminal:CANCELLED"
+      },
+      {
+        "id": "event.node.IM-15.blackbox.nonretryable-failure",
+        "from": "node.IM-15.blackbox",
+        "event": "nonretryable-failure",
+        "to": "terminal:FAILED"
+      },
+      {
+        "id": "event.node.IM-15.blackbox.budget-exhausted",
+        "from": "node.IM-15.blackbox",
+        "event": "budget-exhausted",
+        "to": "terminal:INCOMPLETE"
+      },
+      {
+        "id": "event.node.IM-15.whitebox.cancelled",
+        "from": "node.IM-15.whitebox",
+        "event": "cancelled",
+        "to": "terminal:CANCELLED"
+      },
+      {
+        "id": "event.node.IM-15.whitebox.nonretryable-failure",
+        "from": "node.IM-15.whitebox",
+        "event": "nonretryable-failure",
+        "to": "terminal:FAILED"
+      },
+      {
+        "id": "event.node.IM-15.whitebox.budget-exhausted",
+        "from": "node.IM-15.whitebox",
+        "event": "budget-exhausted",
+        "to": "terminal:INCOMPLETE"
+      },
+      {
+        "id": "event.node.IM-16.cancelled",
+        "from": "node.IM-16",
+        "event": "cancelled",
+        "to": "terminal:CANCELLED"
+      },
+      {
+        "id": "event.node.IM-16.nonretryable-failure",
+        "from": "node.IM-16",
+        "event": "nonretryable-failure",
+        "to": "terminal:FAILED"
+      },
+      {
+        "id": "event.node.IM-16.budget-exhausted",
+        "from": "node.IM-16",
+        "event": "budget-exhausted",
+        "to": "terminal:INCOMPLETE"
+      },
+      {
+        "id": "event.node.IM-17.cancelled",
+        "from": "node.IM-17",
+        "event": "cancelled",
+        "to": "terminal:CANCELLED"
+      },
+      {
+        "id": "event.node.IM-17.nonretryable-failure",
+        "from": "node.IM-17",
+        "event": "nonretryable-failure",
+        "to": "terminal:FAILED"
+      },
+      {
+        "id": "event.node.IM-17.budget-exhausted",
+        "from": "node.IM-17",
+        "event": "budget-exhausted",
+        "to": "terminal:INCOMPLETE"
+      },
+      {
+        "id": "event.node.IM-18.cancelled",
+        "from": "node.IM-18",
+        "event": "cancelled",
+        "to": "terminal:CANCELLED"
+      },
+      {
+        "id": "event.node.IM-18.nonretryable-failure",
+        "from": "node.IM-18",
+        "event": "nonretryable-failure",
+        "to": "terminal:FAILED"
+      },
+      {
+        "id": "event.node.IM-18.budget-exhausted",
+        "from": "node.IM-18",
+        "event": "budget-exhausted",
+        "to": "terminal:INCOMPLETE"
+      },
+      {
+        "id": "event.node.wait.user-measurement.cancelled",
+        "from": "node.wait.user-measurement",
+        "event": "cancelled",
+        "to": "terminal:CANCELLED"
+      },
+      {
+        "id": "event.node.wait.user-measurement.wait-expired",
+        "from": "node.wait.user-measurement",
+        "event": "wait-expired",
+        "to": "node.wait-renewal.user-measurement"
+      },
+      {
+        "id": "event.node.wait.user-measurement.continuation-invalid",
+        "from": "node.wait.user-measurement",
+        "event": "continuation-invalid",
+        "to": "terminal:FAILED"
+      },
+      {
+        "id": "event.node.wait-renewal.user-measurement.cancelled",
+        "from": "node.wait-renewal.user-measurement",
+        "event": "cancelled",
+        "to": "terminal:CANCELLED"
+      },
+      {
+        "id": "event.node.wait-renewal.user-measurement.nonretryable-failure",
+        "from": "node.wait-renewal.user-measurement",
+        "event": "nonretryable-failure",
+        "to": "terminal:FAILED"
+      },
+      {
+        "id": "event.node.wait-renewal.user-measurement.budget-exhausted",
+        "from": "node.wait-renewal.user-measurement",
+        "event": "budget-exhausted",
+        "to": "terminal:INCOMPLETE"
+      },
+      {
+        "id": "event.node.wait.user-confirm.cancelled",
+        "from": "node.wait.user-confirm",
+        "event": "cancelled",
+        "to": "terminal:CANCELLED"
+      },
+      {
+        "id": "event.node.wait.user-confirm.wait-expired",
+        "from": "node.wait.user-confirm",
+        "event": "wait-expired",
+        "to": "node.wait-renewal.user-confirm"
+      },
+      {
+        "id": "event.node.wait.user-confirm.continuation-invalid",
+        "from": "node.wait.user-confirm",
+        "event": "continuation-invalid",
+        "to": "terminal:FAILED"
+      },
+      {
+        "id": "event.node.wait-renewal.user-confirm.cancelled",
+        "from": "node.wait-renewal.user-confirm",
+        "event": "cancelled",
+        "to": "terminal:CANCELLED"
+      },
+      {
+        "id": "event.node.wait-renewal.user-confirm.nonretryable-failure",
+        "from": "node.wait-renewal.user-confirm",
+        "event": "nonretryable-failure",
+        "to": "terminal:FAILED"
+      },
+      {
+        "id": "event.node.wait-renewal.user-confirm.budget-exhausted",
+        "from": "node.wait-renewal.user-confirm",
+        "event": "budget-exhausted",
+        "to": "terminal:INCOMPLETE"
+      },
+      {
+        "id": "event.node.wait.external-coordination.cancelled",
+        "from": "node.wait.external-coordination",
+        "event": "cancelled",
+        "to": "terminal:CANCELLED"
+      },
+      {
+        "id": "event.node.wait.external-coordination.wait-expired",
+        "from": "node.wait.external-coordination",
+        "event": "wait-expired",
+        "to": "node.wait-renewal.external-coordination"
+      },
+      {
+        "id": "event.node.wait.external-coordination.continuation-invalid",
+        "from": "node.wait.external-coordination",
+        "event": "continuation-invalid",
+        "to": "terminal:FAILED"
+      },
+      {
+        "id": "event.node.wait-renewal.external-coordination.cancelled",
+        "from": "node.wait-renewal.external-coordination",
+        "event": "cancelled",
+        "to": "terminal:CANCELLED"
+      },
+      {
+        "id": "event.node.wait-renewal.external-coordination.nonretryable-failure",
+        "from": "node.wait-renewal.external-coordination",
+        "event": "nonretryable-failure",
+        "to": "terminal:FAILED"
+      },
+      {
+        "id": "event.node.wait-renewal.external-coordination.budget-exhausted",
+        "from": "node.wait-renewal.external-coordination",
+        "event": "budget-exhausted",
+        "to": "terminal:INCOMPLETE"
+      },
+      {
+        "id": "event.node.wait.external-authority.cancelled",
+        "from": "node.wait.external-authority",
+        "event": "cancelled",
+        "to": "terminal:CANCELLED"
+      },
+      {
+        "id": "event.node.wait.external-authority.wait-expired",
+        "from": "node.wait.external-authority",
+        "event": "wait-expired",
+        "to": "node.wait-renewal.external-authority"
+      },
+      {
+        "id": "event.node.wait.external-authority.continuation-invalid",
+        "from": "node.wait.external-authority",
+        "event": "continuation-invalid",
+        "to": "terminal:FAILED"
+      },
+      {
+        "id": "event.node.wait-renewal.external-authority.cancelled",
+        "from": "node.wait-renewal.external-authority",
+        "event": "cancelled",
+        "to": "terminal:CANCELLED"
+      },
+      {
+        "id": "event.node.wait-renewal.external-authority.nonretryable-failure",
+        "from": "node.wait-renewal.external-authority",
+        "event": "nonretryable-failure",
+        "to": "terminal:FAILED"
+      },
+      {
+        "id": "event.node.wait-renewal.external-authority.budget-exhausted",
+        "from": "node.wait-renewal.external-authority",
+        "event": "budget-exhausted",
+        "to": "terminal:INCOMPLETE"
       }
     ],
     "terminals": [
@@ -755,8 +1496,6 @@
       "id": "wait.user-measurement",
       "kind": "user",
       "purpose": "One measurement/intent decision required by adaptive grilling (IM-03); exactly one decision per wait.",
-      "triggerAction": "action.IM-03",
-      "resumeAction": "action.IM-03",
       "resumeSchema": {
         "type": "object",
         "properties": {
@@ -775,18 +1514,12 @@
         "identitySource": "wait-request-id",
         "staleRejected": true,
         "duplicateRejected": true
-      },
-      "expiry": {
-        "policy": "renewable-once-then-incomplete",
-        "renewalAllowed": true
       }
     },
     {
       "id": "wait.user-confirm",
       "kind": "user",
       "purpose": "Explicit whole-Brief/goal-graph confirmation (IM-04); human confirms, executor persists the exact frozen artifacts.",
-      "triggerAction": "action.IM-04",
-      "resumeAction": "action.IM-04",
       "resumeSchema": {
         "type": "object",
         "properties": {
@@ -805,18 +1538,12 @@
         "identitySource": "wait-request-id",
         "staleRejected": true,
         "duplicateRejected": true
-      },
-      "expiry": {
-        "policy": "renewable-while-open",
-        "renewalAllowed": true
       }
     },
     {
       "id": "wait.external-coordination",
       "kind": "external",
       "purpose": "A selected Goal requires a missing cross-owner Contract/design artifact (IM-06); a compatible result resumes IM-03 classification; a result that changes design semantics stops the Delivery.",
-      "triggerAction": "action.IM-06",
-      "resumeAction": "action.IM-03",
       "resumeSchema": {
         "type": "object",
         "properties": {
@@ -839,18 +1566,12 @@
         "identitySource": "coordination-request-id",
         "staleRejected": true,
         "duplicateRejected": true
-      },
-      "expiry": {
-        "policy": "renewable-while-compatible",
-        "renewalAllowed": true
       }
     },
     {
       "id": "wait.external-authority",
       "kind": "external",
       "purpose": "IM-02V requires an external authority/environment fact the current Delivery cannot produce; resumes IM-02V when available.",
-      "triggerAction": "action.IM-02V",
-      "resumeAction": "action.IM-02V",
       "resumeSchema": {
         "type": "object",
         "properties": {
@@ -869,46 +1590,24 @@
         "identitySource": "authority-request-id",
         "staleRejected": true,
         "duplicateRejected": true
-      },
-      "expiry": {
-        "policy": "renewable-while-compatible",
-        "renewalAllowed": true
       }
     }
   ],
   "recovery": [
     {
       "id": "recovery.default",
-      "scope": "workflow",
       "mode": "continue",
-      "noBlindReplay": true,
-      "condition": {
-        "field": "status",
-        "op": "ne",
-        "value": "unknown"
-      }
+      "noBlindReplay": true
     },
     {
       "id": "recovery.intervene",
-      "scope": "workflow",
       "mode": "intervene",
-      "noBlindReplay": true,
-      "condition": {
-        "field": "status",
-        "op": "eq",
-        "value": "unknown"
-      }
+      "noBlindReplay": true
     },
     {
       "id": "recovery.incomplete-resume",
-      "scope": "workflow",
-      "mode": "restartFromSavepoint",
-      "noBlindReplay": true,
-      "condition": {
-        "field": "status",
-        "op": "eq",
-        "value": "INCOMPLETE"
-      }
+      "mode": "checkpoint-recovery",
+      "noBlindReplay": true
     }
   ],
   "handoffs": [
@@ -978,7 +1677,9 @@
         "action.IM-09",
         "action.IM-10",
         "action.IM-11",
-        "action.IM-17"
+        "action.IM-17.blackbox",
+        "action.IM-17.whitebox",
+        "action.IM-17.custodian"
       ],
       "preservesSemantics": {
         "semanticDependency": "Verification evidence must be produced by the current implementation and its conformance/fault tests; unexecuted evidence is never reported as passed.",
@@ -1008,14 +1709,12 @@
   "budgets": [
     {
       "id": "budget.attempts",
-      "scope": "workflow",
       "resource": "custom",
-      "resourceName": "attempts",
       "evaluator": {
         "path": "../scripts/budget/attempts.mjs",
         "contentIdentity": "sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
       },
-      "onExhaustion": "incomplete",
+      "resourceName": "attempts",
       "accounting": "each retry gains a new attempt identity; repeating the same failure without new diagnosis consumes budget; runtime invokes the evaluator registration point to obtain the budget conclusion; numeric limits are never configured; exhaustion never relaxes a Gate"
     }
   ]

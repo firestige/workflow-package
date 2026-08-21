@@ -14,8 +14,9 @@
     "definition": {
       "name": "implementation-workflow",
       "version": "0.3.0",
-      "contentIdentity": "sha256:09915947a345678e7a22e89cef91fcb0340bf872799ed6a2d9bdeb923b83f4c8"
-    }
+      "contentIdentity": "sha256:c5b451489f772069335e077c814d3a400b1f5dde4b88d038138e70248f8038e6"
+    },
+    "digest": "sha256:36ce11da766d28a3a52aa065b28d9cc3eab12e33c70d64ca90dc60da0fa2b656"
   },
   "documents": {
     "workflow": "workflow.json",

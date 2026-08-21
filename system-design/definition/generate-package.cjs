@@ -7,6 +7,33 @@ const crypto = require('crypto');
 
 const ROOT = __dirname;
 const sha256 = (p) => 'sha256:' + crypto.createHash('sha256').update(fs.readFileSync(path.join(ROOT, p))).digest('hex');
+const PORTABLE_BINDINGS = ['delivery', 'snapshot', 'graphNode', 'action', 'attempt', 'inputBindings', 'artifactBindings', 'branchResults', 'budgets', 'pendingWait'];
+const assertUnicodeScalars = (value) => {
+  for (let index = 0; index < value.length; index += 1) {
+    const unit = value.charCodeAt(index);
+    if (unit >= 0xd800 && unit <= 0xdbff) {
+      const next = value.charCodeAt(index + 1);
+      if (!(next >= 0xdc00 && next <= 0xdfff)) throw new TypeError('canonical JSON strings must contain Unicode scalar values');
+      index += 1;
+    } else if (unit >= 0xdc00 && unit <= 0xdfff) throw new TypeError('canonical JSON strings must contain Unicode scalar values');
+  }
+};
+const canonicalize = (value) => {
+  if (value === null || typeof value === 'boolean') return JSON.stringify(value);
+  if (typeof value === 'string') {
+    assertUnicodeScalars(value);
+    return JSON.stringify(value);
+  }
+  if (typeof value === 'number') {
+    if (!Number.isFinite(value)) throw new TypeError('canonical JSON rejects non-finite numbers');
+    return Object.is(value, -0) ? '0' : JSON.stringify(value);
+  }
+  if (Array.isArray(value)) return `[${value.map(canonicalize).join(',')}]`;
+  const keys = Object.keys(value);
+  for (const key of keys) assertUnicodeScalars(key);
+  return `{${keys.sort().map(key => `${JSON.stringify(key)}:${canonicalize(value[key])}`).join(',')}}`;
+};
+const canonicalDigest = (value) => 'sha256:' + crypto.createHash('sha256').update(canonicalize(value)).digest('hex');
 
 // ---- owned resources: [id, kind, relpath, use] ----
 const owned = [
@@ -19,7 +46,7 @@ const owned = [
   ['resource.role-prompt.quality-reviewer', 'role-prompt', '../roles/quality-reviewer.role.md', 'Quality & Acceptance Reviewer role authority for the quality-acceptance review lens'],
   ['resource.role-prompt.finding-aggregator', 'role-prompt', '../roles/finding-aggregator.role.md', 'Finding Aggregator role authority for aggregation and triage'],
   ['resource.role-prompt.fresh-reader', 'role-prompt', '../roles/fresh-reader.role.md', 'Fresh Reader role authority for the Fresh Reader Test'],
-  ['resource.role-prompt.runtime-custodian', 'role-prompt', 'resources/runtime-custodian.role.md', 'Declarative route-closure role prompt for the Runtime deterministic lifecycle authority (SD-14/SD-15); no Agent session'],
+  ['resource.documentation.runtime-custodian', 'documentation', 'resources/runtime-custodian.role.md', 'Deterministic lifecycle boundary for SD-14/SD-15; not an Agent Role and grants no Route authority'],
   // action prompts
   ['resource.prompt.intake-and-authority', 'action-prompt', '../prompts/actions/intake-and-authority.prompt.md', 'action.sd-01 mission'],
   ['resource.prompt.adaptive-grilling', 'action-prompt', '../prompts/actions/adaptive-grilling.prompt.md', 'action.sd-02 mission'],
@@ -30,9 +57,9 @@ const owned = [
   ['resource.prompt.expand-system-design', 'action-prompt', '../prompts/actions/expand-system-design.prompt.md', 'action.sd-07 mission'],
   ['resource.prompt.integrate-draft', 'action-prompt', '../prompts/actions/integrate-draft.prompt.md', 'action.sd-08 mission'],
   ['resource.prompt.architecture-direction-review', 'action-prompt', '../prompts/actions/architecture-direction-review.prompt.md', 'action.sd-05 mission'],
-  ['resource.prompt.architecture-review', 'action-prompt', '../prompts/actions/architecture-review.prompt.md', 'action.sd-09 architecture lens mission'],
-  ['resource.prompt.problem-solution-review', 'action-prompt', '../prompts/actions/problem-solution-review.prompt.md', 'action.sd-09 problem-solution lens mission'],
-  ['resource.prompt.quality-acceptance-review', 'action-prompt', '../prompts/actions/quality-acceptance-review.prompt.md', 'action.sd-09 quality-acceptance lens mission'],
+  ['resource.prompt.architecture-review', 'action-prompt', '../prompts/actions/architecture-review.prompt.md', 'action.sd-09.architecture mission'],
+  ['resource.prompt.problem-solution-review', 'action-prompt', '../prompts/actions/problem-solution-review.prompt.md', 'action.sd-09.problem-solution mission'],
+  ['resource.prompt.quality-acceptance-review', 'action-prompt', '../prompts/actions/quality-acceptance-review.prompt.md', 'action.sd-09.quality-acceptance mission'],
   ['resource.prompt.aggregate-findings', 'action-prompt', '../prompts/actions/aggregate-findings.prompt.md', 'action.sd-10 mission'],
   ['resource.prompt.targeted-revision', 'action-prompt', '../prompts/actions/targeted-revision.prompt.md', 'action.sd-11 mission'],
   ['resource.prompt.human-decision-dialogue', 'action-prompt', '../prompts/actions/human-decision-dialogue.prompt.md', 'action.sd-11H human decision branch mission'],
@@ -88,7 +115,19 @@ const referenced = [
   ['resource.driver.managed-cli', 'driver', 'workflow-self-recursive', 'bindings/managed-cli-driver.yaml', 'e',
     'Managed CLI Driver projecting the frozen route, never ambient defaults; exact identity resolved by the future Package Snapshot (placeholder, do not fabricate)'],
   ['resource.tool.repo-read', 'tool', 'workflow-self-recursive', 'tools/repo-read.yaml', 'f',
-    'Repository/authorized-source read tool for routes that read repository evidence; exact identity resolved by the future Package Snapshot (placeholder, do not fabricate)']
+    'Repository/authorized-source read tool for routes that read repository evidence; exact identity resolved by the future Package Snapshot (placeholder, do not fabricate)'],
+  ['budget.evaluator.questions', 'cli', 'system-design-workflow', 'scripts/budget/questions.mjs', 'a',
+    'Declared evaluator registration point for budget.questions; implementation is outside this Definition'],
+  ['budget.evaluator.research', 'cli', 'system-design-workflow', 'scripts/budget/research.mjs', 'b',
+    'Declared evaluator registration point for budget.research; implementation is outside this Definition'],
+  ['budget.evaluator.feasibility', 'cli', 'system-design-workflow', 'scripts/budget/feasibility.mjs', 'c',
+    'Declared evaluator registration point for budget.feasibility; implementation is outside this Definition'],
+  ['budget.evaluator.review', 'cli', 'system-design-workflow', 'scripts/budget/review.mjs', 'd',
+    'Declared evaluator registration point for budget.review; implementation is outside this Definition'],
+  ['budget.evaluator.revision', 'cli', 'system-design-workflow', 'scripts/budget/revision.mjs', 'e',
+    'Declared evaluator registration point for budget.revision; implementation is outside this Definition'],
+  ['budget.evaluator.decision-dialogue', 'cli', 'system-design-workflow', 'scripts/budget/decision-dialogue.mjs', 'f',
+    'Declared evaluator registration point for budget.decision-dialogue; implementation is outside this Definition']
 ];
 
 const schematic = (ch) => 'sha256:' + ch.repeat(64);
@@ -153,6 +192,42 @@ const pkg = {
   }
 };
 
+pkg.package.digest = canonicalDigest(pkg);
 fs.writeFileSync(path.join(ROOT, 'package.json'), JSON.stringify(pkg, null, 2) + '\n');
+const workflow = JSON.parse(fs.readFileSync(path.join(ROOT, pkg.documents.workflow), 'utf8'));
+const actions = JSON.parse(fs.readFileSync(path.join(ROOT, pkg.documents.actions), 'utf8'));
+const documents = Object.entries(pkg.documents).map(([kind, file]) => ({ kind, contentIdentity: sha256(file) }));
+const resources = [...pkg.resources.owned, ...pkg.resources.referenced].map(({ id, owner, contentIdentity }) => ({ id, owner, contentIdentity }));
+const routeBindings = actions.actions.flatMap(action => (action.allowedRoutes || []).map(route => ({
+  action: action.id,
+  role: action.responsibleAuthority.role,
+  route
+})));
+const snapshot = {
+  kind: 'agentops.workflow-package-snapshot',
+  schemaVersion: pkg.schemaVersion,
+  snapshot: {
+    id: `snapshot.${workflow.workflow.id}`,
+    package: { name: pkg.package.name, version: pkg.package.version, digest: pkg.package.digest },
+    definition: { id: workflow.workflow.id, version: workflow.workflow.version, contentIdentity: pkg.package.definition.contentIdentity },
+    documents,
+    resources,
+    routeBindings,
+    graph: {
+      nodes: workflow.graph.nodes.map(node => node.id),
+      eventEdges: workflow.graph.eventEdges.map(edge => edge.id),
+      terminals: workflow.graph.terminals.map(terminal => terminal.id),
+      continuationBindings: PORTABLE_BINDINGS
+    },
+    authority: {
+      order: pkg.authority.order,
+      mergeProof: canonicalDigest({ authority: pkg.authority, routes: routeBindings, resources })
+    },
+    resolutionProof: { noAmbientFallback: true, allBindingsExact: true }
+  }
+};
+snapshot.snapshot.digest = canonicalDigest(snapshot);
+fs.writeFileSync(path.join(ROOT, 'snapshot.json'), JSON.stringify(snapshot, null, 2) + '\n');
 console.log('package.json written; owned resources:', ownedRes.length, 'referenced resources:', referencedRes.length);
 console.log('definition contentIdentity:', pkg.package.definition.contentIdentity);
+console.log('snapshot.json written:', snapshot.snapshot.digest);
