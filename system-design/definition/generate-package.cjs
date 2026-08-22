@@ -146,7 +146,7 @@ const referencedRes = referenced.map(([id, kind, repository, rpath, ch, use]) =>
 
 const pkg = {
   kind: 'agentops.package',
-  schemaVersion: 'agentops.workflow-dsl@1.0.0',
+  schemaVersion: 'agentops.workflow-dsl@1.1.0',
   package: {
     name: 'system-design-workflow',
     version: '0.3.0',
@@ -187,8 +187,8 @@ const pkg = {
     'deterministic validator CLI for SD-14/SD-15 (checks defined under validators/README.md)'
   ],
   compatibility: {
-    minContractVersion: '1.0.0',
-    maxContractVersion: '1.0.0'
+    minContractVersion: '1.1.0',
+    maxContractVersion: '1.1.0'
   }
 };
 
@@ -216,6 +216,8 @@ const snapshot = {
     graph: {
       nodes: workflow.graph.nodes.map(node => node.id),
       eventEdges: workflow.graph.eventEdges.map(edge => edge.id),
+      dataEdges: workflow.dataflow.edges.map(edge => edge.id),
+      hostOperations: (workflow.hostOperations || []).map(operation => operation.id),
       terminals: workflow.graph.terminals.map(terminal => terminal.id),
       continuationBindings: PORTABLE_BINDINGS
     },

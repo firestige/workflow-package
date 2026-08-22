@@ -1,6 +1,6 @@
 {
   "kind": "agentops.package",
-  "schemaVersion": "agentops.workflow-dsl@1.0.0",
+  "schemaVersion": "agentops.workflow-dsl@1.1.0",
   "package": {
     "name": "system-design-workflow",
     "version": "0.3.0",
@@ -14,9 +14,9 @@
     "definition": {
       "name": "system-design-workflow",
       "version": "0.3.0",
-      "contentIdentity": "sha256:ce0c6e79cba68d1fa1a1eab25aaebb183fa64a5d6b4fe8d3e9012afb61a5bcc8"
+      "contentIdentity": "sha256:9f3d2a0c7ab5ed08e976c1240cae29231801e0b9fa9a52afc7f672e07caf2316"
     },
-    "digest": "sha256:d76683b4a7454781ded91f056d585248eeb5116ccfd7c47cade6a6da5e5e2222"
+    "digest": "sha256:5611855dc6908d6d128f00cc6ca4cc11117ee0122e2d71256d749cf322266f34"
   },
   "documents": {
     "workflow": "workflow.json",
@@ -465,7 +465,7 @@
         "kind": "documentation",
         "owner": "owned",
         "path": "../workflow.md",
-        "contentIdentity": "sha256:6317aacf628c5ac67ddf1f2488bf727c6b1ccc1d39652f615f970fca1ad13786",
+        "contentIdentity": "sha256:b830eca1b7a8fd606e3486a9843b8059193a3c859b26fe4ccdc5f9d330c9113c",
         "use": "Semantic source of this Definition (workflow.md); every Action/transition/Gate/Wait/terminal translates from it"
       },
       {
@@ -638,7 +638,7 @@
     "deterministic validator CLI for SD-14/SD-15 (checks defined under validators/README.md)"
   ],
   "compatibility": {
-    "minContractVersion": "1.0.0",
-    "maxContractVersion": "1.0.0"
+    "minContractVersion": "1.1.0",
+    "maxContractVersion": "1.1.0"
   }
 }

@@ -1,6 +1,6 @@
 {
   "kind": "agentops.actions",
-  "schemaVersion": "agentops.workflow-dsl@1.0.0",
+  "schemaVersion": "agentops.workflow-dsl@1.1.0",
   "actions": [
     {
       "id": "action.sd-01",
@@ -158,6 +158,10 @@
       "id": "action.sd-02",
       "name": "SD-02 Adaptive Grilling",
       "purpose": "Pressure-test requirements and guide the user until both sides clearly understand what is being built: one question at a time, follow the user's answer, use solution hypotheses as probes without making architecture decisions; classify every remaining unknown with owner, impact, required evidence and return location.",
+      "interaction": {
+        "mode": "action-scoped",
+        "completion": "structured-only"
+      },
       "inputSchema": {
         "type": "object",
         "properties": {
@@ -184,7 +188,6 @@
             "type": "string",
             "enum": [
               "continue",
-              "wait-user",
               "unmatched"
             ]
           },

@@ -1,12 +1,12 @@
 {
   "kind": "agentops.workflow-definition",
-  "schemaVersion": "agentops.workflow-dsl@1.0.0",
+  "schemaVersion": "agentops.workflow-dsl@1.1.0",
   "workflow": {
     "id": "system-design-workflow",
     "name": "System Design Workflow",
     "version": "0.3.0",
     "purpose": "Turn a short Intake, project authority material and user opinions into a System Design that explains what problem is solved, why the design is shaped this way, and how fitness for the current project is proven. The only success terminal is IMPLEMENTATION_READY; budget exhaustion or missing external authority enters recoverable INCOMPLETE, explicit cancellation enters CANCELLED, and non-retryable execution/configuration failure enters FAILED; none of the three equals success.",
-    "contractVersion": "agentops.workflow-dsl@1.0.0"
+    "contractVersion": "agentops.workflow-dsl@1.1.0"
   },
   "state": {
     "fields": [
@@ -35,6 +35,20 @@
         "name": "resume_lens",
         "type": "string",
         "description": "Affected SD-09 lens (PROBLEM_SOLUTION | ARCHITECTURE | QUALITY_ACCEPTANCE) recorded when evidence research returns to SD-09; research resumes only that fresh recheck before aggregation resumes."
+      },
+      {
+        "name": "selected_review_lenses",
+        "type": "array",
+        "items": {
+          "type": "string",
+          "enum": [
+            "branch.sd-09.problem-solution",
+            "branch.sd-09.architecture",
+            "branch.sd-09.quality-acceptance"
+          ]
+        },
+        "required": true,
+        "description": "Admitted non-empty branch subset for the current SD-09 pass; the initial value contains all three lenses and each recheck contains exactly the affected lenses."
       },
       {
         "name": "findings",
@@ -158,10 +172,6 @@
             {
               "value": "continue",
               "target": "node.sd-03"
-            },
-            {
-              "value": "wait-user",
-              "target": "node.wait.user-grilling-answer"
             },
             {
               "value": "unmatched",
@@ -358,6 +368,12 @@
           }
         ],
         "maxConcurrency": 3,
+        "selection": {
+          "source": {
+            "kind": "state",
+            "field": "selected_review_lenses"
+          }
+        },
         "join": {
           "kind": "aggregator",
           "action": "action.sd-10"
@@ -580,48 +596,6 @@
         "id": "node.sd-15",
         "kind": "action",
         "action": "action.sd-15",
-        "checkpoint": {
-          "mode": "always",
-          "bindings": [
-            "delivery",
-            "snapshot",
-            "graphNode",
-            "action",
-            "attempt",
-            "inputBindings",
-            "artifactBindings",
-            "branchResults",
-            "budgets",
-            "pendingWait"
-          ]
-        }
-      },
-      {
-        "id": "node.wait.user-grilling-answer",
-        "kind": "wait",
-        "wait": "wait.user-grilling-answer",
-        "checkpoint": {
-          "mode": "on-wait",
-          "bindings": [
-            "delivery",
-            "snapshot",
-            "graphNode",
-            "action",
-            "attempt",
-            "inputBindings",
-            "artifactBindings",
-            "branchResults",
-            "budgets",
-            "pendingWait"
-          ]
-        },
-        "continuationSource": true
-      },
-      {
-        "id": "node.wait-renewal.user-grilling-answer",
-        "kind": "wait-renewal",
-        "wait": "wait.user-grilling-answer",
-        "maxRenewals": 1,
         "checkpoint": {
           "mode": "always",
           "bindings": [
@@ -1064,42 +1038,6 @@
         "to": "terminal:failed"
       },
       {
-        "id": "event.node.wait.user-grilling-answer.cancelled",
-        "from": "node.wait.user-grilling-answer",
-        "event": "cancelled",
-        "to": "terminal:cancelled"
-      },
-      {
-        "id": "event.node.wait.user-grilling-answer.wait-expired",
-        "from": "node.wait.user-grilling-answer",
-        "event": "wait-expired",
-        "to": "node.wait-renewal.user-grilling-answer"
-      },
-      {
-        "id": "event.node.wait.user-grilling-answer.continuation-invalid",
-        "from": "node.wait.user-grilling-answer",
-        "event": "continuation-invalid",
-        "to": "terminal:failed"
-      },
-      {
-        "id": "event.node.wait-renewal.user-grilling-answer.cancelled",
-        "from": "node.wait-renewal.user-grilling-answer",
-        "event": "cancelled",
-        "to": "terminal:cancelled"
-      },
-      {
-        "id": "event.node.wait-renewal.user-grilling-answer.nonretryable-failure",
-        "from": "node.wait-renewal.user-grilling-answer",
-        "event": "nonretryable-failure",
-        "to": "terminal:failed"
-      },
-      {
-        "id": "event.node.wait-renewal.user-grilling-answer.budget-exhausted",
-        "from": "node.wait-renewal.user-grilling-answer",
-        "event": "budget-exhausted",
-        "to": "terminal:incomplete"
-      },
-      {
         "id": "event.node.wait.user-brief-confirm.cancelled",
         "from": "node.wait.user-brief-confirm",
         "event": "cancelled",
@@ -1275,32 +1213,34 @@
       }
     ]
   },
-  "waits": [
-    {
-      "id": "wait.user-grilling-answer",
-      "kind": "user",
-      "purpose": "WAITING_FOR_USER during adaptive grilling: persists the pending question identity, evidence binding and dialogue history; only a correlated answer bound to the same question identity may resume the same working Brief.",
-      "resumeSchema": {
-        "type": "object",
-        "properties": {
-          "question_id": {
-            "type": "string"
-          },
-          "answer": {
-            "type": "string"
-          }
+  "dataflow": {
+    "edges": [
+      {
+        "id": "data.sd-02-status",
+        "source": {
+          "kind": "site-result",
+          "site": { "kind": "node", "nodeIdentity": "node.sd-02" },
+          "slot": { "kind": "property", "name": "status" }
         },
-        "required": [
-          "question_id",
-          "answer"
-        ]
-      },
-      "correlation": {
-        "identitySource": "wait-request-id (pending question identity)",
-        "staleRejected": true,
-        "duplicateRejected": true
+        "target": { "kind": "state", "field": "status" }
       }
+    ]
+  },
+  "hostOperations": [
+    {
+      "id": "operation.sd-14-deterministic-verification",
+      "contractIdentity": "host-operation.deterministic-validation.v1",
+      "configuration": { "validator": "validator.final-verification" },
+      "requiredCapabilities": ["deterministic-validation"]
     },
+    {
+      "id": "operation.sd-15-publication-guard",
+      "contractIdentity": "host-operation.deterministic-validation.v1",
+      "configuration": { "validator": "validator.cleanup-gate" },
+      "requiredCapabilities": ["deterministic-validation"]
+    }
+  ],
+  "waits": [
     {
       "id": "wait.user-brief-confirm",
       "kind": "user",

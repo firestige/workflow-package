@@ -121,10 +121,10 @@ Brief confirmation freezes that version. Later changes require a `BriefChangeReq
 - **Purpose:** pressure-test requirements and guide the user until both sides clearly understand what is being built.
 - **Role:** Grilling Facilitator in a dedicated session.
 - **Resources:** shared `grilling`; Brief template as topic coverage map.
-- **Method:** one question at a time; follow the user's answer; use solution hypotheses as probes without making architecture decisions.
+- **Method:** one question at a time; follow the user's answer; use solution hypotheses as probes without making architecture decisions. Each question/answer continues the same Action episode and admitted session through Action-scoped `awaiting-input`/`continueWithInput`; it does not create a Workflow Wait.
 - **Outputs:** working Brief containing scenarios, opinions, priorities, project context, quality expectations, risks, acceptance intent, rejected interpretations, and classified unknowns.
 - **Gate:** no design-significant ambiguity remains unclassified or ownerless.
-- **Next:** `WAITING_FOR_USER`, `SD-03`, or `INCOMPLETE` without lowering the closure standard.
+- **Next:** `SD-03` or `INCOMPLETE` without lowering the closure standard. A Workflow Wait is available only after an Action has returned and explicitly requested an external approval/decision; ordinary SD-02 grilling remains inside the Action.
 
 ### SD-03 Confirm and Freeze Brief
 
@@ -189,7 +189,7 @@ All three sessions receive the required source artifacts but cannot see each oth
 
 Each emits admitted Findings or non-blocking `REVIEW_SIGNAL`s. Results are not votes.
 
-The first SD-09 pass runs all three lenses behind the barrier. Later recheck runs only lenses whose exact review evidence was invalidated; independence and fresh-session rules still apply.
+The first SD-09 pass initializes the selection source to all three declared lens identities and runs that selected set behind the barrier. Later recheck sets the same source to the affected non-empty subset only; `required:true` constrains each member of the current selected set, and the barrier waits only for that set. This is one static parallel topology with data-driven selection, not an `All|Selected` mode. Independence and fresh-session rules still apply.
 
 ### SD-10 Aggregate and Triage Findings
 

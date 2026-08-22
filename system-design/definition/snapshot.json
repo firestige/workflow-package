@@ -1,42 +1,42 @@
 {
   "kind": "agentops.workflow-package-snapshot",
-  "schemaVersion": "agentops.workflow-dsl@1.0.0",
+  "schemaVersion": "agentops.workflow-dsl@1.1.0",
   "snapshot": {
     "id": "snapshot.system-design-workflow",
     "package": {
       "name": "system-design-workflow",
       "version": "0.3.0",
-      "digest": "sha256:d76683b4a7454781ded91f056d585248eeb5116ccfd7c47cade6a6da5e5e2222"
+      "digest": "sha256:5611855dc6908d6d128f00cc6ca4cc11117ee0122e2d71256d749cf322266f34"
     },
     "definition": {
       "id": "system-design-workflow",
       "version": "0.3.0",
-      "contentIdentity": "sha256:ce0c6e79cba68d1fa1a1eab25aaebb183fa64a5d6b4fe8d3e9012afb61a5bcc8"
+      "contentIdentity": "sha256:9f3d2a0c7ab5ed08e976c1240cae29231801e0b9fa9a52afc7f672e07caf2316"
     },
     "documents": [
       {
         "kind": "workflow",
-        "contentIdentity": "sha256:ce0c6e79cba68d1fa1a1eab25aaebb183fa64a5d6b4fe8d3e9012afb61a5bcc8"
+        "contentIdentity": "sha256:9f3d2a0c7ab5ed08e976c1240cae29231801e0b9fa9a52afc7f672e07caf2316"
       },
       {
         "kind": "actions",
-        "contentIdentity": "sha256:2e3e8da944f77154f3439a0fbbffdaa24c3192f84d3367eafe0dd0a8cfee7ed1"
+        "contentIdentity": "sha256:8f9de3ae05ed663560f0bbf31d97273a0e1680179c429ec9b06daba3e35c2c6c"
       },
       {
         "kind": "roles",
-        "contentIdentity": "sha256:09647f1baa14be027cc21aa3b74959c0d33fab92f6b3440a9aeecfb599b6cab3"
+        "contentIdentity": "sha256:6c7c3dbb3fd3761752e189d69389e9a535bfdc55855f5ca5684840430589ed6b"
       },
       {
         "kind": "routes",
-        "contentIdentity": "sha256:51315764d7898b03f45f9c60d06917c87778d3bd7fbd432ca2a22c841d37df39"
+        "contentIdentity": "sha256:c2556f1398295f2224b40a10c6232aeee8707e2d3fb544a249667a563b7ad542"
       },
       {
         "kind": "artifacts",
-        "contentIdentity": "sha256:06d30898d60df28bffb23e5510fafbc1d4af465f8f7a08f925917108692ef9f7"
+        "contentIdentity": "sha256:64ca1e80a0d7ba4477301ffff27ecc6ee3a67897dbf1450eb27a15d3adc86ec2"
       },
       {
         "kind": "validation",
-        "contentIdentity": "sha256:cef8454d8589f14f39d78ef12c5652bc478e00b0c4cc6d030827210f9ac77538"
+        "contentIdentity": "sha256:bbe37c0501bef2446a57f04f7f4cf9a8fe0d85f1c4ed0d39c906863048c18323"
       }
     ],
     "resources": [
@@ -313,7 +313,7 @@
       {
         "id": "resource.workflow-definition-source",
         "owner": "owned",
-        "contentIdentity": "sha256:6317aacf628c5ac67ddf1f2488bf727c6b1ccc1d39652f615f970fca1ad13786"
+        "contentIdentity": "sha256:b830eca1b7a8fd606e3486a9843b8059193a3c859b26fe4ccdc5f9d330c9113c"
       },
       {
         "id": "resource.routes-catalog",
@@ -496,8 +496,6 @@
         "node.sd-13",
         "node.sd-14",
         "node.sd-15",
-        "node.wait.user-grilling-answer",
-        "node.wait-renewal.user-grilling-answer",
         "node.wait.user-brief-confirm",
         "node.wait-renewal.user-brief-confirm",
         "node.wait.user-decision",
@@ -546,12 +544,6 @@
         "event.node.sd-14.nonretryable-failure",
         "event.node.sd-15.cancelled",
         "event.node.sd-15.nonretryable-failure",
-        "event.node.wait.user-grilling-answer.cancelled",
-        "event.node.wait.user-grilling-answer.wait-expired",
-        "event.node.wait.user-grilling-answer.continuation-invalid",
-        "event.node.wait-renewal.user-grilling-answer.cancelled",
-        "event.node.wait-renewal.user-grilling-answer.nonretryable-failure",
-        "event.node.wait-renewal.user-grilling-answer.budget-exhausted",
         "event.node.wait.user-brief-confirm.cancelled",
         "event.node.wait.user-brief-confirm.wait-expired",
         "event.node.wait.user-brief-confirm.continuation-invalid",
@@ -576,6 +568,13 @@
         "event.node.wait-renewal.spike-design-parameter.cancelled",
         "event.node.wait-renewal.spike-design-parameter.nonretryable-failure",
         "event.node.wait-renewal.spike-design-parameter.budget-exhausted"
+      ],
+      "dataEdges": [
+        "data.sd-02-status"
+      ],
+      "hostOperations": [
+        "operation.sd-14-deterministic-verification",
+        "operation.sd-15-publication-guard"
       ],
       "terminals": [
         "implementation-ready",
@@ -604,12 +603,12 @@
         "skill",
         "artifact_user"
       ],
-      "mergeProof": "sha256:0aecd7f115b0c1c6a43cd167d56d7865a11a720855500a9bc537d58037287350"
+      "mergeProof": "sha256:20a2bd9ccca94f6380415f29e0a8291aeac3f67e6613e0ffaa80098a8252585b"
     },
     "resolutionProof": {
       "noAmbientFallback": true,
       "allBindingsExact": true
     },
-    "digest": "sha256:11b521a03a166294b100e891c47534b0b00fe03f3cebf24a844b0b93b38c6f9b"
+    "digest": "sha256:b931d913c48497543d26a78731c3db2e928eec5676c1c2984120ba2a2300599d"
   }
 }

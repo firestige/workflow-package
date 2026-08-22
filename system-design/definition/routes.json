@@ -1,6 +1,6 @@
 {
   "kind": "agentops.routes",
-  "schemaVersion": "agentops.workflow-dsl@1.0.0",
+  "schemaVersion": "agentops.workflow-dsl@1.1.0",
   "routes": [
     {
       "id": "route.facilitator.standard",
@@ -45,9 +45,13 @@
         "driver": {
           "id": "resource.driver.managed-cli"
         },
+        "capabilities": ["structured-completion", "action-interaction"],
         "sessionPolicy": {
-          "freshness": "fresh-per-episode",
+
+          "scope": { "kind": "episode" },
+
           "isolation": "shared"
+
         }
       },
       "access": [
@@ -95,9 +99,13 @@
         "driver": {
           "id": "resource.driver.managed-cli"
         },
+        "capabilities": ["structured-completion"],
         "sessionPolicy": {
-          "freshness": "fresh-per-episode",
+
+          "scope": { "kind": "episode" },
+
           "isolation": "isolated"
+
         }
       },
       "access": [
@@ -188,10 +196,13 @@
         "driver": {
           "id": "resource.driver.managed-cli"
         },
+        "capabilities": ["structured-completion"],
         "sessionPolicy": {
-          "freshness": "fresh-per-episode",
-          "isolation": "isolated",
-          "resumeRule": "fresh after Brief freeze; resumable working Draft checkpoints only, never Git deliverables"
+
+          "scope": { "kind": "episode" },
+
+          "isolation": "isolated"
+
         }
       },
       "access": [
@@ -252,10 +263,13 @@
         "driver": {
           "id": "resource.driver.managed-cli"
         },
+        "capabilities": ["structured-completion"],
         "sessionPolicy": {
-          "freshness": "fresh-per-episode",
-          "isolation": "isolated",
-          "resumeRule": "recheck starts fresh with the original Finding, treatment, new Draft and evidence"
+
+          "scope": { "kind": "episode" },
+
+          "isolation": "isolated"
+
         }
       },
       "access": [
@@ -307,10 +321,13 @@
         "driver": {
           "id": "resource.driver.managed-cli"
         },
+        "capabilities": ["structured-completion"],
         "sessionPolicy": {
-          "freshness": "fresh-per-episode",
-          "isolation": "isolated",
-          "resumeRule": "recheck starts fresh with the original Finding, treatment, new Draft and evidence"
+
+          "scope": { "kind": "episode" },
+
+          "isolation": "isolated"
+
         }
       },
       "access": [
@@ -362,10 +379,13 @@
         "driver": {
           "id": "resource.driver.managed-cli"
         },
+        "capabilities": ["structured-completion"],
         "sessionPolicy": {
-          "freshness": "fresh-per-episode",
-          "isolation": "isolated",
-          "resumeRule": "recheck starts fresh with the original Finding, treatment, new Draft and evidence"
+
+          "scope": { "kind": "episode" },
+
+          "isolation": "isolated"
+
         }
       },
       "access": [
@@ -409,9 +429,13 @@
         "driver": {
           "id": "resource.driver.managed-cli"
         },
+        "capabilities": ["structured-completion"],
         "sessionPolicy": {
-          "freshness": "fresh-per-episode",
+
+          "scope": { "kind": "episode" },
+
           "isolation": "shared"
+
         }
       },
       "access": [
@@ -459,10 +483,13 @@
         "driver": {
           "id": "resource.driver.managed-cli"
         },
+        "capabilities": ["structured-completion", "action-interaction"],
         "sessionPolicy": {
-          "freshness": "resumable-within-admitted-dialogue",
-          "isolation": "isolated",
-          "resumeRule": "resumable only within the same admitted decision identity and evidence binding; exploratory replies are never final decisions"
+
+          "scope": { "kind": "episode" },
+
+          "isolation": "isolated"
+
         }
       },
       "access": [
@@ -506,10 +533,13 @@
         "driver": {
           "id": "resource.driver.managed-cli"
         },
+        "capabilities": ["structured-completion"],
         "sessionPolicy": {
-          "freshness": "fresh-per-episode",
-          "isolation": "isolated",
-          "resumeRule": "context-isolated fresh session; no grilling transcript or hidden author/reviewer context"
+
+          "scope": { "kind": "episode" },
+
+          "isolation": "isolated"
+
         }
       },
       "access": [
