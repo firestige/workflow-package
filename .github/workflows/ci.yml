@@ -31,6 +31,12 @@ jobs:
         uses: actions/setup-node@v7
         with:
           node-version: 24.12.0
+          cache: npm
+          cache-dependency-path: system-contracts/workflow-dsl/package-lock.json
+
+      - name: Install Workflow Contract dependencies
+        working-directory: system-contracts/workflow-dsl
+        run: npm ci
 
       - name: Qualify first-party Packages
         run: |
