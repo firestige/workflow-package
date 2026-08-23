@@ -1,16 +1,16 @@
 # Implementation Workflow Definition — Semantic Fidelity Checklist
 
-Machine Definition: `workflow-package/implementation/definition/` (`agentops.workflow-dsl@1.0.0`). The semantic source remains `workflow.md`; this checklist records the 1.0 Contract migration and does not create new Workflow meaning. Status: `DESIGN_REFERENCE`.
+Machine Definition: `workflow-package/implementation/definition/` (`agentops.workflow-dsl@1.1.0`). The semantic source remains `workflow.md`; this checklist records the 1.1 Contract migration and does not create new Workflow meaning. Status: `DESIGN_REFERENCE`.
 
 ## 1. Contract document set
 
 | Document | Current closure |
 | --- | --- |
 | `package.json` | Exact six-document index, 92 owned and 6 referenced resources, canonical Package digest |
-| `snapshot.json` | Exact Definition, document, resource, Route, graph, authority and resolution bindings with canonical Snapshot digest |
-| `workflow.json` | 30 graph nodes, 13 ordinary edges, 90 typed event edges, 5 terminals, 4 Wait declarations, one budget and 3 recovery policies |
+| `snapshot.json` | Exact Definition, document, resource, Route, graph/data/Host-operation, authority and resolution bindings with canonical Snapshot digest |
+| `workflow.json` | 30 graph nodes, 13 ordinary edges, 90 typed event edges, 3 explicit data edges, one deterministic Host operation, 5 terminals, 4 Wait declarations, one budget and 3 recovery policies |
 | `actions.json` | 25 ordinary Actions; every Agent Action has one Role/Route envelope and IM-06 is deterministic with no Agent Route |
-| `roles.json` / `routes.json` | 9 Roles and 10 exact Routes |
+| `roles.json` / `routes.json` | 9 Roles and 10 exact Routes；旧 per-episode session 映射为 `episode` scope，Implementer 的旧 continuous-within-goal session 映射为以 `currentGoal` 为 source 的 `data-bound` scope；全部 Agent Route 显式声明 structured completion capability |
 | `artifacts.json` | 17 Artifact shapes; each review Finding shape is owned by its exact Reviewer Action |
 | `validation.json` | 21 validators, two explicit aggregator bindings, five isolated review bindings and three executable Contract fixtures |
 
@@ -34,6 +34,7 @@ IM-15 was also split into `action.IM-15.blackbox` and `action.IM-15.whitebox`, b
 - `node.IM-12`, `node.IM-17`, and the reusable `node.IM-13` route from the explicit IM-13 aggregator's closed `finding` result.
 - Finite return choices fail closed on an unmatched enum value; no Definition field selects a Runtime invocation or attempt.
 - State fields declare data shapes only. `attempts` is an observed value used by the declared budget evaluator, not a shared-write reducer declaration.
+- IM-06 remains the only deterministic Action with no Agent Route. It binds `operation.IM-06-selection` and writes its exact selected Goal/Rung into `currentGoal`/`currentRung`; that declared State source scopes the Implementer session without ambient affinity.
 
 ## 4. Wait, continuation and typed events
 

@@ -1,6 +1,6 @@
 {
   "kind": "agentops.routes",
-  "schemaVersion": "agentops.workflow-dsl@1.0.0",
+  "schemaVersion": "agentops.workflow-dsl@1.1.0",
   "routes": [
     {
       "id": "route.goal.facilitator",
@@ -17,7 +17,8 @@
         "model": { "id": "model.managed" },
         "tools": [{ "id": "tool.repo-read" }],
         "driver": { "id": "driver.managed-cli" },
-        "sessionPolicy": { "freshness": "fresh-per-episode", "isolation": "shared" }
+        "sessionPolicy": { "scope": { "kind": "episode" }, "isolation": "shared" },
+        "capabilities": ["structured-completion", "action-interaction"]
       },
       "access": [
         { "target": "repository and frozen design", "mode": "read" },
@@ -36,7 +37,8 @@
         "model": { "id": "model.managed" },
         "tools": [{ "id": "tool.repo-read" }],
         "driver": { "id": "driver.managed-cli" },
-        "sessionPolicy": { "freshness": "fresh-per-episode", "isolation": "shared" }
+        "sessionPolicy": { "scope": { "kind": "episode" }, "isolation": "shared" },
+        "capabilities": ["structured-completion"]
       },
       "access": [{ "target": "admitted sources", "mode": "read" }],
       "escalationAllowed": false
@@ -52,7 +54,8 @@
         "model": { "id": "model.managed" },
         "tools": [{ "id": "tool.repo-read" }],
         "driver": { "id": "driver.managed-cli" },
-        "sessionPolicy": { "freshness": "fresh-per-episode", "isolation": "shared" }
+        "sessionPolicy": { "scope": { "kind": "episode" }, "isolation": "shared" },
+        "capabilities": ["structured-completion"]
       },
       "access": [
         { "target": "authoritative sources", "mode": "read" },
@@ -75,7 +78,8 @@
         "model": { "id": "model.managed" },
         "tools": [],
         "driver": { "id": "driver.managed-cli" },
-        "sessionPolicy": { "freshness": "fresh-per-episode", "isolation": "isolated" }
+        "sessionPolicy": { "scope": { "kind": "episode" }, "isolation": "isolated" },
+        "capabilities": ["structured-completion"]
       },
       "access": [
         { "target": "Goal/Contract/design", "mode": "read" },
@@ -97,7 +101,8 @@
         "model": { "id": "model.managed" },
         "tools": [],
         "driver": { "id": "driver.managed-cli" },
-        "sessionPolicy": { "freshness": "fresh-per-episode", "isolation": "isolated" }
+        "sessionPolicy": { "scope": { "kind": "episode" }, "isolation": "isolated" },
+        "capabilities": ["structured-completion"]
       },
       "access": [
         { "target": "code and coverage data", "mode": "read" },
@@ -120,7 +125,8 @@
         "model": { "id": "model.managed" },
         "tools": [],
         "driver": { "id": "driver.managed-cli" },
-        "sessionPolicy": { "freshness": "continuous-within-goal", "isolation": "shared" }
+        "sessionPolicy": { "scope": { "kind": "data-bound", "source": { "kind": "state", "field": "currentGoal" } }, "isolation": "shared" },
+        "capabilities": ["structured-completion"]
       },
       "access": [
         { "target": "production paths", "mode": "write" },
@@ -143,7 +149,8 @@
         "model": { "id": "model.managed" },
         "tools": [],
         "driver": { "id": "driver.managed-cli" },
-        "sessionPolicy": { "freshness": "fresh-per-episode", "isolation": "isolated" }
+        "sessionPolicy": { "scope": { "kind": "episode" }, "isolation": "isolated" },
+        "capabilities": ["structured-completion"]
       },
       "access": [
         { "target": "Goal/Contract/test", "mode": "read" },
@@ -166,7 +173,8 @@
         "model": { "id": "model.managed" },
         "tools": [],
         "driver": { "id": "driver.managed-cli" },
-        "sessionPolicy": { "freshness": "fresh-per-episode", "isolation": "isolated" }
+        "sessionPolicy": { "scope": { "kind": "episode" }, "isolation": "isolated" },
+        "capabilities": ["structured-completion"]
       },
       "access": [
         { "target": "candidate, diff and coverage", "mode": "read" },
@@ -185,7 +193,8 @@
         "model": { "id": "model.managed" },
         "tools": [],
         "driver": { "id": "driver.managed-cli" },
-        "sessionPolicy": { "freshness": "fresh-per-episode", "isolation": "shared" }
+        "sessionPolicy": { "scope": { "kind": "episode" }, "isolation": "shared" },
+        "capabilities": ["structured-completion"]
       },
       "access": [
         { "target": "review artifacts", "mode": "read" },
@@ -211,7 +220,8 @@
         "model": { "id": "model.managed" },
         "tools": [],
         "driver": { "id": "driver.managed-cli" },
-        "sessionPolicy": { "freshness": "fresh-per-episode", "isolation": "shared" }
+        "sessionPolicy": { "scope": { "kind": "episode" }, "isolation": "shared" },
+        "capabilities": ["structured-completion"]
       },
       "access": [
         { "target": "declared package CLI", "mode": "execute" }

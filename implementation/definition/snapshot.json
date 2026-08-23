@@ -1,49 +1,49 @@
 {
   "kind": "agentops.workflow-package-snapshot",
-  "schemaVersion": "agentops.workflow-dsl@1.0.0",
+  "schemaVersion": "agentops.workflow-dsl@1.1.0",
   "snapshot": {
     "id": "snapshot.implementation-workflow",
     "package": {
       "name": "implementation-workflow",
       "version": "0.3.0",
-      "digest": "sha256:36ce11da766d28a3a52aa065b28d9cc3eab12e33c70d64ca90dc60da0fa2b656"
+      "digest": "sha256:3c345ebbbf537d73f009da3894444a0bdb0a5e55106d5fd3ba56e52ba71f8abf"
     },
     "definition": {
       "id": "implementation-workflow",
       "version": "0.3.0",
-      "contentIdentity": "sha256:c5b451489f772069335e077c814d3a400b1f5dde4b88d038138e70248f8038e6"
+      "contentIdentity": "sha256:5b9e986e4a156fc5e5272d774de30eec93b2483e1856b59a0d0fefeb442de056"
     },
     "documents": [
       {
         "kind": "workflow",
-        "contentIdentity": "sha256:c5b451489f772069335e077c814d3a400b1f5dde4b88d038138e70248f8038e6"
+        "contentIdentity": "sha256:5b9e986e4a156fc5e5272d774de30eec93b2483e1856b59a0d0fefeb442de056"
       },
       {
         "kind": "actions",
-        "contentIdentity": "sha256:3b56ca6d5a695ade36d3eb4bf54714e84851bdd48f052c35ffcaf64ae3b58f37"
+        "contentIdentity": "sha256:9cd22c8461c20a5234fbef47180f8e485a6ba27b5b75329528f59a7651312b74"
       },
       {
         "kind": "roles",
-        "contentIdentity": "sha256:8cf664e7b1bff141e0690a24cdb239de197c6c9b27a3d92cd822f7f96e3695ff"
+        "contentIdentity": "sha256:f76ab087549da44bc748596d0ae4b7fe1b4f4554c52eb911ee9fc40fe6bc98f3"
       },
       {
         "kind": "routes",
-        "contentIdentity": "sha256:c9d18be3e8c26596278b6deefc709e9cbf4b82086ec0da162e8ed14b0b83f591"
+        "contentIdentity": "sha256:75c955425df4c8ac31a003654c2f2c2d0486a9609b8ec3b7ec3856b68f6de49a"
       },
       {
         "kind": "artifacts",
-        "contentIdentity": "sha256:e8be3ccd8322abc313b9504c9feb9f57acfe39cb4ffb8beb5c5df212e6b621d9"
+        "contentIdentity": "sha256:dc4e56a1bc5b9c496d9100915b723ae7e42c3af0bc84aae7d7e167aef5ab1d58"
       },
       {
         "kind": "validation",
-        "contentIdentity": "sha256:75c95d2a3a19578c4463f66f5f73c206ded220eb151e25fd9f2c1293749aa486"
+        "contentIdentity": "sha256:499a44b627face28c839d5458409cce45786d360c4246f0ef496deb91385714a"
       }
     ],
     "resources": [
       {
         "id": "doc.readme",
         "owner": "owned",
-        "contentIdentity": "sha256:2fe21aea7d1c9a5b565067df1b6b493716b5fa94068a683cc91d7706521a75d4"
+        "contentIdentity": "sha256:b548390aaad9ba78ce16b1fb89a19d75984eba9eec85c7df3dc0ce9823995a68"
       },
       {
         "id": "doc.routes",
@@ -783,6 +783,14 @@
         "event.node.wait-renewal.external-authority.nonretryable-failure",
         "event.node.wait-renewal.external-authority.budget-exhausted"
       ],
+      "dataEdges": [
+        "data.IM-06-goal-graph-input",
+        "data.IM-06-current-goal",
+        "data.IM-06-current-rung"
+      ],
+      "hostOperations": [
+        "operation.IM-06-selection"
+      ],
       "terminals": [
         "VERIFIED_IMPLEMENTATION_READY",
         "INCOMPLETE",
@@ -811,12 +819,12 @@
         "skill",
         "artifact_user"
       ],
-      "mergeProof": "sha256:8f3cc45e6b7e38d8ccffa1e48e79791b8d9687773290a2c2e156f05a25059b7f"
+      "mergeProof": "sha256:0e09d81380e1eba50f2b771c7a3952e5aa83c88be6347d915bbc7366dd966959"
     },
     "resolutionProof": {
       "noAmbientFallback": true,
       "allBindingsExact": true
     },
-    "digest": "sha256:7eed62e2ba3147c47aea286862610b24a5ed5691346021ba8868e918f6fd178c"
+    "digest": "sha256:dbfc4cfcb28488a6f5dce7f53d4b9a52f73d22dd3ac37505ffc91d1e42007600"
   }
 }
