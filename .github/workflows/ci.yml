@@ -1,0 +1,52 @@
+name: CI
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: workflow-package-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout workflow-package
+        uses: actions/checkout@v6
+        with:
+          path: workflow-package
+
+      - name: Checkout frozen Workflow Contract
+        uses: actions/checkout@v6
+        with:
+          repository: firestige/system-contracts
+          ref: 6d3a0b74c8de594020747022447aab5df1058570
+          path: system-contracts
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 24.12.0
+
+      - name: Qualify first-party Packages
+        run: |
+          node system-contracts/workflow-dsl/tools/check-example.cjs workflow-package/system-design/definition
+          node system-contracts/workflow-dsl/tools/check-example.cjs workflow-package/implementation/definition
+
+      - name: Run executable Contract corpus
+        run: |
+          node system-contracts/workflow-dsl/tools/run-conformance.cjs workflow-package/system-design/definition
+          node system-contracts/workflow-dsl/tools/run-conformance.cjs workflow-package/implementation/definition
+
+      - name: Run Workflow Contract machine suite
+        run: node system-contracts/workflow-dsl/tools/test-wave6-contract.cjs
+
+      - name: Run Implementation CLI suite
+        working-directory: workflow-package/implementation/cli
+        run: |
+          npm test
+          npm run check
