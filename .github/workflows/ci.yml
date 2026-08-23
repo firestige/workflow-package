@@ -15,6 +15,12 @@ jobs:
   verify:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout canonical documentation authority
+        uses: actions/checkout@v6
+        with:
+          repository: firestige/workflow-self-recursive
+          ref: bc7e46e90d8643bd9e4b4890fc93851494204de1
+
       - name: Checkout workflow-package
         uses: actions/checkout@v6
         with:
@@ -31,6 +37,12 @@ jobs:
         uses: actions/setup-node@v7
         with:
           node-version: 24.12.0
+          cache: npm
+          cache-dependency-path: system-contracts/workflow-dsl/package-lock.json
+
+      - name: Install Workflow Contract dependencies
+        working-directory: system-contracts/workflow-dsl
+        run: npm ci
 
       - name: Qualify first-party Packages
         run: |
