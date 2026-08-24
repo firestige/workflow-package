@@ -1,0 +1,31 @@
+{
+  "kind": "agentops.workflow-definition",
+  "schemaVersion": "agentops.workflow-dsl@1.1.0",
+  "workflow": {
+    "id": "hello-world-workflow",
+    "name": "Hello World Workflow",
+    "version": "0.1.0",
+    "purpose": "Prove a real configured model can consume the current Intake TaskPrompt and return one short structured success without workspace, Git, environment, secret, or tool authority.",
+    "contractVersion": "agentops.workflow-dsl@1.1.0"
+  },
+  "state": { "fields": [] },
+  "graph": {
+    "start": "node.greet",
+    "nodes": [
+      { "id": "node.greet", "kind": "action", "action": "action.greet" }
+    ],
+    "edges": [
+      { "id": "edge.greet-success", "from": "node.greet", "to": "terminal:SUCCESS" }
+    ],
+    "eventEdges": [
+      { "id": "event.greet-cancelled", "from": "node.greet", "event": "cancelled", "to": "terminal:CANCELLED" },
+      { "id": "event.greet-failed", "from": "node.greet", "event": "nonretryable-failure", "to": "terminal:FAILED" }
+    ],
+    "terminals": [
+      { "id": "SUCCESS", "kind": "success", "meaning": "The configured model returned the admitted structured greeting.", "proposalCheckpoint": true },
+      { "id": "FAILED", "kind": "failure", "meaning": "A non-retryable configuration, model, or execution failure occurred.", "proposalCheckpoint": true },
+      { "id": "CANCELLED", "kind": "cancelled", "meaning": "The Delivery was explicitly cancelled and is not successful.", "proposalCheckpoint": true }
+    ]
+  },
+  "dataflow": { "edges": [] }
+}

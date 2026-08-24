@@ -1,0 +1,33 @@
+{
+  "kind": "agentops.validation",
+  "schemaVersion": "agentops.workflow-dsl@1.1.0",
+  "validators": [],
+  "aggregation": [],
+  "review": [],
+  "conformance": [
+    {
+      "id": "conf.hello.positive",
+      "class": "positive",
+      "meaning": "A declared closed success branch is selected.",
+      "input": { "operation": "planner-classification", "branches": ["branch.success", "branch.failure"], "outcome": "branch", "returnedBranch": "branch.success", "fallback": "interrupt", "budgetRemaining": 1 },
+      "trace": [{ "event": "classification-selected", "branch": "branch.success" }],
+      "oracle": { "disposition": "BRANCH", "branch": "branch.success" }
+    },
+    {
+      "id": "conf.hello.negative",
+      "class": "negative",
+      "meaning": "A non-retryable model failure fails closed.",
+      "input": { "operation": "planner-classification", "branches": ["branch.success", "branch.failure"], "outcome": "nonretryable-failure", "fallback": "interrupt", "budgetRemaining": 1 },
+      "trace": [{ "event": "failed", "reason": "nonretryable" }],
+      "oracle": { "disposition": "FAILED" }
+    },
+    {
+      "id": "conf.hello.recovery",
+      "class": "recovery",
+      "meaning": "A stale continuation remains rejected.",
+      "input": { "operation": "wait-correlation", "pendingId": "wait.current", "answerId": "wait.stale", "duplicate": false },
+      "trace": [{ "event": "wait-rejected", "reason": "correlation-mismatch" }],
+      "oracle": { "disposition": "WAIT_PENDING" }
+    }
+  ]
+}

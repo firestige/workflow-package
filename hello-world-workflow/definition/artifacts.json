@@ -1,0 +1,5 @@
+{
+  "kind": "agentops.artifacts",
+  "schemaVersion": "agentops.workflow-dsl@1.1.0",
+  "artifacts": []
+}

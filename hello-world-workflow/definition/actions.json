@@ -1,0 +1,62 @@
+{
+  "kind": "agentops.actions",
+  "schemaVersion": "agentops.workflow-dsl@1.1.0",
+  "actions": [
+    {
+      "id": "action.greet",
+      "name": "Greet from TaskPrompt",
+      "purpose": "Use only the immutable TaskPrompt text and ordered attachment snapshots to produce one concise structured greeting.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "prompt": {
+            "type": "object",
+            "properties": {
+              "text": { "type": "string" },
+              "attachments": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "identity": { "type": "string" },
+                    "filename": { "type": "string" },
+                    "mediaType": { "type": "string" },
+                    "byteLength": { "type": "integer" },
+                    "digest": { "type": "string" },
+                    "content": {
+                      "type": "object",
+                      "properties": {
+                        "encoding": { "type": "string", "const": "base64" },
+                        "data": { "type": "string" }
+                      },
+                      "required": ["encoding", "data"]
+                    }
+                  },
+                  "required": ["identity", "filename", "mediaType", "byteLength", "digest", "content"]
+                }
+              }
+            },
+            "required": ["text", "attachments"]
+          }
+        },
+        "required": ["prompt"]
+      },
+      "resultSchema": {
+        "type": "object",
+        "properties": {
+          "success": { "type": "boolean", "const": true },
+          "greeting": { "type": "string" }
+        },
+        "required": ["success", "greeting"]
+      },
+      "responsibleAuthority": { "kind": "role", "role": "role.greeter" },
+      "allowedRoutes": ["route.greeter.model"],
+      "escalation": {
+        "allowed": false,
+        "scope": "route-within-allowed",
+        "cannotChange": ["TaskPrompt", "result schema", "tool scope", "workspace authority", "terminal"]
+      },
+      "gate": { "deterministic": [], "freeTextBypass": "prohibited" }
+    }
+  ]
+}

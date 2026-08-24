@@ -1,0 +1,28 @@
+{
+  "kind": "agentops.routes",
+  "schemaVersion": "agentops.workflow-dsl@1.1.0",
+  "routes": [
+    {
+      "id": "route.greeter.model",
+      "role": "role.greeter",
+      "agent": {
+        "definition": { "id": "resource.agent-definition.managed" },
+        "managedProjection": "required"
+      },
+      "resources": {
+        "rolePrompt": { "id": "resource.role-prompt.greeter" },
+        "actionPrompts": [
+          { "action": "action.greet", "prompt": { "id": "resource.prompt.greet" } }
+        ],
+        "skills": [],
+        "model": { "id": "resource.model.managed" },
+        "tools": [],
+        "driver": { "id": "resource.driver.managed-cli" },
+        "capabilities": ["structured-completion"],
+        "sessionPolicy": { "scope": { "kind": "episode" }, "isolation": "shared" }
+      },
+      "access": [],
+      "escalationAllowed": false
+    }
+  ]
+}
