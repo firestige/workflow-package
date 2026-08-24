@@ -1,0 +1,24 @@
+{
+  "kind": "agentops.roles",
+  "schemaVersion": "agentops.workflow-dsl@1.1.0",
+  "roles": [
+    {
+      "id": "role.greeter",
+      "name": "Greeter",
+      "responsibility": "Produce one concise structured greeting from only the admitted TaskPrompt.",
+      "authorityBoundary": {
+        "concerns": ["responsibility", "mission", "data"],
+        "writePermissions": [
+          { "target": "Action structured result", "scope": "write" }
+        ],
+        "prohibited": [
+          "requesting workspace or Git access",
+          "reading environment, credentials, or secrets",
+          "using tools or network facts",
+          "changing Workflow control flow"
+        ]
+      },
+      "independence": { "isolation": "shared", "barrier": false }
+    }
+  ]
+}

@@ -4,10 +4,11 @@
 
 workflow-package 存放 workflow-self-recursive 所执行的版本化 Workflow Package。每个 Package 都是 owner 声明的、版本化的闭合组合：Workflow Definition 与其 Actions、Role routes、Prompts、Skills、模型、工具、Drivers、schemas、validators 和 conformance 资源共同构成。它是源码组件的划分（Workflow 定义与资源的家），而不是两个产品 System 之一。
 
-首个发行版包含两个逻辑 Workflow：
+仓库包含彼此独立定版的逻辑 Workflow：
 
 - **Implementation**：把一份精确冻结、具备实现授权的上游设计转化为经过测试和独立对抗检查的特性分支候选变更，由 Goal Graph、Test Ladder 与演进式 TDD 驱动。
 - **System Design**：把简短、模糊的设计请求转化为 `IMPLEMENTATION_READY` 的 System Design，经历 adaptive grilling、冻结的 Brief 与 Skeleton、单一 writer 扩写与三个独立 Review。
+- **Hello World 0.1.0**：非 initial 的安装验证 Package；单个 model-backed Action 消费当前 Intake TaskPrompt，在没有 tool 或 workspace authority 的情况下返回 structured success。
 
 ## Developer preview
 
@@ -40,6 +41,7 @@ git clone https://github.com/firestige/workflow-package.git
 
 - [Implementation Workflow Package](implementation/README.md)
 - [System Design Workflow Package](system-design/README.md)
+- [Hello World Workflow Package](hello-world-workflow/README.md)
 - [Workflow 组合模型](https://github.com/firestige/workflow-self-recursive/blob/main/docs/workflow-composition-model.md)
 - [概念架构](https://github.com/firestige/workflow-self-recursive/blob/main/docs/agent-architecture.zh-CN.md)
 

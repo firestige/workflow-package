@@ -1,0 +1,118 @@
+{
+  "kind": "agentops.package",
+  "schemaVersion": "agentops.workflow-dsl@1.1.0",
+  "package": {
+    "name": "hello-world-workflow",
+    "version": "0.1.0",
+    "purpose": "Prove current Intake TaskPrompt to configured model to structured success without workspace, Git, environment, secret, or tool authority.",
+    "status": "CONFIRMED",
+    "admissibility": "ADMISSIBLE",
+    "ownership": {
+      "owner": "workflow-package maintainers",
+      "authoritySource": "repository owner"
+    },
+    "definition": {
+      "name": "hello-world-workflow",
+      "version": "0.1.0",
+      "contentIdentity": "sha256:dfe9d6de0d7b89b2312825a72aecb978f0c68feb615fb6871e0ea3f8a1c4726a"
+    },
+    "digest": "sha256:e69a59308bc6f5c5aeb20cbca45ead7232594d256409bd1b8a26fb0b900a1e5a"
+  },
+  "documents": {
+    "workflow": "workflow.json",
+    "actions": "actions.json",
+    "roles": "roles.json",
+    "routes": "routes.json",
+    "artifacts": "artifacts.json",
+    "validation": "validation.json"
+  },
+  "resources": {
+    "owned": [
+      {
+        "id": "resource.role-prompt.greeter",
+        "kind": "role-prompt",
+        "owner": "owned",
+        "path": "../roles/greeter.role.md",
+        "contentIdentity": "sha256:95da1ed74b468e0140d2cf13b83e18ef929081201270ca1df1d5c40c6bc9b787",
+        "use": "Greeter Role authority"
+      },
+      {
+        "id": "resource.prompt.greet",
+        "kind": "action-prompt",
+        "owner": "owned",
+        "path": "../prompts/actions/greet.prompt.md",
+        "contentIdentity": "sha256:b05c467c47c7e95f48ca2feafab77481b931a87b5689f0bccca42976e4ce8197",
+        "use": "action.greet mission"
+      },
+      {
+        "id": "resource.package-readme",
+        "kind": "documentation",
+        "owner": "owned",
+        "path": "../README.md",
+        "contentIdentity": "sha256:4faa2c469b2972707cd055648b01695dc728c902656832045fd780c76857109f",
+        "use": "Package reference"
+      },
+      {
+        "id": "resource.workflow-source",
+        "kind": "documentation",
+        "owner": "owned",
+        "path": "../workflow.md",
+        "contentIdentity": "sha256:19b1483e4ce7af5bcac7d42bde27b52f6ec3ca43f483085a3e5ad1172e542780",
+        "use": "Workflow semantic source"
+      }
+    ],
+    "referenced": [
+      {
+        "id": "resource.agent-definition.managed",
+        "kind": "agent-definition",
+        "owner": "referenced",
+        "sourceLocator": {
+          "repository": "workflow-self-recursive",
+          "path": "agents/managed-agent-definition.yaml"
+        },
+        "contentIdentity": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "use": "Managed agent projection"
+      },
+      {
+        "id": "resource.model.managed",
+        "kind": "model",
+        "owner": "referenced",
+        "sourceLocator": {
+          "repository": "workflow-self-recursive",
+          "path": "bindings/managed-model.yaml"
+        },
+        "contentIdentity": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "use": "Configured model binding"
+      },
+      {
+        "id": "resource.driver.managed-cli",
+        "kind": "driver",
+        "owner": "referenced",
+        "sourceLocator": {
+          "repository": "workflow-self-recursive",
+          "path": "bindings/managed-cli-driver.yaml"
+        },
+        "contentIdentity": "sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+        "use": "Managed DSH driver"
+      }
+    ]
+  },
+  "authority": {
+    "order": [
+      "workflow_action",
+      "role_prompt",
+      "action_prompt",
+      "skill",
+      "artifact_user"
+    ],
+    "conflictMode": "fail-closed"
+  },
+  "environmentRequirements": [
+    "managed runtime with structured completion",
+    "configured model binding"
+  ],
+  "compatibility": {
+    "minContractVersion": "1.1.0",
+    "maxContractVersion": "1.1.0"
+  }
+}
