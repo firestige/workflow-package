@@ -1,0 +1,14 @@
+{
+  "schemaVersion": "wsr.release-component@1.0.0",
+  "repository": "firestige/workflow-package",
+  "releaseBranch": "main",
+  "triggerBranch": "release/next",
+  "assetMode": "workflow-assets",
+  "acceptanceCommand": "node release/cli/release.cjs acceptance",
+  "buildCommand": "node release/cli/release.cjs build",
+  "verifyCommand": "node release/cli/release.cjs verify",
+  "publisherAdapter": "workflow-assets+github-release",
+  "remoteInstallMode": "workflow-contract-conformance",
+  "stablePolicy": "qualified-candidate-exact-assets",
+  "capabilities": ["github-release", "workflow-assets"]
+}
