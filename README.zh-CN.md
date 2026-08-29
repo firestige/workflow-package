@@ -25,7 +25,7 @@ workflow-package 存放 workflow-self-recursive 所执行的版本化 Workflow P
 
 ## 安装 Workflow Package
 
-产品用户选择确定的 `name@version`。Execution 从 `firestige/workflow-package` 下载不可变的 public GitHub Release `workflow-package/<name>/v<version>`，依次校验 descriptor、checksum、provenance、兼容 Contract revision、Package closure、Workflow schema 与 Snapshot identity，再写入 exact-content cache。用户不需要克隆仓库或安装仓库开发依赖。
+产品用户选择确定的 `name@version`。Execution 从 `firestige/wsr-workflow-package` 下载不可变的 public GitHub Release `workflow-package/<name>/v<version>`，依次校验 descriptor、checksum、provenance、兼容 Contract revision、Package closure、Workflow schema 与 Snapshot identity，再写入 exact-content cache。用户不需要克隆仓库或安装仓库开发依赖。
 
 克隆仓库仅属于 contributor workflow，绝不是 runtime fallback。官方产品 source 不提供 `latest`、branch、ambient checkout 或本地 source fallback。
 

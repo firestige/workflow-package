@@ -61,7 +61,7 @@ test("workflow asset builder is deterministic and digest verified", async () => 
     const descriptor = JSON.parse(await readFile(path.join(first, item.assets.find((asset) => asset.kind === "descriptor").name)));
     assert.equal(descriptor.schemaVersion, "workflow-package.package-release@2.0.0");
     assert.deepEqual(descriptor.contract, {
-      repository: "firestige/system-contracts",
+      repository: "firestige/wsr-contracts",
       revision: contractRevision,
       minVersion: "1.1.0",
       maxVersion: "1.1.0",
@@ -108,7 +108,7 @@ test("only stable publish receives the release App token", async () => {
   assert.equal(candidate.includes("ref: main"), false);
   assert.ok(promote.includes("actions/create-github-app-token@"));
   assert.ok(promote.includes("GH_TOKEN: ${{ steps.release-app-token.outputs.token }}"));
-  assert.ok(promote.includes("repositories: workflow-package"));
+  assert.ok(promote.includes("repositories: wsr-workflow-package"));
   assert.ok(promote.includes("permission-contents: write"));
   assert.ok(candidate.includes('release.cjs qualify "$RUNNER_TEMP/remote-release"'));
   assert.ok(promote.includes("jq -c '.packages[]'"));

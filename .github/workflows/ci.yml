@@ -29,7 +29,7 @@ jobs:
       - name: Checkout frozen Workflow Contract
         uses: actions/checkout@v6
         with:
-          repository: firestige/system-contracts
+          repository: firestige/wsr-contracts
           ref: 6d3a0b74c8de594020747022447aab5df1058570
           path: system-contracts
 
