@@ -25,7 +25,7 @@ Each package keeps four concerns independently locatable, following the [Workflo
 
 ## Install a Workflow Package
 
-Product users select an exact `name@version`. Execution downloads the immutable public GitHub Release `workflow-package/<name>/v<version>` from `firestige/workflow-package`, verifies its descriptor, checksum, provenance, compatible Contract revision, Package closure, Workflow schema, and Snapshot identities, then admits it to the exact-content cache. No repository clone or repository development dependency is required.
+Product users select an exact `name@version`. Execution downloads the immutable public GitHub Release `workflow-package/<name>/v<version>` from `firestige/wsr-workflow-package`, verifies its descriptor, checksum, provenance, compatible Contract revision, Package closure, Workflow schema, and Snapshot identities, then admits it to the exact-content cache. No repository clone or repository development dependency is required.
 
 Repository cloning remains a contributor workflow only; it is never a runtime fallback. There is no `latest`, branch, ambient checkout, or local-source fallback in the official product source.
 

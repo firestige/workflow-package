@@ -37,7 +37,7 @@ jobs:
       - name: Check out frozen Workflow Contract
         uses: actions/checkout@v6
         with:
-          repository: firestige/system-contracts
+          repository: firestige/wsr-contracts
           ref: ${{ inputs.contract_ref }}
           path: system-contracts
       - name: Verify exact Workflow Contract revision

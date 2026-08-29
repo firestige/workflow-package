@@ -130,8 +130,8 @@ async function buildWorkflowAssets(repository, destination, revision, contractRe
     const provenance = {
       schemaVersion: "workflow-package.provenance@1.0.0",
       subject: { name: archiveName, sha256: archiveDigest },
-      source: { repository: "firestige/workflow-package", revision },
-      contract: { repository: "firestige/system-contracts", revision: contractRevision },
+      source: { repository: "firestige/wsr-workflow-package", revision },
+      contract: { repository: "firestige/wsr-contracts", revision: contractRevision },
       builder: { workflow: ".github/workflows/release-candidate.yml" },
     };
     const provenanceBytes = Buffer.from(`${JSON.stringify(provenance, null, 2)}\n`);
@@ -143,7 +143,7 @@ async function buildWorkflowAssets(repository, destination, revision, contractRe
       checksum: { name: checksumName },
       provenance: { name: provenanceName, sha256: sha256(provenanceBytes) },
       contract: {
-        repository: "firestige/system-contracts", revision: contractRevision,
+        repository: "firestige/wsr-contracts", revision: contractRevision,
         minVersion: packageDocument.compatibility.minContractVersion,
         maxVersion: packageDocument.compatibility.maxContractVersion,
       },
@@ -169,9 +169,9 @@ async function buildWorkflowAssets(repository, destination, revision, contractRe
   }
   const manifest = {
     schemaVersion: "wsr.workflow-assets-release@2.0.0",
-    repository: "firestige/workflow-package",
+    repository: "firestige/wsr-workflow-package",
     revision,
-    contract: { repository: "firestige/system-contracts", revision: contractRevision },
+    contract: { repository: "firestige/wsr-contracts", revision: contractRevision },
     packages,
   };
   await writeFile(path.join(destination, "release-metadata.json"), `${JSON.stringify(manifest, null, 2)}\n`);
@@ -183,9 +183,9 @@ async function verifyWorkflowAssets(destination) {
   try { manifest = JSON.parse(await readFile(path.join(destination, "release-metadata.json"))); }
   catch (error) { throw new ReleaseError("RELEASE_METADATA_INVALID", { cause: error }); }
   if (manifest.schemaVersion !== "wsr.workflow-assets-release@2.0.0"
-    || manifest.repository !== "firestige/workflow-package"
+    || manifest.repository !== "firestige/wsr-workflow-package"
     || !/^[a-f0-9]{40}$/.test(manifest.revision)
-    || manifest.contract?.repository !== "firestige/system-contracts"
+    || manifest.contract?.repository !== "firestige/wsr-contracts"
     || !/^[a-f0-9]{40}$/.test(manifest.contract?.revision)
     || !Array.isArray(manifest.packages) || manifest.packages.length !== PACKAGE_DIRECTORIES.length) {
     throw new ReleaseError("RELEASE_METADATA_INVALID");

@@ -1,6 +1,6 @@
 {
   "schemaVersion": "wsr.release-component@1.0.0",
-  "repository": "firestige/workflow-package",
+  "repository": "firestige/wsr-workflow-package",
   "releaseBranch": "main",
   "triggerBranch": "release/next",
   "assetMode": "workflow-assets",
