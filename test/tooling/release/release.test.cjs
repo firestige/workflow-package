@@ -1,5 +1,5 @@
 const assert = require("node:assert/strict");
-const { mkdtemp, readFile, writeFile } = require("node:fs/promises");
+const { mkdir, mkdtemp, readFile, writeFile } = require("node:fs/promises");
 const { tmpdir } = require("node:os");
 const path = require("node:path");
 const test = require("node:test");
@@ -8,6 +8,7 @@ const {
   ReleaseError,
   assertConfiguration,
   buildWorkflowAssets,
+  qualifyWorkflowAssets,
   simulateLifecycle,
   verifyWorkflowAssets,
 } = require("../../../release/cli/release.cjs");
@@ -22,18 +23,70 @@ test("workflow adapter selects workflow assets without npm publication", async (
   assert.equal(JSON.stringify(config).includes("npm-pair"), false);
 });
 
+test("clean-directory qualification replays a Contract validator for every downloaded archive", async () => {
+  const destination = await mkdtemp(path.join(tmpdir(), "workflow-release-replay-"));
+  const checkerRoot = await mkdtemp(path.join(tmpdir(), "workflow-release-checker-"));
+  await mkdir(path.join(checkerRoot, "tools"), { recursive: true });
+  await writeFile(path.join(checkerRoot, "tools/check-example.cjs"), `
+    const fs = require("node:fs");
+    const path = require("node:path");
+    const root = process.argv[2];
+    const pkg = JSON.parse(fs.readFileSync(path.join(root, "package.json")));
+    if (!pkg.package || !pkg.documents || !fs.existsSync(path.join(root, "snapshot.json"))) process.exit(1);
+  `);
+  await buildWorkflowAssets(root, destination, "a".repeat(40), "b".repeat(40));
+  assert.deepEqual(await qualifyWorkflowAssets(destination, checkerRoot), {
+    artifactCount: 8,
+    packageCount: 2,
+  });
+});
+
 test("workflow asset builder is deterministic and digest verified", async () => {
   const first = await mkdtemp(path.join(tmpdir(), "workflow-release-a-"));
   const second = await mkdtemp(path.join(tmpdir(), "workflow-release-b-"));
   const revision = "a".repeat(40);
-  const a = await buildWorkflowAssets(root, first, revision);
-  const b = await buildWorkflowAssets(root, second, revision);
+  const contractRevision = "b".repeat(40);
+  const a = await buildWorkflowAssets(root, first, revision, contractRevision);
+  const b = await buildWorkflowAssets(root, second, revision, contractRevision);
   assert.deepEqual(a, b);
-  assert.ok(a.artifactCount >= 2);
+  assert.equal(a.artifactCount, 8);
   assert.equal(await verifyWorkflowAssets(first), a.artifactCount);
   const manifest = JSON.parse(await readFile(path.join(first, "release-metadata.json")));
-  await writeFile(path.join(first, manifest.artifacts[0].name), "changed");
+  assert.deepEqual(manifest.packages.map((item) => item.tag), [
+    "workflow-package/implementation-workflow/v0.3.0",
+    "workflow-package/system-design-workflow/v0.3.0",
+  ]);
+  for (const item of manifest.packages) {
+    assert.equal(item.assets.length, 4);
+    const descriptor = JSON.parse(await readFile(path.join(first, item.assets.find((asset) => asset.kind === "descriptor").name)));
+    assert.equal(descriptor.schemaVersion, "workflow-package.package-release@2.0.0");
+    assert.deepEqual(descriptor.contract, {
+      repository: "firestige/system-contracts",
+      revision: contractRevision,
+      minVersion: "1.1.0",
+      maxVersion: "1.1.0",
+    });
+    const provenance = JSON.parse(await readFile(path.join(first, descriptor.provenance.name)));
+    assert.equal(provenance.schemaVersion, "workflow-package.provenance@1.0.0");
+    assert.equal(provenance.subject.name, descriptor.archive.name);
+    assert.equal(provenance.subject.sha256, descriptor.archive.sha256);
+    assert.equal(provenance.source.revision, revision);
+    assert.equal(provenance.contract.revision, contractRevision);
+  }
+  await writeFile(path.join(first, manifest.packages[0].assets[0].name), "changed");
   await assert.rejects(() => verifyWorkflowAssets(first), /RELEASE_ARTIFACT_DIGEST_MISMATCH/);
+});
+
+test("workflow release verification rejects missing provenance and undeclared files", async () => {
+  const destination = await mkdtemp(path.join(tmpdir(), "workflow-release-closed-"));
+  await buildWorkflowAssets(root, destination, "a".repeat(40), "b".repeat(40));
+  const manifest = JSON.parse(await readFile(path.join(destination, "release-metadata.json")));
+  const provenance = manifest.packages[0].assets.find((asset) => asset.kind === "provenance");
+  await writeFile(path.join(destination, provenance.name), "{}");
+  await assert.rejects(() => verifyWorkflowAssets(destination), /RELEASE_ARTIFACT_DIGEST_MISMATCH/);
+  await buildWorkflowAssets(root, destination, "a".repeat(40), "b".repeat(40));
+  await writeFile(path.join(destination, "latest.json"), "{}");
+  await assert.rejects(() => verifyWorkflowAssets(destination), /RELEASE_ARTIFACT_SET_INVALID/);
 });
 
 test("generic lifecycle cases are fail closed", () => {
@@ -57,4 +110,8 @@ test("only stable publish receives the release App token", async () => {
   assert.ok(promote.includes("GH_TOKEN: ${{ steps.release-app-token.outputs.token }}"));
   assert.ok(promote.includes("repositories: workflow-package"));
   assert.ok(promote.includes("permission-contents: write"));
+  assert.ok(candidate.includes('release.cjs qualify "$RUNNER_TEMP/remote-release"'));
+  assert.ok(promote.includes("jq -c '.packages[]'"));
+  assert.ok(promote.includes('gh release create "$TAG"'));
+  assert.equal(promote.includes("inputs.final_tag"), false);
 });

@@ -23,19 +23,11 @@ workflow-package 存放 workflow-self-recursive 所执行的版本化 Workflow P
 - 按类型拆分的资源目录（`roles/`、`agents/`、`prompts/actions/`、`skills/`、`templates/`、`schemas/`、`validators/`、`conformance/`）；
 - 显式的 artifact 生命周期与 Git identity 规则。
 
-## 获取源码
+## 安装 Workflow Package
 
-本仓库通常作为 [workflow-self-recursive](https://github.com/firestige/workflow-self-recursive) 的 submodule 使用：
+产品用户选择确定的 `name@version`。Execution 从 `firestige/workflow-package` 下载不可变的 public GitHub Release `workflow-package/<name>/v<version>`，依次校验 descriptor、checksum、provenance、兼容 Contract revision、Package closure、Workflow schema 与 Snapshot identity，再写入 exact-content cache。用户不需要克隆仓库或安装仓库开发依赖。
 
-```sh
-git clone --recurse-submodules https://github.com/firestige/workflow-self-recursive.git
-```
-
-单独克隆：
-
-```sh
-git clone https://github.com/firestige/workflow-package.git
-```
+克隆仓库仅属于 contributor workflow，绝不是 runtime fallback。官方产品 source 不提供 `latest`、branch、ambient checkout 或本地 source fallback。
 
 ## 文档
 
