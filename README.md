@@ -23,19 +23,11 @@ Each package keeps four concerns independently locatable, following the [Workflo
 - a resource catalog split by type (`roles/`, `agents/`, `prompts/actions/`, `skills/`, `templates/`, `schemas/`, `validators/`, `conformance/`);
 - an explicit artifact lifecycle and Git-identity rules.
 
-## Get the source
+## Install a Workflow Package
 
-This repository is normally consumed as a submodule of [workflow-self-recursive](https://github.com/firestige/workflow-self-recursive):
+Product users select an exact `name@version`. Execution downloads the immutable public GitHub Release `workflow-package/<name>/v<version>` from `firestige/workflow-package`, verifies its descriptor, checksum, provenance, compatible Contract revision, Package closure, Workflow schema, and Snapshot identities, then admits it to the exact-content cache. No repository clone or repository development dependency is required.
 
-```sh
-git clone --recurse-submodules https://github.com/firestige/workflow-self-recursive.git
-```
-
-To clone it standalone:
-
-```sh
-git clone https://github.com/firestige/workflow-package.git
-```
+Repository cloning remains a contributor workflow only; it is never a runtime fallback. There is no `latest`, branch, ambient checkout, or local-source fallback in the official product source.
 
 ## Documentation
 

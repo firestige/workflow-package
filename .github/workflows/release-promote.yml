@@ -6,9 +6,6 @@ on:
       candidate_tag:
         required: true
         type: string
-      final_tag:
-        required: true
-        type: string
 
 permissions:
   contents: read
@@ -41,8 +38,15 @@ jobs:
           gh release download "$CANDIDATE_TAG" --dir "$RUNNER_TEMP/qualified-release"
           node release/cli/release.cjs verify "$RUNNER_TEMP/qualified-release"
           node -e 'const fs=require("node:fs"),crypto=require("node:crypto"),path=require("node:path"); const p=path.join(process.env.RUNNER_TEMP,"qualified-release"),q=JSON.parse(fs.readFileSync(path.join(p,"release-qualification.json"))),m=fs.readFileSync(path.join(p,"release-metadata.json")); if(q.commit!==process.env.EXPECTED_COMMIT||q.candidateTag!==process.env.CANDIDATE_TAG||q.artifactMetadataSha256!=="sha256:"+crypto.createHash("sha256").update(m).digest("hex")||q.localAcceptance.status!=="PASS"||q.remoteQualification.status!=="PASS") process.exit(1)'
-          ! gh release view "${{ inputs.final_tag }}"
-          ! git ls-remote --exit-code --tags origin "refs/tags/${{ inputs.final_tag }}"
+      - name: Check out frozen Workflow Contract
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          CONTRACT_REF="$(jq -r '.contract.revision' "$RUNNER_TEMP/qualified-release/release-metadata.json")"
+          gh repo clone firestige/system-contracts "$RUNNER_TEMP/system-contracts"
+          git -C "$RUNNER_TEMP/system-contracts" checkout --detach "$CONTRACT_REF"
+          test "$(git -C "$RUNNER_TEMP/system-contracts" rev-parse HEAD)" = "$CONTRACT_REF"
+          node release/cli/release.cjs qualify "$RUNNER_TEMP/qualified-release" "$RUNNER_TEMP/system-contracts/workflow-dsl"
       - name: Mint short-lived release App token for final publish only
         id: release-app-token
         uses: actions/create-github-app-token@v2
@@ -52,7 +56,24 @@ jobs:
           owner: firestige
           repositories: workflow-package
           permission-contents: write
-      - name: Create stable Release as the last operation
+      - name: Create or exactly recover package-scoped stable Releases
         env:
           GH_TOKEN: ${{ steps.release-app-token.outputs.token }}
-        run: gh release create "${{ inputs.final_tag }}" "$RUNNER_TEMP/qualified-release/"* --target "${{ steps.candidate.outputs.sha }}"
+        run: |
+          jq -c '.packages[]' "$RUNNER_TEMP/qualified-release/release-metadata.json" | while read -r PACKAGE; do
+            TAG="$(jq -r '.tag' <<<"$PACKAGE")"
+            PACKAGE_DIR="$RUNNER_TEMP/stable/$(printf '%s' "$TAG" | shasum -a 256 | cut -d' ' -f1)"
+            mkdir -p "$PACKAGE_DIR"
+            jq -r '.assets[].name' <<<"$PACKAGE" | while read -r ASSET; do
+              cp "$RUNNER_TEMP/qualified-release/$ASSET" "$PACKAGE_DIR/$ASSET"
+            done
+            if gh release view "$TAG" >/dev/null 2>&1; then
+              test "$(gh api "repos/$GITHUB_REPOSITORY/git/ref/tags/$TAG" --jq .object.sha)" = "${{ steps.candidate.outputs.sha }}"
+              mkdir "$PACKAGE_DIR/remote"
+              gh release download "$TAG" --dir "$PACKAGE_DIR/remote"
+              diff -qr "$PACKAGE_DIR" "$PACKAGE_DIR/remote" --exclude remote
+            else
+              ! git ls-remote --exit-code --tags origin "refs/tags/$TAG"
+              gh release create "$TAG" "$PACKAGE_DIR/"* --target "${{ steps.candidate.outputs.sha }}"
+            fi
+          done
