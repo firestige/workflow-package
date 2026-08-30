@@ -23,7 +23,9 @@ const referenced = (id, kind, repository, resourcePath, fill, use) => ({
 });
 const owned = [
   ["resource.role-prompt.greeter", "role-prompt", "../roles/greeter.role.md", "Greeter Role authority"],
+  ["resource.role-prompt.reviewer", "role-prompt", "../roles/reviewer.role.md", "Reviewer Role authority"],
   ["resource.prompt.greet", "action-prompt", "../prompts/actions/greet.prompt.md", "action.greet mission"],
+  ["resource.prompt.review", "action-prompt", "../prompts/actions/review.prompt.md", "action.review mission"],
   ["resource.package-readme", "documentation", "../README.md", "Package reference"],
   ["resource.workflow-source", "documentation", "../workflow.md", "Workflow semantic source"],
 ].map(([id, kind, resourcePath, use]) => ({
@@ -40,22 +42,20 @@ const documents = {
 const resources = {
   owned,
   referenced: [
-    referenced("resource.agent-definition.managed", "agent-definition", "workflow-self-recursive", "agents/managed-agent-definition.yaml", "a", "Managed agent projection"),
-    referenced("resource.model.managed", "model", "workflow-self-recursive", "bindings/managed-model.yaml", "b", "Configured model binding"),
-    referenced("resource.driver.managed-cli", "driver", "workflow-self-recursive", "bindings/managed-cli-driver.yaml", "c", "Managed DSH driver"),
+    referenced("resource.driver.provider", "driver", "workflow-self-recursive", "bindings/agent-provider-driver.yaml", "c", "Execution projects the frozen Role Provider binding"),
   ],
 };
 const pkg = {
   kind: "agentops.package",
-  schemaVersion: "agentops.workflow-dsl@1.1.0",
+  schemaVersion: "agentops.workflow-dsl@2.0.0",
   package: {
     name: "hello-world-workflow",
-    version: "0.1.0",
-    purpose: "Prove current Intake TaskPrompt to configured model to structured success without workspace, Git, environment, secret, or tool authority.",
+    version: "0.2.0",
+    purpose: "Prove two frozen Roles route through two exact Agent Providers in one Delivery without ambient fallback.",
     status: "CONFIRMED",
     admissibility: "ADMISSIBLE",
     ownership: { owner: "workflow-package maintainers", authoritySource: "repository owner" },
-    definition: { name: "hello-world-workflow", version: "0.1.0", contentIdentity: rawDigest(documents.workflow) },
+    definition: { name: "hello-world-workflow", version: "0.2.0", contentIdentity: rawDigest(documents.workflow) },
   },
   documents,
   resources,
@@ -63,8 +63,8 @@ const pkg = {
     order: ["workflow_action", "role_prompt", "action_prompt", "skill", "artifact_user"],
     conflictMode: "fail-closed",
   },
-  environmentRequirements: ["managed runtime with structured completion", "configured model binding"],
-  compatibility: { minContractVersion: "1.1.0", maxContractVersion: "1.1.0" },
+  environmentRequirements: ["Execution runner.v2", "two exact Agent Provider Role bindings"],
+  compatibility: { minContractVersion: "2.0.0", maxContractVersion: "2.0.0" },
 };
 pkg.package.digest = canonicalDigest(pkg);
 fs.writeFileSync(path.join(root, "package.json"), `${JSON.stringify(pkg, null, 2)}\n`);
@@ -78,7 +78,7 @@ const snapshot = {
   kind: "agentops.workflow-package-snapshot",
   schemaVersion: pkg.schemaVersion,
   snapshot: {
-    id: "snapshot.hello-world-workflow.0.1.0",
+    id: "snapshot.hello-world-workflow.0.2.0",
     package: { name: pkg.package.name, version: pkg.package.version, digest: pkg.package.digest },
     definition: { id: workflow.workflow.id, version: workflow.workflow.version, contentIdentity: pkg.package.definition.contentIdentity },
     documents: Object.entries(documents).map(([kind, file]) => ({ kind, contentIdentity: rawDigest(file) })),

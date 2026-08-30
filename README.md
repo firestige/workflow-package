@@ -8,11 +8,11 @@ The repository ships independently versioned logical Workflows:
 
 - **Implementation** turns a frozen, authorized upstream design into a tested, independently reviewed feature-branch candidate change, driven by a Goal Graph, a Test Ladder, and evolutionary TDD.
 - **System Design** turns a short, ambiguous design request into an `IMPLEMENTATION_READY` System Design through adaptive grilling, a confirmed Brief and Skeleton, single-writer drafting, and three independent reviews.
-- **Hello World 0.1.0** is a non-initial installation proof: one model-backed Action consumes the current Intake TaskPrompt and returns structured success without tool or workspace authority.
+- **Hello World 0.2.0** is the multi-provider installation proof: a Copilot-backed greeter Role hands its structured result to a Codex-backed reviewer Role, without tool or workspace authority.
 
 ## Developer preview
 
-This repository is part of workflow-self-recursive's architecture-first developer preview for trusted local use by individuals and small teams. It publishes Workflow definitions and resources under a design-time model; the Workflow Contract and a machine-readable Runtime DSL are not yet published, so packages are validated through `UNMANAGED_SIMULATION` with package-owned CLI gates. **THERE WILL BE COMPATIBILITY-BREAKING CHANGES.**
+This repository is part of workflow-self-recursive's architecture-first developer preview for trusted local use by individuals and small teams. Packages are validated against the exact frozen Workflow Contract used by their release. Hello World 0.2.0 uses Runtime DSL 2.0; the existing Implementation and System Design packages remain on Runtime DSL 1.1. **THERE WILL BE COMPATIBILITY-BREAKING CHANGES.**
 
 ## Structure
 

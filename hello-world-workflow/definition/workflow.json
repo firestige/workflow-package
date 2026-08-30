@@ -1,31 +1,43 @@
 {
   "kind": "agentops.workflow-definition",
-  "schemaVersion": "agentops.workflow-dsl@1.1.0",
+  "schemaVersion": "agentops.workflow-dsl@2.0.0",
   "workflow": {
     "id": "hello-world-workflow",
-    "name": "Hello World Workflow",
-    "version": "0.1.0",
-    "purpose": "Prove a real configured model can consume the current Intake TaskPrompt and return one short structured success without workspace, Git, environment, secret, or tool authority.",
-    "contractVersion": "agentops.workflow-dsl@1.1.0"
+    "name": "Hello World Dual Provider Workflow",
+    "version": "0.2.0",
+    "purpose": "Prove one Delivery can route two immutable Roles to two different exact Agent Providers and return a structured reviewed greeting.",
+    "contractVersion": "agentops.workflow-dsl@2.0.0"
   },
   "state": { "fields": [] },
   "graph": {
     "start": "node.greet",
     "nodes": [
-      { "id": "node.greet", "kind": "action", "action": "action.greet" }
+      { "id": "node.greet", "kind": "action", "action": "action.greet" },
+      { "id": "node.review", "kind": "action", "action": "action.review" }
     ],
     "edges": [
-      { "id": "edge.greet-success", "from": "node.greet", "to": "terminal:SUCCESS" }
+      { "id": "edge.greet-review", "from": "node.greet", "to": "node.review" },
+      { "id": "edge.review-success", "from": "node.review", "to": "terminal:SUCCESS" }
     ],
     "eventEdges": [
       { "id": "event.greet-cancelled", "from": "node.greet", "event": "cancelled", "to": "terminal:CANCELLED" },
-      { "id": "event.greet-failed", "from": "node.greet", "event": "nonretryable-failure", "to": "terminal:FAILED" }
+      { "id": "event.greet-failed", "from": "node.greet", "event": "nonretryable-failure", "to": "terminal:FAILED" },
+      { "id": "event.review-cancelled", "from": "node.review", "event": "cancelled", "to": "terminal:CANCELLED" },
+      { "id": "event.review-failed", "from": "node.review", "event": "nonretryable-failure", "to": "terminal:FAILED" }
     ],
     "terminals": [
-      { "id": "SUCCESS", "kind": "success", "meaning": "The configured model returned the admitted structured greeting.", "proposalCheckpoint": true },
-      { "id": "FAILED", "kind": "failure", "meaning": "A non-retryable configuration, model, or execution failure occurred.", "proposalCheckpoint": true },
-      { "id": "CANCELLED", "kind": "cancelled", "meaning": "The Delivery was explicitly cancelled and is not successful.", "proposalCheckpoint": true }
+      { "id": "SUCCESS", "kind": "success", "meaning": "Both frozen Roles completed through their exact Providers.", "proposalCheckpoint": true },
+      { "id": "FAILED", "kind": "failure", "meaning": "A frozen Role or Provider failed closed.", "proposalCheckpoint": true },
+      { "id": "CANCELLED", "kind": "cancelled", "meaning": "The Delivery was explicitly cancelled.", "proposalCheckpoint": true }
     ]
   },
-  "dataflow": { "edges": [] }
+  "dataflow": {
+    "edges": [
+      {
+        "id": "data.greeting-to-review",
+        "source": { "kind": "site-result", "site": { "kind": "node", "nodeIdentity": "node.greet" }, "slot": { "kind": "whole" } },
+        "target": { "kind": "site-input", "site": { "kind": "node", "nodeIdentity": "node.review" }, "slot": { "kind": "whole" } }
+      }
+    ]
+  }
 }

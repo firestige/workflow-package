@@ -23,21 +23,26 @@ test("workflow adapter selects workflow assets without npm publication", async (
   assert.equal(JSON.stringify(config).includes("npm-pair"), false);
 });
 
-test("clean-directory qualification replays a Contract validator for every downloaded archive", async () => {
+test("clean-directory qualification replays the matching v1 or v2 Contract validator for every downloaded archive", async () => {
   const destination = await mkdtemp(path.join(tmpdir(), "workflow-release-replay-"));
   const checkerRoot = await mkdtemp(path.join(tmpdir(), "workflow-release-checker-"));
-  await mkdir(path.join(checkerRoot, "tools"), { recursive: true });
-  await writeFile(path.join(checkerRoot, "tools/check-example.cjs"), `
+  await mkdir(path.join(checkerRoot, "workflow-dsl", "tools"), { recursive: true });
+  await mkdir(path.join(checkerRoot, "workflow-dsl-2-candidate", "generated", "tools"), { recursive: true });
+  const checker = `
     const fs = require("node:fs");
     const path = require("node:path");
     const root = process.argv[2];
     const pkg = JSON.parse(fs.readFileSync(path.join(root, "package.json")));
     if (!pkg.package || !pkg.documents || !fs.existsSync(path.join(root, "snapshot.json"))) process.exit(1);
-  `);
+  `;
+  await Promise.all([
+    writeFile(path.join(checkerRoot, "workflow-dsl", "tools/check-example.cjs"), checker),
+    writeFile(path.join(checkerRoot, "workflow-dsl-2-candidate", "generated", "tools/check-example.cjs"), checker),
+  ]);
   await buildWorkflowAssets(root, destination, "a".repeat(40), "b".repeat(40));
   assert.deepEqual(await qualifyWorkflowAssets(destination, checkerRoot), {
-    artifactCount: 8,
-    packageCount: 2,
+    artifactCount: 12,
+    packageCount: 3,
   });
 });
 
@@ -49,10 +54,11 @@ test("workflow asset builder is deterministic and digest verified", async () => 
   const a = await buildWorkflowAssets(root, first, revision, contractRevision);
   const b = await buildWorkflowAssets(root, second, revision, contractRevision);
   assert.deepEqual(a, b);
-  assert.equal(a.artifactCount, 8);
+  assert.equal(a.artifactCount, 12);
   assert.equal(await verifyWorkflowAssets(first), a.artifactCount);
   const manifest = JSON.parse(await readFile(path.join(first, "release-metadata.json")));
   assert.deepEqual(manifest.packages.map((item) => item.tag), [
+    "workflow-package/hello-world-workflow/v0.2.0",
     "workflow-package/implementation-workflow/v0.3.0",
     "workflow-package/system-design-workflow/v0.3.0",
   ]);
@@ -63,8 +69,8 @@ test("workflow asset builder is deterministic and digest verified", async () => 
     assert.deepEqual(descriptor.contract, {
       repository: "firestige/wsr-contracts",
       revision: contractRevision,
-      minVersion: "1.1.0",
-      maxVersion: "1.1.0",
+      minVersion: item.package.name === "hello-world-workflow" ? "2.0.0" : "1.1.0",
+      maxVersion: item.package.name === "hello-world-workflow" ? "2.0.0" : "1.1.0",
     });
     const provenance = JSON.parse(await readFile(path.join(first, descriptor.provenance.name)));
     assert.equal(provenance.schemaVersion, "workflow-package.provenance@1.0.0");
@@ -111,6 +117,7 @@ test("only stable publish receives the release App token", async () => {
   assert.ok(promote.includes("repositories: wsr-workflow-package"));
   assert.ok(promote.includes("permission-contents: write"));
   assert.ok(candidate.includes('release.cjs qualify "$RUNNER_TEMP/remote-release"'));
+  assert.ok(promote.includes('release.cjs qualify "$RUNNER_TEMP/qualified-release" "$RUNNER_TEMP/system-contracts"'));
   assert.ok(promote.includes("jq -c '.packages[]'"));
   assert.ok(promote.includes('gh release create "$TAG"'));
   assert.equal(promote.includes("inputs.final_tag"), false);

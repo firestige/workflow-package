@@ -49,6 +49,8 @@ jobs:
       - name: Run acceptance
         run: |
           npm --prefix system-contracts/workflow-dsl ci
+          npm --prefix system-contracts/workflow-dsl-2-candidate ci
+          node system-contracts/workflow-dsl-2-candidate/generated/tools/check-example.cjs hello-world-workflow/definition
           node system-contracts/workflow-dsl/tools/check-example.cjs implementation/definition
           node system-contracts/workflow-dsl/tools/check-example.cjs system-design/definition
           node system-contracts/workflow-dsl/tools/run-conformance.cjs implementation/definition
@@ -59,7 +61,7 @@ jobs:
           CONTRACT_REF: ${{ inputs.contract_ref }}
         run: |
           node release/cli/release.cjs build "$RUNNER_TEMP/local-release" "$GITHUB_SHA" "$CONTRACT_REF"
-          node release/cli/release.cjs qualify "$RUNNER_TEMP/local-release" system-contracts/workflow-dsl
+          node release/cli/release.cjs qualify "$RUNNER_TEMP/local-release" system-contracts
       - name: Create and requalify RC
         env:
           GH_TOKEN: ${{ github.token }}
@@ -70,7 +72,7 @@ jobs:
           gh release create "$CANDIDATE_TAG" "$RUNNER_TEMP/local-release/"* --prerelease --target "$GITHUB_SHA"
           mkdir "$RUNNER_TEMP/remote-release"
           gh release download "$CANDIDATE_TAG" --dir "$RUNNER_TEMP/remote-release"
-          node release/cli/release.cjs qualify "$RUNNER_TEMP/remote-release" system-contracts/workflow-dsl
+          node release/cli/release.cjs qualify "$RUNNER_TEMP/remote-release" system-contracts
           cmp "$RUNNER_TEMP/local-release/release-metadata.json" "$RUNNER_TEMP/remote-release/release-metadata.json"
       - name: Attach qualification evidence
         env:
