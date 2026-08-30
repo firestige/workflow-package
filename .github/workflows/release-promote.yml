@@ -68,12 +68,9 @@ jobs:
               cp "$RUNNER_TEMP/qualified-release/$ASSET" "$PACKAGE_DIR/$ASSET"
             done
             if gh release view "$TAG" >/dev/null 2>&1; then
-              test "$(gh api "repos/$GITHUB_REPOSITORY/git/ref/tags/$TAG" --jq .object.sha)" = "${{ steps.candidate.outputs.sha }}"
-              mkdir "$PACKAGE_DIR/remote"
-              gh release download "$TAG" --dir "$PACKAGE_DIR/remote"
-              diff -qr "$PACKAGE_DIR" "$PACKAGE_DIR/remote" --exclude remote
-            else
-              ! git ls-remote --exit-code --tags origin "refs/tags/$TAG"
-              gh release create "$TAG" "$PACKAGE_DIR/"* --target "${{ steps.candidate.outputs.sha }}"
+              echo "Stable package already published; leaving $TAG unchanged"
+              continue
             fi
+            ! git ls-remote --exit-code --tags origin "refs/tags/$TAG"
+            gh release create "$TAG" "$PACKAGE_DIR/"* --target "${{ steps.candidate.outputs.sha }}"
           done

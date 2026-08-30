@@ -119,6 +119,9 @@ test("only stable publish receives the release App token", async () => {
   assert.ok(candidate.includes('release.cjs qualify "$RUNNER_TEMP/remote-release"'));
   assert.ok(promote.includes('release.cjs qualify "$RUNNER_TEMP/qualified-release" "$RUNNER_TEMP/system-contracts"'));
   assert.ok(promote.includes("jq -c '.packages[]'"));
+  assert.ok(promote.includes('gh release view "$TAG"'));
+  assert.ok(promote.includes("continue"));
+  assert.equal(promote.includes('test "$(gh api "repos/$GITHUB_REPOSITORY/git/ref/tags/$TAG"'), false);
   assert.ok(promote.includes('gh release create "$TAG"'));
   assert.equal(promote.includes("inputs.final_tag"), false);
 });
