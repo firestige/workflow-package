@@ -113,6 +113,7 @@ test("only stable publish receives the release App token", async () => {
   assert.ok(candidate.includes("ref: ${{ inputs.contract_ref }}"));
   assert.equal(candidate.includes("ref: main"), false);
   assert.ok(promote.includes("actions/create-github-app-token@"));
+  assert.ok(promote.includes('gh release view "$CANDIDATE_TAG" --repo "$GITHUB_REPOSITORY"'));
   assert.ok(promote.includes("GH_TOKEN: ${{ steps.release-app-token.outputs.token }}"));
   assert.ok(promote.includes("repositories: wsr-workflow-package"));
   assert.ok(promote.includes("permission-contents: write"));
