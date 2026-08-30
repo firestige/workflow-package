@@ -1,61 +1,21 @@
 {
   "kind": "agentops.actions",
-  "schemaVersion": "agentops.workflow-dsl@1.1.0",
+  "schemaVersion": "agentops.workflow-dsl@2.0.0",
   "actions": [
     {
-      "id": "action.greet",
-      "name": "Greet from TaskPrompt",
-      "purpose": "Use only the immutable TaskPrompt text and ordered attachment snapshots to produce one concise structured greeting.",
-      "inputSchema": {
-        "type": "object",
-        "properties": {
-          "prompt": {
-            "type": "object",
-            "properties": {
-              "text": { "type": "string" },
-              "attachments": {
-                "type": "array",
-                "items": {
-                  "type": "object",
-                  "properties": {
-                    "identity": { "type": "string" },
-                    "filename": { "type": "string" },
-                    "mediaType": { "type": "string" },
-                    "byteLength": { "type": "integer" },
-                    "digest": { "type": "string" },
-                    "content": {
-                      "type": "object",
-                      "properties": {
-                        "encoding": { "type": "string", "const": "base64" },
-                        "data": { "type": "string" }
-                      },
-                      "required": ["encoding", "data"]
-                    }
-                  },
-                  "required": ["identity", "filename", "mediaType", "byteLength", "digest", "content"]
-                }
-              }
-            },
-            "required": ["text", "attachments"]
-          }
-        },
-        "required": ["prompt"]
-      },
-      "resultSchema": {
-        "type": "object",
-        "properties": {
-          "success": { "type": "boolean", "const": true },
-          "greeting": { "type": "string" }
-        },
-        "required": ["success", "greeting"]
-      },
-      "responsibleAuthority": { "kind": "role", "role": "role.greeter" },
-      "allowedRoutes": ["route.greeter.model"],
-      "escalation": {
-        "allowed": false,
-        "scope": "route-within-allowed",
-        "cannotChange": ["TaskPrompt", "result schema", "tool scope", "workspace authority", "terminal"]
-      },
+      "id": "action.greet", "name": "Draft Greeting", "purpose": "Use only the immutable TaskPrompt to produce one concise structured greeting.",
+      "inputSchema": { "type": "object", "properties": { "prompt": { "type": "object", "properties": { "text": { "type": "string" }, "attachments": { "type": "array", "items": { "type": "object" } } }, "required": ["text", "attachments"] } }, "required": ["prompt"] },
+      "resultSchema": { "type": "object", "properties": { "success": { "type": "boolean", "const": true }, "greeting": { "type": "string" } }, "required": ["success", "greeting"] },
+      "responsibleAuthority": { "kind": "role", "role": "role.greeter" }, "allowedRoutes": ["route.greeter"],
+      "escalation": { "allowed": false, "scope": "route-within-allowed", "cannotChange": ["TaskPrompt", "result schema", "Provider binding"] },
+      "gate": { "deterministic": [], "freeTextBypass": "prohibited" }
+    },
+    {
+      "id": "action.review", "name": "Review Greeting", "purpose": "Review the frozen greeting and return the final structured result without changing the Provider binding.",
+      "inputSchema": { "type": "object", "properties": { "success": { "type": "boolean", "const": true }, "greeting": { "type": "string" } }, "required": ["success", "greeting"] },
+      "resultSchema": { "type": "object", "properties": { "success": { "type": "boolean", "const": true }, "greeting": { "type": "string" }, "reviewed": { "type": "boolean", "const": true } }, "required": ["success", "greeting", "reviewed"] },
+      "responsibleAuthority": { "kind": "role", "role": "role.reviewer" }, "allowedRoutes": ["route.reviewer"],
+      "escalation": { "allowed": false, "scope": "route-within-allowed", "cannotChange": ["greeting input", "result schema", "Provider binding"] },
       "gate": { "deterministic": [], "freeTextBypass": "prohibited" }
     }
   ]

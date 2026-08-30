@@ -8,11 +8,11 @@ workflow-package 存放 workflow-self-recursive 所执行的版本化 Workflow P
 
 - **Implementation**：把一份精确冻结、具备实现授权的上游设计转化为经过测试和独立对抗检查的特性分支候选变更，由 Goal Graph、Test Ladder 与演进式 TDD 驱动。
 - **System Design**：把简短、模糊的设计请求转化为 `IMPLEMENTATION_READY` 的 System Design，经历 adaptive grilling、冻结的 Brief 与 Skeleton、单一 writer 扩写与三个独立 Review。
-- **Hello World 0.1.0**：非 initial 的安装验证 Package；单个 model-backed Action 消费当前 Intake TaskPrompt，在没有 tool 或 workspace authority 的情况下返回 structured success。
+- **Hello World 0.2.0**：多 Provider 安装验证 Package；由 Copilot 驱动的 greeter Role 把结构化结果交给 Codex 驱动的 reviewer Role，全程不申请 tool 或 workspace authority。
 
 ## Developer preview
 
-本仓库是 workflow-self-recursive 架构优先开发者预览版的一部分，适用于个人或小团队的可信本地环境。当前以 design-time 模型发布 Workflow 定义与资源；Workflow Contract 与机器可读 Runtime DSL 尚未发布，因此 Package 通过 `UNMANAGED_SIMULATION` 与 package 自带的 CLI gates 验证。**后续会有破坏兼容性的变更。**
+本仓库是 workflow-self-recursive 架构优先开发者预览版的一部分，适用于个人或小团队的可信本地环境。每个 Package 都必须通过其 release 精确冻结的 Workflow Contract 校验；Hello World 0.2.0 使用 Runtime DSL 2.0，现有 Implementation 与 System Design Package 继续使用 Runtime DSL 1.1。**后续会有破坏兼容性的变更。**
 
 ## 结构
 

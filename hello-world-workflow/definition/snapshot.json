@@ -1,42 +1,42 @@
 {
   "kind": "agentops.workflow-package-snapshot",
-  "schemaVersion": "agentops.workflow-dsl@1.1.0",
+  "schemaVersion": "agentops.workflow-dsl@2.0.0",
   "snapshot": {
-    "id": "snapshot.hello-world-workflow.0.1.0",
+    "id": "snapshot.hello-world-workflow.0.2.0",
     "package": {
       "name": "hello-world-workflow",
-      "version": "0.1.0",
-      "digest": "sha256:e69a59308bc6f5c5aeb20cbca45ead7232594d256409bd1b8a26fb0b900a1e5a"
+      "version": "0.2.0",
+      "digest": "sha256:ed8fb7a19bc2360d707e067a9425205683208d7ce2d7f8d498386d16fdd05a27"
     },
     "definition": {
       "id": "hello-world-workflow",
-      "version": "0.1.0",
-      "contentIdentity": "sha256:dfe9d6de0d7b89b2312825a72aecb978f0c68feb615fb6871e0ea3f8a1c4726a"
+      "version": "0.2.0",
+      "contentIdentity": "sha256:d0604cdf67bee4d863b9fde24a2a57b91004c69326bc0679ecb0ce2542b1e13a"
     },
     "documents": [
       {
         "kind": "workflow",
-        "contentIdentity": "sha256:dfe9d6de0d7b89b2312825a72aecb978f0c68feb615fb6871e0ea3f8a1c4726a"
+        "contentIdentity": "sha256:d0604cdf67bee4d863b9fde24a2a57b91004c69326bc0679ecb0ce2542b1e13a"
       },
       {
         "kind": "actions",
-        "contentIdentity": "sha256:41bc8c2f9f9752fa30357b55d07a794f7fee320512ea5f3388cabeb404449fec"
+        "contentIdentity": "sha256:703f62683d2fda00ee61d0ab654549c36084b2e8d1d2d0552fcf68db7ef91f43"
       },
       {
         "kind": "roles",
-        "contentIdentity": "sha256:90c7965550ca7319fb85f819e13788e62a3336446f1e4f8596948a4bf7fb553d"
+        "contentIdentity": "sha256:945d338aa617d32cf5a17b44a2aebcf0ca60e34447dc6982444c4003f77b96df"
       },
       {
         "kind": "routes",
-        "contentIdentity": "sha256:eeb5f1dcb82f74468b9228d17ef8108582ae159c5021435146656055a32533aa"
+        "contentIdentity": "sha256:94e2d328a86c24df24da79ca6913ecfa45e1202821dd2afa6d441a136bbe3dc7"
       },
       {
         "kind": "artifacts",
-        "contentIdentity": "sha256:c7b55f9d84e8cbe58d32942e9e10d3d4a082c3ce2f2ef2de040a5a07ed83e428"
+        "contentIdentity": "sha256:5b4e76a2aefd22bca564881a9ccd0ccb9f8d37dadc1b49e1690a4312876dd47c"
       },
       {
         "kind": "validation",
-        "contentIdentity": "sha256:0a1defbe1b5975f24c23a2a49f79d61d6b2839d39de9c8296f72d84828abf56f"
+        "contentIdentity": "sha256:837458de2949bedf2fd09efe3d5fe84bd718d739c6ead57d752064e59514e58d"
       }
     ],
     "resources": [
@@ -46,14 +46,24 @@
         "contentIdentity": "sha256:95da1ed74b468e0140d2cf13b83e18ef929081201270ca1df1d5c40c6bc9b787"
       },
       {
+        "id": "resource.role-prompt.reviewer",
+        "owner": "owned",
+        "contentIdentity": "sha256:1dada445353df7d6be879b027118b572c6c3d5accff984bba14676159da97f98"
+      },
+      {
         "id": "resource.prompt.greet",
         "owner": "owned",
         "contentIdentity": "sha256:b05c467c47c7e95f48ca2feafab77481b931a87b5689f0bccca42976e4ce8197"
       },
       {
+        "id": "resource.prompt.review",
+        "owner": "owned",
+        "contentIdentity": "sha256:05154dcf5dca420b80a7682992ef22c69eb0efe17f28a14c7c906c560f81a207"
+      },
+      {
         "id": "resource.package-readme",
         "owner": "owned",
-        "contentIdentity": "sha256:4faa2c469b2972707cd055648b01695dc728c902656832045fd780c76857109f"
+        "contentIdentity": "sha256:36d466027404edf38fe211c5a1e77e57a5c0f1d7a6a4be5cafa7a9b26a81a0e1"
       },
       {
         "id": "resource.workflow-source",
@@ -61,17 +71,7 @@
         "contentIdentity": "sha256:19b1483e4ce7af5bcac7d42bde27b52f6ec3ca43f483085a3e5ad1172e542780"
       },
       {
-        "id": "resource.agent-definition.managed",
-        "owner": "referenced",
-        "contentIdentity": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-      },
-      {
-        "id": "resource.model.managed",
-        "owner": "referenced",
-        "contentIdentity": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
-      },
-      {
-        "id": "resource.driver.managed-cli",
+        "id": "resource.driver.provider",
         "owner": "referenced",
         "contentIdentity": "sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
       }
@@ -80,18 +80,28 @@
       {
         "action": "action.greet",
         "role": "role.greeter",
-        "route": "route.greeter.model"
+        "route": "route.greeter"
+      },
+      {
+        "action": "action.review",
+        "role": "role.reviewer",
+        "route": "route.reviewer"
       }
     ],
     "graph": {
       "nodes": [
-        "node.greet"
+        "node.greet",
+        "node.review"
       ],
       "eventEdges": [
         "event.greet-cancelled",
-        "event.greet-failed"
+        "event.greet-failed",
+        "event.review-cancelled",
+        "event.review-failed"
       ],
-      "dataEdges": [],
+      "dataEdges": [
+        "data.greeting-to-review"
+      ],
       "hostOperations": [],
       "terminals": [
         "SUCCESS",
@@ -119,12 +129,12 @@
         "skill",
         "artifact_user"
       ],
-      "mergeProof": "sha256:49bebc7d69c9fd32c5e4c38f07982a5603d4a55e2ab20955296a7eaf90a3f635"
+      "mergeProof": "sha256:78b74759e19a65d43da81a142d1309d20b0d67203dac0436126677209917fb9a"
     },
     "resolutionProof": {
       "noAmbientFallback": true,
       "allBindingsExact": true
     },
-    "digest": "sha256:9328049e9a1abd760ee503fe6ea9cb819f56f36e298ac99b030174ce014e1d79"
+    "digest": "sha256:5825f2a4d009b826f1023a9ca8504c59bf6a597313d81c114abca5183efc65aa"
   }
 }
