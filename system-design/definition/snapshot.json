@@ -2,25 +2,25 @@
   "kind": "agentops.workflow-package-snapshot",
   "schemaVersion": "agentops.workflow-dsl@2.0.0",
   "snapshot": {
-    "id": "snapshot.system-design-workflow.0.4.3",
+    "id": "snapshot.system-design-workflow.0.4.4",
     "package": {
       "name": "system-design-workflow",
-      "version": "0.4.3",
-      "digest": "sha256:08e92af522b4e2130270a0e45c0109f3316c0fe1006aaf8990ace66cefcd2024"
+      "version": "0.4.4",
+      "digest": "sha256:7801302a5614a2486b367f03681b4587226f4bb154e0c999321fa8ea508c4b32"
     },
     "definition": {
       "id": "system-design-workflow",
-      "version": "0.4.3",
-      "contentIdentity": "sha256:f8129ee2fb0a94f2d8f3c1715031ded3a94a3b8b25f619471428cc781b845934"
+      "version": "0.4.4",
+      "contentIdentity": "sha256:7c02484a07a06eadf3fcf3d32a60e04136fa3773b4becf9041233a2b19b5997c"
     },
     "documents": [
       {
         "kind": "workflow",
-        "contentIdentity": "sha256:f8129ee2fb0a94f2d8f3c1715031ded3a94a3b8b25f619471428cc781b845934"
+        "contentIdentity": "sha256:7c02484a07a06eadf3fcf3d32a60e04136fa3773b4becf9041233a2b19b5997c"
       },
       {
         "kind": "actions",
-        "contentIdentity": "sha256:4eda2e3adb5ff0e7bca064405e122d84e71e1970515167caf6fbc5a0d53cb1ce"
+        "contentIdentity": "sha256:8ab6137808a7833e38a9af991d5f7eb834d6c9c76f2d270c2045f9f8b645b1dd"
       },
       {
         "kind": "roles",
@@ -323,7 +323,7 @@
       {
         "id": "resource.package-readme",
         "owner": "owned",
-        "contentIdentity": "sha256:3f0e45bd3c75fc0786ecc28f43e11bde8787691064f32a8f8153d260da2aeae3"
+        "contentIdentity": "sha256:3474fb884a6eacf1078e4219615d9e80021a679b9ca316b540d51712beb54e26"
       },
       {
         "id": "resource.skill.grilling",
@@ -604,12 +604,12 @@
         "skill",
         "artifact_user"
       ],
-      "mergeProof": "sha256:a0e94f4c6410e5c3dfb8023e9ee4d6be6db182e89728c78327fbb61ecbd9134a"
+      "mergeProof": "sha256:01ae683ba3b461d87fe21a7c8907a6b992af0524097d9b625ab6dcc35af60c50"
     },
     "resolutionProof": {
       "noAmbientFallback": true,
       "allBindingsExact": true
     },
-    "digest": "sha256:102235270afed33641f7027bbbd7f9aca9e9e417b62f882c3244fb607ffd56dd"
+    "digest": "sha256:11a2382a9dbd6cc689bfade87a5f97cb457856eb6e631a370a2b3b93a01609ae"
   }
 }
