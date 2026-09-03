@@ -2,25 +2,25 @@
   "kind": "agentops.workflow-package-snapshot",
   "schemaVersion": "agentops.workflow-dsl@2.0.0",
   "snapshot": {
-    "id": "snapshot.system-design-workflow.0.4.6",
+    "id": "snapshot.system-design-workflow.0.4.7",
     "package": {
       "name": "system-design-workflow",
-      "version": "0.4.6",
-      "digest": "sha256:73ceb1b9d9c2615989b0d795b6637465e243ac855a333d9f17c9f5d338a8b897"
+      "version": "0.4.7",
+      "digest": "sha256:cd67e3f888a939a24ad6ff723e2be097e1a9dbba0e30b22de73675b65086ad3c"
     },
     "definition": {
       "id": "system-design-workflow",
-      "version": "0.4.6",
-      "contentIdentity": "sha256:0fcf11dec93f8d06a44ca029917a4097d1a10f9482ea3c4ce1c1bec62d2855b1"
+      "version": "0.4.7",
+      "contentIdentity": "sha256:41eebf19a230167d3f3281df789f6ff22743c3dc011565955b4e3977a8e68a3a"
     },
     "documents": [
       {
         "kind": "workflow",
-        "contentIdentity": "sha256:0fcf11dec93f8d06a44ca029917a4097d1a10f9482ea3c4ce1c1bec62d2855b1"
+        "contentIdentity": "sha256:41eebf19a230167d3f3281df789f6ff22743c3dc011565955b4e3977a8e68a3a"
       },
       {
         "kind": "actions",
-        "contentIdentity": "sha256:8ab6137808a7833e38a9af991d5f7eb834d6c9c76f2d270c2045f9f8b645b1dd"
+        "contentIdentity": "sha256:5cc38dcaad4c6416a9300d2d9e31926f4d4fce8eacd9b7666bada7ecbab5848b"
       },
       {
         "kind": "roles",
@@ -118,12 +118,12 @@
       {
         "id": "resource.prompt.expand-system-design",
         "owner": "owned",
-        "contentIdentity": "sha256:c75fd8c889fb557134f5d91f8110fbcfd3597ce07a70344f24afe6e4dd0f3ce3"
+        "contentIdentity": "sha256:99e90d2131ea8cd6fe7f50124b35c4afc99e6b52d0e8f4ad36883e78657fa2e1"
       },
       {
         "id": "resource.prompt.integrate-draft",
         "owner": "owned",
-        "contentIdentity": "sha256:070318879038a261fad4825d3a968bd048a7abfc25196607c0b1ef63e05ac760"
+        "contentIdentity": "sha256:16d8ee9b28ef1c709de28a3327da8c816f55970d1114f52920666c871e8c6fbe"
       },
       {
         "id": "resource.prompt.architecture-direction-review",
@@ -618,12 +618,12 @@
         "skill",
         "artifact_user"
       ],
-      "mergeProof": "sha256:69f8c74922f2acd0e52f72a0a3efc8253546f8d1415cbc48f2acfaf956f43ee0"
+      "mergeProof": "sha256:7f7ba57e0a99ea08a9bce50989215059fe03094ee00b4bddacd538fd21b60937"
     },
     "resolutionProof": {
       "noAmbientFallback": true,
       "allBindingsExact": true
     },
-    "digest": "sha256:777d23e8388064f90cde810ce40bce313c4e62e45001f2e622a1f402294606c0"
+    "digest": "sha256:be93f1022a3b4aa8dc7c0e2542384b10f1c6bd805ba4d267c6e330989607e84d"
   }
 }
