@@ -5,8 +5,8 @@ const test = require("node:test");
 
 const repository = path.resolve(__dirname, "../..");
 const packages = [
-  { directory: "implementation", name: "implementation-workflow" },
-  { directory: "system-design", name: "system-design-workflow" },
+  { directory: "implementation", name: "implementation-workflow", version: "0.4.6" },
+  { directory: "system-design", name: "system-design-workflow", version: "0.4.7" },
 ];
 const documentNames = ["package", "workflow", "actions", "roles", "routes", "artifacts", "validation", "snapshot"];
 
@@ -15,7 +15,7 @@ async function readDefinition(directory, documentName) {
 }
 
 for (const packageUnderTest of packages) {
-  test(`${packageUnderTest.name}@0.4.6 is a closed Workflow DSL 2.0 package`, async () => {
+  test(`${packageUnderTest.name}@${packageUnderTest.version} is a closed Workflow DSL 2.0 package`, async () => {
     const documents = Object.fromEntries(await Promise.all(documentNames.map(async (name) => [
       name,
       await readDefinition(packageUnderTest.directory, name),
@@ -25,16 +25,16 @@ for (const packageUnderTest of packages) {
       assert.equal(document.schemaVersion, "agentops.workflow-dsl@2.0.0", `${name}.json schemaVersion`);
     }
     assert.equal(documents.package.package.name, packageUnderTest.name);
-    assert.equal(documents.package.package.version, "0.4.6");
-    assert.equal(documents.package.package.definition.version, "0.4.6");
+    assert.equal(documents.package.package.version, packageUnderTest.version);
+    assert.equal(documents.package.package.definition.version, packageUnderTest.version);
     assert.deepEqual(documents.package.compatibility, {
       minContractVersion: "2.0.0",
       maxContractVersion: "2.0.0",
     });
-    assert.equal(documents.workflow.workflow.version, "0.4.6");
+    assert.equal(documents.workflow.workflow.version, packageUnderTest.version);
     assert.equal(documents.workflow.workflow.contractVersion, "agentops.workflow-dsl@2.0.0");
-    assert.equal(documents.snapshot.snapshot.package.version, "0.4.6");
-    assert.equal(documents.snapshot.snapshot.definition.version, "0.4.6");
+    assert.equal(documents.snapshot.snapshot.package.version, packageUnderTest.version);
+    assert.equal(documents.snapshot.snapshot.definition.version, packageUnderTest.version);
 
     const resources = [
       ...documents.package.resources.owned,
@@ -198,6 +198,19 @@ for (const packageUnderTest of packages) {
       });
       const integratePrompt = await readFile(path.join(repository, "system-design", "prompts", "actions", "integrate-draft.prompt.md"), "utf8");
       assert.match(integratePrompt, /write the candidate to `system-design\.md`/u);
+      assert.match(integratePrompt, /Delivery worktree is the current working directory/u,
+        "SD-08 must state its admitted write location without relying on package-local filesystem access");
+      assert.match(integratePrompt, /## 1\. Metadata and Authority[\s\S]*## 15\. Module Deepening and Implementation Handoff/u,
+        "SD-08 must carry the authoring template in its admitted prompt");
+      assert.doesNotMatch(integratePrompt, /Integrate .* into `system-design-document\.template\.md`/u,
+        "SD-08 must not require direct access to a package-local template file");
+      const expandPrompt = await readFile(path.join(repository, "system-design", "prompts", "actions", "expand-system-design.prompt.md"), "utf8");
+      assert.match(expandPrompt, /Return each checkpoint with its complete Markdown `content`/u,
+        "SD-07 must project checkpoint content into its structured result for SD-08");
+      const expandAction = documents.actions.actions.find(({ id }) => id === "action.sd-07");
+      assert.deepEqual(expandAction?.resultSchema.properties.draftCheckpoints.items.required, [
+        "identity", "contentDigest", "content",
+      ]);
     }
   });
 }

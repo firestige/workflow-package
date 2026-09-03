@@ -56,7 +56,7 @@ test("workflow asset builder is deterministic and digest verified", async () => 
   assert.deepEqual(manifest.packages.map((item) => item.tag), [
     "workflow-package/hello-world-workflow/v0.2.0",
     "workflow-package/implementation-workflow/v0.4.6",
-    "workflow-package/system-design-workflow/v0.4.6",
+    "workflow-package/system-design-workflow/v0.4.7",
   ]);
   for (const item of manifest.packages) {
     assert.equal(item.assets.length, 4);

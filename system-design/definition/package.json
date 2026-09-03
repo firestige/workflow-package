@@ -3,7 +3,7 @@
   "schemaVersion": "agentops.workflow-dsl@2.0.0",
   "package": {
     "name": "system-design-workflow",
-    "version": "0.4.6",
+    "version": "0.4.7",
     "purpose": "Turn a short Intake, project authority material and user opinions into an IMPLEMENTATION_READY System Design that states what problem is solved, why the design is shaped this way, and how fitness for the current project is proven; budget exhaustion or missing external authority enters recoverable INCOMPLETE, explicit cancellation enters CANCELLED, and non-retryable failure enters FAILED (none equals success).",
     "status": "DRAFT",
     "admissibility": "DESIGN_REFERENCE",
@@ -13,10 +13,10 @@
     },
     "definition": {
       "name": "system-design-workflow",
-      "version": "0.4.6",
-      "contentIdentity": "sha256:0fcf11dec93f8d06a44ca029917a4097d1a10f9482ea3c4ce1c1bec62d2855b1"
+      "version": "0.4.7",
+      "contentIdentity": "sha256:41eebf19a230167d3f3281df789f6ff22743c3dc011565955b4e3977a8e68a3a"
     },
-    "digest": "sha256:73ceb1b9d9c2615989b0d795b6637465e243ac855a333d9f17c9f5d338a8b897"
+    "digest": "sha256:cd67e3f888a939a24ad6ff723e2be097e1a9dbba0e30b22de73675b65086ad3c"
   },
   "documents": {
     "workflow": "workflow.json",
@@ -153,7 +153,7 @@
         "kind": "action-prompt",
         "owner": "owned",
         "path": "../prompts/actions/expand-system-design.prompt.md",
-        "contentIdentity": "sha256:c75fd8c889fb557134f5d91f8110fbcfd3597ce07a70344f24afe6e4dd0f3ce3",
+        "contentIdentity": "sha256:99e90d2131ea8cd6fe7f50124b35c4afc99e6b52d0e8f4ad36883e78657fa2e1",
         "use": "action.sd-07 mission"
       },
       {
@@ -161,7 +161,7 @@
         "kind": "action-prompt",
         "owner": "owned",
         "path": "../prompts/actions/integrate-draft.prompt.md",
-        "contentIdentity": "sha256:070318879038a261fad4825d3a968bd048a7abfc25196607c0b1ef63e05ac760",
+        "contentIdentity": "sha256:16d8ee9b28ef1c709de28a3327da8c816f55970d1114f52920666c871e8c6fbe",
         "use": "action.sd-08 mission"
       },
       {
