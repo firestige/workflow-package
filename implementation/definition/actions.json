@@ -875,14 +875,23 @@
       "purpose": "Preserve provenance, merge clear common causes, detect conflicts and route each Finding; never votes, never changes severity, never edits tests/code and never closes Findings.",
       "inputSchema": {
         "type": "object",
-        "properties": {
-          "reviewResults": {
-            "type": "array",
-            "items": {
-              "type": "object"
-            }
+      "properties": {
+        "reviewResults": {
+          "type": "array",
+          "items": {
+            "type": "object"
           }
+        },
+        "blackboxReview": {
+          "type": "object"
+        },
+        "whiteboxReview": {
+          "type": "object"
+        },
+        "custodyReview": {
+          "type": "object"
         }
+      }
       },
       "resultSchema": {
         "type": "object",

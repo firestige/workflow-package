@@ -4,7 +4,7 @@
   "workflow": {
     "id": "system-design-workflow",
     "name": "System Design Workflow",
-    "version": "0.4.2",
+    "version": "0.4.6",
     "purpose": "Turn a short Intake, project authority material and user opinions into a System Design that explains what problem is solved, why the design is shaped this way, and how fitness for the current project is proven. The only success terminal is IMPLEMENTATION_READY; budget exhaustion or missing external authority enters recoverable INCOMPLETE, explicit cancellation enters CANCELLED, and non-retryable execution/configuration failure enters FAILED; none of the three equals success.",
     "contractVersion": "agentops.workflow-dsl@2.0.0"
   },
@@ -1247,6 +1247,317 @@
           "slot": { "kind": "property", "name": "status" }
         },
         "target": { "kind": "state", "field": "status" }
+      },
+      {
+        "id": "data.sd-02-sd-03-working-brief",
+        "source": {
+          "kind": "site-result",
+          "site": { "kind": "node", "nodeIdentity": "node.sd-02" },
+          "slot": { "kind": "property", "name": "workingBrief" }
+        },
+        "target": {
+          "kind": "site-input",
+          "site": { "kind": "node", "nodeIdentity": "node.sd-03" },
+          "slot": { "kind": "property", "name": "workingBrief" }
+        }
+      },
+      {
+        "id": "data.sd-03-sd-04-brief",
+        "source": {
+          "kind": "site-result",
+          "site": { "kind": "node", "nodeIdentity": "node.sd-03" },
+          "slot": { "kind": "property", "name": "brief" }
+        },
+        "target": {
+          "kind": "site-input",
+          "site": { "kind": "node", "nodeIdentity": "node.sd-04" },
+          "slot": { "kind": "property", "name": "brief" }
+        }
+      },
+      {
+        "id": "data.sd-03-sd-05-brief",
+        "source": {
+          "kind": "site-result",
+          "site": { "kind": "node", "nodeIdentity": "node.sd-03" },
+          "slot": { "kind": "property", "name": "brief" }
+        },
+        "target": {
+          "kind": "site-input",
+          "site": { "kind": "node", "nodeIdentity": "node.sd-05" },
+          "slot": { "kind": "property", "name": "brief" }
+        }
+      },
+      {
+        "id": "data.sd-04-sd-05-skeleton",
+        "source": {
+          "kind": "site-result",
+          "site": { "kind": "node", "nodeIdentity": "node.sd-04" },
+          "slot": { "kind": "property", "name": "skeleton" }
+        },
+        "target": {
+          "kind": "site-input",
+          "site": { "kind": "node", "nodeIdentity": "node.sd-05" },
+          "slot": { "kind": "property", "name": "skeleton" }
+        }
+      },
+      {
+        "id": "data.sd-03-sd-06-brief",
+        "source": {
+          "kind": "site-result",
+          "site": { "kind": "node", "nodeIdentity": "node.sd-03" },
+          "slot": { "kind": "property", "name": "brief" }
+        },
+        "target": {
+          "kind": "site-input",
+          "site": { "kind": "node", "nodeIdentity": "node.sd-06" },
+          "slot": { "kind": "property", "name": "brief" }
+        }
+      },
+      {
+        "id": "data.sd-04-sd-06-skeleton",
+        "source": {
+          "kind": "site-result",
+          "site": { "kind": "node", "nodeIdentity": "node.sd-04" },
+          "slot": { "kind": "property", "name": "skeleton" }
+        },
+        "target": {
+          "kind": "site-input",
+          "site": { "kind": "node", "nodeIdentity": "node.sd-06" },
+          "slot": { "kind": "property", "name": "skeleton" }
+        }
+      },
+      {
+        "id": "data.sd-05-sd-06-direction-review",
+        "source": {
+          "kind": "site-result",
+          "site": { "kind": "node", "nodeIdentity": "node.sd-05" },
+          "slot": { "kind": "whole" }
+        },
+        "target": {
+          "kind": "site-input",
+          "site": { "kind": "node", "nodeIdentity": "node.sd-06" },
+          "slot": { "kind": "property", "name": "directionReview" }
+        }
+      },
+      {
+        "id": "data.sd-03-sd-07-brief",
+        "source": {
+          "kind": "site-result",
+          "site": { "kind": "node", "nodeIdentity": "node.sd-03" },
+          "slot": { "kind": "property", "name": "brief" }
+        },
+        "target": {
+          "kind": "site-input",
+          "site": { "kind": "node", "nodeIdentity": "node.sd-07" },
+          "slot": { "kind": "property", "name": "brief" }
+        }
+      },
+      {
+        "id": "data.sd-04-sd-07-skeleton",
+        "source": {
+          "kind": "site-result",
+          "site": { "kind": "node", "nodeIdentity": "node.sd-04" },
+          "slot": { "kind": "property", "name": "skeleton" }
+        },
+        "target": {
+          "kind": "site-input",
+          "site": { "kind": "node", "nodeIdentity": "node.sd-07" },
+          "slot": { "kind": "property", "name": "skeleton" }
+        }
+      },
+      {
+        "id": "data.sd-06-sd-07-feasibility",
+        "source": {
+          "kind": "site-result",
+          "site": { "kind": "node", "nodeIdentity": "node.sd-06" },
+          "slot": { "kind": "whole" }
+        },
+        "target": {
+          "kind": "site-input",
+          "site": { "kind": "node", "nodeIdentity": "node.sd-07" },
+          "slot": { "kind": "property", "name": "feasibility" }
+        }
+      },
+      {
+        "id": "data.sd-03-sd-08-brief",
+        "source": {
+          "kind": "site-result",
+          "site": { "kind": "node", "nodeIdentity": "node.sd-03" },
+          "slot": { "kind": "property", "name": "brief" }
+        },
+        "target": {
+          "kind": "site-input",
+          "site": { "kind": "node", "nodeIdentity": "node.sd-08" },
+          "slot": { "kind": "property", "name": "brief" }
+        }
+      },
+      {
+        "id": "data.sd-04-sd-08-skeleton",
+        "source": {
+          "kind": "site-result",
+          "site": { "kind": "node", "nodeIdentity": "node.sd-04" },
+          "slot": { "kind": "property", "name": "skeleton" }
+        },
+        "target": {
+          "kind": "site-input",
+          "site": { "kind": "node", "nodeIdentity": "node.sd-08" },
+          "slot": { "kind": "property", "name": "skeleton" }
+        }
+      },
+      {
+        "id": "data.sd-07-sd-08-expanded-design",
+        "source": {
+          "kind": "site-result",
+          "site": { "kind": "node", "nodeIdentity": "node.sd-07" },
+          "slot": { "kind": "whole" }
+        },
+        "target": {
+          "kind": "site-input",
+          "site": { "kind": "node", "nodeIdentity": "node.sd-08" },
+          "slot": { "kind": "property", "name": "expandedDesign" }
+        }
+      },
+      {
+        "id": "data.sd-08-sd-09-problem-solution-draft",
+        "source": {
+          "kind": "site-result",
+          "site": { "kind": "node", "nodeIdentity": "node.sd-08" },
+          "slot": { "kind": "property", "name": "draft" }
+        },
+        "target": {
+          "kind": "site-input",
+          "site": { "kind": "parallel-branch", "nodeIdentity": "node.sd-09", "branchIdentity": "branch.sd-09.problem-solution" },
+          "slot": { "kind": "property", "name": "draft" }
+        }
+      },
+      {
+        "id": "data.sd-08-selected-review-lenses",
+        "source": {
+          "kind": "site-result",
+          "site": { "kind": "node", "nodeIdentity": "node.sd-08" },
+          "slot": { "kind": "property", "name": "selectedReviewLenses" }
+        },
+        "target": {
+          "kind": "state",
+          "field": "selected_review_lenses"
+        }
+      },
+      {
+        "id": "data.sd-08-sd-09-architecture-draft",
+        "source": {
+          "kind": "site-result",
+          "site": { "kind": "node", "nodeIdentity": "node.sd-08" },
+          "slot": { "kind": "property", "name": "draft" }
+        },
+        "target": {
+          "kind": "site-input",
+          "site": { "kind": "parallel-branch", "nodeIdentity": "node.sd-09", "branchIdentity": "branch.sd-09.architecture" },
+          "slot": { "kind": "property", "name": "draft" }
+        }
+      },
+      {
+        "id": "data.sd-08-sd-09-quality-acceptance-draft",
+        "source": {
+          "kind": "site-result",
+          "site": { "kind": "node", "nodeIdentity": "node.sd-08" },
+          "slot": { "kind": "property", "name": "draft" }
+        },
+        "target": {
+          "kind": "site-input",
+          "site": { "kind": "parallel-branch", "nodeIdentity": "node.sd-09", "branchIdentity": "branch.sd-09.quality-acceptance" },
+          "slot": { "kind": "property", "name": "draft" }
+        }
+      },
+      {
+        "id": "data.sd-08-sd-13-candidate-design",
+        "source": {
+          "kind": "site-result",
+          "site": { "kind": "node", "nodeIdentity": "node.sd-08" },
+          "slot": { "kind": "property", "name": "draft" }
+        },
+        "target": {
+          "kind": "site-input",
+          "site": { "kind": "node", "nodeIdentity": "node.sd-13" },
+          "slot": { "kind": "property", "name": "candidateDesign" }
+        }
+      },
+      {
+        "id": "data.sd-08-sd-14-candidate",
+        "source": {
+          "kind": "site-result",
+          "site": { "kind": "node", "nodeIdentity": "node.sd-08" },
+          "slot": { "kind": "property", "name": "draft" }
+        },
+        "target": {
+          "kind": "site-input",
+          "site": { "kind": "node", "nodeIdentity": "node.sd-14" },
+          "slot": { "kind": "property", "name": "candidate" }
+        }
+      },
+      {
+        "id": "data.sd-09-problem-solution-to-join",
+        "source": {
+          "kind": "site-result",
+          "site": { "kind": "parallel-branch", "nodeIdentity": "node.sd-09", "branchIdentity": "branch.sd-09.problem-solution" },
+          "slot": { "kind": "whole" }
+        },
+        "target": {
+          "kind": "site-input",
+          "site": { "kind": "parallel-join", "nodeIdentity": "node.sd-09" },
+          "slot": { "kind": "property", "name": "problemSolutionReview" }
+        }
+      },
+      {
+        "id": "data.sd-09-architecture-to-join",
+        "source": {
+          "kind": "site-result",
+          "site": { "kind": "parallel-branch", "nodeIdentity": "node.sd-09", "branchIdentity": "branch.sd-09.architecture" },
+          "slot": { "kind": "whole" }
+        },
+        "target": {
+          "kind": "site-input",
+          "site": { "kind": "parallel-join", "nodeIdentity": "node.sd-09" },
+          "slot": { "kind": "property", "name": "architectureReview" }
+        }
+      },
+      {
+        "id": "data.sd-09-quality-acceptance-to-join",
+        "source": {
+          "kind": "site-result",
+          "site": { "kind": "parallel-branch", "nodeIdentity": "node.sd-09", "branchIdentity": "branch.sd-09.quality-acceptance" },
+          "slot": { "kind": "whole" }
+        },
+        "target": {
+          "kind": "site-input",
+          "site": { "kind": "parallel-join", "nodeIdentity": "node.sd-09" },
+          "slot": { "kind": "property", "name": "qualityAcceptanceReview" }
+        }
+      },
+      {
+        "id": "data.sd-09-join-sd-12-review-disposition",
+        "source": {
+          "kind": "site-result",
+          "site": { "kind": "parallel-join", "nodeIdentity": "node.sd-09" },
+          "slot": { "kind": "whole" }
+        },
+        "target": {
+          "kind": "site-input",
+          "site": { "kind": "node", "nodeIdentity": "node.sd-12" },
+          "slot": { "kind": "property", "name": "reviewDisposition" }
+        }
+      },
+      {
+        "id": "data.sd-08-sd-12-draft",
+        "source": {
+          "kind": "site-result",
+          "site": { "kind": "node", "nodeIdentity": "node.sd-08" },
+          "slot": { "kind": "property", "name": "draft" }
+        },
+        "target": {
+          "kind": "site-input",
+          "site": { "kind": "node", "nodeIdentity": "node.sd-12" },
+          "slot": { "kind": "property", "name": "draft" }
+        }
       }
     ]
   },
@@ -1254,13 +1565,29 @@
     {
       "id": "operation.sd-14-deterministic-verification",
       "contractIdentity": "host-operation.deterministic-validation.v1",
-      "configuration": { "validator": "validator.final-verification" },
+      "configuration": {
+        "validator": "validator.final-verification",
+        "accepted": true,
+        "result": {
+          "status": "PASS",
+          "routing": "pass",
+          "validatorReport": { "mode": "ACCEPT_ALL", "issue": 87 }
+        }
+      },
       "requiredCapabilities": ["deterministic-validation"]
     },
     {
       "id": "operation.sd-15-publication-guard",
       "contractIdentity": "host-operation.deterministic-validation.v1",
-      "configuration": { "validator": "validator.cleanup-gate" },
+      "configuration": {
+        "validator": "validator.cleanup-gate",
+        "accepted": true,
+        "result": {
+          "status": "CLEAN",
+          "routing": "clean",
+          "promotedDeliverables": ["system-design.md"]
+        }
+      },
       "requiredCapabilities": ["deterministic-validation"]
     }
   ],

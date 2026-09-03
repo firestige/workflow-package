@@ -30,4 +30,6 @@ test('SD-02 grilling remains Action-scoped and does not route through a Workflow
     mode: 'action-scoped',
     completion: 'structured-only'
   });
+  assert.ok(action.resultSchema.required.includes('workingBrief'),
+    'the structured completion must contain the value projected into SD-03');
 });

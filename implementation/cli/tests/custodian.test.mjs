@@ -186,7 +186,7 @@ test("package verification accepts the complete checked-in resource set", () => 
   assert.equal(result.json.status, "PASSED");
   assert.equal(result.json.action_ids.length, 21);
   assert.equal(result.json.referenced_action_ids.length, 21);
-  assert.equal(result.json.skill_count, 8);
+  assert.equal(result.json.skill_count, 9);
 });
 
 test("cleanup removes only an implementation run workspace under project tmp", () => {

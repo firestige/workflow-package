@@ -39,9 +39,9 @@ const pkg = read("package.json");
 const workflow = read(pkg.documents.workflow);
 const actions = read(pkg.documents.actions);
 pkg.schemaVersion = "agentops.workflow-dsl@2.0.0";
-pkg.package.version = "0.4.2";
+pkg.package.version = "0.4.6";
 pkg.package.purpose = "Turns one exact frozen, implementation-authorizing design into a tested, independently reviewed feature-branch candidate via Goal Graph, Test Ladder and evolutionary TDD; machine-readable Definition per agentops.workflow-dsl@2.0.0.";
-pkg.package.definition.version = "0.4.2";
+pkg.package.definition.version = "0.4.6";
 pkg.compatibility = { minContractVersion: "2.0.0", maxContractVersion: "2.0.0" };
 for (const owner of ["owned", "referenced"]) {
   pkg.resources[owner] = pkg.resources[owner].filter(({ kind }) => kind !== "agent-definition" && kind !== "model");

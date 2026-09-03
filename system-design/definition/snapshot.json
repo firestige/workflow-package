@@ -2,25 +2,25 @@
   "kind": "agentops.workflow-package-snapshot",
   "schemaVersion": "agentops.workflow-dsl@2.0.0",
   "snapshot": {
-    "id": "snapshot.system-design-workflow.0.4.2",
+    "id": "snapshot.system-design-workflow.0.4.6",
     "package": {
       "name": "system-design-workflow",
-      "version": "0.4.2",
-      "digest": "sha256:64fc01dddee7b810a201a34de531360ad23f3191d72ce4cb3a0a0fabf0fb379c"
+      "version": "0.4.6",
+      "digest": "sha256:73ceb1b9d9c2615989b0d795b6637465e243ac855a333d9f17c9f5d338a8b897"
     },
     "definition": {
       "id": "system-design-workflow",
-      "version": "0.4.2",
-      "contentIdentity": "sha256:209e5eebc94418b88485f7b43924e24a6c78bc0fbaa7ec3badac74205258612b"
+      "version": "0.4.6",
+      "contentIdentity": "sha256:0fcf11dec93f8d06a44ca029917a4097d1a10f9482ea3c4ce1c1bec62d2855b1"
     },
     "documents": [
       {
         "kind": "workflow",
-        "contentIdentity": "sha256:209e5eebc94418b88485f7b43924e24a6c78bc0fbaa7ec3badac74205258612b"
+        "contentIdentity": "sha256:0fcf11dec93f8d06a44ca029917a4097d1a10f9482ea3c4ce1c1bec62d2855b1"
       },
       {
         "kind": "actions",
-        "contentIdentity": "sha256:ecdad2b732ae4bc7b65072d5344d0a612944e6b60c8db1de51c651cdeb1f6fdd"
+        "contentIdentity": "sha256:8ab6137808a7833e38a9af991d5f7eb834d6c9c76f2d270c2045f9f8b645b1dd"
       },
       {
         "kind": "roles",
@@ -28,7 +28,7 @@
       },
       {
         "kind": "routes",
-        "contentIdentity": "sha256:08c47bbb40f28ffa72cc919dfebd284f4d93ea886b9d97aa97bbca92b5829c15"
+        "contentIdentity": "sha256:d79e21c2853534bb5d78be019722f1a8965c2aeb7517062844ade318874991b5"
       },
       {
         "kind": "artifacts",
@@ -93,7 +93,7 @@
       {
         "id": "resource.prompt.adaptive-grilling",
         "owner": "owned",
-        "contentIdentity": "sha256:db680494fe18d032f86888709dfc310b112f670dac3d9ab88af846685ad63594"
+        "contentIdentity": "sha256:ebcc900870a3ab28a76fc5fda1a751f17fc7d78c4f03580d3164ab531e5299c7"
       },
       {
         "id": "resource.prompt.evidence-research",
@@ -123,7 +123,7 @@
       {
         "id": "resource.prompt.integrate-draft",
         "owner": "owned",
-        "contentIdentity": "sha256:eb5003d890bb0d9e6d4031f37ac0827b34952503512b10f0675c47f671b5513d"
+        "contentIdentity": "sha256:070318879038a261fad4825d3a968bd048a7abfc25196607c0b1ef63e05ac760"
       },
       {
         "id": "resource.prompt.architecture-direction-review",
@@ -169,6 +169,16 @@
         "id": "resource.prompt.fresh-reader-test",
         "owner": "owned",
         "contentIdentity": "sha256:211a2767423df9b9a624acc921b98996e8f4d32507408d81c2d8be3fe382cc19"
+      },
+      {
+        "id": "resource.skill.grilling",
+        "owner": "owned",
+        "contentIdentity": "sha256:7551ce62841d4cb954c64ba7e9613b439f0a89bf549a2fbbdff82ef725fb9c27"
+      },
+      {
+        "id": "resource.skill.codebase-design",
+        "owner": "owned",
+        "contentIdentity": "sha256:19b6802aa524ee7f2257dc24b843305956c6920f278b8e4b073fcebfc66c6856"
       },
       {
         "id": "resource.skill.system-design-authoring",
@@ -323,17 +333,7 @@
       {
         "id": "resource.package-readme",
         "owner": "owned",
-        "contentIdentity": "sha256:f0e9c01f0d5ce42bccf6caf34ae7136d85465bb0784b8b1c0740d975bcdf670f"
-      },
-      {
-        "id": "resource.skill.grilling",
-        "owner": "referenced",
-        "contentIdentity": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-      },
-      {
-        "id": "resource.skill.codebase-design",
-        "owner": "referenced",
-        "contentIdentity": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+        "contentIdentity": "sha256:f020785f6c6aa21c0c6bdbc4b676e0a88584fdab2b1ffaebaf7e94552ee930a7"
       },
       {
         "id": "resource.driver.managed-cli",
@@ -561,7 +561,31 @@
       ],
       "dataEdges": [
         "data.sd-01-sd-02-intake-context",
-        "data.sd-02-status"
+        "data.sd-02-status",
+        "data.sd-02-sd-03-working-brief",
+        "data.sd-03-sd-04-brief",
+        "data.sd-03-sd-05-brief",
+        "data.sd-04-sd-05-skeleton",
+        "data.sd-03-sd-06-brief",
+        "data.sd-04-sd-06-skeleton",
+        "data.sd-05-sd-06-direction-review",
+        "data.sd-03-sd-07-brief",
+        "data.sd-04-sd-07-skeleton",
+        "data.sd-06-sd-07-feasibility",
+        "data.sd-03-sd-08-brief",
+        "data.sd-04-sd-08-skeleton",
+        "data.sd-07-sd-08-expanded-design",
+        "data.sd-08-sd-09-problem-solution-draft",
+        "data.sd-08-selected-review-lenses",
+        "data.sd-08-sd-09-architecture-draft",
+        "data.sd-08-sd-09-quality-acceptance-draft",
+        "data.sd-08-sd-13-candidate-design",
+        "data.sd-08-sd-14-candidate",
+        "data.sd-09-problem-solution-to-join",
+        "data.sd-09-architecture-to-join",
+        "data.sd-09-quality-acceptance-to-join",
+        "data.sd-09-join-sd-12-review-disposition",
+        "data.sd-08-sd-12-draft"
       ],
       "hostOperations": [
         "operation.sd-14-deterministic-verification",
@@ -594,12 +618,12 @@
         "skill",
         "artifact_user"
       ],
-      "mergeProof": "sha256:89ee0e5af21c8309708882d5293c31b85731648cd5b7e783521c1d1e988e699d"
+      "mergeProof": "sha256:69f8c74922f2acd0e52f72a0a3efc8253546f8d1415cbc48f2acfaf956f43ee0"
     },
     "resolutionProof": {
       "noAmbientFallback": true,
       "allBindingsExact": true
     },
-    "digest": "sha256:73fec3e2ea181aceb9f0c65de99e1cf4fc65deca8e29cc33582beb25fc523caf"
+    "digest": "sha256:777d23e8388064f90cde810ce40bce313c4e62e45001f2e622a1f402294606c0"
   }
 }

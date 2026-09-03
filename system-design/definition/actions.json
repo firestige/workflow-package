@@ -197,7 +197,8 @@
         },
         "required": [
           "status",
-          "routing"
+          "routing",
+          "workingBrief"
         ]
       },
       "responsibleAuthority": {
@@ -223,11 +224,18 @@
         ]
       }
     },
-    {
-      "id": "action.sd-03",
-      "name": "SD-03 Confirm and Freeze Brief",
-      "purpose": "Turn the conversation into an explicit shared-understanding artifact: run the Brief Closure Check, present a decision-oriented summary and navigable topic index, allow follow-up, require explicit whole-Brief confirmation, then freeze the immutable Confirmed Design Brief with run-workspace content digest, authoritative-source bindings and topic identities.",
-      "resultSchema": {
+  {
+    "id": "action.sd-03",
+    "name": "SD-03 Confirm and Freeze Brief",
+    "purpose": "Turn the conversation into an explicit shared-understanding artifact: run the Brief Closure Check, present a decision-oriented summary and navigable topic index, allow follow-up, require explicit whole-Brief confirmation, then freeze the immutable Confirmed Design Brief with run-workspace content digest, authoritative-source bindings and topic identities.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "workingBrief": { "type": "object" }
+      },
+      "required": ["workingBrief"]
+    },
+    "resultSchema": {
         "type": "object",
         "properties": {
           "status": {
@@ -488,13 +496,25 @@
               "FAILED"
             ]
           },
-          "draft": {
-            "type": "object"
-          }
+      "draft": {
+        "type": "object"
+      },
+      "selectedReviewLenses": {
+        "type": "array",
+        "items": {
+          "type": "string",
+          "enum": [
+            "branch.sd-09.problem-solution",
+            "branch.sd-09.architecture",
+            "branch.sd-09.quality-acceptance"
+          ]
+        }
+      }
         },
         "required": [
           "status",
-          "draft"
+      "draft",
+      "selectedReviewLenses"
         ]
       },
       "responsibleAuthority": {
@@ -676,11 +696,21 @@
       "purpose": "Merge corroborating Findings while preserving provenance, relate common causes, identify contradictions, and route by evidence and affected stage; never decide by majority, hide risk, inflate signals, change severity without returning to the Reviewer, or close Findings; the Finding Aggregator holds no technical decision authority.",
       "inputSchema": {
         "type": "object",
-        "properties": {
-          "findings": {
-            "type": "array"
-          }
+      "properties": {
+        "findings": {
+          "type": "array"
+        },
+        "problemSolutionReview": {
+          "type": "object"
+        },
+        "architectureReview": {
+          "type": "object"
+        },
+        "qualityAcceptanceReview": {
+          "type": "object"
         }
+      },
+      "required": ["problemSolutionReview", "architectureReview", "qualityAcceptanceReview"]
       },
       "resultSchema": {
         "type": "object",

@@ -3,7 +3,7 @@
   "schemaVersion": "agentops.workflow-dsl@2.0.0",
   "package": {
     "name": "implementation-workflow",
-    "version": "0.4.2",
+    "version": "0.4.6",
     "purpose": "Turns one exact frozen, implementation-authorizing design into a tested, independently reviewed feature-branch candidate via Goal Graph, Test Ladder and evolutionary TDD; machine-readable Definition per agentops.workflow-dsl@2.0.0.",
     "status": "DRAFT",
     "admissibility": "DESIGN_REFERENCE",
@@ -13,10 +13,10 @@
     },
     "definition": {
       "name": "implementation-workflow",
-      "version": "0.4.2",
-      "contentIdentity": "sha256:c25be41c19b4d6f6dff98f8fbb791d70663d40081a57ff5a44aab062e86e5ba9"
+      "version": "0.4.6",
+      "contentIdentity": "sha256:03ca9b884353e23cd292b834db22c0e504b399bab99d96e7f9e4d008ad0cdc03"
     },
-    "digest": "sha256:4236523cbc9362c81e0782a4a147d64b96b8fd4b34a90d684ff898551a25b1e0"
+    "digest": "sha256:62958ae94f6b40d64483622a1d3d668300de0983ef930fb44ddcc0094aa4f56f"
   },
   "documents": {
     "workflow": "workflow.json",
@@ -33,7 +33,7 @@
         "kind": "documentation",
         "owner": "owned",
         "path": "../README.md",
-        "contentIdentity": "sha256:dc97ddc1d5fdc554e05ee01800274eeb28ab13ac52df8e304af4a81b32f25d53",
+        "contentIdentity": "sha256:9e89c27092833a804943250799c8c9efc19994a789b76fb1ee5382d92113e951",
         "use": "documentation resource at README.md"
       },
       {
@@ -121,7 +121,7 @@
         "kind": "cli",
         "owner": "owned",
         "path": "../cli/tests/custodian.test.mjs",
-        "contentIdentity": "sha256:18a1a7194c28746d0963d0e2b94b4849b0c2fd7cf018d75274933a06bb42d2f7",
+        "contentIdentity": "sha256:175d149c2aa45260676c6259dd2fba1657be58e0d99f80887cf131b7318d3c38",
         "use": "cli resource at cli/tests/custodian.test.mjs"
       },
       {
@@ -161,7 +161,7 @@
         "kind": "documentation",
         "owner": "owned",
         "path": "../composition-conformance.md",
-        "contentIdentity": "sha256:ca153cf288ea097e7bfb3efac86f8b27dcb981e5ae6cb74169ed648b454e1d0e",
+        "contentIdentity": "sha256:88e35c471768c660e4f6f242319dc7e03c137edf087cda6807a98e413a4a600d",
         "use": "documentation resource at composition-conformance.md"
       },
       {
@@ -565,6 +565,14 @@
         "use": "skill resource at skills/implementation-feasibility-validation/SKILL.md"
       },
       {
+        "id": "skill.grilling",
+        "kind": "skill",
+        "owner": "owned",
+        "path": "../skills/grilling/SKILL.md",
+        "contentIdentity": "sha256:65c641ac6b995ebfc636dccd74661772b2fe6480a82705fa826ef88b3c4fe625",
+        "use": "package-owned single-question measurement grilling method; method-only, no control-flow authority"
+      },
+      {
         "id": "skill.implementation-goal-classification",
         "kind": "skill",
         "owner": "owned",
@@ -710,18 +718,6 @@
       }
     ],
     "referenced": [
-      {
-        "id": "skill.grilling",
-        "kind": "skill",
-        "owner": "referenced",
-        "sourceLocator": {
-          "repository": "workflow-package",
-          "path": ".agents/skills/grilling/SKILL.md",
-          "ref": "main"
-        },
-        "contentIdentity": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-        "use": "shared single-question measurement grilling method; method-only, no control-flow authority; exact content identity resolved at Package Snapshot admission"
-      },
       {
         "id": "driver.managed-cli",
         "kind": "driver",

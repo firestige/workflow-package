@@ -66,6 +66,8 @@ const owned = [
   ['resource.prompt.classify-downstream-handoffs', 'action-prompt', '../prompts/actions/classify-downstream-handoffs.prompt.md', 'action.sd-12 mission'],
   ['resource.prompt.fresh-reader-test', 'action-prompt', '../prompts/actions/fresh-reader-test.prompt.md', 'action.sd-13 mission'],
   // skills
+  ['resource.skill.grilling', 'skill', '../skills/grilling/SKILL.md', 'Package-owned adaptive grilling method for facilitator routes'],
+  ['resource.skill.codebase-design', 'skill', '../skills/codebase-design/SKILL.md', 'Package-owned codebase structure method for designer and architecture reviewer routes'],
   ['resource.skill.system-design-authoring', 'skill', '../skills/system-design-authoring/SKILL.md', 'Bounded authoring method for the System Designer route'],
   ['resource.skill.architecture-review', 'skill', '../skills/architecture-review/SKILL.md', 'Bounded architecture review method for the architecture reviewer routes'],
   ['resource.skill.problem-solution-review', 'skill', '../skills/problem-solution-review/SKILL.md', 'Bounded problem-solution review method for the problem-solution reviewer route'],
@@ -104,10 +106,6 @@ const owned = [
 
 // ---- referenced resources: [id, kind, repository, path, identityPattern, use] ----
 const referenced = [
-  ['resource.skill.grilling', 'skill', 'workflow-package', '.agents/skills/grilling/SKILL.md', 'a',
-    'Shared adaptive grilling method used by the facilitator routes; method-only, no control-flow authority; exact content identity resolved by the future Package Snapshot (placeholder, do not fabricate)'],
-  ['resource.skill.codebase-design', 'skill', 'workflow-package', '.agents/skills/codebase-design/SKILL.md', 'b',
-    'Shared codebase-design method (Module/Interface/Seam/Depth/Leverage/Locality) used when structure is in scope; exact content identity resolved by the future Package Snapshot (placeholder, do not fabricate)'],
   ['resource.driver.managed-cli', 'driver', 'workflow-self-recursive', 'bindings/managed-cli-driver.yaml', 'e',
     'Managed CLI Driver projecting the frozen route, never ambient defaults; exact identity resolved by the future Package Snapshot (placeholder, do not fabricate)'],
   ['resource.tool.repo-read', 'tool', 'workflow-self-recursive', 'tools/repo-read.yaml', 'f',
@@ -145,7 +143,7 @@ const pkg = {
   schemaVersion: 'agentops.workflow-dsl@2.0.0',
   package: {
     name: 'system-design-workflow',
-    version: '0.4.2',
+    version: '0.4.6',
     purpose: 'Turn a short Intake, project authority material and user opinions into an IMPLEMENTATION_READY System Design that states what problem is solved, why the design is shaped this way, and how fitness for the current project is proven; budget exhaustion or missing external authority enters recoverable INCOMPLETE, explicit cancellation enters CANCELLED, and non-retryable failure enters FAILED (none equals success).',
     status: 'DRAFT',
     admissibility: 'DESIGN_REFERENCE',
@@ -155,7 +153,7 @@ const pkg = {
     },
     definition: {
       name: 'system-design-workflow',
-      version: '0.4.2',
+      version: '0.4.6',
       contentIdentity: sha256('workflow.json')
     }
   },
