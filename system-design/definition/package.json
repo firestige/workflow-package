@@ -3,7 +3,7 @@
   "schemaVersion": "agentops.workflow-dsl@2.0.0",
   "package": {
     "name": "system-design-workflow",
-    "version": "0.4.9",
+    "version": "0.4.10",
     "purpose": "Turn a short Intake, project authority material and user opinions into an IMPLEMENTATION_READY System Design that states what problem is solved, why the design is shaped this way, and how fitness for the current project is proven; budget exhaustion or missing external authority enters recoverable INCOMPLETE, explicit cancellation enters CANCELLED, and non-retryable failure enters FAILED (none equals success).",
     "status": "DRAFT",
     "admissibility": "DESIGN_REFERENCE",
@@ -13,10 +13,10 @@
     },
     "definition": {
       "name": "system-design-workflow",
-      "version": "0.4.9",
-      "contentIdentity": "sha256:52b454856fddcafd380c8163b104b62c5f641a02efbf42831f1c6c06ffd8dd7a"
+      "version": "0.4.10",
+      "contentIdentity": "sha256:63c9cd760c577780f88a7fc28ac943002cb92ceaff0b700f5d9994b76311e1f8"
     },
-    "digest": "sha256:2c1e693733f135add2af891fae3ba21744506ef67a6e23da64ea6cfeace6ad5c"
+    "digest": "sha256:85f2ab154ca8dde9b5c9e2b72482af73eba0886ae9a5ea6236cfce6e56b871cf"
   },
   "documents": {
     "workflow": "workflow.json",
@@ -193,7 +193,7 @@
         "kind": "action-prompt",
         "owner": "owned",
         "path": "../prompts/actions/quality-acceptance-review.prompt.md",
-        "contentIdentity": "sha256:327dd7f142e2d682383a1faac86a725ba5b2f26ba56eb8eb48fabfbb9489f31e",
+        "contentIdentity": "sha256:4352a89c96a488a1ffb696328c882f1d228faa557599198fad7a0dfd4106d533",
         "use": "action.sd-09.quality-acceptance mission"
       },
       {
