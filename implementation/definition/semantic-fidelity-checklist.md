@@ -1,6 +1,6 @@
 # Implementation Workflow Definition — Semantic Fidelity Checklist
 
-Machine Definition: `workflow-package/implementation/definition/` (`agentops.workflow-dsl@2.0.0`, Package `0.4.0`). The semantic source remains `workflow.md`; this checklist records the 2.0 structural migration and does not create new Workflow meaning. Status: `DESIGN_REFERENCE`.
+Machine Definition: `workflow-package/implementation/definition/` (`agentops.workflow-dsl@2.0.0`, Package `0.4.1`). The semantic source remains `workflow.md`; this checklist records the 2.0 structural migration and does not create new Workflow meaning. Status: `DESIGN_REFERENCE`.
 
 ## 1. Contract document set
 
@@ -61,4 +61,4 @@ node system-contracts/workflow-dsl-2-candidate/generated/tools/check-example.cjs
 node --test workflow-package/test/tooling/dsl2-first-party-migration.test.cjs
 ```
 
-Expected results: schema/graph/event/authority/corpus-shape/digest closure passes; the migration guard proves DSL 2.0 versions, removed 1.x bindings, exact Role/Action prompts and the System Design 0.4.0 handoff coordinate.
+Expected results: schema/graph/event/authority/corpus-shape/digest closure passes; the migration guard proves DSL 2.0 versions, removed 1.x bindings, exact Role/Action prompts and the System Design 0.4.1 handoff coordinate.

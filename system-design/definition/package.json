@@ -3,7 +3,7 @@
   "schemaVersion": "agentops.workflow-dsl@2.0.0",
   "package": {
     "name": "system-design-workflow",
-    "version": "0.4.0",
+    "version": "0.4.1",
     "purpose": "Turn a short Intake, project authority material and user opinions into an IMPLEMENTATION_READY System Design that states what problem is solved, why the design is shaped this way, and how fitness for the current project is proven; budget exhaustion or missing external authority enters recoverable INCOMPLETE, explicit cancellation enters CANCELLED, and non-retryable failure enters FAILED (none equals success).",
     "status": "DRAFT",
     "admissibility": "DESIGN_REFERENCE",
@@ -13,10 +13,10 @@
     },
     "definition": {
       "name": "system-design-workflow",
-      "version": "0.4.0",
-      "contentIdentity": "sha256:43b0253f91c774e0d9f0177241130a6c63ae59412f1d0a566bcd8073b216a664"
+      "version": "0.4.1",
+      "contentIdentity": "sha256:f088ad034d2d09653ad77a88a9b784a8ea7562768afce373e0903694ac26ec44"
     },
-    "digest": "sha256:a617c916c2277799a017426bd54b046786b3b98ba298d217ec2d8c7ff7fcb4f2"
+    "digest": "sha256:a47d4cbee7108b06a3f3976afe618a8939fe9f14e4a403600bc28d1e08b6af9c"
   },
   "documents": {
     "workflow": "workflow.json",
@@ -105,7 +105,7 @@
         "kind": "action-prompt",
         "owner": "owned",
         "path": "../prompts/actions/intake-and-authority.prompt.md",
-        "contentIdentity": "sha256:2410ae27d4f3ce8e7ad7bc081465041b4f8c373f295234fc244b6fe8ec6210ab",
+        "contentIdentity": "sha256:de1c2054e74e7704f9f861509c9563d8cf5aa70255048e0765a8d5961c6f1836",
         "use": "action.sd-01 mission"
       },
       {
@@ -113,7 +113,7 @@
         "kind": "action-prompt",
         "owner": "owned",
         "path": "../prompts/actions/adaptive-grilling.prompt.md",
-        "contentIdentity": "sha256:af19e9cd5716346770f80034ac4bf2bec9bd71883d799e1d7d96e56a6f08fcf2",
+        "contentIdentity": "sha256:db680494fe18d032f86888709dfc310b112f670dac3d9ab88af846685ad63594",
         "use": "action.sd-02 mission"
       },
       {
@@ -217,7 +217,7 @@
         "kind": "action-prompt",
         "owner": "owned",
         "path": "../prompts/actions/human-decision-dialogue.prompt.md",
-        "contentIdentity": "sha256:789c6641f5ba40d7c0c99b3a7e2d369902e0153ada1b903e5bd3c98726be199a",
+        "contentIdentity": "sha256:b574830d549b9a32177abe8669aa4e07675f7aaa868f33cce3fe01fa259c79a0",
         "use": "action.sd-11H human decision branch mission"
       },
       {
@@ -481,7 +481,7 @@
         "kind": "documentation",
         "owner": "owned",
         "path": "../README.md",
-        "contentIdentity": "sha256:ec75c25673630afea182e251416777beeaf9348baae368d4327e8c79337c2b30",
+        "contentIdentity": "sha256:3c6e4784fc9e507300fb749432dc05093735b47387cf4efcbdfc0ce29480a411",
         "use": "Package-level design-time reference documentation"
       }
     ],

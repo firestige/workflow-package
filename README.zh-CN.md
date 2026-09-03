@@ -12,7 +12,7 @@ workflow-package 存放 workflow-self-recursive 所执行的版本化 Workflow P
 
 ## Developer preview
 
-本仓库是 workflow-self-recursive 架构优先开发者预览版的一部分，适用于个人或小团队的可信本地环境。每个 Package 都必须通过其 release 精确冻结的 Workflow Contract 校验；Hello World 0.2.0、Implementation 0.4.0 与 System Design 0.4.0 均使用 Runtime DSL 2.0。**后续会有破坏兼容性的变更。**
+本仓库是 workflow-self-recursive 架构优先开发者预览版的一部分，适用于个人或小团队的可信本地环境。每个 Package 都必须通过其 release 精确冻结的 Workflow Contract 校验；Hello World 0.2.0、Implementation 0.4.1 与 System Design 0.4.1 均使用 Runtime DSL 2.0。**后续会有破坏兼容性的变更。**
 
 ## 结构
 
