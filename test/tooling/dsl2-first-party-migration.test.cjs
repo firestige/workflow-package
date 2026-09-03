@@ -5,7 +5,7 @@ const test = require("node:test");
 
 const repository = path.resolve(__dirname, "../..");
 const packages = [
-  { directory: "implementation", name: "implementation-workflow", version: "0.4.9" },
+  { directory: "implementation", name: "implementation-workflow", version: "0.4.10" },
   { directory: "system-design", name: "system-design-workflow", version: "0.4.10" },
 ];
 const documentNames = ["package", "workflow", "actions", "roles", "routes", "artifacts", "validation", "snapshot"];
@@ -100,6 +100,7 @@ for (const packageUnderTest of packages) {
       const runtimeAcceptAll = new Map([
         ["action.IM-02", "operation.IM-02-preflight"],
         ["action.IM-05", "operation.IM-05-branch"],
+        ["action.IM-10", "operation.IM-10-refactor"],
         ["action.IM-11", "operation.IM-11-rung-verification"],
         ["action.IM-16", "operation.IM-16-goal-commit"],
         ["action.IM-17.custodian", "operation.IM-17-custody-review"],
@@ -124,8 +125,9 @@ for (const packageUnderTest of packages) {
           `${routeId} must receive its admitted workspace tool`);
       }
       for (const [promptFile, requiredInstruction] of [
-        ["materialize-tests.prompt.md", /must perform at least one workspace `write`/u],
-        ["evolve-prototype.prompt.md", /must perform at least one workspace `write`/u],
+        ["materialize-tests.prompt.md", /read `system-design\.md`[\s\S]*every enumerated acceptance case[\s\S]*must perform at least one workspace `write`/u],
+        ["evolve-prototype.prompt.md", /`"test": "node --test"`[\s\S]*must perform at least one workspace `write`/u],
+        ["close-structural-coverage.prompt.md", /reject placeholder or synthetic tests/u],
         ["implementation-resolution.prompt.md", /must perform a workspace `write`/u],
       ]) {
         const prompt = await readFile(path.join(repository, "implementation", "prompts", "actions", promptFile), "utf8");
