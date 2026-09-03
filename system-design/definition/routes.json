@@ -21,6 +21,18 @@
             "prompt": {
               "id": "resource.prompt.adaptive-grilling"
             }
+          },
+          {
+            "action": "action.sd-03",
+            "prompt": {
+              "id": "resource.prompt.adaptive-grilling"
+            }
+          },
+          {
+            "action": "action.sd-11h",
+            "prompt": {
+              "id": "resource.prompt.human-decision-dialogue"
+            }
           }
         ],
         "skills": [

@@ -145,7 +145,7 @@ const pkg = {
   schemaVersion: 'agentops.workflow-dsl@2.0.0',
   package: {
     name: 'system-design-workflow',
-    version: '0.4.2',
+    version: '0.4.3',
     purpose: 'Turn a short Intake, project authority material and user opinions into an IMPLEMENTATION_READY System Design that states what problem is solved, why the design is shaped this way, and how fitness for the current project is proven; budget exhaustion or missing external authority enters recoverable INCOMPLETE, explicit cancellation enters CANCELLED, and non-retryable failure enters FAILED (none equals success).',
     status: 'DRAFT',
     admissibility: 'DESIGN_REFERENCE',
@@ -155,7 +155,7 @@ const pkg = {
     },
     definition: {
       name: 'system-design-workflow',
-      version: '0.4.2',
+      version: '0.4.3',
       contentIdentity: sha256('workflow.json')
     }
   },

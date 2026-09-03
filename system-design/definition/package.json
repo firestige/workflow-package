@@ -3,7 +3,7 @@
   "schemaVersion": "agentops.workflow-dsl@2.0.0",
   "package": {
     "name": "system-design-workflow",
-    "version": "0.4.2",
+    "version": "0.4.3",
     "purpose": "Turn a short Intake, project authority material and user opinions into an IMPLEMENTATION_READY System Design that states what problem is solved, why the design is shaped this way, and how fitness for the current project is proven; budget exhaustion or missing external authority enters recoverable INCOMPLETE, explicit cancellation enters CANCELLED, and non-retryable failure enters FAILED (none equals success).",
     "status": "DRAFT",
     "admissibility": "DESIGN_REFERENCE",
@@ -13,10 +13,10 @@
     },
     "definition": {
       "name": "system-design-workflow",
-      "version": "0.4.2",
-      "contentIdentity": "sha256:209e5eebc94418b88485f7b43924e24a6c78bc0fbaa7ec3badac74205258612b"
+      "version": "0.4.3",
+      "contentIdentity": "sha256:f8129ee2fb0a94f2d8f3c1715031ded3a94a3b8b25f619471428cc781b845934"
     },
-    "digest": "sha256:64fc01dddee7b810a201a34de531360ad23f3191d72ce4cb3a0a0fabf0fb379c"
+    "digest": "sha256:08e92af522b4e2130270a0e45c0109f3316c0fe1006aaf8990ace66cefcd2024"
   },
   "documents": {
     "workflow": "workflow.json",
@@ -113,7 +113,7 @@
         "kind": "action-prompt",
         "owner": "owned",
         "path": "../prompts/actions/adaptive-grilling.prompt.md",
-        "contentIdentity": "sha256:db680494fe18d032f86888709dfc310b112f670dac3d9ab88af846685ad63594",
+        "contentIdentity": "sha256:ebcc900870a3ab28a76fc5fda1a751f17fc7d78c4f03580d3164ab531e5299c7",
         "use": "action.sd-02 mission"
       },
       {
@@ -161,7 +161,7 @@
         "kind": "action-prompt",
         "owner": "owned",
         "path": "../prompts/actions/integrate-draft.prompt.md",
-        "contentIdentity": "sha256:eb5003d890bb0d9e6d4031f37ac0827b34952503512b10f0675c47f671b5513d",
+        "contentIdentity": "sha256:070318879038a261fad4825d3a968bd048a7abfc25196607c0b1ef63e05ac760",
         "use": "action.sd-08 mission"
       },
       {
@@ -481,7 +481,7 @@
         "kind": "documentation",
         "owner": "owned",
         "path": "../README.md",
-        "contentIdentity": "sha256:f0e9c01f0d5ce42bccf6caf34ae7136d85465bb0784b8b1c0740d975bcdf670f",
+        "contentIdentity": "sha256:3f0e45bd3c75fc0786ecc28f43e11bde8787691064f32a8f8153d260da2aeae3",
         "use": "Package-level design-time reference documentation"
       }
     ],
