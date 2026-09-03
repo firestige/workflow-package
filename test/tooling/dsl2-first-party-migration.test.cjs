@@ -5,7 +5,7 @@ const test = require("node:test");
 
 const repository = path.resolve(__dirname, "../..");
 const packages = [
-  { directory: "implementation", name: "implementation-workflow", version: "0.4.6" },
+  { directory: "implementation", name: "implementation-workflow", version: "0.4.7" },
   { directory: "system-design", name: "system-design-workflow", version: "0.4.10" },
 ];
 const documentNames = ["package", "workflow", "actions", "roles", "routes", "artifacts", "validation", "snapshot"];
@@ -97,12 +97,26 @@ for (const packageUnderTest of packages) {
     }
 
     if (packageUnderTest.name === "implementation-workflow") {
+      const intakeResearchAction = documents.actions.actions.find(({ id }) => id === "action.IM-01R");
+      for (const requiredInput of intakeResearchAction.inputSchema.required) {
+        assert.ok(documents.workflow.dataflow.edges.some((edge) =>
+          edge.source.kind === "site-result"
+          && edge.source.site?.nodeIdentity === "node.IM-01"
+          && edge.target.kind === "site-input"
+          && edge.target.site?.nodeIdentity === "node.IM-01R"
+          && edge.target.slot?.kind === "property"
+          && edge.target.slot.name === requiredInput),
+        `IM-01 must bind IM-01R required input ${requiredInput}`);
+      }
+      const intakePrompt = await readFile(path.join(repository, "implementation", "prompts", "actions", "intake-and-authority.prompt.md"), "utf8");
+      assert.match(intakePrompt, /operation `list` with path `\.`/u,
+        "IM-01 must name the valid workspace-root tool request explicitly");
       assert.ok(documents.workflow.consumedHandoffs.length > 0);
       for (const handoff of documents.workflow.consumedHandoffs) {
         assert.deepEqual(handoff.upstreamHandoff, {
           ...handoff.upstreamHandoff,
           package: "system-design-workflow",
-          packageVersion: "0.4.6",
+          packageVersion: "0.4.10",
         });
       }
       const selector = documents.workflow.hostOperations.find(({ id }) => id === "operation.IM-06-selection");
