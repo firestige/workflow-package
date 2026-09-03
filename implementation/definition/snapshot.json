@@ -2,25 +2,25 @@
   "kind": "agentops.workflow-package-snapshot",
   "schemaVersion": "agentops.workflow-dsl@2.0.0",
   "snapshot": {
-    "id": "snapshot.implementation-workflow.0.4.6",
+    "id": "snapshot.implementation-workflow.0.4.7",
     "package": {
       "name": "implementation-workflow",
-      "version": "0.4.6",
-      "digest": "sha256:62958ae94f6b40d64483622a1d3d668300de0983ef930fb44ddcc0094aa4f56f"
+      "version": "0.4.7",
+      "digest": "sha256:3388cd967e5aefbe87a7beae6fb2ad029aaa2ad73285e198d0e0299091c1327e"
     },
     "definition": {
       "id": "implementation-workflow",
-      "version": "0.4.6",
-      "contentIdentity": "sha256:03ca9b884353e23cd292b834db22c0e504b399bab99d96e7f9e4d008ad0cdc03"
+      "version": "0.4.7",
+      "contentIdentity": "sha256:8cf61bb70a0aacb51c5729e1fa6e2c9990b9dc4cdfc1d33580bb7444754a4a87"
     },
     "documents": [
       {
         "kind": "workflow",
-        "contentIdentity": "sha256:03ca9b884353e23cd292b834db22c0e504b399bab99d96e7f9e4d008ad0cdc03"
+        "contentIdentity": "sha256:8cf61bb70a0aacb51c5729e1fa6e2c9990b9dc4cdfc1d33580bb7444754a4a87"
       },
       {
         "kind": "actions",
-        "contentIdentity": "sha256:31677d146723e8bad168e59443cf9be57c68fe4fd44400314ce52b0b0ffacf50"
+        "contentIdentity": "sha256:682c615fc8204b89a2158b5602e3f55ad4d155e6b51d935d71c2ed412dd1b67f"
       },
       {
         "kind": "roles",
@@ -193,7 +193,7 @@
       {
         "id": "prompt.intake-and-authority",
         "owner": "owned",
-        "contentIdentity": "sha256:e45373d90661d9ba698cf7a231a5b42d78e884920d6520137e0417624cb09ad5"
+        "contentIdentity": "sha256:8895b58e3c1de235e47a18b29f20a447759028144c3046261d4ed573e086eddd"
       },
       {
         "id": "prompt.materialize-tests",
@@ -739,6 +739,8 @@
         "event.node.wait-renewal.external-authority.budget-exhausted"
       ],
       "dataEdges": [
+        "data.IM-01-IM-01R-request-id",
+        "data.IM-01-IM-01R-requesting-action",
         "data.IM-06-goal-graph-input",
         "data.IM-06-current-goal",
         "data.IM-06-current-rung",
@@ -779,12 +781,12 @@
         "skill",
         "artifact_user"
       ],
-      "mergeProof": "sha256:2a31239e6c81d68c15004933a8210aa328768f72b11b48fc3ae278a0509f6cfa"
+      "mergeProof": "sha256:1561fb26c6d2099bc633da0feef5ef6758f20fc03fa470a50007449f75f8e52b"
     },
     "resolutionProof": {
       "noAmbientFallback": true,
       "allBindingsExact": true
     },
-    "digest": "sha256:8e2ab76029b74b51f73318331db2737ec3217c47116dec6ae8124f685fc8c28f"
+    "digest": "sha256:da367857b6e089cbb30d2274f1a8125a07c73c3467813beb9c7125ea508b947f"
   }
 }
