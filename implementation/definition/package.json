@@ -3,7 +3,7 @@
   "schemaVersion": "agentops.workflow-dsl@2.0.0",
   "package": {
     "name": "implementation-workflow",
-    "version": "0.4.9",
+    "version": "0.4.10",
     "purpose": "Turns one exact frozen, implementation-authorizing design into a tested, independently reviewed feature-branch candidate via Goal Graph, Test Ladder and evolutionary TDD; machine-readable Definition per agentops.workflow-dsl@2.0.0.",
     "status": "DRAFT",
     "admissibility": "DESIGN_REFERENCE",
@@ -13,10 +13,10 @@
     },
     "definition": {
       "name": "implementation-workflow",
-      "version": "0.4.9",
-      "contentIdentity": "sha256:14b8a052daf05d2d3971624bcb4b5acd4875a2c442347b85649b4dde5677c43c"
+      "version": "0.4.10",
+      "contentIdentity": "sha256:921e2bbfe513d4ed56151978a3effb808c5575f504f4c6a433d07c9113306db9"
     },
-    "digest": "sha256:54b1c196469d72edde790b652a3fde0b02eb4132940cb93190d96923712cc339"
+    "digest": "sha256:e69a3bd594699e1d3526c7324f7b9fd309680d11a5890548785e18f94c1db07a"
   },
   "documents": {
     "workflow": "workflow.json",
@@ -225,7 +225,7 @@
         "kind": "action-prompt",
         "owner": "owned",
         "path": "../prompts/actions/close-structural-coverage.prompt.md",
-        "contentIdentity": "sha256:7f78cc3e7adabf56c2f55951047c616f943132e063a3db283f4c1b075703f8b0",
+        "contentIdentity": "sha256:168b847b75d7ebaaa0078c79c3a1aa8078e9a2e4a5ed38c5c7e91bdcf70011df",
         "use": "action-prompt resource at prompts/actions/close-structural-coverage.prompt.md"
       },
       {
@@ -257,7 +257,7 @@
         "kind": "action-prompt",
         "owner": "owned",
         "path": "../prompts/actions/evolve-prototype.prompt.md",
-        "contentIdentity": "sha256:a090b184b1c8ef201589ffc530c5b9c495f576a7eacd94b3f3f1185f3081280c",
+        "contentIdentity": "sha256:df477b17427c4c4a200d67da7ff57c5cf499fe0d5f35a68e9565f1c5d4034abf",
         "use": "action-prompt resource at prompts/actions/evolve-prototype.prompt.md"
       },
       {
@@ -281,7 +281,7 @@
         "kind": "action-prompt",
         "owner": "owned",
         "path": "../prompts/actions/materialize-tests.prompt.md",
-        "contentIdentity": "sha256:2228bd14e3a4999d96a6e4e1d1d051bf8d2e918f1fcd96fe0d96c7e1ad7a9108",
+        "contentIdentity": "sha256:1c83779437547c26c8f8e0f90da02f7d7e37f28f0704f8cc973713d6324adff3",
         "use": "action-prompt resource at prompts/actions/materialize-tests.prompt.md"
       },
       {
@@ -302,11 +302,11 @@
       },
       {
         "id": "prompt.refactor-and-harden",
-        "kind": "action-prompt",
+        "kind": "documentation",
         "owner": "owned",
         "path": "../prompts/actions/refactor-and-harden.prompt.md",
         "contentIdentity": "sha256:debac5f8216c39414e939cbcbc8988498beb20e54e6ecbc7b5f66aa937ecf174",
-        "use": "action-prompt resource at prompts/actions/refactor-and-harden.prompt.md"
+        "use": "deferred #87 refactor-validator semantics reference"
       },
       {
         "id": "prompt.test-side-resolution",

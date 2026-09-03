@@ -718,12 +718,9 @@
         ]
       },
       "responsibleAuthority": {
-        "kind": "role",
-        "role": "role.implementer"
+        "kind": "runtime",
+        "validator": "validator.refactor-checks"
       },
-      "allowedRoutes": [
-        "route.implementation.standard"
-      ],
       "gate": {
         "freeTextBypass": "prohibited",
         "deterministic": [
