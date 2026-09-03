@@ -2,21 +2,21 @@
   "kind": "agentops.workflow-package-snapshot",
   "schemaVersion": "agentops.workflow-dsl@2.0.0",
   "snapshot": {
-    "id": "snapshot.implementation-workflow.0.4.1",
+    "id": "snapshot.implementation-workflow.0.4.2",
     "package": {
       "name": "implementation-workflow",
-      "version": "0.4.1",
-      "digest": "sha256:4de097f68afc2f2c3b02c6c3d7beae0eb451394ecd9af475682e9c9cfbb34b99"
+      "version": "0.4.2",
+      "digest": "sha256:4236523cbc9362c81e0782a4a147d64b96b8fd4b34a90d684ff898551a25b1e0"
     },
     "definition": {
       "id": "implementation-workflow",
-      "version": "0.4.1",
-      "contentIdentity": "sha256:9293993e4ff66fe0491f75d2bfc5b5be7213f21dcaf41327be184453ac52a451"
+      "version": "0.4.2",
+      "contentIdentity": "sha256:c25be41c19b4d6f6dff98f8fbb791d70663d40081a57ff5a44aab062e86e5ba9"
     },
     "documents": [
       {
         "kind": "workflow",
-        "contentIdentity": "sha256:9293993e4ff66fe0491f75d2bfc5b5be7213f21dcaf41327be184453ac52a451"
+        "contentIdentity": "sha256:c25be41c19b4d6f6dff98f8fbb791d70663d40081a57ff5a44aab062e86e5ba9"
       },
       {
         "kind": "actions",
@@ -43,7 +43,7 @@
       {
         "id": "doc.readme",
         "owner": "owned",
-        "contentIdentity": "sha256:58dd53ad18c5ed09c03cf36353cc17893cd95fd60102a120d7ebe8be9cb32bc2"
+        "contentIdentity": "sha256:dc97ddc1d5fdc554e05ee01800274eeb28ab13ac52df8e304af4a81b32f25d53"
       },
       {
         "id": "doc.routes",
@@ -123,7 +123,7 @@
       {
         "id": "doc.composition-conformance",
         "owner": "owned",
-        "contentIdentity": "sha256:0aeb83a21df81b6f88fe53a0e6f9a65672033f3d07777540995cdbac9cbd5b03"
+        "contentIdentity": "sha256:ca153cf288ea097e7bfb3efac86f8b27dcb981e5ae6cb74169ed648b454e1d0e"
       },
       {
         "id": "conformance.negative",
@@ -774,12 +774,12 @@
         "skill",
         "artifact_user"
       ],
-      "mergeProof": "sha256:19ec50fec0143ac6099b6de97bbebfcfd2817d0a2ce11f06a72f9349f67b2b6f"
+      "mergeProof": "sha256:f0a01276287ad82dcb23dfe68585cfec77880c325ca55e6a100bc961fae2afaa"
     },
     "resolutionProof": {
       "noAmbientFallback": true,
       "allBindingsExact": true
     },
-    "digest": "sha256:389f9fe2aa07a62ad972ca226705d2c00716b6e74e382e4fce360e05ac2767e4"
+    "digest": "sha256:d185db3cdfe1d7cff24bed1acca9f1e061e89869eb92b1d1e8f3ff49506549bd"
   }
 }

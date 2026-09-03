@@ -4,7 +4,7 @@
   "workflow": {
     "id": "system-design-workflow",
     "name": "System Design Workflow",
-    "version": "0.4.1",
+    "version": "0.4.2",
     "purpose": "Turn a short Intake, project authority material and user opinions into a System Design that explains what problem is solved, why the design is shaped this way, and how fitness for the current project is proven. The only success terminal is IMPLEMENTATION_READY; budget exhaustion or missing external authority enters recoverable INCOMPLETE, explicit cancellation enters CANCELLED, and non-retryable execution/configuration failure enters FAILED; none of the three equals success.",
     "contractVersion": "agentops.workflow-dsl@2.0.0"
   },

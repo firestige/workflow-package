@@ -15,7 +15,7 @@ async function readDefinition(directory, documentName) {
 }
 
 for (const packageUnderTest of packages) {
-  test(`${packageUnderTest.name}@0.4.1 is a closed Workflow DSL 2.0 package`, async () => {
+  test(`${packageUnderTest.name}@0.4.2 is a closed Workflow DSL 2.0 package`, async () => {
     const documents = Object.fromEntries(await Promise.all(documentNames.map(async (name) => [
       name,
       await readDefinition(packageUnderTest.directory, name),
@@ -25,16 +25,16 @@ for (const packageUnderTest of packages) {
       assert.equal(document.schemaVersion, "agentops.workflow-dsl@2.0.0", `${name}.json schemaVersion`);
     }
     assert.equal(documents.package.package.name, packageUnderTest.name);
-    assert.equal(documents.package.package.version, "0.4.1");
-    assert.equal(documents.package.package.definition.version, "0.4.1");
+    assert.equal(documents.package.package.version, "0.4.2");
+    assert.equal(documents.package.package.definition.version, "0.4.2");
     assert.deepEqual(documents.package.compatibility, {
       minContractVersion: "2.0.0",
       maxContractVersion: "2.0.0",
     });
-    assert.equal(documents.workflow.workflow.version, "0.4.1");
+    assert.equal(documents.workflow.workflow.version, "0.4.2");
     assert.equal(documents.workflow.workflow.contractVersion, "agentops.workflow-dsl@2.0.0");
-    assert.equal(documents.snapshot.snapshot.package.version, "0.4.1");
-    assert.equal(documents.snapshot.snapshot.definition.version, "0.4.1");
+    assert.equal(documents.snapshot.snapshot.package.version, "0.4.2");
+    assert.equal(documents.snapshot.snapshot.definition.version, "0.4.2");
 
     const resources = [
       ...documents.package.resources.owned,
@@ -54,6 +54,21 @@ for (const packageUnderTest of packages) {
     const resourcesById = new Map(resources.map((resource) => [resource.id, resource]));
     for (const route of documents.routes.routes.filter(({ resources: routeResources }) =>
       routeResources.capabilities.includes("action-interaction"))) {
+      const explicitlyPromptedActions = new Set(route.resources.actionPrompts.map(({ action }) => action));
+      const fallbackActions = documents.actions.actions.filter(({ id, allowedRoutes = [] }) =>
+        allowedRoutes.includes(route.id) && !explicitlyPromptedActions.has(id));
+      if (fallbackActions.length > 0) {
+        const rolePromptResource = resourcesById.get(route.resources.rolePrompt.id);
+        assert.ok(rolePromptResource, `${route.resources.rolePrompt.id} is declared`);
+        const rolePrompt = await readFile(path.resolve(
+          repository,
+          packageUnderTest.directory,
+          "definition",
+          rolePromptResource.path,
+        ), "utf8");
+        assert.match(rolePrompt, /Chat interaction protocol:[\s\S]*responseSchema\.type = "string"/u,
+          `${route.resources.rolePrompt.id} must preserve the DSH Chat string contract for fallback Actions: ${fallbackActions.map(({ id }) => id).join(", ")}`);
+      }
       for (const actionPrompt of route.resources.actionPrompts) {
         const resource = resourcesById.get(actionPrompt.prompt.id);
         assert.ok(resource, `${actionPrompt.prompt.id} is declared`);
@@ -74,7 +89,7 @@ for (const packageUnderTest of packages) {
         assert.deepEqual(handoff.upstreamHandoff, {
           ...handoff.upstreamHandoff,
           package: "system-design-workflow",
-          packageVersion: "0.4.1",
+          packageVersion: "0.4.2",
         });
       }
     } else {

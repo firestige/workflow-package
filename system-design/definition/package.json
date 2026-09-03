@@ -3,7 +3,7 @@
   "schemaVersion": "agentops.workflow-dsl@2.0.0",
   "package": {
     "name": "system-design-workflow",
-    "version": "0.4.1",
+    "version": "0.4.2",
     "purpose": "Turn a short Intake, project authority material and user opinions into an IMPLEMENTATION_READY System Design that states what problem is solved, why the design is shaped this way, and how fitness for the current project is proven; budget exhaustion or missing external authority enters recoverable INCOMPLETE, explicit cancellation enters CANCELLED, and non-retryable failure enters FAILED (none equals success).",
     "status": "DRAFT",
     "admissibility": "DESIGN_REFERENCE",
@@ -13,10 +13,10 @@
     },
     "definition": {
       "name": "system-design-workflow",
-      "version": "0.4.1",
-      "contentIdentity": "sha256:f088ad034d2d09653ad77a88a9b784a8ea7562768afce373e0903694ac26ec44"
+      "version": "0.4.2",
+      "contentIdentity": "sha256:209e5eebc94418b88485f7b43924e24a6c78bc0fbaa7ec3badac74205258612b"
     },
-    "digest": "sha256:a47d4cbee7108b06a3f3976afe618a8939fe9f14e4a403600bc28d1e08b6af9c"
+    "digest": "sha256:64fc01dddee7b810a201a34de531360ad23f3191d72ce4cb3a0a0fabf0fb379c"
   },
   "documents": {
     "workflow": "workflow.json",
@@ -33,7 +33,7 @@
         "kind": "role-prompt",
         "owner": "owned",
         "path": "../roles/grilling-facilitator.role.md",
-        "contentIdentity": "sha256:acbcfd7c06f247625ae9df06593b9d382c5fea83f80a8c177a791c1a61840418",
+        "contentIdentity": "sha256:31e7578afe84ccf4e9c2232a772e126aa0795e681a18595fb5e2e7d1202d7869",
         "use": "Grilling Facilitator role authority for intake, adaptive grilling, Brief confirmation and Brief Change Request facilitation"
       },
       {
@@ -481,7 +481,7 @@
         "kind": "documentation",
         "owner": "owned",
         "path": "../README.md",
-        "contentIdentity": "sha256:3c6e4784fc9e507300fb749432dc05093735b47387cf4efcbdfc0ce29480a411",
+        "contentIdentity": "sha256:f0e9c01f0d5ce42bccf6caf34ae7136d85465bb0784b8b1c0740d975bcdf670f",
         "use": "Package-level design-time reference documentation"
       }
     ],
