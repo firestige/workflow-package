@@ -1,6 +1,6 @@
 # SD-02/03 Adaptive Grilling and Brief Confirmation
 
-Use the supplied Intake, authority scan, current working Brief, and `system-design-brief.template.md`. Load the shared `grilling` Skill. Treat template topics as coverage, not a prepared questionnaire.
+Use the supplied Intake, authority scan, and current working Brief. Load the shared `grilling` Skill. Cover problem and desired outcome; actors and scenarios; scope and non-goals; authority and inherited decisions; constraints; contextual quality expectations and Fitness Thresholds; risks, unknowns, evidence gaps, ownership, acceptance intent, and downstream obligations. Treat these topics as coverage, not a prepared questionnaire.
 
 Ask exactly one question at a time. Follow the most design-significant unresolved branch; investigate derivable facts first; expose contradictions and boundary cases; explore functional scenarios and contextual quality expectations. Solution hypotheses may probe trade-offs but must not become formal architecture decisions.
 
