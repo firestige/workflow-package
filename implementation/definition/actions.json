@@ -950,16 +950,25 @@
       "inputSchema": {
         "type": "object",
         "properties": {
-          "routedFindings": {
+          "goalRoutedFindings": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          },
+          "recheckRoutedFindings": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          },
+          "wholeRoutedFindings": {
             "type": "array",
             "items": {
               "type": "object"
             }
           }
-        },
-        "required": [
-          "routedFindings"
-        ]
+        }
       },
       "resultSchema": {
         "type": "object",
@@ -1002,16 +1011,25 @@
       "inputSchema": {
         "type": "object",
         "properties": {
-          "routedFindings": {
+          "goalRoutedFindings": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          },
+          "recheckRoutedFindings": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          },
+          "wholeRoutedFindings": {
             "type": "array",
             "items": {
               "type": "object"
             }
           }
-        },
-        "required": [
-          "routedFindings"
-        ]
+        }
       },
       "resultSchema": {
         "type": "object",
@@ -1221,8 +1239,14 @@
             "items": {
               "type": "string"
             }
+          },
+          "goalCommit": {
+            "type": "object"
           }
-        }
+        },
+        "required": [
+          "goalCommit"
+        ]
       },
       "resultSchema": {
         "type": "object",
@@ -1232,11 +1256,18 @@
           },
           "wholeScopeFindingAdmitted": {
             "type": "boolean"
+          },
+          "findings": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
           }
         },
         "required": [
           "passed",
-          "wholeScopeFindingAdmitted"
+          "wholeScopeFindingAdmitted",
+          "findings"
         ]
       },
       "responsibleAuthority": {
@@ -1268,8 +1299,14 @@
             "items": {
               "type": "string"
             }
+          },
+          "goalCommit": {
+            "type": "object"
           }
-        }
+        },
+        "required": [
+          "goalCommit"
+        ]
       },
       "resultSchema": {
         "type": "object",
@@ -1279,11 +1316,18 @@
           },
           "wholeScopeFindingAdmitted": {
             "type": "boolean"
+          },
+          "findings": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
           }
         },
         "required": [
           "passed",
-          "wholeScopeFindingAdmitted"
+          "wholeScopeFindingAdmitted",
+          "findings"
         ]
       },
       "responsibleAuthority": {

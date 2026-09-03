@@ -3,7 +3,7 @@
   "schemaVersion": "agentops.workflow-dsl@2.0.0",
   "package": {
     "name": "implementation-workflow",
-    "version": "0.4.11",
+    "version": "0.4.12",
     "purpose": "Turns one exact frozen, implementation-authorizing design into a tested, independently reviewed feature-branch candidate via Goal Graph, Test Ladder and evolutionary TDD; machine-readable Definition per agentops.workflow-dsl@2.0.0.",
     "status": "DRAFT",
     "admissibility": "DESIGN_REFERENCE",
@@ -13,10 +13,10 @@
     },
     "definition": {
       "name": "implementation-workflow",
-      "version": "0.4.11",
-      "contentIdentity": "sha256:db37066dd6b87b6677cbcbafe11e91c7979f5bff1db7337b7e4598bc3ae7a53a"
+      "version": "0.4.12",
+      "contentIdentity": "sha256:594da60c5da07b7bdb051013bdbe2bb72dc3e66ff5df07f1445d91576ba68768"
     },
-    "digest": "sha256:2a11ebb42c8941eaec1f672ddfe74af3d8e207111b52453cd945cb9044c78b02"
+    "digest": "sha256:d3397add4ef37f2a5629388752e2cc4fdf42d14335248f37d4f7d535f14869b1"
   },
   "documents": {
     "workflow": "workflow.json",
@@ -265,7 +265,7 @@
         "kind": "action-prompt",
         "owner": "owned",
         "path": "../prompts/actions/implementation-resolution.prompt.md",
-        "contentIdentity": "sha256:7e72bd47395eeb1ab346393690250e9c3df6a82572aae74c6cc352c871bacb7b",
+        "contentIdentity": "sha256:43f4236e96594f5fd0c26cd42e3830b6367bcd2f6151815c91fc6308019e9a49",
         "use": "action-prompt resource at prompts/actions/implementation-resolution.prompt.md"
       },
       {
@@ -313,7 +313,7 @@
         "kind": "action-prompt",
         "owner": "owned",
         "path": "../prompts/actions/test-side-resolution.prompt.md",
-        "contentIdentity": "sha256:afdb9d369dae196d0e94f23183c508e91622e86465049e43ddb473f0dfafee01",
+        "contentIdentity": "sha256:541b7bee9e9d56eb04d3f437076572b92f505e50b1e29c2a41b87bde10a02116",
         "use": "action-prompt resource at prompts/actions/test-side-resolution.prompt.md"
       },
       {
@@ -337,7 +337,7 @@
         "kind": "action-prompt",
         "owner": "owned",
         "path": "../prompts/actions/whole-scope-review.prompt.md",
-        "contentIdentity": "sha256:cacb07b0e90e878162409fea46cd3afee4f0c5e3face3e6ef9c9e14dd6c70128",
+        "contentIdentity": "sha256:c4ac65c6f48879ed16f8e9a6e13dba24e023f8baaad4f156aeb6592b04d0c364",
         "use": "action-prompt resource at prompts/actions/whole-scope-review.prompt.md"
       },
       {
