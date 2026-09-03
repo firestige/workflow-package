@@ -2,25 +2,25 @@
   "kind": "agentops.workflow-package-snapshot",
   "schemaVersion": "agentops.workflow-dsl@2.0.0",
   "snapshot": {
-    "id": "snapshot.implementation-workflow.0.4.10",
+    "id": "snapshot.implementation-workflow.0.4.11",
     "package": {
       "name": "implementation-workflow",
-      "version": "0.4.10",
-      "digest": "sha256:e69a3bd594699e1d3526c7324f7b9fd309680d11a5890548785e18f94c1db07a"
+      "version": "0.4.11",
+      "digest": "sha256:2a11ebb42c8941eaec1f672ddfe74af3d8e207111b52453cd945cb9044c78b02"
     },
     "definition": {
       "id": "implementation-workflow",
-      "version": "0.4.10",
-      "contentIdentity": "sha256:921e2bbfe513d4ed56151978a3effb808c5575f504f4c6a433d07c9113306db9"
+      "version": "0.4.11",
+      "contentIdentity": "sha256:db37066dd6b87b6677cbcbafe11e91c7979f5bff1db7337b7e4598bc3ae7a53a"
     },
     "documents": [
       {
         "kind": "workflow",
-        "contentIdentity": "sha256:921e2bbfe513d4ed56151978a3effb808c5575f504f4c6a433d07c9113306db9"
+        "contentIdentity": "sha256:db37066dd6b87b6677cbcbafe11e91c7979f5bff1db7337b7e4598bc3ae7a53a"
       },
       {
         "kind": "actions",
-        "contentIdentity": "sha256:a4f549a25a62aa1fa017e882b05ebb2ba4e0d0af2636b79e9fa8ff06430d3d14"
+        "contentIdentity": "sha256:9464183676a8c9b757f7db8950f4bb0edc094fd785e6cc1754bb0ae5838212db"
       },
       {
         "kind": "roles",
@@ -183,12 +183,12 @@
       {
         "id": "prompt.evolve-prototype",
         "owner": "owned",
-        "contentIdentity": "sha256:df477b17427c4c4a200d67da7ff57c5cf499fe0d5f35a68e9565f1c5d4034abf"
+        "contentIdentity": "sha256:be229642e77962ee96cb708e6020e6a9dbf37ee497b950767922cb88db6e9cb9"
       },
       {
         "id": "prompt.implementation-resolution",
         "owner": "owned",
-        "contentIdentity": "sha256:5e54bdd47f0727b7592b782d41d92364d0910a3283e5225c3eeaf2f050beeaea"
+        "contentIdentity": "sha256:7e72bd47395eeb1ab346393690250e9c3df6a82572aae74c6cc352c871bacb7b"
       },
       {
         "id": "prompt.intake-and-authority",
@@ -218,7 +218,7 @@
       {
         "id": "prompt.test-side-resolution",
         "owner": "owned",
-        "contentIdentity": "sha256:89c6acac31807214bb6e5fa7c3c0ab7557eb0d8f988b84d16d5fc1aa40c68427"
+        "contentIdentity": "sha256:afdb9d369dae196d0e94f23183c508e91622e86465049e43ddb473f0dfafee01"
       },
       {
         "id": "prompt.validate-implementation-feasibility",
@@ -710,11 +710,14 @@
         "data.IM-06-goal-graph-input",
         "data.IM-06-current-goal",
         "data.IM-06-current-rung",
+        "data.IM-07-IM-08-red-feedback",
         "data.IM-12-blackbox-to-join",
         "data.IM-12-whitebox-to-join",
         "data.IM-17-blackbox-to-join",
         "data.IM-17-whitebox-to-join",
-        "data.IM-17-custodian-to-join"
+        "data.IM-17-custodian-to-join",
+        "data.IM-13-IM-14T-routed-findings",
+        "data.IM-13-IM-14I-routed-findings"
       ],
       "hostOperations": [
         "operation.IM-02-preflight",
@@ -754,12 +757,12 @@
         "skill",
         "artifact_user"
       ],
-      "mergeProof": "sha256:887ababe368b95099f4cec89e32323dbcebc23734267c054ce4d706b7d6ff75b"
+      "mergeProof": "sha256:87b141b0e8a545fa9a3536640d9de8c5cc7406cf3b3588f9d94fedd04eb50a6c"
     },
     "resolutionProof": {
       "noAmbientFallback": true,
       "allBindingsExact": true
     },
-    "digest": "sha256:0c5e1cfc94be4bd5d4f73d62a4dfc27fe7b064187049523f9099988fb8b21e62"
+    "digest": "sha256:00a53b187dda9e8e1bb1a0ac9f0fa02ebf39fb190f8b443763559d99415eed5e"
   }
 }

@@ -4,7 +4,7 @@
   "workflow": {
     "id": "implementation-workflow",
     "name": "Implementation Workflow",
-    "version": "0.4.10",
+    "version": "0.4.11",
     "purpose": "Turns one exact frozen, implementation-authorizing design into a VERIFIED_IMPLEMENTATION_READY feature-branch candidate through Goal Graph, Test Ladder and evolutionary TDD; preserves every upstream obligation semantic while owning its own lifecycle classification, Actions, Gates and terminal effects.",
     "contractVersion": "agentops.workflow-dsl@2.0.0"
   },
@@ -1615,6 +1615,19 @@
         }
       },
       {
+        "id": "data.IM-07-IM-08-red-feedback",
+        "source": {
+          "kind": "site-result",
+          "site": { "kind": "node", "nodeIdentity": "node.IM-07" },
+          "slot": { "kind": "whole" }
+        },
+        "target": {
+          "kind": "site-input",
+          "site": { "kind": "node", "nodeIdentity": "node.IM-08" },
+          "slot": { "kind": "property", "name": "redFeedback" }
+        }
+      },
+      {
         "id": "data.IM-12-blackbox-to-join",
         "source": {
           "kind": "site-result",
@@ -1677,6 +1690,32 @@
           "kind": "site-input",
           "site": { "kind": "parallel-join", "nodeIdentity": "node.IM-17" },
           "slot": { "kind": "property", "name": "custodyReview" }
+        }
+      },
+      {
+        "id": "data.IM-13-IM-14T-routed-findings",
+        "source": {
+          "kind": "site-result",
+          "site": { "kind": "node", "nodeIdentity": "node.IM-13" },
+          "slot": { "kind": "property", "name": "routedFindings" }
+        },
+        "target": {
+          "kind": "site-input",
+          "site": { "kind": "node", "nodeIdentity": "node.IM-14T" },
+          "slot": { "kind": "property", "name": "routedFindings" }
+        }
+      },
+      {
+        "id": "data.IM-13-IM-14I-routed-findings",
+        "source": {
+          "kind": "site-result",
+          "site": { "kind": "node", "nodeIdentity": "node.IM-13" },
+          "slot": { "kind": "property", "name": "routedFindings" }
+        },
+        "target": {
+          "kind": "site-input",
+          "site": { "kind": "node", "nodeIdentity": "node.IM-14I" },
+          "slot": { "kind": "property", "name": "routedFindings" }
         }
       }
     ]
