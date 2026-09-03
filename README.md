@@ -12,7 +12,7 @@ The repository ships independently versioned logical Workflows:
 
 ## Developer preview
 
-This repository is part of workflow-self-recursive's architecture-first developer preview for trusted local use by individuals and small teams. Packages are validated against the exact frozen Workflow Contract used by their release. Hello World 0.2.0, Implementation 0.4.0, and System Design 0.4.0 use Runtime DSL 2.0. **THERE WILL BE COMPATIBILITY-BREAKING CHANGES.**
+This repository is part of workflow-self-recursive's architecture-first developer preview for trusted local use by individuals and small teams. Packages are validated against the exact frozen Workflow Contract used by their release. Hello World 0.2.0, Implementation 0.4.1, and System Design 0.4.1 use Runtime DSL 2.0. **THERE WILL BE COMPATIBILITY-BREAKING CHANGES.**
 
 ## Structure
 

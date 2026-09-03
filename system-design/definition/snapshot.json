@@ -2,21 +2,21 @@
   "kind": "agentops.workflow-package-snapshot",
   "schemaVersion": "agentops.workflow-dsl@2.0.0",
   "snapshot": {
-    "id": "snapshot.system-design-workflow.0.4.0",
+    "id": "snapshot.system-design-workflow.0.4.1",
     "package": {
       "name": "system-design-workflow",
-      "version": "0.4.0",
-      "digest": "sha256:a617c916c2277799a017426bd54b046786b3b98ba298d217ec2d8c7ff7fcb4f2"
+      "version": "0.4.1",
+      "digest": "sha256:a47d4cbee7108b06a3f3976afe618a8939fe9f14e4a403600bc28d1e08b6af9c"
     },
     "definition": {
       "id": "system-design-workflow",
-      "version": "0.4.0",
-      "contentIdentity": "sha256:43b0253f91c774e0d9f0177241130a6c63ae59412f1d0a566bcd8073b216a664"
+      "version": "0.4.1",
+      "contentIdentity": "sha256:f088ad034d2d09653ad77a88a9b784a8ea7562768afce373e0903694ac26ec44"
     },
     "documents": [
       {
         "kind": "workflow",
-        "contentIdentity": "sha256:43b0253f91c774e0d9f0177241130a6c63ae59412f1d0a566bcd8073b216a664"
+        "contentIdentity": "sha256:f088ad034d2d09653ad77a88a9b784a8ea7562768afce373e0903694ac26ec44"
       },
       {
         "kind": "actions",
@@ -88,12 +88,12 @@
       {
         "id": "resource.prompt.intake-and-authority",
         "owner": "owned",
-        "contentIdentity": "sha256:2410ae27d4f3ce8e7ad7bc081465041b4f8c373f295234fc244b6fe8ec6210ab"
+        "contentIdentity": "sha256:de1c2054e74e7704f9f861509c9563d8cf5aa70255048e0765a8d5961c6f1836"
       },
       {
         "id": "resource.prompt.adaptive-grilling",
         "owner": "owned",
-        "contentIdentity": "sha256:af19e9cd5716346770f80034ac4bf2bec9bd71883d799e1d7d96e56a6f08fcf2"
+        "contentIdentity": "sha256:db680494fe18d032f86888709dfc310b112f670dac3d9ab88af846685ad63594"
       },
       {
         "id": "resource.prompt.evidence-research",
@@ -158,7 +158,7 @@
       {
         "id": "resource.prompt.human-decision-dialogue",
         "owner": "owned",
-        "contentIdentity": "sha256:789c6641f5ba40d7c0c99b3a7e2d369902e0153ada1b903e5bd3c98726be199a"
+        "contentIdentity": "sha256:b574830d549b9a32177abe8669aa4e07675f7aaa868f33cce3fe01fa259c79a0"
       },
       {
         "id": "resource.prompt.classify-downstream-handoffs",
@@ -323,7 +323,7 @@
       {
         "id": "resource.package-readme",
         "owner": "owned",
-        "contentIdentity": "sha256:ec75c25673630afea182e251416777beeaf9348baae368d4327e8c79337c2b30"
+        "contentIdentity": "sha256:3c6e4784fc9e507300fb749432dc05093735b47387cf4efcbdfc0ce29480a411"
       },
       {
         "id": "resource.skill.grilling",
@@ -594,12 +594,12 @@
         "skill",
         "artifact_user"
       ],
-      "mergeProof": "sha256:624b4a0595a91f6558d3613733a86e9c95a953b2a9bfd092c3d0dab08a893c92"
+      "mergeProof": "sha256:406f447181dc6b1166c2e7ce385e062aca56588239c9685a99072327d76df39b"
     },
     "resolutionProof": {
       "noAmbientFallback": true,
       "allBindingsExact": true
     },
-    "digest": "sha256:10433138bf19a30211bbf632c0135cf97fa0e9085f094c49fd7d4066b6442499"
+    "digest": "sha256:02f715671cd0f583a9f6ca1f5af73cc975a5d6b9a2a8a21e78b3f3d76b5bcd89"
   }
 }
