@@ -3,7 +3,7 @@
   "schemaVersion": "agentops.workflow-dsl@2.0.0",
   "package": {
     "name": "implementation-workflow",
-    "version": "0.4.10",
+    "version": "0.4.11",
     "purpose": "Turns one exact frozen, implementation-authorizing design into a tested, independently reviewed feature-branch candidate via Goal Graph, Test Ladder and evolutionary TDD; machine-readable Definition per agentops.workflow-dsl@2.0.0.",
     "status": "DRAFT",
     "admissibility": "DESIGN_REFERENCE",
@@ -13,10 +13,10 @@
     },
     "definition": {
       "name": "implementation-workflow",
-      "version": "0.4.10",
-      "contentIdentity": "sha256:921e2bbfe513d4ed56151978a3effb808c5575f504f4c6a433d07c9113306db9"
+      "version": "0.4.11",
+      "contentIdentity": "sha256:db37066dd6b87b6677cbcbafe11e91c7979f5bff1db7337b7e4598bc3ae7a53a"
     },
-    "digest": "sha256:e69a3bd594699e1d3526c7324f7b9fd309680d11a5890548785e18f94c1db07a"
+    "digest": "sha256:2a11ebb42c8941eaec1f672ddfe74af3d8e207111b52453cd945cb9044c78b02"
   },
   "documents": {
     "workflow": "workflow.json",
@@ -257,7 +257,7 @@
         "kind": "action-prompt",
         "owner": "owned",
         "path": "../prompts/actions/evolve-prototype.prompt.md",
-        "contentIdentity": "sha256:df477b17427c4c4a200d67da7ff57c5cf499fe0d5f35a68e9565f1c5d4034abf",
+        "contentIdentity": "sha256:be229642e77962ee96cb708e6020e6a9dbf37ee497b950767922cb88db6e9cb9",
         "use": "action-prompt resource at prompts/actions/evolve-prototype.prompt.md"
       },
       {
@@ -265,7 +265,7 @@
         "kind": "action-prompt",
         "owner": "owned",
         "path": "../prompts/actions/implementation-resolution.prompt.md",
-        "contentIdentity": "sha256:5e54bdd47f0727b7592b782d41d92364d0910a3283e5225c3eeaf2f050beeaea",
+        "contentIdentity": "sha256:7e72bd47395eeb1ab346393690250e9c3df6a82572aae74c6cc352c871bacb7b",
         "use": "action-prompt resource at prompts/actions/implementation-resolution.prompt.md"
       },
       {
@@ -313,7 +313,7 @@
         "kind": "action-prompt",
         "owner": "owned",
         "path": "../prompts/actions/test-side-resolution.prompt.md",
-        "contentIdentity": "sha256:89c6acac31807214bb6e5fa7c3c0ab7557eb0d8f988b84d16d5fc1aa40c68427",
+        "contentIdentity": "sha256:afdb9d369dae196d0e94f23183c508e91622e86465049e43ddb473f0dfafee01",
         "use": "action-prompt resource at prompts/actions/test-side-resolution.prompt.md"
       },
       {

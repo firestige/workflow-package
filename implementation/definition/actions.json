@@ -568,7 +568,10 @@
           "redFeedback": {
             "type": "object"
           }
-        }
+        },
+        "required": [
+          "redFeedback"
+        ]
       },
       "resultSchema": {
         "type": "object",
@@ -597,6 +600,7 @@
         "required": [
           "expectedRedProgress",
           "green",
+          "changedPaths",
           "routing"
         ]
       },
@@ -921,6 +925,7 @@
         },
         "required": [
           "finding",
+          "routedFindings",
           "routing"
         ]
       },
@@ -945,23 +950,33 @@
       "inputSchema": {
         "type": "object",
         "properties": {
-          "finding": {
-            "type": "object"
-          },
-          "treatment": {
-            "type": "object"
+          "routedFindings": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
           }
-        }
+        },
+        "required": [
+          "routedFindings"
+        ]
       },
       "resultSchema": {
         "type": "object",
         "properties": {
           "treatmentRecorded": {
             "type": "boolean"
+          },
+          "changedPaths": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
           }
         },
         "required": [
-          "treatmentRecorded"
+          "treatmentRecorded",
+          "changedPaths"
         ]
       },
       "responsibleAuthority": {
@@ -987,23 +1002,33 @@
       "inputSchema": {
         "type": "object",
         "properties": {
-          "finding": {
-            "type": "object"
-          },
-          "treatment": {
-            "type": "object"
+          "routedFindings": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
           }
-        }
+        },
+        "required": [
+          "routedFindings"
+        ]
       },
       "resultSchema": {
         "type": "object",
         "properties": {
           "treatmentRecorded": {
             "type": "boolean"
+          },
+          "changedPaths": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
           }
         },
         "required": [
-          "treatmentRecorded"
+          "treatmentRecorded",
+          "changedPaths"
         ]
       },
       "responsibleAuthority": {

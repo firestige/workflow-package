@@ -5,7 +5,7 @@ const test = require("node:test");
 
 const repository = path.resolve(__dirname, "../..");
 const packages = [
-  { directory: "implementation", name: "implementation-workflow", version: "0.4.10" },
+  { directory: "implementation", name: "implementation-workflow", version: "0.4.11" },
   { directory: "system-design", name: "system-design-workflow", version: "0.4.10" },
 ];
 const documentNames = ["package", "workflow", "actions", "roles", "routes", "artifacts", "validation", "snapshot"];
@@ -147,6 +147,41 @@ for (const packageUnderTest of packages) {
       const intakePrompt = await readFile(path.join(repository, "implementation", "prompts", "actions", "intake-and-authority.prompt.md"), "utf8");
       assert.match(intakePrompt, /operation `list` with path `\.`/u,
         "IM-01 must name the valid workspace-root tool request explicitly");
+      const requiredImplementationBindings = [
+        ["node.IM-07", "whole", "node.IM-08", "redFeedback"],
+        ["node.IM-13", "routedFindings", "node.IM-14T", "routedFindings"],
+        ["node.IM-13", "routedFindings", "node.IM-14I", "routedFindings"],
+      ];
+      for (const [producer, sourceSlot, consumer, targetProperty] of requiredImplementationBindings) {
+        assert.ok(documents.workflow.dataflow.edges.some((edge) =>
+          edge.source.kind === "site-result"
+          && edge.source.site?.kind === "node"
+          && edge.source.site?.nodeIdentity === producer
+          && edge.source.slot?.kind === (sourceSlot === "whole" ? "whole" : "property")
+          && (sourceSlot === "whole" || edge.source.slot.name === sourceSlot)
+          && edge.target.kind === "site-input"
+          && edge.target.site?.kind === "node"
+          && edge.target.site?.nodeIdentity === consumer
+          && edge.target.slot?.kind === "property"
+          && edge.target.slot.name === targetProperty),
+        `${producer}.${sourceSlot} must bind ${consumer}.${targetProperty}`);
+      }
+      const implementationActions = new Map(documents.actions.actions.map((action) => [action.id, action]));
+      assert.ok(implementationActions.get("action.IM-08")?.inputSchema.required?.includes("redFeedback"),
+        "IM-08 must require the calibrated RED result it is responsible for resolving");
+      assert.ok(implementationActions.get("action.IM-08")?.resultSchema.required?.includes("changedPaths"),
+        "IM-08 must identify the production paths it materialized");
+      for (const actionId of ["action.IM-14T", "action.IM-14I"]) {
+        assert.ok(implementationActions.get(actionId)?.inputSchema.required?.includes("routedFindings"),
+          `${actionId} must require the admitted routed findings`);
+      }
+      assert.ok(implementationActions.get("action.IM-13")?.resultSchema.required?.includes("routedFindings"),
+        "IM-13 must materialize the routed findings projected to its resolver");
+      assert.ok(implementationActions.get("action.IM-14I")?.resultSchema.required?.includes("changedPaths"),
+        "IM-14I must identify the production paths it repaired");
+      const evolvePrompt = await readFile(path.join(repository, "implementation", "prompts", "actions", "evolve-prototype.prompt.md"), "utf8");
+      assert.match(evolvePrompt, /operation `write`[\s\S]*operation `read`[\s\S]*must not return/u,
+        "IM-08 must prescribe observable write/read tool operations before completion");
       assert.ok(documents.workflow.consumedHandoffs.length > 0);
       for (const handoff of documents.workflow.consumedHandoffs) {
         assert.deepEqual(handoff.upstreamHandoff, {
