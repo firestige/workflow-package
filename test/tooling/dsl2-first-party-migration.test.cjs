@@ -6,7 +6,7 @@ const test = require("node:test");
 const repository = path.resolve(__dirname, "../..");
 const packages = [
   { directory: "implementation", name: "implementation-workflow", version: "0.4.6" },
-  { directory: "system-design", name: "system-design-workflow", version: "0.4.9" },
+  { directory: "system-design", name: "system-design-workflow", version: "0.4.10" },
 ];
 const documentNames = ["package", "workflow", "actions", "roles", "routes", "artifacts", "validation", "snapshot"];
 
@@ -232,6 +232,11 @@ for (const packageUnderTest of packages) {
         "SD-06 must not turn ordinary verification mechanics into an architecture-feasibility wait");
       assert.match(spikePrompt, /`routing: "feasibility-confirmed"`/u,
         "SD-06 must expose the no-Spike happy path explicitly");
+      const qualityReviewPrompt = await readFile(path.join(repository, "system-design", "prompts", "actions", "quality-acceptance-review.prompt.md"), "utf8");
+      assert.match(qualityReviewPrompt, /String\.prototype\.trim\(\)[\s\S]*one representative concrete Unicode-whitespace fixture/u,
+        "SD-09 must accept the authority-defined representative Unicode-whitespace evidence boundary");
+      assert.match(qualityReviewPrompt, /Do not invent an exhaustive or normative code-point corpus/u,
+        "SD-09 must not promote an unauthorised exhaustive Unicode corpus into a blocking requirement");
     }
   });
 }
