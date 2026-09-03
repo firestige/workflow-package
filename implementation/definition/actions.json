@@ -197,12 +197,9 @@
         ]
       },
       "responsibleAuthority": {
-        "kind": "role",
-        "role": "role.delivery-custodian"
+        "kind": "runtime",
+        "validator": "validator.preflight-checks"
       },
-      "allowedRoutes": [
-        "route.delivery.custodian"
-      ],
       "gate": {
         "freeTextBypass": "prohibited",
         "deterministic": [
@@ -432,12 +429,9 @@
         ]
       },
       "responsibleAuthority": {
-        "kind": "role",
-        "role": "role.delivery-custodian"
+        "kind": "runtime",
+        "validator": "validator.branch-checks"
       },
-      "allowedRoutes": [
-        "route.delivery.custodian"
-      ],
       "gate": {
         "freeTextBypass": "prohibited",
         "deterministic": [
@@ -786,12 +780,9 @@
         ]
       },
       "responsibleAuthority": {
-        "kind": "role",
-        "role": "role.delivery-custodian"
+        "kind": "runtime",
+        "validator": "validator.rung-verify"
       },
-      "allowedRoutes": [
-        "route.delivery.custodian"
-      ],
       "gate": {
         "freeTextBypass": "prohibited",
         "deterministic": [
@@ -1182,12 +1173,9 @@
         ]
       },
       "responsibleAuthority": {
-        "kind": "role",
-        "role": "role.delivery-custodian"
+        "kind": "runtime",
+        "validator": "validator.goal-commit-checks"
       },
-      "allowedRoutes": [
-        "route.delivery.custodian"
-      ],
       "gate": {
         "freeTextBypass": "prohibited",
         "deterministic": [
@@ -1324,12 +1312,9 @@
         ]
       },
       "responsibleAuthority": {
-        "kind": "role",
-        "role": "role.delivery-custodian"
+        "kind": "runtime",
+        "validator": "validator.whole-scope-checks"
       },
-      "allowedRoutes": [
-        "route.delivery.custodian"
-      ],
       "gate": {
         "freeTextBypass": "prohibited",
         "deterministic": [
@@ -1376,12 +1361,9 @@
         ]
       },
       "responsibleAuthority": {
-        "kind": "role",
-        "role": "role.delivery-custodian"
+        "kind": "runtime",
+        "validator": "validator.final-checks"
       },
-      "allowedRoutes": [
-        "route.delivery.custodian"
-      ],
       "gate": {
         "freeTextBypass": "prohibited",
         "deterministic": [

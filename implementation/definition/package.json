@@ -3,7 +3,7 @@
   "schemaVersion": "agentops.workflow-dsl@2.0.0",
   "package": {
     "name": "implementation-workflow",
-    "version": "0.4.7",
+    "version": "0.4.8",
     "purpose": "Turns one exact frozen, implementation-authorizing design into a tested, independently reviewed feature-branch candidate via Goal Graph, Test Ladder and evolutionary TDD; machine-readable Definition per agentops.workflow-dsl@2.0.0.",
     "status": "DRAFT",
     "admissibility": "DESIGN_REFERENCE",
@@ -13,10 +13,10 @@
     },
     "definition": {
       "name": "implementation-workflow",
-      "version": "0.4.7",
-      "contentIdentity": "sha256:8cf61bb70a0aacb51c5729e1fa6e2c9990b9dc4cdfc1d33580bb7444754a4a87"
+      "version": "0.4.8",
+      "contentIdentity": "sha256:5035423c3da63438b8823fb9f89ff6f581cf4fd2a2ce4ccca1089113d89c1097"
     },
-    "digest": "sha256:3388cd967e5aefbe87a7beae6fb2ad029aaa2ad73285e198d0e0299091c1327e"
+    "digest": "sha256:3125518e89b96723f1eec1a736826260772e052d42321b31e9020c7732c86b63"
   },
   "documents": {
     "workflow": "workflow.json",
@@ -201,7 +201,7 @@
         "kind": "action-prompt",
         "owner": "owned",
         "path": "../prompts/actions/adaptive-grilling.prompt.md",
-        "contentIdentity": "sha256:e5609c21f2a65779088cfcb3e7d99bee0d1f53be16409961321b66e760949589",
+        "contentIdentity": "sha256:2eb5d4b3338c4dd8b2f5b63c28000d909dafa503af56f42f7fe250d4373e4f74",
         "use": "action-prompt resource at prompts/actions/adaptive-grilling.prompt.md"
       },
       {
@@ -209,7 +209,7 @@
         "kind": "action-prompt",
         "owner": "owned",
         "path": "../prompts/actions/aggregate-findings.prompt.md",
-        "contentIdentity": "sha256:c96bebb8fa2290321da3540960bbb2821acdfb7451c2a1507014f9327c19a5cc",
+        "contentIdentity": "sha256:f1eb5a96a61652b5eafe115fd32545591b8e802f61b4c2e892e49e6c27ce3960",
         "use": "action-prompt resource at prompts/actions/aggregate-findings.prompt.md"
       },
       {
@@ -217,7 +217,7 @@
         "kind": "action-prompt",
         "owner": "owned",
         "path": "../prompts/actions/black-box-goal-review.prompt.md",
-        "contentIdentity": "sha256:323bcb2b3d4b994c2cb08fdeb52f9081f1b80305169e05acfa0f8d0c234f8133",
+        "contentIdentity": "sha256:20efc28b2309d7aea9579e438457e07e201f6d857b5367a295742d7a38a2a658",
         "use": "action-prompt resource at prompts/actions/black-box-goal-review.prompt.md"
       },
       {
@@ -225,7 +225,7 @@
         "kind": "action-prompt",
         "owner": "owned",
         "path": "../prompts/actions/close-structural-coverage.prompt.md",
-        "contentIdentity": "sha256:1e30eb1b2806327f8523a574e069029e2bc358787b41496e32a38989c46b42f8",
+        "contentIdentity": "sha256:7f78cc3e7adabf56c2f55951047c616f943132e063a3db283f4c1b075703f8b0",
         "use": "action-prompt resource at prompts/actions/close-structural-coverage.prompt.md"
       },
       {
@@ -233,16 +233,16 @@
         "kind": "action-prompt",
         "owner": "owned",
         "path": "../prompts/actions/confirm-goal-graph.prompt.md",
-        "contentIdentity": "sha256:0674cb60c348401f9e4531e3189ee2774699f5c5b49d165b42caf52fd6704f4a",
+        "contentIdentity": "sha256:1a96bd6406ae2efb2b111d0e0c73b225a5c78783ef0610aeeccb2b7f9f1eba45",
         "use": "action-prompt resource at prompts/actions/confirm-goal-graph.prompt.md"
       },
       {
         "id": "prompt.custody-gate",
-        "kind": "action-prompt",
+        "kind": "documentation",
         "owner": "owned",
         "path": "../prompts/actions/custody-gate.prompt.md",
         "contentIdentity": "sha256:deb9426fa29c1341c1d44549733aad8b548f4599198c486e9291608843b6eeb0",
-        "use": "action-prompt resource at prompts/actions/custody-gate.prompt.md"
+        "use": "deferred #87 custody-validator semantics reference"
       },
       {
         "id": "prompt.evidence-research",
@@ -257,7 +257,7 @@
         "kind": "action-prompt",
         "owner": "owned",
         "path": "../prompts/actions/evolve-prototype.prompt.md",
-        "contentIdentity": "sha256:407628332155a6919c39ce36b057bde579dd9326a0f12031fd31438abbc38bb7",
+        "contentIdentity": "sha256:c4e575b7fe3cdbbd9c2adf358f643fcc4887a9e310f2d850c7f972630356cdf7",
         "use": "action-prompt resource at prompts/actions/evolve-prototype.prompt.md"
       },
       {
@@ -281,16 +281,16 @@
         "kind": "action-prompt",
         "owner": "owned",
         "path": "../prompts/actions/materialize-tests.prompt.md",
-        "contentIdentity": "sha256:b5f44b47a607b8e46e5c497484043875ecd1b0af79a4de82f89bd0a79708abd6",
+        "contentIdentity": "sha256:bd30f133945ccd9d63ffa654c712428bbbf324a63acd61809c50744ba530b680",
         "use": "action-prompt resource at prompts/actions/materialize-tests.prompt.md"
       },
       {
         "id": "prompt.preflight",
-        "kind": "action-prompt",
+        "kind": "documentation",
         "owner": "owned",
         "path": "../prompts/actions/preflight.prompt.md",
         "contentIdentity": "sha256:1ecaaf97ed58accb39f99b99c81980375d95706fca27443a38401758d920ed6b",
-        "use": "action-prompt resource at prompts/actions/preflight.prompt.md"
+        "use": "deferred #87 preflight-validator semantics reference"
       },
       {
         "id": "prompt.recheck-finding",
@@ -305,7 +305,7 @@
         "kind": "action-prompt",
         "owner": "owned",
         "path": "../prompts/actions/refactor-and-harden.prompt.md",
-        "contentIdentity": "sha256:d04f673d28f274188b8e8d47fdd3108fbee5364e47b56e9a7b91b96cd2c09e5d",
+        "contentIdentity": "sha256:debac5f8216c39414e939cbcbc8988498beb20e54e6ecbc7b5f66aa937ecf174",
         "use": "action-prompt resource at prompts/actions/refactor-and-harden.prompt.md"
       },
       {
@@ -329,7 +329,7 @@
         "kind": "action-prompt",
         "owner": "owned",
         "path": "../prompts/actions/white-box-implementation-review.prompt.md",
-        "contentIdentity": "sha256:dd81695e7117bb6805caf6a522d5ef8933729ded1fe0b0d08f5477222c69cb09",
+        "contentIdentity": "sha256:484b73f4a354254d9ca7f604e29c494bf075ab07b07e88100b9fe1ee39ebae1d",
         "use": "action-prompt resource at prompts/actions/white-box-implementation-review.prompt.md"
       },
       {
@@ -337,7 +337,7 @@
         "kind": "action-prompt",
         "owner": "owned",
         "path": "../prompts/actions/whole-scope-review.prompt.md",
-        "contentIdentity": "sha256:64038fe1d7cf65764523c20c39586c1b542bcc5bf50f76047b2de0eb71803e57",
+        "contentIdentity": "sha256:cacb07b0e90e878162409fea46cd3afee4f0c5e3face3e6ef9c9e14dd6c70128",
         "use": "action-prompt resource at prompts/actions/whole-scope-review.prompt.md"
       },
       {

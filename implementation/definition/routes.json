@@ -68,7 +68,7 @@
           { "action": "action.IM-14T", "prompt": { "id": "prompt.test-side-resolution" } }
         ],
         "skills": [{ "id": "skill.acceptance-test-design" }],
-        "tools": [],
+        "tools": [{ "id": "tool.repo-read" }],
         "driver": { "id": "driver.managed-cli" },
         "sessionPolicy": { "scope": { "kind": "episode" }, "isolation": "isolated" },
         "capabilities": ["structured-completion"]
@@ -89,7 +89,7 @@
           { "action": "action.IM-14T", "prompt": { "id": "prompt.test-side-resolution" } }
         ],
         "skills": [{ "id": "skill.structural-test-coverage" }],
-        "tools": [],
+        "tools": [{ "id": "tool.repo-read" }],
         "driver": { "id": "driver.managed-cli" },
         "sessionPolicy": { "scope": { "kind": "episode" }, "isolation": "isolated" },
         "capabilities": ["structured-completion"]
@@ -111,7 +111,7 @@
           { "action": "action.IM-14I", "prompt": { "id": "prompt.implementation-resolution" } }
         ],
         "skills": [{ "id": "skill.evolutionary-tdd-implementation" }],
-        "tools": [],
+        "tools": [{ "id": "tool.repo-read" }],
         "driver": { "id": "driver.managed-cli" },
         "sessionPolicy": { "scope": { "kind": "data-bound", "source": { "kind": "state", "field": "currentGoal" } }, "isolation": "shared" },
         "capabilities": ["structured-completion"]
@@ -133,7 +133,7 @@
           {"action":"action.IM-17.blackbox","prompt":{"id":"prompt.whole-scope-review"}}
         ],
         "skills": [{ "id": "skill.black-box-goal-adversary" }],
-        "tools": [],
+        "tools": [{ "id": "tool.repo-read" }],
         "driver": { "id": "driver.managed-cli" },
         "sessionPolicy": { "scope": { "kind": "episode" }, "isolation": "isolated" },
         "capabilities": ["structured-completion"]
@@ -155,7 +155,7 @@
           {"action":"action.IM-17.whitebox","prompt":{"id":"prompt.whole-scope-review"}}
         ],
         "skills": [{ "id": "skill.white-box-implementation-review" }],
-        "tools": [],
+        "tools": [{ "id": "tool.repo-read" }],
         "driver": { "id": "driver.managed-cli" },
         "sessionPolicy": { "scope": { "kind": "episode" }, "isolation": "isolated" },
         "capabilities": ["structured-completion"]
@@ -189,14 +189,7 @@
       "role": "role.delivery-custodian",
       "resources": {
         "rolePrompt": { "id": "role.prompt.delivery-custodian" },
-        "actionPrompts": [
-          { "action": "action.IM-02", "prompt": { "id": "prompt.preflight" } },
-          { "action": "action.IM-05", "prompt": { "id": "prompt.custody-gate" } },
-          { "action": "action.IM-11", "prompt": { "id": "prompt.custody-gate" } },
-          { "action": "action.IM-16", "prompt": { "id": "prompt.custody-gate" } },
-          {"action":"action.IM-17.custodian","prompt":{"id":"prompt.custody-gate"}},
-          { "action": "action.IM-18", "prompt": { "id": "prompt.custody-gate" } }
-        ],
+        "actionPrompts": [],
         "skills": [{ "id": "skill.implementation-delivery-custody" }],
         "tools": [],
         "driver": { "id": "driver.managed-cli" },

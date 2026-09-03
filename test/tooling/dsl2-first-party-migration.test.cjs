@@ -5,7 +5,7 @@ const test = require("node:test");
 
 const repository = path.resolve(__dirname, "../..");
 const packages = [
-  { directory: "implementation", name: "implementation-workflow", version: "0.4.7" },
+  { directory: "implementation", name: "implementation-workflow", version: "0.4.8" },
   { directory: "system-design", name: "system-design-workflow", version: "0.4.10" },
 ];
 const documentNames = ["package", "workflow", "actions", "roles", "routes", "artifacts", "validation", "snapshot"];
@@ -97,6 +97,32 @@ for (const packageUnderTest of packages) {
     }
 
     if (packageUnderTest.name === "implementation-workflow") {
+      const runtimeAcceptAll = new Map([
+        ["action.IM-02", "operation.IM-02-preflight"],
+        ["action.IM-05", "operation.IM-05-branch"],
+        ["action.IM-11", "operation.IM-11-rung-verification"],
+        ["action.IM-16", "operation.IM-16-goal-commit"],
+        ["action.IM-17.custodian", "operation.IM-17-custody-review"],
+        ["action.IM-18", "operation.IM-18-final"],
+      ]);
+      for (const [actionId, operationId] of runtimeAcceptAll) {
+        const action = documents.actions.actions.find(({ id }) => id === actionId);
+        assert.equal(action?.responsibleAuthority.kind, "runtime", `${actionId} must use the Runtime gate`);
+        assert.deepEqual(action?.allowedRoutes, undefined, `${actionId} must not require a package CLI Agent route`);
+        const operation = documents.workflow.hostOperations.find(({ id }) => id === operationId);
+        assert.equal(operation?.configuration.accepted, true, `${operationId} must provide the current accept-all mechanism`);
+      }
+      for (const routeId of [
+        "route.test.designer.blackbox",
+        "route.test.designer.structural",
+        "route.implementation.standard",
+        "route.review.goal-blackbox",
+        "route.review.implementation-whitebox",
+      ]) {
+        const route = documents.routes.routes.find(({ id }) => id === routeId);
+        assert.ok(route?.resources.tools.some(({ id }) => id === "tool.repo-read"),
+          `${routeId} must receive its admitted workspace tool`);
+      }
       const intakeResearchAction = documents.actions.actions.find(({ id }) => id === "action.IM-01R");
       for (const requiredInput of intakeResearchAction.inputSchema.required) {
         assert.ok(documents.workflow.dataflow.edges.some((edge) =>
@@ -122,11 +148,22 @@ for (const packageUnderTest of packages) {
       const selector = documents.workflow.hostOperations.find(({ id }) => id === "operation.IM-06-selection");
       assert.equal(selector?.configuration.accepted, true);
       assert.deepEqual(selector?.configuration.result, {
-        goalRungReady: false,
-        allGoalsCommitted: true,
+        goalRungReady: true,
+        allGoalsCommitted: false,
         missingContract: false,
-        routing: "select-whole",
+        selectedGoal: "goal.greet-cli",
+        selectedRung: "rung.walking-skeleton",
+        routing: "select-calibrate",
       });
+      assert.ok(documents.workflow.dataflow.edges.some((edge) =>
+        edge.source.kind === "site-result"
+        && edge.source.site?.nodeIdentity === "node.IM-04"
+        && edge.source.slot?.kind === "whole"
+        && edge.target.kind === "state"
+        && edge.target.field === "goalGraph"),
+      "IM-04 must replace the placeholder goalGraph before deterministic selection");
+      assert.ok(documents.workflow.graph.edges.some(({ from, to }) => from === "node.IM-16" && to === "node.IM-17"),
+        "The current one-goal accept-all path must advance to whole-scope review after commit");
     } else {
       assert.ok(documents.workflow.dataflow.edges.some((edge) =>
         edge.source.kind === "site-result"
