@@ -2,25 +2,25 @@
   "kind": "agentops.workflow-package-snapshot",
   "schemaVersion": "agentops.workflow-dsl@2.0.0",
   "snapshot": {
-    "id": "snapshot.implementation-workflow.0.4.2",
+    "id": "snapshot.implementation-workflow.0.4.3",
     "package": {
       "name": "implementation-workflow",
-      "version": "0.4.2",
-      "digest": "sha256:4236523cbc9362c81e0782a4a147d64b96b8fd4b34a90d684ff898551a25b1e0"
+      "version": "0.4.3",
+      "digest": "sha256:3ff16d3423bb448bbadddc3a24352e0c94496e314db627f78e716324fedc1949"
     },
     "definition": {
       "id": "implementation-workflow",
-      "version": "0.4.2",
-      "contentIdentity": "sha256:c25be41c19b4d6f6dff98f8fbb791d70663d40081a57ff5a44aab062e86e5ba9"
+      "version": "0.4.3",
+      "contentIdentity": "sha256:ca0f261149cf68ad1216152351fed3c71dcb263e7486856afa0b9f01bb28f54b"
     },
     "documents": [
       {
         "kind": "workflow",
-        "contentIdentity": "sha256:c25be41c19b4d6f6dff98f8fbb791d70663d40081a57ff5a44aab062e86e5ba9"
+        "contentIdentity": "sha256:ca0f261149cf68ad1216152351fed3c71dcb263e7486856afa0b9f01bb28f54b"
       },
       {
         "kind": "actions",
-        "contentIdentity": "sha256:7bf03a8c789b0050cee896c1595455329491878055bf76f102552323df935f53"
+        "contentIdentity": "sha256:31677d146723e8bad168e59443cf9be57c68fe4fd44400314ce52b0b0ffacf50"
       },
       {
         "kind": "roles",
@@ -43,7 +43,7 @@
       {
         "id": "doc.readme",
         "owner": "owned",
-        "contentIdentity": "sha256:dc97ddc1d5fdc554e05ee01800274eeb28ab13ac52df8e304af4a81b32f25d53"
+        "contentIdentity": "sha256:bb06aad976f5002299894f8edaec37ff26cacc5da3828f5d0f5383228383ca78"
       },
       {
         "id": "doc.routes",
@@ -123,7 +123,7 @@
       {
         "id": "doc.composition-conformance",
         "owner": "owned",
-        "contentIdentity": "sha256:ca153cf288ea097e7bfb3efac86f8b27dcb981e5ae6cb74169ed648b454e1d0e"
+        "contentIdentity": "sha256:b3aeac19f6f3725d044faa00f8895c683817da73fcabf949d7f5cc54d4ff03d9"
       },
       {
         "id": "conformance.negative",
@@ -741,7 +741,12 @@
       "dataEdges": [
         "data.IM-06-goal-graph-input",
         "data.IM-06-current-goal",
-        "data.IM-06-current-rung"
+        "data.IM-06-current-rung",
+        "data.IM-12-blackbox-to-join",
+        "data.IM-12-whitebox-to-join",
+        "data.IM-17-blackbox-to-join",
+        "data.IM-17-whitebox-to-join",
+        "data.IM-17-custodian-to-join"
       ],
       "hostOperations": [
         "operation.IM-06-selection"
@@ -774,12 +779,12 @@
         "skill",
         "artifact_user"
       ],
-      "mergeProof": "sha256:f0a01276287ad82dcb23dfe68585cfec77880c325ca55e6a100bc961fae2afaa"
+      "mergeProof": "sha256:f30b1a640e57574d5b485012763673a9a84fc1f70101566955de36c101faee3d"
     },
     "resolutionProof": {
       "noAmbientFallback": true,
       "allBindingsExact": true
     },
-    "digest": "sha256:d185db3cdfe1d7cff24bed1acca9f1e061e89869eb92b1d1e8f3ff49506549bd"
+    "digest": "sha256:8880d9998861f5245e07e9adca5a807e0a379236f6c472144641241758ea5dca"
   }
 }

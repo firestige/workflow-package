@@ -2,25 +2,25 @@
   "kind": "agentops.workflow-package-snapshot",
   "schemaVersion": "agentops.workflow-dsl@2.0.0",
   "snapshot": {
-    "id": "snapshot.system-design-workflow.0.4.2",
+    "id": "snapshot.system-design-workflow.0.4.3",
     "package": {
       "name": "system-design-workflow",
-      "version": "0.4.2",
-      "digest": "sha256:64fc01dddee7b810a201a34de531360ad23f3191d72ce4cb3a0a0fabf0fb379c"
+      "version": "0.4.3",
+      "digest": "sha256:08e92af522b4e2130270a0e45c0109f3316c0fe1006aaf8990ace66cefcd2024"
     },
     "definition": {
       "id": "system-design-workflow",
-      "version": "0.4.2",
-      "contentIdentity": "sha256:209e5eebc94418b88485f7b43924e24a6c78bc0fbaa7ec3badac74205258612b"
+      "version": "0.4.3",
+      "contentIdentity": "sha256:f8129ee2fb0a94f2d8f3c1715031ded3a94a3b8b25f619471428cc781b845934"
     },
     "documents": [
       {
         "kind": "workflow",
-        "contentIdentity": "sha256:209e5eebc94418b88485f7b43924e24a6c78bc0fbaa7ec3badac74205258612b"
+        "contentIdentity": "sha256:f8129ee2fb0a94f2d8f3c1715031ded3a94a3b8b25f619471428cc781b845934"
       },
       {
         "kind": "actions",
-        "contentIdentity": "sha256:ecdad2b732ae4bc7b65072d5344d0a612944e6b60c8db1de51c651cdeb1f6fdd"
+        "contentIdentity": "sha256:4eda2e3adb5ff0e7bca064405e122d84e71e1970515167caf6fbc5a0d53cb1ce"
       },
       {
         "kind": "roles",
@@ -28,7 +28,7 @@
       },
       {
         "kind": "routes",
-        "contentIdentity": "sha256:08c47bbb40f28ffa72cc919dfebd284f4d93ea886b9d97aa97bbca92b5829c15"
+        "contentIdentity": "sha256:d79e21c2853534bb5d78be019722f1a8965c2aeb7517062844ade318874991b5"
       },
       {
         "kind": "artifacts",
@@ -93,7 +93,7 @@
       {
         "id": "resource.prompt.adaptive-grilling",
         "owner": "owned",
-        "contentIdentity": "sha256:db680494fe18d032f86888709dfc310b112f670dac3d9ab88af846685ad63594"
+        "contentIdentity": "sha256:ebcc900870a3ab28a76fc5fda1a751f17fc7d78c4f03580d3164ab531e5299c7"
       },
       {
         "id": "resource.prompt.evidence-research",
@@ -123,7 +123,7 @@
       {
         "id": "resource.prompt.integrate-draft",
         "owner": "owned",
-        "contentIdentity": "sha256:eb5003d890bb0d9e6d4031f37ac0827b34952503512b10f0675c47f671b5513d"
+        "contentIdentity": "sha256:070318879038a261fad4825d3a968bd048a7abfc25196607c0b1ef63e05ac760"
       },
       {
         "id": "resource.prompt.architecture-direction-review",
@@ -323,7 +323,7 @@
       {
         "id": "resource.package-readme",
         "owner": "owned",
-        "contentIdentity": "sha256:f0e9c01f0d5ce42bccf6caf34ae7136d85465bb0784b8b1c0740d975bcdf670f"
+        "contentIdentity": "sha256:3f0e45bd3c75fc0786ecc28f43e11bde8787691064f32a8f8153d260da2aeae3"
       },
       {
         "id": "resource.skill.grilling",
@@ -561,7 +561,17 @@
       ],
       "dataEdges": [
         "data.sd-01-sd-02-intake-context",
-        "data.sd-02-status"
+        "data.sd-02-status",
+        "data.sd-02-sd-03-working-brief",
+        "data.sd-08-sd-09-problem-solution-draft",
+        "data.sd-08-selected-review-lenses",
+        "data.sd-08-sd-09-architecture-draft",
+        "data.sd-08-sd-09-quality-acceptance-draft",
+        "data.sd-08-sd-13-candidate-design",
+        "data.sd-08-sd-14-candidate",
+        "data.sd-09-problem-solution-to-join",
+        "data.sd-09-architecture-to-join",
+        "data.sd-09-quality-acceptance-to-join"
       ],
       "hostOperations": [
         "operation.sd-14-deterministic-verification",
@@ -594,12 +604,12 @@
         "skill",
         "artifact_user"
       ],
-      "mergeProof": "sha256:89ee0e5af21c8309708882d5293c31b85731648cd5b7e783521c1d1e988e699d"
+      "mergeProof": "sha256:a0e94f4c6410e5c3dfb8023e9ee4d6be6db182e89728c78327fbb61ecbd9134a"
     },
     "resolutionProof": {
       "noAmbientFallback": true,
       "allBindingsExact": true
     },
-    "digest": "sha256:73fec3e2ea181aceb9f0c65de99e1cf4fc65deca8e29cc33582beb25fc523caf"
+    "digest": "sha256:102235270afed33641f7027bbbd7f9aca9e9e417b62f882c3244fb607ffd56dd"
   }
 }
