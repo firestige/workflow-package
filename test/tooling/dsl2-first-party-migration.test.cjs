@@ -6,7 +6,7 @@ const test = require("node:test");
 const repository = path.resolve(__dirname, "../..");
 const packages = [
   { directory: "implementation", name: "implementation-workflow", version: "0.4.6" },
-  { directory: "system-design", name: "system-design-workflow", version: "0.4.7" },
+  { directory: "system-design", name: "system-design-workflow", version: "0.4.8" },
 ];
 const documentNames = ["package", "workflow", "actions", "roles", "routes", "artifacts", "validation", "snapshot"];
 
@@ -211,6 +211,22 @@ for (const packageUnderTest of packages) {
       assert.deepEqual(expandAction?.resultSchema.properties.draftCheckpoints.items.required, [
         "identity", "contentDigest", "content",
       ]);
+      const promptCases = [
+        ["adaptive-grilling.prompt.md", /system-design-brief\.template\.md/u],
+        ["produce-skeleton.prompt.md", /system-design-skeleton\.template\.md/u],
+        ["prepare-spike-request.prompt.md", /spike-request\.template\.md/u],
+        ["classify-downstream-handoffs.prompt.md", /downstream-obligation\.schema\.md/u],
+      ];
+      for (const [filename, inaccessibleResource] of promptCases) {
+        const prompt = await readFile(path.join(repository, "system-design", "prompts", "actions", filename), "utf8");
+        assert.doesNotMatch(prompt, inaccessibleResource,
+          `${filename} must not require direct access to an unrouted package-local resource`);
+      }
+      const skeletonPrompt = await readFile(path.join(repository, "system-design", "prompts", "actions", "produce-skeleton.prompt.md"), "utf8");
+      assert.match(skeletonPrompt, /Problem Decomposition[\s\S]*Scenario-driven View Plan/u,
+        "SD-04 must carry its Skeleton coverage contract in the admitted prompt");
+      assert.match(skeletonPrompt, /Return the complete Skeleton in the structured `skeleton` field/u,
+        "SD-04 must project its artifact for downstream Actions");
     }
   });
 }
