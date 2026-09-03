@@ -2,21 +2,21 @@
   "kind": "agentops.workflow-package-snapshot",
   "schemaVersion": "agentops.workflow-dsl@2.0.0",
   "snapshot": {
-    "id": "snapshot.implementation-workflow.0.4.8",
+    "id": "snapshot.implementation-workflow.0.4.9",
     "package": {
       "name": "implementation-workflow",
-      "version": "0.4.8",
-      "digest": "sha256:3125518e89b96723f1eec1a736826260772e052d42321b31e9020c7732c86b63"
+      "version": "0.4.9",
+      "digest": "sha256:54b1c196469d72edde790b652a3fde0b02eb4132940cb93190d96923712cc339"
     },
     "definition": {
       "id": "implementation-workflow",
-      "version": "0.4.8",
-      "contentIdentity": "sha256:5035423c3da63438b8823fb9f89ff6f581cf4fd2a2ce4ccca1089113d89c1097"
+      "version": "0.4.9",
+      "contentIdentity": "sha256:14b8a052daf05d2d3971624bcb4b5acd4875a2c442347b85649b4dde5677c43c"
     },
     "documents": [
       {
         "kind": "workflow",
-        "contentIdentity": "sha256:5035423c3da63438b8823fb9f89ff6f581cf4fd2a2ce4ccca1089113d89c1097"
+        "contentIdentity": "sha256:14b8a052daf05d2d3971624bcb4b5acd4875a2c442347b85649b4dde5677c43c"
       },
       {
         "kind": "actions",
@@ -183,12 +183,12 @@
       {
         "id": "prompt.evolve-prototype",
         "owner": "owned",
-        "contentIdentity": "sha256:c4e575b7fe3cdbbd9c2adf358f643fcc4887a9e310f2d850c7f972630356cdf7"
+        "contentIdentity": "sha256:a090b184b1c8ef201589ffc530c5b9c495f576a7eacd94b3f3f1185f3081280c"
       },
       {
         "id": "prompt.implementation-resolution",
         "owner": "owned",
-        "contentIdentity": "sha256:d1c6977837b2c364cfbbd0a063429487ea5c6896b0704579d485c83e1c04c464"
+        "contentIdentity": "sha256:5e54bdd47f0727b7592b782d41d92364d0910a3283e5225c3eeaf2f050beeaea"
       },
       {
         "id": "prompt.intake-and-authority",
@@ -198,7 +198,7 @@
       {
         "id": "prompt.materialize-tests",
         "owner": "owned",
-        "contentIdentity": "sha256:bd30f133945ccd9d63ffa654c712428bbbf324a63acd61809c50744ba530b680"
+        "contentIdentity": "sha256:2228bd14e3a4999d96a6e4e1d1d051bf8d2e918f1fcd96fe0d96c7e1ad7a9108"
       },
       {
         "id": "prompt.preflight",
@@ -758,12 +758,12 @@
         "skill",
         "artifact_user"
       ],
-      "mergeProof": "sha256:05e51253790bb2a0ca3a3ad368bb55c1c894a130d3cd9f40b1f923fd022c8e72"
+      "mergeProof": "sha256:0287976e77526be0ae2434db406f94c24c1fce1facae5b994dd8934a7419f922"
     },
     "resolutionProof": {
       "noAmbientFallback": true,
       "allBindingsExact": true
     },
-    "digest": "sha256:ab3e2420af3d1b25d5b37f91f6bed8094408f8cfa24a7aad034e24de2369e798"
+    "digest": "sha256:2a9dab0ce7eb642367c78a1f7a69024ba6d06670d3fa3487e4aca654d78fb9cb"
   }
 }

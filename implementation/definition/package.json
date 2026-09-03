@@ -3,7 +3,7 @@
   "schemaVersion": "agentops.workflow-dsl@2.0.0",
   "package": {
     "name": "implementation-workflow",
-    "version": "0.4.8",
+    "version": "0.4.9",
     "purpose": "Turns one exact frozen, implementation-authorizing design into a tested, independently reviewed feature-branch candidate via Goal Graph, Test Ladder and evolutionary TDD; machine-readable Definition per agentops.workflow-dsl@2.0.0.",
     "status": "DRAFT",
     "admissibility": "DESIGN_REFERENCE",
@@ -13,10 +13,10 @@
     },
     "definition": {
       "name": "implementation-workflow",
-      "version": "0.4.8",
-      "contentIdentity": "sha256:5035423c3da63438b8823fb9f89ff6f581cf4fd2a2ce4ccca1089113d89c1097"
+      "version": "0.4.9",
+      "contentIdentity": "sha256:14b8a052daf05d2d3971624bcb4b5acd4875a2c442347b85649b4dde5677c43c"
     },
-    "digest": "sha256:3125518e89b96723f1eec1a736826260772e052d42321b31e9020c7732c86b63"
+    "digest": "sha256:54b1c196469d72edde790b652a3fde0b02eb4132940cb93190d96923712cc339"
   },
   "documents": {
     "workflow": "workflow.json",
@@ -257,7 +257,7 @@
         "kind": "action-prompt",
         "owner": "owned",
         "path": "../prompts/actions/evolve-prototype.prompt.md",
-        "contentIdentity": "sha256:c4e575b7fe3cdbbd9c2adf358f643fcc4887a9e310f2d850c7f972630356cdf7",
+        "contentIdentity": "sha256:a090b184b1c8ef201589ffc530c5b9c495f576a7eacd94b3f3f1185f3081280c",
         "use": "action-prompt resource at prompts/actions/evolve-prototype.prompt.md"
       },
       {
@@ -265,7 +265,7 @@
         "kind": "action-prompt",
         "owner": "owned",
         "path": "../prompts/actions/implementation-resolution.prompt.md",
-        "contentIdentity": "sha256:d1c6977837b2c364cfbbd0a063429487ea5c6896b0704579d485c83e1c04c464",
+        "contentIdentity": "sha256:5e54bdd47f0727b7592b782d41d92364d0910a3283e5225c3eeaf2f050beeaea",
         "use": "action-prompt resource at prompts/actions/implementation-resolution.prompt.md"
       },
       {
@@ -281,7 +281,7 @@
         "kind": "action-prompt",
         "owner": "owned",
         "path": "../prompts/actions/materialize-tests.prompt.md",
-        "contentIdentity": "sha256:bd30f133945ccd9d63ffa654c712428bbbf324a63acd61809c50744ba530b680",
+        "contentIdentity": "sha256:2228bd14e3a4999d96a6e4e1d1d051bf8d2e918f1fcd96fe0d96c7e1ad7a9108",
         "use": "action-prompt resource at prompts/actions/materialize-tests.prompt.md"
       },
       {
