@@ -2,21 +2,21 @@
   "kind": "agentops.workflow-package-snapshot",
   "schemaVersion": "agentops.workflow-dsl@2.0.0",
   "snapshot": {
-    "id": "snapshot.system-design-workflow.0.4.9",
+    "id": "snapshot.system-design-workflow.0.4.10",
     "package": {
       "name": "system-design-workflow",
-      "version": "0.4.9",
-      "digest": "sha256:2c1e693733f135add2af891fae3ba21744506ef67a6e23da64ea6cfeace6ad5c"
+      "version": "0.4.10",
+      "digest": "sha256:85f2ab154ca8dde9b5c9e2b72482af73eba0886ae9a5ea6236cfce6e56b871cf"
     },
     "definition": {
       "id": "system-design-workflow",
-      "version": "0.4.9",
-      "contentIdentity": "sha256:52b454856fddcafd380c8163b104b62c5f641a02efbf42831f1c6c06ffd8dd7a"
+      "version": "0.4.10",
+      "contentIdentity": "sha256:63c9cd760c577780f88a7fc28ac943002cb92ceaff0b700f5d9994b76311e1f8"
     },
     "documents": [
       {
         "kind": "workflow",
-        "contentIdentity": "sha256:52b454856fddcafd380c8163b104b62c5f641a02efbf42831f1c6c06ffd8dd7a"
+        "contentIdentity": "sha256:63c9cd760c577780f88a7fc28ac943002cb92ceaff0b700f5d9994b76311e1f8"
       },
       {
         "kind": "actions",
@@ -143,7 +143,7 @@
       {
         "id": "resource.prompt.quality-acceptance-review",
         "owner": "owned",
-        "contentIdentity": "sha256:327dd7f142e2d682383a1faac86a725ba5b2f26ba56eb8eb48fabfbb9489f31e"
+        "contentIdentity": "sha256:4352a89c96a488a1ffb696328c882f1d228faa557599198fad7a0dfd4106d533"
       },
       {
         "id": "resource.prompt.aggregate-findings",
@@ -618,12 +618,12 @@
         "skill",
         "artifact_user"
       ],
-      "mergeProof": "sha256:97a07abffea3967d7c962fc21cb5c93816a334698c666f669209faef2e069db4"
+      "mergeProof": "sha256:38b9b3c3868109708c9da9d79a897c1db8e482a21f1428484eb6b04cee4b3f23"
     },
     "resolutionProof": {
       "noAmbientFallback": true,
       "allBindingsExact": true
     },
-    "digest": "sha256:d11a947eac2cdf3554f4f46ad6731def8e215136bb63a235e909ebcccac2d89f"
+    "digest": "sha256:2ca3d383e41cd68917878bcea098a81b13b4b4dfd7808a00804448101b7c6a64"
   }
 }
