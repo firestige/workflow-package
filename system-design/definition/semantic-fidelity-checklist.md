@@ -1,6 +1,6 @@
 # System Design Workflow Definition — Semantic Fidelity Checklist
 
-Machine Definition: `workflow-package/system-design/definition/` (`agentops.workflow-dsl@2.0.0`, Package `0.4.1`). The semantic source remains `workflow.md`; this checklist records the 2.0 structural migration and does not create new Workflow meaning. Status: `DESIGN_REFERENCE`.
+Machine Definition: `workflow-package/system-design/definition/` (`agentops.workflow-dsl@2.0.0`, Package `0.4.2`). The semantic source remains `workflow.md`; this checklist records the 2.0 structural migration and does not create new Workflow meaning. Status: `DESIGN_REFERENCE`.
 
 ## 1. Contract document set
 

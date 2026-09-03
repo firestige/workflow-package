@@ -2,21 +2,21 @@
   "kind": "agentops.workflow-package-snapshot",
   "schemaVersion": "agentops.workflow-dsl@2.0.0",
   "snapshot": {
-    "id": "snapshot.system-design-workflow.0.4.1",
+    "id": "snapshot.system-design-workflow.0.4.2",
     "package": {
       "name": "system-design-workflow",
-      "version": "0.4.1",
-      "digest": "sha256:a47d4cbee7108b06a3f3976afe618a8939fe9f14e4a403600bc28d1e08b6af9c"
+      "version": "0.4.2",
+      "digest": "sha256:64fc01dddee7b810a201a34de531360ad23f3191d72ce4cb3a0a0fabf0fb379c"
     },
     "definition": {
       "id": "system-design-workflow",
-      "version": "0.4.1",
-      "contentIdentity": "sha256:f088ad034d2d09653ad77a88a9b784a8ea7562768afce373e0903694ac26ec44"
+      "version": "0.4.2",
+      "contentIdentity": "sha256:209e5eebc94418b88485f7b43924e24a6c78bc0fbaa7ec3badac74205258612b"
     },
     "documents": [
       {
         "kind": "workflow",
-        "contentIdentity": "sha256:f088ad034d2d09653ad77a88a9b784a8ea7562768afce373e0903694ac26ec44"
+        "contentIdentity": "sha256:209e5eebc94418b88485f7b43924e24a6c78bc0fbaa7ec3badac74205258612b"
       },
       {
         "kind": "actions",
@@ -43,7 +43,7 @@
       {
         "id": "resource.role-prompt.grilling-facilitator",
         "owner": "owned",
-        "contentIdentity": "sha256:acbcfd7c06f247625ae9df06593b9d382c5fea83f80a8c177a791c1a61840418"
+        "contentIdentity": "sha256:31e7578afe84ccf4e9c2232a772e126aa0795e681a18595fb5e2e7d1202d7869"
       },
       {
         "id": "resource.role-prompt.evidence-scout",
@@ -323,7 +323,7 @@
       {
         "id": "resource.package-readme",
         "owner": "owned",
-        "contentIdentity": "sha256:3c6e4784fc9e507300fb749432dc05093735b47387cf4efcbdfc0ce29480a411"
+        "contentIdentity": "sha256:f0e9c01f0d5ce42bccf6caf34ae7136d85465bb0784b8b1c0740d975bcdf670f"
       },
       {
         "id": "resource.skill.grilling",
@@ -594,12 +594,12 @@
         "skill",
         "artifact_user"
       ],
-      "mergeProof": "sha256:406f447181dc6b1166c2e7ce385e062aca56588239c9685a99072327d76df39b"
+      "mergeProof": "sha256:89ee0e5af21c8309708882d5293c31b85731648cd5b7e783521c1d1e988e699d"
     },
     "resolutionProof": {
       "noAmbientFallback": true,
       "allBindingsExact": true
     },
-    "digest": "sha256:02f715671cd0f583a9f6ca1f5af73cc975a5d6b9a2a8a21e78b3f3d76b5bcd89"
+    "digest": "sha256:73fec3e2ea181aceb9f0c65de99e1cf4fc65deca8e29cc33582beb25fc523caf"
   }
 }

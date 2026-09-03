@@ -9,7 +9,7 @@
 | Field | Value |
 | --- | --- |
 | Package owner | Repository owner acting through `team-config/` configuration authority |
-| Design version | `0.4.1-design` |
+| Design version | `0.4.2-design` |
 | Design status | `CONFIRMED` |
 | Governing model | [`docs/workflow-composition-model-2.0.0-candidate.md`](https://github.com/firestige/workflow-self-recursive/blob/03f216bdedc3ecf272b2b8321169edc180b4b60f/docs/workflow-composition-model-2.0.0-candidate.md) |
 | Workflow authority | [`workflow.md`](workflow.md) remains the semantic source; the machine-readable Definition under [`definition/`](definition/) is its `DESIGN_REFERENCE` translation under [`agentops.workflow-dsl@2.0.0`](https://github.com/firestige/workflow-self-recursive/blob/03f216bdedc3ecf272b2b8321169edc180b4b60f/docs/contracts/workflow/workflow-definition-dsl-2.0.0-candidate.md) |
