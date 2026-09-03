@@ -6,7 +6,7 @@ const test = require("node:test");
 const repository = path.resolve(__dirname, "../..");
 const packages = [
   { directory: "implementation", name: "implementation-workflow", version: "0.4.6" },
-  { directory: "system-design", name: "system-design-workflow", version: "0.4.8" },
+  { directory: "system-design", name: "system-design-workflow", version: "0.4.9" },
 ];
 const documentNames = ["package", "workflow", "actions", "roles", "routes", "artifacts", "validation", "snapshot"];
 
@@ -227,6 +227,11 @@ for (const packageUnderTest of packages) {
         "SD-04 must carry its Skeleton coverage contract in the admitted prompt");
       assert.match(skeletonPrompt, /Return the complete Skeleton in the structured `skeleton` field/u,
         "SD-04 must project its artifact for downstream Actions");
+      const spikePrompt = await readFile(path.join(repository, "system-design", "prompts", "actions", "prepare-spike-request.prompt.md"), "utf8");
+      assert.match(spikePrompt, /test-Harness or assertion mechanism[\s\S]*downstream verification obligation/u,
+        "SD-06 must not turn ordinary verification mechanics into an architecture-feasibility wait");
+      assert.match(spikePrompt, /`routing: "feasibility-confirmed"`/u,
+        "SD-06 must expose the no-Spike happy path explicitly");
     }
   });
 }

@@ -3,7 +3,7 @@
   "schemaVersion": "agentops.workflow-dsl@2.0.0",
   "package": {
     "name": "system-design-workflow",
-    "version": "0.4.8",
+    "version": "0.4.9",
     "purpose": "Turn a short Intake, project authority material and user opinions into an IMPLEMENTATION_READY System Design that states what problem is solved, why the design is shaped this way, and how fitness for the current project is proven; budget exhaustion or missing external authority enters recoverable INCOMPLETE, explicit cancellation enters CANCELLED, and non-retryable failure enters FAILED (none equals success).",
     "status": "DRAFT",
     "admissibility": "DESIGN_REFERENCE",
@@ -13,10 +13,10 @@
     },
     "definition": {
       "name": "system-design-workflow",
-      "version": "0.4.8",
-      "contentIdentity": "sha256:445ac588b73f0bd68ce7136d24d0cd227acaa91177a949e8ac4a5039e9453438"
+      "version": "0.4.9",
+      "contentIdentity": "sha256:52b454856fddcafd380c8163b104b62c5f641a02efbf42831f1c6c06ffd8dd7a"
     },
-    "digest": "sha256:7f44d7e72ea4a44b58f8d6a3a032dce48e5b7968386b3f1c2556e769b000adc5"
+    "digest": "sha256:2c1e693733f135add2af891fae3ba21744506ef67a6e23da64ea6cfeace6ad5c"
   },
   "documents": {
     "workflow": "workflow.json",
@@ -137,7 +137,7 @@
         "kind": "action-prompt",
         "owner": "owned",
         "path": "../prompts/actions/prepare-spike-request.prompt.md",
-        "contentIdentity": "sha256:377ba15a7b7f290e246f0f2a168d24782384ae2d60f7a8c9658c62c5590d2e6a",
+        "contentIdentity": "sha256:83b78ce313c8fa9d63e472b0895745a37498aba6cfafd5ed74f0d7d959688abc",
         "use": "action.sd-06 spike request preparation mission"
       },
       {
@@ -169,7 +169,7 @@
         "kind": "action-prompt",
         "owner": "owned",
         "path": "../prompts/actions/architecture-direction-review.prompt.md",
-        "contentIdentity": "sha256:40bb043509fdc3eed84c9b8ec5ecd96bb572408add886ac061204a8aaa6f8b8f",
+        "contentIdentity": "sha256:7ba8dda19a20cae47a9abcc67c81e6abd4836df4dcf7425dbedce88e944b737c",
         "use": "action.sd-05 mission"
       },
       {
