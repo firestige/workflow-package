@@ -15,7 +15,7 @@ async function readDefinition(directory, documentName) {
 }
 
 for (const packageUnderTest of packages) {
-  test(`${packageUnderTest.name}@0.4.3 is a closed Workflow DSL 2.0 package`, async () => {
+  test(`${packageUnderTest.name}@0.4.4 is a closed Workflow DSL 2.0 package`, async () => {
     const documents = Object.fromEntries(await Promise.all(documentNames.map(async (name) => [
       name,
       await readDefinition(packageUnderTest.directory, name),
@@ -25,16 +25,16 @@ for (const packageUnderTest of packages) {
       assert.equal(document.schemaVersion, "agentops.workflow-dsl@2.0.0", `${name}.json schemaVersion`);
     }
     assert.equal(documents.package.package.name, packageUnderTest.name);
-    assert.equal(documents.package.package.version, "0.4.3");
-    assert.equal(documents.package.package.definition.version, "0.4.3");
+    assert.equal(documents.package.package.version, "0.4.4");
+    assert.equal(documents.package.package.definition.version, "0.4.4");
     assert.deepEqual(documents.package.compatibility, {
       minContractVersion: "2.0.0",
       maxContractVersion: "2.0.0",
     });
-    assert.equal(documents.workflow.workflow.version, "0.4.3");
+    assert.equal(documents.workflow.workflow.version, "0.4.4");
     assert.equal(documents.workflow.workflow.contractVersion, "agentops.workflow-dsl@2.0.0");
-    assert.equal(documents.snapshot.snapshot.package.version, "0.4.3");
-    assert.equal(documents.snapshot.snapshot.definition.version, "0.4.3");
+    assert.equal(documents.snapshot.snapshot.package.version, "0.4.4");
+    assert.equal(documents.snapshot.snapshot.definition.version, "0.4.4");
 
     const resources = [
       ...documents.package.resources.owned,
@@ -94,7 +94,7 @@ for (const packageUnderTest of packages) {
         assert.deepEqual(handoff.upstreamHandoff, {
           ...handoff.upstreamHandoff,
           package: "system-design-workflow",
-          packageVersion: "0.4.3",
+          packageVersion: "0.4.4",
         });
       }
       const selector = documents.workflow.hostOperations.find(({ id }) => id === "operation.IM-06-selection");
@@ -147,6 +147,17 @@ for (const packageUnderTest of packages) {
           && edge.target.slot?.kind === "property"
           && edge.target.slot.name === targetProperty),
         `${producer}.${sourceProperty} must bind ${targetNode}${targetBranch ? `/${targetBranch}` : ""}.${targetProperty}`);
+      }
+      const actionsById = new Map(documents.actions.actions.map((action) => [action.id, action]));
+      const actionByNode = new Map(documents.workflow.graph.nodes
+        .filter((node) => typeof node.action === "string")
+        .map((node) => [node.id, node.action]));
+      for (const edge of documents.workflow.dataflow.edges) {
+        if (edge.source.kind !== "site-result" || edge.source.slot?.kind !== "property") continue;
+        const action = actionsById.get(actionByNode.get(edge.source.site?.nodeIdentity));
+        if (action === undefined) continue;
+        assert.ok(action.resultSchema.required?.includes(edge.source.slot.name),
+          `${action.id}.${edge.source.slot.name} is projected by dataflow and must be required by its result schema`);
       }
       const operations = new Map(documents.workflow.hostOperations.map((operation) => [operation.id, operation]));
       assert.equal(operations.get("operation.sd-14-deterministic-verification")?.configuration.accepted, true);

@@ -197,7 +197,8 @@
         },
         "required": [
           "status",
-          "routing"
+          "routing",
+          "workingBrief"
         ]
       },
       "responsibleAuthority": {

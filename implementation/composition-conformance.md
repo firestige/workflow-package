@@ -1,6 +1,6 @@
 # Workflow Composition Conformance Review
 
-本审查按 [`docs/workflow-composition-model-2.0.0-candidate.md`](https://github.com/firestige/workflow-self-recursive/blob/03f216bdedc3ecf272b2b8321169edc180b4b60f/docs/workflow-composition-model-2.0.0-candidate.md) 的设计顺序、不变量和十三项验收问题检查 Implementation Workflow `0.4.3-design`。状态含义：
+本审查按 [`docs/workflow-composition-model-2.0.0-candidate.md`](https://github.com/firestige/workflow-self-recursive/blob/03f216bdedc3ecf272b2b8321169edc180b4b60f/docs/workflow-composition-model-2.0.0-candidate.md) 的设计顺序、不变量和十三项验收问题检查 Implementation Workflow `0.4.4-design`。状态含义：
 
 - `DESIGN_CLOSED`：Package 已给出明确设计答案；
 - `IMPLEMENTATION_REQUIRED`：设计已闭合，但需要 Contract/Execution/Runtime/CLI 实现和证据；
@@ -46,4 +46,4 @@ Two confirmed sources currently pull in different directions:
 
 The Package owner confirmed that Agent-only execution is `UNMANAGED_SIMULATION`: it can validate every Action/resource and produce simulation results, but cannot publish formal `VERIFIED_IMPLEMENTATION_READY`, durable Wait or resumable Managed checkpoint.
 
-Formal Delivery may use any Contract-conforming generic Runtime Profile, including a future minimal local implementation; it does not require LangGraph and cannot add Implementation-specific Runtime semantics. No additional Runtime-specific composition amendment is required. This closes the execution-mode authority decision for `0.4.3-design`.
+Formal Delivery may use any Contract-conforming generic Runtime Profile, including a future minimal local implementation; it does not require LangGraph and cannot add Implementation-specific Runtime semantics. No additional Runtime-specific composition amendment is required. This closes the execution-mode authority decision for `0.4.4-design`.
