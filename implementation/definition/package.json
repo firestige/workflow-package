@@ -16,7 +16,7 @@
       "version": "0.4.6",
       "contentIdentity": "sha256:03ca9b884353e23cd292b834db22c0e504b399bab99d96e7f9e4d008ad0cdc03"
     },
-    "digest": "sha256:6ae5ddd4f0eefe5301d5696849bb0e910dff1acef83d929e8547488cc07631f2"
+    "digest": "sha256:62958ae94f6b40d64483622a1d3d668300de0983ef930fb44ddcc0094aa4f56f"
   },
   "documents": {
     "workflow": "workflow.json",
@@ -121,7 +121,7 @@
         "kind": "cli",
         "owner": "owned",
         "path": "../cli/tests/custodian.test.mjs",
-        "contentIdentity": "sha256:18a1a7194c28746d0963d0e2b94b4849b0c2fd7cf018d75274933a06bb42d2f7",
+        "contentIdentity": "sha256:175d149c2aa45260676c6259dd2fba1657be58e0d99f80887cf131b7318d3c38",
         "use": "cli resource at cli/tests/custodian.test.mjs"
       },
       {

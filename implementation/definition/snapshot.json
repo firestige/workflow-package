@@ -6,7 +6,7 @@
     "package": {
       "name": "implementation-workflow",
       "version": "0.4.6",
-      "digest": "sha256:6ae5ddd4f0eefe5301d5696849bb0e910dff1acef83d929e8547488cc07631f2"
+      "digest": "sha256:62958ae94f6b40d64483622a1d3d668300de0983ef930fb44ddcc0094aa4f56f"
     },
     "definition": {
       "id": "implementation-workflow",
@@ -98,7 +98,7 @@
       {
         "id": "cli.tests.custodian.test",
         "owner": "owned",
-        "contentIdentity": "sha256:18a1a7194c28746d0963d0e2b94b4849b0c2fd7cf018d75274933a06bb42d2f7"
+        "contentIdentity": "sha256:175d149c2aa45260676c6259dd2fba1657be58e0d99f80887cf131b7318d3c38"
       },
       {
         "id": "cli.tests.harness.test",
@@ -779,12 +779,12 @@
         "skill",
         "artifact_user"
       ],
-      "mergeProof": "sha256:49cc614c6743d3fa12cfeb226692dcb408b359cdac00953226636d6efaa8b50d"
+      "mergeProof": "sha256:2a31239e6c81d68c15004933a8210aa328768f72b11b48fc3ae278a0509f6cfa"
     },
     "resolutionProof": {
       "noAmbientFallback": true,
       "allBindingsExact": true
     },
-    "digest": "sha256:b859d7b40e0f900147ce6250656eeb72dc0b621f7bcdedfda0af161d48dd4b2b"
+    "digest": "sha256:8e2ab76029b74b51f73318331db2737ec3217c47116dec6ae8124f685fc8c28f"
   }
 }
