@@ -9,10 +9,10 @@
 | Field | Value |
 | --- | --- |
 | Package owner | Repository owner acting through `team-config/` configuration authority |
-| Design version | `0.3.0-design` |
+| Design version | `0.4.0-design` |
 | Design status | `CONFIRMED` |
-| Governing model | [`docs/workflow-composition-model.md`](../../docs/workflow-composition-model.md) |
-| Workflow authority | [`workflow.md`](workflow.md) remains the semantic source; the machine-readable Definition under [`definition/`](definition/) is its `DESIGN_REFERENCE` translation under published [`agentops.workflow-dsl@1.1.0`](../../docs/contracts/workflow/workflow-definition-dsl.md) |
+| Governing model | [`docs/workflow-composition-model-2.0.0-candidate.md`](../../docs/workflow-composition-model-2.0.0-candidate.md) |
+| Workflow authority | [`workflow.md`](workflow.md) remains the semantic source; the machine-readable Definition under [`definition/`](definition/) is its `DESIGN_REFERENCE` translation under [`agentops.workflow-dsl@2.0.0`](../../docs/contracts/workflow/workflow-definition-dsl-2.0.0-candidate.md) |
 | Initial validation mode | `UNMANAGED_SIMULATION` with package-owned CLI Gates |
 
 ## 核心原则

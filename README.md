@@ -12,7 +12,7 @@ The repository ships independently versioned logical Workflows:
 
 ## Developer preview
 
-This repository is part of workflow-self-recursive's architecture-first developer preview for trusted local use by individuals and small teams. Packages are validated against the exact frozen Workflow Contract used by their release. Hello World 0.2.0 uses Runtime DSL 2.0; the existing Implementation and System Design packages remain on Runtime DSL 1.1. **THERE WILL BE COMPATIBILITY-BREAKING CHANGES.**
+This repository is part of workflow-self-recursive's architecture-first developer preview for trusted local use by individuals and small teams. Packages are validated against the exact frozen Workflow Contract used by their release. Hello World 0.2.0, Implementation 0.4.0, and System Design 0.4.0 use Runtime DSL 2.0. **THERE WILL BE COMPATIBILITY-BREAKING CHANGES.**
 
 ## Structure
 
@@ -25,9 +25,9 @@ Each package keeps four concerns independently locatable, following the [Workflo
 
 ## Install a Workflow Package
 
-Product users select an exact `name@version`. Execution downloads the immutable public GitHub Release `workflow-package/<name>/v<version>` from `firestige/wsr-workflow-package`, verifies its descriptor, checksum, provenance, compatible Contract revision, Package closure, Workflow schema, and Snapshot identities, then admits it to the exact-content cache. No repository clone or repository development dependency is required.
+Product users select a Workflow with `name`, `name@latest`, or exact `name@version`. Execution resolves a bare name or `@latest` through its sticky-local alias and its single configured Source, then freezes the selected exact `name@version`, digest, and local path into the Delivery. It downloads immutable public GitHub Releases at `workflow-package/<name>/v<version>` from `firestige/wsr-workflow-package`, verifies their descriptor, checksum, provenance, compatible Contract revision, Package closure, Workflow schema, and Snapshot identities, then admits them to the exact-content cache. No repository clone or repository development dependency is required.
 
-Repository cloning remains a contributor workflow only; it is never a runtime fallback. There is no `latest`, branch, ambient checkout, or local-source fallback in the official product source.
+Repository cloning remains a contributor workflow only; it is never a runtime fallback. `latest` is a controlled package selector, not a tag, branch, ambient-checkout, or local-source fallback.
 
 ## Documentation
 

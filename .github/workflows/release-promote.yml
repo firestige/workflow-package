@@ -46,7 +46,6 @@ jobs:
           gh repo clone firestige/wsr-contracts "$RUNNER_TEMP/system-contracts"
           git -C "$RUNNER_TEMP/system-contracts" checkout --detach "$CONTRACT_REF"
           test "$(git -C "$RUNNER_TEMP/system-contracts" rev-parse HEAD)" = "$CONTRACT_REF"
-          npm --prefix "$RUNNER_TEMP/system-contracts/workflow-dsl" ci
           npm --prefix "$RUNNER_TEMP/system-contracts/workflow-dsl-2-candidate" ci
           node release/cli/release.cjs qualify "$RUNNER_TEMP/qualified-release" "$RUNNER_TEMP/system-contracts"
       - name: Mint short-lived release App token for final publish only

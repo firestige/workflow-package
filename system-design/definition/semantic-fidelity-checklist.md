@@ -1,12 +1,12 @@
 # System Design Workflow Definition — Semantic Fidelity Checklist
 
-Machine Definition: `workflow-package/system-design/definition/` (`agentops.workflow-dsl@1.0.0`). The semantic source remains `workflow.md`; this checklist records the 1.0 Contract migration and does not create new Workflow meaning. Status: `DESIGN_REFERENCE`.
+Machine Definition: `workflow-package/system-design/definition/` (`agentops.workflow-dsl@2.0.0`, Package `0.4.0`). The semantic source remains `workflow.md`; this checklist records the 2.0 structural migration and does not create new Workflow meaning. Status: `DESIGN_REFERENCE`.
 
 ## 1. Contract document set
 
 | Document | Current closure |
 | --- | --- |
-| `package.json` | Exact six-document index, 57 owned and 12 referenced resources, canonical Package digest |
+| `package.json` | Exact six-document index, 57 owned and 10 referenced resources, canonical Package digest; Agent/provider selection is repository Role binding authority rather than Package-local agent/model resources |
 | `snapshot.json` | Exact Definition, document, resource, Route, graph, authority and resolution bindings with canonical Snapshot digest |
 | `workflow.json` | 26 graph nodes, 15 ordinary edges, 68 typed event edges, 4 terminals, 5 Wait declarations, 6 budgets and 4 recovery policies |
 | `actions.json` | 19 ordinary Actions; every Agent Action has one Role and Route envelope; SD-14/SD-15 are deterministic Runtime Actions without Agent Routes |
@@ -49,7 +49,7 @@ Every graph node declares exactly the applicable closed event edges from `budget
 - emits the canonical Package digest and exact `snapshot.json` bindings;
 - produces byte-identical `package.json` and `snapshot.json` on consecutive runs with unchanged inputs.
 
-The runtime-custodian document grants no Role, Route, tool, model, or design authority. SD-14 and SD-15 remain deterministic Actions bound only to their declared validators.
+The runtime-custodian document grants no Role, Route, tool, provider binding, or design authority. SD-14 and SD-15 remain deterministic Actions bound only to their declared validators.
 
 ## 6. Executable Contract fixtures
 
@@ -59,8 +59,8 @@ The runtime-custodian document grants no Role, Route, tool, model, or design aut
 
 ```bash
 node workflow-package/system-design/definition/generate-package.cjs
-node system-contracts/workflow-dsl/tools/check-example.cjs workflow-package/system-design/definition
-node system-contracts/workflow-dsl/tools/run-conformance.cjs workflow-package/system-design/definition
+node system-contracts/workflow-dsl-2-candidate/generated/tools/check-example.cjs workflow-package/system-design/definition
+node --test workflow-package/test/tooling/dsl2-first-party-migration.test.cjs
 ```
 
-Expected results: generator reconstruction is stable; schema/graph/event/authority/digest closure passes; corpus reports `positive=1 negative=1 recovery=1`.
+Expected results: generator reconstruction is stable; schema/graph/event/authority/corpus-shape/digest closure passes; the migration guard proves DSL 2.0 versions, removed 1.x bindings and exact Role/Action prompts.

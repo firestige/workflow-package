@@ -1,10 +1,10 @@
 {
   "kind": "agentops.package",
-  "schemaVersion": "agentops.workflow-dsl@1.1.0",
+  "schemaVersion": "agentops.workflow-dsl@2.0.0",
   "package": {
     "name": "implementation-workflow",
-    "version": "0.3.0",
-    "purpose": "Turns one exact frozen, implementation-authorizing design into a tested, independently reviewed feature-branch candidate via Goal Graph, Test Ladder and evolutionary TDD; machine-readable Definition per agentops.workflow-dsl@1.1.0.",
+    "version": "0.4.0",
+    "purpose": "Turns one exact frozen, implementation-authorizing design into a tested, independently reviewed feature-branch candidate via Goal Graph, Test Ladder and evolutionary TDD; machine-readable Definition per agentops.workflow-dsl@2.0.0.",
     "status": "DRAFT",
     "admissibility": "DESIGN_REFERENCE",
     "ownership": {
@@ -13,10 +13,10 @@
     },
     "definition": {
       "name": "implementation-workflow",
-      "version": "0.3.0",
-      "contentIdentity": "sha256:5b9e986e4a156fc5e5272d774de30eec93b2483e1856b59a0d0fefeb442de056"
+      "version": "0.4.0",
+      "contentIdentity": "sha256:2421e9ff00b8b6710419679a29fdb7ab92d47a8ffe6083f7c320675175c5cc4f"
     },
-    "digest": "sha256:3c345ebbbf537d73f009da3894444a0bdb0a5e55106d5fd3ba56e52ba71f8abf"
+    "digest": "sha256:34caa25b0dc6191fd071928b6f4d81895f6c46095810fc975c527e242111871f"
   },
   "documents": {
     "workflow": "workflow.json",
@@ -33,7 +33,7 @@
         "kind": "documentation",
         "owner": "owned",
         "path": "../README.md",
-        "contentIdentity": "sha256:b548390aaad9ba78ce16b1fb89a19d75984eba9eec85c7df3dc0ce9823995a68",
+        "contentIdentity": "sha256:7eb9e1770541e64f63dc472fecf65d275f5246fbcb2371a7533aa35fb8e3ba1d",
         "use": "documentation resource at README.md"
       },
       {
@@ -161,7 +161,7 @@
         "kind": "documentation",
         "owner": "owned",
         "path": "../composition-conformance.md",
-        "contentIdentity": "sha256:7be1789b3cbe7cf0ae89faa10d3dc28939ea8e72a8021a8a8f1db1bcc893dd71",
+        "contentIdentity": "sha256:b2fe36477da1fdff51376e87206772246e2e4e282a74c2ccbc5154ca3540c180",
         "use": "documentation resource at composition-conformance.md"
       },
       {
@@ -533,28 +533,12 @@
         "use": "skill resource at skills/acceptance-test-design/SKILL.md"
       },
       {
-        "id": "agent.definition.acceptance-test-design",
-        "kind": "agent-definition",
-        "owner": "owned",
-        "path": "../skills/acceptance-test-design/agents/openai.yaml",
-        "contentIdentity": "sha256:0175e23bbe6263093ea74f93e64caf9d695abd2258d5c779fff89e40a641940e",
-        "use": "agent-definition resource at skills/acceptance-test-design/agents/openai.yaml"
-      },
-      {
         "id": "skill.black-box-goal-adversary",
         "kind": "skill",
         "owner": "owned",
         "path": "../skills/black-box-goal-adversary/SKILL.md",
         "contentIdentity": "sha256:254925e14ac96ea90239f3facf096401a6f01b2fa6098d8d2fd502eb667943f7",
         "use": "skill resource at skills/black-box-goal-adversary/SKILL.md"
-      },
-      {
-        "id": "agent.definition.black-box-goal-adversary",
-        "kind": "agent-definition",
-        "owner": "owned",
-        "path": "../skills/black-box-goal-adversary/agents/openai.yaml",
-        "contentIdentity": "sha256:ba9673e3f39802e3dfbb8b2025a785b435555a6c79120a18f62ac838bcccf527",
-        "use": "agent-definition resource at skills/black-box-goal-adversary/agents/openai.yaml"
       },
       {
         "id": "skill.evolutionary-tdd-implementation",
@@ -565,28 +549,12 @@
         "use": "skill resource at skills/evolutionary-tdd-implementation/SKILL.md"
       },
       {
-        "id": "agent.definition.evolutionary-tdd-implementation",
-        "kind": "agent-definition",
-        "owner": "owned",
-        "path": "../skills/evolutionary-tdd-implementation/agents/openai.yaml",
-        "contentIdentity": "sha256:0a80d9f805113e67c06a1ca852ffdcf86b18bcb32d73cbfa4af3fd3da666a637",
-        "use": "agent-definition resource at skills/evolutionary-tdd-implementation/agents/openai.yaml"
-      },
-      {
         "id": "skill.implementation-delivery-custody",
         "kind": "skill",
         "owner": "owned",
         "path": "../skills/implementation-delivery-custody/SKILL.md",
         "contentIdentity": "sha256:18498d6b06ea41bb509f6ab4617e07a565bb578288b5400add84fcd0561a9479",
         "use": "skill resource at skills/implementation-delivery-custody/SKILL.md"
-      },
-      {
-        "id": "agent.definition.implementation-delivery-custody",
-        "kind": "agent-definition",
-        "owner": "owned",
-        "path": "../skills/implementation-delivery-custody/agents/openai.yaml",
-        "contentIdentity": "sha256:e8479e775778391ccc7e3e45c9f4b5b0955ec60a2f591fc1223dfa3c38eeab57",
-        "use": "agent-definition resource at skills/implementation-delivery-custody/agents/openai.yaml"
       },
       {
         "id": "skill.implementation-feasibility-validation",
@@ -605,14 +573,6 @@
         "use": "skill resource at skills/implementation-goal-classification/SKILL.md"
       },
       {
-        "id": "agent.definition.implementation-goal-classification",
-        "kind": "agent-definition",
-        "owner": "owned",
-        "path": "../skills/implementation-goal-classification/agents/openai.yaml",
-        "contentIdentity": "sha256:0a03e1e9002a80015fb0c3caf7daa30546f9764a4223617e49bc4dcd8f9c7568",
-        "use": "agent-definition resource at skills/implementation-goal-classification/agents/openai.yaml"
-      },
-      {
         "id": "skill.structural-test-coverage",
         "kind": "skill",
         "owner": "owned",
@@ -621,28 +581,12 @@
         "use": "skill resource at skills/structural-test-coverage/SKILL.md"
       },
       {
-        "id": "agent.definition.structural-test-coverage",
-        "kind": "agent-definition",
-        "owner": "owned",
-        "path": "../skills/structural-test-coverage/agents/openai.yaml",
-        "contentIdentity": "sha256:a185a481914b2fd931c6a447dd8803a491b463b64ceb0535cfa52eb6bc57bd77",
-        "use": "agent-definition resource at skills/structural-test-coverage/agents/openai.yaml"
-      },
-      {
         "id": "skill.white-box-implementation-review",
         "kind": "skill",
         "owner": "owned",
         "path": "../skills/white-box-implementation-review/SKILL.md",
         "contentIdentity": "sha256:3a0538b7e634da7b399b40f81c9644b46c0450d5ce254810055eb65fcb7eb525",
         "use": "skill resource at skills/white-box-implementation-review/SKILL.md"
-      },
-      {
-        "id": "agent.definition.white-box-implementation-review",
-        "kind": "agent-definition",
-        "owner": "owned",
-        "path": "../skills/white-box-implementation-review/agents/openai.yaml",
-        "contentIdentity": "sha256:c34c4d0b34b51be9ffd06194753cfb4387c8735b733623fac77bdf84de318df8",
-        "use": "agent-definition resource at skills/white-box-implementation-review/agents/openai.yaml"
       },
       {
         "id": "template.candidate",
@@ -779,28 +723,6 @@
         "use": "shared single-question measurement grilling method; method-only, no control-flow authority; exact content identity resolved at Package Snapshot admission"
       },
       {
-        "id": "agent.definition.managed",
-        "kind": "agent-definition",
-        "owner": "referenced",
-        "sourceLocator": {
-          "repository": "workflow-self-recursive",
-          "path": "agents/managed-agent-definition.yaml"
-        },
-        "contentIdentity": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
-        "use": "managed agent definition projected through the declared Driver; exact identity resolved at Package Snapshot admission (IMPLEMENTATION_REQUIRED in composition-conformance)"
-      },
-      {
-        "id": "model.managed",
-        "kind": "model",
-        "owner": "referenced",
-        "sourceLocator": {
-          "repository": "workflow-self-recursive",
-          "path": "bindings/managed-model.yaml"
-        },
-        "contentIdentity": "sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
-        "use": "managed model binding with declared capability/cost class; exact identity resolved at Package Snapshot admission"
-      },
-      {
         "id": "driver.managed-cli",
         "kind": "driver",
         "owner": "referenced",
@@ -852,7 +774,7 @@
     "managed runtime with interrupt/resume, checkpoint correlation and terminal settlement"
   ],
   "compatibility": {
-    "minContractVersion": "1.1.0",
-    "maxContractVersion": "1.1.0"
+    "minContractVersion": "2.0.0",
+    "maxContractVersion": "2.0.0"
   }
 }

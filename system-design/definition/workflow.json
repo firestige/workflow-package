@@ -1,12 +1,12 @@
 {
   "kind": "agentops.workflow-definition",
-  "schemaVersion": "agentops.workflow-dsl@1.1.0",
+  "schemaVersion": "agentops.workflow-dsl@2.0.0",
   "workflow": {
     "id": "system-design-workflow",
     "name": "System Design Workflow",
-    "version": "0.3.0",
+    "version": "0.4.0",
     "purpose": "Turn a short Intake, project authority material and user opinions into a System Design that explains what problem is solved, why the design is shaped this way, and how fitness for the current project is proven. The only success terminal is IMPLEMENTATION_READY; budget exhaustion or missing external authority enters recoverable INCOMPLETE, explicit cancellation enters CANCELLED, and non-retryable execution/configuration failure enters FAILED; none of the three equals success.",
-    "contractVersion": "agentops.workflow-dsl@1.1.0"
+    "contractVersion": "agentops.workflow-dsl@2.0.0"
   },
   "state": {
     "fields": [
@@ -1215,6 +1215,30 @@
   },
   "dataflow": {
     "edges": [
+      {
+        "id": "data.sd-01-sd-02-intake-context",
+        "source": {
+          "kind": "site-result",
+          "site": {
+            "kind": "node",
+            "nodeIdentity": "node.sd-01"
+          },
+          "slot": {
+            "kind": "whole"
+          }
+        },
+        "target": {
+          "kind": "site-input",
+          "site": {
+            "kind": "node",
+            "nodeIdentity": "node.sd-02"
+          },
+          "slot": {
+            "kind": "property",
+            "name": "intakeContext"
+          }
+        }
+      },
       {
         "id": "data.sd-02-status",
         "source": {

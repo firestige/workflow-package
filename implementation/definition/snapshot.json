@@ -1,49 +1,49 @@
 {
   "kind": "agentops.workflow-package-snapshot",
-  "schemaVersion": "agentops.workflow-dsl@1.1.0",
+  "schemaVersion": "agentops.workflow-dsl@2.0.0",
   "snapshot": {
-    "id": "snapshot.implementation-workflow",
+    "id": "snapshot.implementation-workflow.0.4.0",
     "package": {
       "name": "implementation-workflow",
-      "version": "0.3.0",
-      "digest": "sha256:3c345ebbbf537d73f009da3894444a0bdb0a5e55106d5fd3ba56e52ba71f8abf"
+      "version": "0.4.0",
+      "digest": "sha256:34caa25b0dc6191fd071928b6f4d81895f6c46095810fc975c527e242111871f"
     },
     "definition": {
       "id": "implementation-workflow",
-      "version": "0.3.0",
-      "contentIdentity": "sha256:5b9e986e4a156fc5e5272d774de30eec93b2483e1856b59a0d0fefeb442de056"
+      "version": "0.4.0",
+      "contentIdentity": "sha256:2421e9ff00b8b6710419679a29fdb7ab92d47a8ffe6083f7c320675175c5cc4f"
     },
     "documents": [
       {
         "kind": "workflow",
-        "contentIdentity": "sha256:5b9e986e4a156fc5e5272d774de30eec93b2483e1856b59a0d0fefeb442de056"
+        "contentIdentity": "sha256:2421e9ff00b8b6710419679a29fdb7ab92d47a8ffe6083f7c320675175c5cc4f"
       },
       {
         "kind": "actions",
-        "contentIdentity": "sha256:9cd22c8461c20a5234fbef47180f8e485a6ba27b5b75329528f59a7651312b74"
+        "contentIdentity": "sha256:7bf03a8c789b0050cee896c1595455329491878055bf76f102552323df935f53"
       },
       {
         "kind": "roles",
-        "contentIdentity": "sha256:f76ab087549da44bc748596d0ae4b7fe1b4f4554c52eb911ee9fc40fe6bc98f3"
+        "contentIdentity": "sha256:fbb5723e42d10ea07c4d7aa0f30d000f458d3f3fab5404027422ae70aada1db7"
       },
       {
         "kind": "routes",
-        "contentIdentity": "sha256:75c955425df4c8ac31a003654c2f2c2d0486a9609b8ec3b7ec3856b68f6de49a"
+        "contentIdentity": "sha256:a308b3de1295aa05f211aaad8a67125304fe6c8fc5e44737a2aa4883e7e85544"
       },
       {
         "kind": "artifacts",
-        "contentIdentity": "sha256:dc4e56a1bc5b9c496d9100915b723ae7e42c3af0bc84aae7d7e167aef5ab1d58"
+        "contentIdentity": "sha256:056e943ad802848470e965a4248834c2fbabeb430b288fe1a9f963d686dbd34a"
       },
       {
         "kind": "validation",
-        "contentIdentity": "sha256:499a44b627face28c839d5458409cce45786d360c4246f0ef496deb91385714a"
+        "contentIdentity": "sha256:9b0c66f640bdd5e4b64fe46b9fa3ab4d3e3ab7a87430bcbb3d5812228ad90de9"
       }
     ],
     "resources": [
       {
         "id": "doc.readme",
         "owner": "owned",
-        "contentIdentity": "sha256:b548390aaad9ba78ce16b1fb89a19d75984eba9eec85c7df3dc0ce9823995a68"
+        "contentIdentity": "sha256:7eb9e1770541e64f63dc472fecf65d275f5246fbcb2371a7533aa35fb8e3ba1d"
       },
       {
         "id": "doc.routes",
@@ -123,7 +123,7 @@
       {
         "id": "doc.composition-conformance",
         "owner": "owned",
-        "contentIdentity": "sha256:7be1789b3cbe7cf0ae89faa10d3dc28939ea8e72a8021a8a8f1db1bcc893dd71"
+        "contentIdentity": "sha256:b2fe36477da1fdff51376e87206772246e2e4e282a74c2ccbc5154ca3540c180"
       },
       {
         "id": "conformance.negative",
@@ -356,19 +356,9 @@
         "contentIdentity": "sha256:b789ee8e1f15805a1340b27f43463d86b033aaf47f536780f98360a983ea9ca3"
       },
       {
-        "id": "agent.definition.acceptance-test-design",
-        "owner": "owned",
-        "contentIdentity": "sha256:0175e23bbe6263093ea74f93e64caf9d695abd2258d5c779fff89e40a641940e"
-      },
-      {
         "id": "skill.black-box-goal-adversary",
         "owner": "owned",
         "contentIdentity": "sha256:254925e14ac96ea90239f3facf096401a6f01b2fa6098d8d2fd502eb667943f7"
-      },
-      {
-        "id": "agent.definition.black-box-goal-adversary",
-        "owner": "owned",
-        "contentIdentity": "sha256:ba9673e3f39802e3dfbb8b2025a785b435555a6c79120a18f62ac838bcccf527"
       },
       {
         "id": "skill.evolutionary-tdd-implementation",
@@ -376,19 +366,9 @@
         "contentIdentity": "sha256:2823cc8c36cba1c0131d7196a72cd272eabed2ac50a46a15e66458f43475beaf"
       },
       {
-        "id": "agent.definition.evolutionary-tdd-implementation",
-        "owner": "owned",
-        "contentIdentity": "sha256:0a80d9f805113e67c06a1ca852ffdcf86b18bcb32d73cbfa4af3fd3da666a637"
-      },
-      {
         "id": "skill.implementation-delivery-custody",
         "owner": "owned",
         "contentIdentity": "sha256:18498d6b06ea41bb509f6ab4617e07a565bb578288b5400add84fcd0561a9479"
-      },
-      {
-        "id": "agent.definition.implementation-delivery-custody",
-        "owner": "owned",
-        "contentIdentity": "sha256:e8479e775778391ccc7e3e45c9f4b5b0955ec60a2f591fc1223dfa3c38eeab57"
       },
       {
         "id": "skill.implementation-feasibility-validation",
@@ -401,29 +381,14 @@
         "contentIdentity": "sha256:f4d980cd31c4420dee267c3fb2e3a8de7d3c339adf8a6e4bf19d9effbb1df514"
       },
       {
-        "id": "agent.definition.implementation-goal-classification",
-        "owner": "owned",
-        "contentIdentity": "sha256:0a03e1e9002a80015fb0c3caf7daa30546f9764a4223617e49bc4dcd8f9c7568"
-      },
-      {
         "id": "skill.structural-test-coverage",
         "owner": "owned",
         "contentIdentity": "sha256:db041a38e85586e3cef78949c2462f2b2d1d3aa2505639cee0d4099ae6933ea9"
       },
       {
-        "id": "agent.definition.structural-test-coverage",
-        "owner": "owned",
-        "contentIdentity": "sha256:a185a481914b2fd931c6a447dd8803a491b463b64ceb0535cfa52eb6bc57bd77"
-      },
-      {
         "id": "skill.white-box-implementation-review",
         "owner": "owned",
         "contentIdentity": "sha256:3a0538b7e634da7b399b40f81c9644b46c0450d5ce254810055eb65fcb7eb525"
-      },
-      {
-        "id": "agent.definition.white-box-implementation-review",
-        "owner": "owned",
-        "contentIdentity": "sha256:c34c4d0b34b51be9ffd06194753cfb4387c8735b733623fac77bdf84de318df8"
       },
       {
         "id": "template.candidate",
@@ -504,16 +469,6 @@
         "id": "skill.grilling",
         "owner": "referenced",
         "contentIdentity": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-      },
-      {
-        "id": "agent.definition.managed",
-        "owner": "referenced",
-        "contentIdentity": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
-      },
-      {
-        "id": "model.managed",
-        "owner": "referenced",
-        "contentIdentity": "sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
       },
       {
         "id": "driver.managed-cli",
@@ -819,12 +774,12 @@
         "skill",
         "artifact_user"
       ],
-      "mergeProof": "sha256:0e09d81380e1eba50f2b771c7a3952e5aa83c88be6347d915bbc7366dd966959"
+      "mergeProof": "sha256:a37156311c09e6159e0d56a7e3df047de7950a172acb4432f34c7495ff6a4b14"
     },
     "resolutionProof": {
       "noAmbientFallback": true,
       "allBindingsExact": true
     },
-    "digest": "sha256:dbfc4cfcb28488a6f5dce7f53d4b9a52f73d22dd3ac37505ffc91d1e42007600"
+    "digest": "sha256:611dde200ae15be4dd1a955afb382057e8df5e30ea2bf5e051ee73e8e89dc31e"
   }
 }

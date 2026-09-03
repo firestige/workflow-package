@@ -38,28 +38,17 @@ jobs:
         with:
           node-version: 24.12.0
           cache: npm
-          cache-dependency-path: |
-            system-contracts/workflow-dsl/package-lock.json
-            system-contracts/workflow-dsl-2-candidate/package-lock.json
+          cache-dependency-path: system-contracts/workflow-dsl-2-candidate/package-lock.json
 
       - name: Install Workflow Contract dependencies
-        run: |
-          npm --prefix system-contracts/workflow-dsl ci
-          npm --prefix system-contracts/workflow-dsl-2-candidate ci
+        run: npm --prefix system-contracts/workflow-dsl-2-candidate ci
 
       - name: Qualify first-party Packages
         run: |
           node system-contracts/workflow-dsl-2-candidate/generated/tools/check-example.cjs workflow-package/hello-world-workflow/definition
-          node system-contracts/workflow-dsl/tools/check-example.cjs workflow-package/system-design/definition
-          node system-contracts/workflow-dsl/tools/check-example.cjs workflow-package/implementation/definition
-
-      - name: Run executable Contract corpus
-        run: |
-          node system-contracts/workflow-dsl/tools/run-conformance.cjs workflow-package/system-design/definition
-          node system-contracts/workflow-dsl/tools/run-conformance.cjs workflow-package/implementation/definition
-
-      - name: Run Workflow Contract machine suite
-        run: node system-contracts/workflow-dsl/tools/test-wave6-contract.cjs
+          node system-contracts/workflow-dsl-2-candidate/generated/tools/check-example.cjs workflow-package/system-design/definition
+          node system-contracts/workflow-dsl-2-candidate/generated/tools/check-example.cjs workflow-package/implementation/definition
+          node --test workflow-package/test/tooling/dsl2-first-party-migration.test.cjs
 
       - name: Run Implementation CLI suite
         working-directory: workflow-package/implementation/cli

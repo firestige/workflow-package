@@ -108,10 +108,6 @@ const referenced = [
     'Shared adaptive grilling method used by the facilitator routes; method-only, no control-flow authority; exact content identity resolved by the future Package Snapshot (placeholder, do not fabricate)'],
   ['resource.skill.codebase-design', 'skill', 'workflow-package', '.agents/skills/codebase-design/SKILL.md', 'b',
     'Shared codebase-design method (Module/Interface/Seam/Depth/Leverage/Locality) used when structure is in scope; exact content identity resolved by the future Package Snapshot (placeholder, do not fabricate)'],
-  ['resource.agent-definition.managed', 'agent-definition', 'workflow-self-recursive', 'agents/managed-agent-definition.yaml', 'c',
-    'Managed agent definition projected through the declared Driver; exact identity resolved by the future Package Snapshot (placeholder, do not fabricate)'],
-  ['resource.model.managed', 'model', 'workflow-self-recursive', 'bindings/managed-model.yaml', 'd',
-    'Managed model binding with declared capability/cost class; exact identity resolved by the future Package Snapshot (placeholder, do not fabricate)'],
   ['resource.driver.managed-cli', 'driver', 'workflow-self-recursive', 'bindings/managed-cli-driver.yaml', 'e',
     'Managed CLI Driver projecting the frozen route, never ambient defaults; exact identity resolved by the future Package Snapshot (placeholder, do not fabricate)'],
   ['resource.tool.repo-read', 'tool', 'workflow-self-recursive', 'tools/repo-read.yaml', 'f',
@@ -146,10 +142,10 @@ const referencedRes = referenced.map(([id, kind, repository, rpath, ch, use]) =>
 
 const pkg = {
   kind: 'agentops.package',
-  schemaVersion: 'agentops.workflow-dsl@1.1.0',
+  schemaVersion: 'agentops.workflow-dsl@2.0.0',
   package: {
     name: 'system-design-workflow',
-    version: '0.3.0',
+    version: '0.4.0',
     purpose: 'Turn a short Intake, project authority material and user opinions into an IMPLEMENTATION_READY System Design that states what problem is solved, why the design is shaped this way, and how fitness for the current project is proven; budget exhaustion or missing external authority enters recoverable INCOMPLETE, explicit cancellation enters CANCELLED, and non-retryable failure enters FAILED (none equals success).',
     status: 'DRAFT',
     admissibility: 'DESIGN_REFERENCE',
@@ -159,7 +155,7 @@ const pkg = {
     },
     definition: {
       name: 'system-design-workflow',
-      version: '0.3.0',
+      version: '0.4.0',
       contentIdentity: sha256('workflow.json')
     }
   },
@@ -187,8 +183,8 @@ const pkg = {
     'deterministic validator CLI for SD-14/SD-15 (checks defined under validators/README.md)'
   ],
   compatibility: {
-    minContractVersion: '1.1.0',
-    maxContractVersion: '1.1.0'
+    minContractVersion: '2.0.0',
+    maxContractVersion: '2.0.0'
   }
 };
 
@@ -207,7 +203,7 @@ const snapshot = {
   kind: 'agentops.workflow-package-snapshot',
   schemaVersion: pkg.schemaVersion,
   snapshot: {
-    id: `snapshot.${workflow.workflow.id}`,
+    id: `snapshot.${workflow.workflow.id}.${pkg.package.version}`,
     package: { name: pkg.package.name, version: pkg.package.version, digest: pkg.package.digest },
     definition: { id: workflow.workflow.id, version: workflow.workflow.version, contentIdentity: pkg.package.definition.contentIdentity },
     documents,

@@ -38,6 +38,14 @@ const canonicalDigest = (value) => `sha256:${crypto.createHash("sha256").update(
 const pkg = read("package.json");
 const workflow = read(pkg.documents.workflow);
 const actions = read(pkg.documents.actions);
+pkg.schemaVersion = "agentops.workflow-dsl@2.0.0";
+pkg.package.version = "0.4.0";
+pkg.package.purpose = "Turns one exact frozen, implementation-authorizing design into a tested, independently reviewed feature-branch candidate via Goal Graph, Test Ladder and evolutionary TDD; machine-readable Definition per agentops.workflow-dsl@2.0.0.";
+pkg.package.definition.version = "0.4.0";
+pkg.compatibility = { minContractVersion: "2.0.0", maxContractVersion: "2.0.0" };
+for (const owner of ["owned", "referenced"]) {
+  pkg.resources[owner] = pkg.resources[owner].filter(({ kind }) => kind !== "agent-definition" && kind !== "model");
+}
 for (const resource of pkg.resources.owned) resource.contentIdentity = rawDigest(resource.path);
 pkg.package.definition.contentIdentity = rawDigest(pkg.documents.workflow);
 delete pkg.package.digest;
@@ -46,7 +54,10 @@ write("package.json", pkg);
 
 const snapshot = read("snapshot.json");
 snapshot.schemaVersion = pkg.schemaVersion;
+snapshot.snapshot.id = `snapshot.${workflow.workflow.id}.${pkg.package.version}`;
+snapshot.snapshot.package.version = pkg.package.version;
 snapshot.snapshot.package.digest = pkg.package.digest;
+snapshot.snapshot.definition.version = workflow.workflow.version;
 snapshot.snapshot.definition.contentIdentity = pkg.package.definition.contentIdentity;
 snapshot.snapshot.documents = Object.entries(pkg.documents).map(([kind, file]) => ({ kind, contentIdentity: rawDigest(file) }));
 snapshot.snapshot.resources = [...pkg.resources.owned, ...pkg.resources.referenced].map(({ id, owner, contentIdentity }) => ({ id, owner, contentIdentity }));
