@@ -2,21 +2,21 @@
   "kind": "agentops.workflow-package-snapshot",
   "schemaVersion": "agentops.workflow-dsl@2.0.0",
   "snapshot": {
-    "id": "snapshot.system-design-workflow.0.4.5",
+    "id": "snapshot.system-design-workflow.0.4.6",
     "package": {
       "name": "system-design-workflow",
-      "version": "0.4.5",
-      "digest": "sha256:966c5e22ae52aedd63afda0ef1fabbbaef6bc5b90fda2593e005b16d8cb0ba83"
+      "version": "0.4.6",
+      "digest": "sha256:73ceb1b9d9c2615989b0d795b6637465e243ac855a333d9f17c9f5d338a8b897"
     },
     "definition": {
       "id": "system-design-workflow",
-      "version": "0.4.5",
-      "contentIdentity": "sha256:e469103acde8c8f4397c6cfabae96b26d478d6528cbea635c3ea29e8f2d23a27"
+      "version": "0.4.6",
+      "contentIdentity": "sha256:0fcf11dec93f8d06a44ca029917a4097d1a10f9482ea3c4ce1c1bec62d2855b1"
     },
     "documents": [
       {
         "kind": "workflow",
-        "contentIdentity": "sha256:e469103acde8c8f4397c6cfabae96b26d478d6528cbea635c3ea29e8f2d23a27"
+        "contentIdentity": "sha256:0fcf11dec93f8d06a44ca029917a4097d1a10f9482ea3c4ce1c1bec62d2855b1"
       },
       {
         "kind": "actions",
@@ -169,6 +169,16 @@
         "id": "resource.prompt.fresh-reader-test",
         "owner": "owned",
         "contentIdentity": "sha256:211a2767423df9b9a624acc921b98996e8f4d32507408d81c2d8be3fe382cc19"
+      },
+      {
+        "id": "resource.skill.grilling",
+        "owner": "owned",
+        "contentIdentity": "sha256:7551ce62841d4cb954c64ba7e9613b439f0a89bf549a2fbbdff82ef725fb9c27"
+      },
+      {
+        "id": "resource.skill.codebase-design",
+        "owner": "owned",
+        "contentIdentity": "sha256:19b6802aa524ee7f2257dc24b843305956c6920f278b8e4b073fcebfc66c6856"
       },
       {
         "id": "resource.skill.system-design-authoring",
@@ -324,16 +334,6 @@
         "id": "resource.package-readme",
         "owner": "owned",
         "contentIdentity": "sha256:f020785f6c6aa21c0c6bdbc4b676e0a88584fdab2b1ffaebaf7e94552ee930a7"
-      },
-      {
-        "id": "resource.skill.grilling",
-        "owner": "referenced",
-        "contentIdentity": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-      },
-      {
-        "id": "resource.skill.codebase-design",
-        "owner": "referenced",
-        "contentIdentity": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
       },
       {
         "id": "resource.driver.managed-cli",
@@ -618,12 +618,12 @@
         "skill",
         "artifact_user"
       ],
-      "mergeProof": "sha256:1127fbcd20555b3b21308d22dc81ecd3126d60bafa593a2be78dd4a41e20a727"
+      "mergeProof": "sha256:69f8c74922f2acd0e52f72a0a3efc8253546f8d1415cbc48f2acfaf956f43ee0"
     },
     "resolutionProof": {
       "noAmbientFallback": true,
       "allBindingsExact": true
     },
-    "digest": "sha256:f66639c8925b02e8312cdf363ad38b15bbb477edea4cc3315da38a7f07f22f12"
+    "digest": "sha256:777d23e8388064f90cde810ce40bce313c4e62e45001f2e622a1f402294606c0"
   }
 }

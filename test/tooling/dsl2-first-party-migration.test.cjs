@@ -15,7 +15,7 @@ async function readDefinition(directory, documentName) {
 }
 
 for (const packageUnderTest of packages) {
-  test(`${packageUnderTest.name}@0.4.5 is a closed Workflow DSL 2.0 package`, async () => {
+  test(`${packageUnderTest.name}@0.4.6 is a closed Workflow DSL 2.0 package`, async () => {
     const documents = Object.fromEntries(await Promise.all(documentNames.map(async (name) => [
       name,
       await readDefinition(packageUnderTest.directory, name),
@@ -25,16 +25,16 @@ for (const packageUnderTest of packages) {
       assert.equal(document.schemaVersion, "agentops.workflow-dsl@2.0.0", `${name}.json schemaVersion`);
     }
     assert.equal(documents.package.package.name, packageUnderTest.name);
-    assert.equal(documents.package.package.version, "0.4.5");
-    assert.equal(documents.package.package.definition.version, "0.4.5");
+    assert.equal(documents.package.package.version, "0.4.6");
+    assert.equal(documents.package.package.definition.version, "0.4.6");
     assert.deepEqual(documents.package.compatibility, {
       minContractVersion: "2.0.0",
       maxContractVersion: "2.0.0",
     });
-    assert.equal(documents.workflow.workflow.version, "0.4.5");
+    assert.equal(documents.workflow.workflow.version, "0.4.6");
     assert.equal(documents.workflow.workflow.contractVersion, "agentops.workflow-dsl@2.0.0");
-    assert.equal(documents.snapshot.snapshot.package.version, "0.4.5");
-    assert.equal(documents.snapshot.snapshot.definition.version, "0.4.5");
+    assert.equal(documents.snapshot.snapshot.package.version, "0.4.6");
+    assert.equal(documents.snapshot.snapshot.definition.version, "0.4.6");
 
     const resources = [
       ...documents.package.resources.owned,
@@ -52,6 +52,14 @@ for (const packageUnderTest of packages) {
     }
 
     const resourcesById = new Map(resources.map((resource) => [resource.id, resource]));
+    for (const route of documents.routes.routes) {
+      for (const skillRef of route.resources.skills) {
+        const skill = resourcesById.get(skillRef.id);
+        assert.equal(skill?.kind, "skill", `${route.id}/${skillRef.id} is a declared Skill`);
+        assert.equal(skill?.owner, "owned", `${route.id}/${skillRef.id} is materialized in the released Package`);
+        await readFile(path.resolve(repository, packageUnderTest.directory, "definition", skill.path), "utf8");
+      }
+    }
     for (const route of documents.routes.routes.filter(({ resources: routeResources }) =>
       routeResources.capabilities.includes("action-interaction"))) {
       const explicitlyPromptedActions = new Set(route.resources.actionPrompts.map(({ action }) => action));
@@ -94,7 +102,7 @@ for (const packageUnderTest of packages) {
         assert.deepEqual(handoff.upstreamHandoff, {
           ...handoff.upstreamHandoff,
           package: "system-design-workflow",
-          packageVersion: "0.4.5",
+          packageVersion: "0.4.6",
         });
       }
       const selector = documents.workflow.hostOperations.find(({ id }) => id === "operation.IM-06-selection");

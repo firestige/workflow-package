@@ -2,21 +2,21 @@
   "kind": "agentops.workflow-package-snapshot",
   "schemaVersion": "agentops.workflow-dsl@2.0.0",
   "snapshot": {
-    "id": "snapshot.implementation-workflow.0.4.5",
+    "id": "snapshot.implementation-workflow.0.4.6",
     "package": {
       "name": "implementation-workflow",
-      "version": "0.4.5",
-      "digest": "sha256:28aa840c2f8e3056a2c31c71831d83520030fbbe9109ba32a291a9a4b935ea6b"
+      "version": "0.4.6",
+      "digest": "sha256:6ae5ddd4f0eefe5301d5696849bb0e910dff1acef83d929e8547488cc07631f2"
     },
     "definition": {
       "id": "implementation-workflow",
-      "version": "0.4.5",
-      "contentIdentity": "sha256:5abd69b7ae74d599a313fc654fe295d7699d2bf9a0f3b6213d619a3f3f4a66cb"
+      "version": "0.4.6",
+      "contentIdentity": "sha256:03ca9b884353e23cd292b834db22c0e504b399bab99d96e7f9e4d008ad0cdc03"
     },
     "documents": [
       {
         "kind": "workflow",
-        "contentIdentity": "sha256:5abd69b7ae74d599a313fc654fe295d7699d2bf9a0f3b6213d619a3f3f4a66cb"
+        "contentIdentity": "sha256:03ca9b884353e23cd292b834db22c0e504b399bab99d96e7f9e4d008ad0cdc03"
       },
       {
         "kind": "actions",
@@ -376,6 +376,11 @@
         "contentIdentity": "sha256:a94acf050c547f4fc7b5164339b04d37bf7da72f3ebc7ba3b629e273075a8c3c"
       },
       {
+        "id": "skill.grilling",
+        "owner": "owned",
+        "contentIdentity": "sha256:65c641ac6b995ebfc636dccd74661772b2fe6480a82705fa826ef88b3c4fe625"
+      },
+      {
         "id": "skill.implementation-goal-classification",
         "owner": "owned",
         "contentIdentity": "sha256:f4d980cd31c4420dee267c3fb2e3a8de7d3c339adf8a6e4bf19d9effbb1df514"
@@ -464,11 +469,6 @@
         "id": "doc.workflow",
         "owner": "owned",
         "contentIdentity": "sha256:f5fdcebe75118b82cbdfe14d4e15aed4738a7cc01db0e33ddd042b8b1aab13fa"
-      },
-      {
-        "id": "skill.grilling",
-        "owner": "referenced",
-        "contentIdentity": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
       },
       {
         "id": "driver.managed-cli",
@@ -779,12 +779,12 @@
         "skill",
         "artifact_user"
       ],
-      "mergeProof": "sha256:bce892685ffff89434df2bb81b4616c4dd2935117577599a789520cc70ce7f6f"
+      "mergeProof": "sha256:49cc614c6743d3fa12cfeb226692dcb408b359cdac00953226636d6efaa8b50d"
     },
     "resolutionProof": {
       "noAmbientFallback": true,
       "allBindingsExact": true
     },
-    "digest": "sha256:5ec2fcb919527949e5cfeb23f540bcce9c34fbf7299c8a28d2583655f440d0f9"
+    "digest": "sha256:b859d7b40e0f900147ce6250656eeb72dc0b621f7bcdedfda0af161d48dd4b2b"
   }
 }

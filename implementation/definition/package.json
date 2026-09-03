@@ -3,7 +3,7 @@
   "schemaVersion": "agentops.workflow-dsl@2.0.0",
   "package": {
     "name": "implementation-workflow",
-    "version": "0.4.5",
+    "version": "0.4.6",
     "purpose": "Turns one exact frozen, implementation-authorizing design into a tested, independently reviewed feature-branch candidate via Goal Graph, Test Ladder and evolutionary TDD; machine-readable Definition per agentops.workflow-dsl@2.0.0.",
     "status": "DRAFT",
     "admissibility": "DESIGN_REFERENCE",
@@ -13,10 +13,10 @@
     },
     "definition": {
       "name": "implementation-workflow",
-      "version": "0.4.5",
-      "contentIdentity": "sha256:5abd69b7ae74d599a313fc654fe295d7699d2bf9a0f3b6213d619a3f3f4a66cb"
+      "version": "0.4.6",
+      "contentIdentity": "sha256:03ca9b884353e23cd292b834db22c0e504b399bab99d96e7f9e4d008ad0cdc03"
     },
-    "digest": "sha256:28aa840c2f8e3056a2c31c71831d83520030fbbe9109ba32a291a9a4b935ea6b"
+    "digest": "sha256:6ae5ddd4f0eefe5301d5696849bb0e910dff1acef83d929e8547488cc07631f2"
   },
   "documents": {
     "workflow": "workflow.json",
@@ -565,6 +565,14 @@
         "use": "skill resource at skills/implementation-feasibility-validation/SKILL.md"
       },
       {
+        "id": "skill.grilling",
+        "kind": "skill",
+        "owner": "owned",
+        "path": "../skills/grilling/SKILL.md",
+        "contentIdentity": "sha256:65c641ac6b995ebfc636dccd74661772b2fe6480a82705fa826ef88b3c4fe625",
+        "use": "package-owned single-question measurement grilling method; method-only, no control-flow authority"
+      },
+      {
         "id": "skill.implementation-goal-classification",
         "kind": "skill",
         "owner": "owned",
@@ -710,18 +718,6 @@
       }
     ],
     "referenced": [
-      {
-        "id": "skill.grilling",
-        "kind": "skill",
-        "owner": "referenced",
-        "sourceLocator": {
-          "repository": "workflow-package",
-          "path": ".agents/skills/grilling/SKILL.md",
-          "ref": "main"
-        },
-        "contentIdentity": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-        "use": "shared single-question measurement grilling method; method-only, no control-flow authority; exact content identity resolved at Package Snapshot admission"
-      },
       {
         "id": "driver.managed-cli",
         "kind": "driver",

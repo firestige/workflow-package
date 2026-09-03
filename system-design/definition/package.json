@@ -3,7 +3,7 @@
   "schemaVersion": "agentops.workflow-dsl@2.0.0",
   "package": {
     "name": "system-design-workflow",
-    "version": "0.4.5",
+    "version": "0.4.6",
     "purpose": "Turn a short Intake, project authority material and user opinions into an IMPLEMENTATION_READY System Design that states what problem is solved, why the design is shaped this way, and how fitness for the current project is proven; budget exhaustion or missing external authority enters recoverable INCOMPLETE, explicit cancellation enters CANCELLED, and non-retryable failure enters FAILED (none equals success).",
     "status": "DRAFT",
     "admissibility": "DESIGN_REFERENCE",
@@ -13,10 +13,10 @@
     },
     "definition": {
       "name": "system-design-workflow",
-      "version": "0.4.5",
-      "contentIdentity": "sha256:e469103acde8c8f4397c6cfabae96b26d478d6528cbea635c3ea29e8f2d23a27"
+      "version": "0.4.6",
+      "contentIdentity": "sha256:0fcf11dec93f8d06a44ca029917a4097d1a10f9482ea3c4ce1c1bec62d2855b1"
     },
-    "digest": "sha256:966c5e22ae52aedd63afda0ef1fabbbaef6bc5b90fda2593e005b16d8cb0ba83"
+    "digest": "sha256:73ceb1b9d9c2615989b0d795b6637465e243ac855a333d9f17c9f5d338a8b897"
   },
   "documents": {
     "workflow": "workflow.json",
@@ -235,6 +235,22 @@
         "path": "../prompts/actions/fresh-reader-test.prompt.md",
         "contentIdentity": "sha256:211a2767423df9b9a624acc921b98996e8f4d32507408d81c2d8be3fe382cc19",
         "use": "action.sd-13 mission"
+      },
+      {
+        "id": "resource.skill.grilling",
+        "kind": "skill",
+        "owner": "owned",
+        "path": "../skills/grilling/SKILL.md",
+        "contentIdentity": "sha256:7551ce62841d4cb954c64ba7e9613b439f0a89bf549a2fbbdff82ef725fb9c27",
+        "use": "Package-owned adaptive grilling method for facilitator routes"
+      },
+      {
+        "id": "resource.skill.codebase-design",
+        "kind": "skill",
+        "owner": "owned",
+        "path": "../skills/codebase-design/SKILL.md",
+        "contentIdentity": "sha256:19b6802aa524ee7f2257dc24b843305956c6920f278b8e4b073fcebfc66c6856",
+        "use": "Package-owned codebase structure method for designer and architecture reviewer routes"
       },
       {
         "id": "resource.skill.system-design-authoring",
@@ -486,28 +502,6 @@
       }
     ],
     "referenced": [
-      {
-        "id": "resource.skill.grilling",
-        "kind": "skill",
-        "owner": "referenced",
-        "sourceLocator": {
-          "repository": "workflow-package",
-          "path": ".agents/skills/grilling/SKILL.md"
-        },
-        "contentIdentity": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-        "use": "Shared adaptive grilling method used by the facilitator routes; method-only, no control-flow authority; exact content identity resolved by the future Package Snapshot (placeholder, do not fabricate)"
-      },
-      {
-        "id": "resource.skill.codebase-design",
-        "kind": "skill",
-        "owner": "referenced",
-        "sourceLocator": {
-          "repository": "workflow-package",
-          "path": ".agents/skills/codebase-design/SKILL.md"
-        },
-        "contentIdentity": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
-        "use": "Shared codebase-design method (Module/Interface/Seam/Depth/Leverage/Locality) used when structure is in scope; exact content identity resolved by the future Package Snapshot (placeholder, do not fabricate)"
-      },
       {
         "id": "resource.driver.managed-cli",
         "kind": "driver",
