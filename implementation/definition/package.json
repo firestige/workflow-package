@@ -3,7 +3,7 @@
   "schemaVersion": "agentops.workflow-dsl@2.0.0",
   "package": {
     "name": "implementation-workflow",
-    "version": "0.4.4",
+    "version": "0.4.5",
     "purpose": "Turns one exact frozen, implementation-authorizing design into a tested, independently reviewed feature-branch candidate via Goal Graph, Test Ladder and evolutionary TDD; machine-readable Definition per agentops.workflow-dsl@2.0.0.",
     "status": "DRAFT",
     "admissibility": "DESIGN_REFERENCE",
@@ -13,10 +13,10 @@
     },
     "definition": {
       "name": "implementation-workflow",
-      "version": "0.4.4",
-      "contentIdentity": "sha256:e77a948e7169d3c02ac1363e64e44a02a9eabeb9e3acbf5353774f54c2bd4eb8"
+      "version": "0.4.5",
+      "contentIdentity": "sha256:5abd69b7ae74d599a313fc654fe295d7699d2bf9a0f3b6213d619a3f3f4a66cb"
     },
-    "digest": "sha256:857ec7a3315fa414171bc2e5d20918d325c01ed8379b5d311bee7feb0e8e771b"
+    "digest": "sha256:28aa840c2f8e3056a2c31c71831d83520030fbbe9109ba32a291a9a4b935ea6b"
   },
   "documents": {
     "workflow": "workflow.json",
@@ -33,7 +33,7 @@
         "kind": "documentation",
         "owner": "owned",
         "path": "../README.md",
-        "contentIdentity": "sha256:239655ffcf0c1342613fca99abfeb4d17d049a76d4e3c0c6e364d6d7f832e7b5",
+        "contentIdentity": "sha256:9e89c27092833a804943250799c8c9efc19994a789b76fb1ee5382d92113e951",
         "use": "documentation resource at README.md"
       },
       {
@@ -161,7 +161,7 @@
         "kind": "documentation",
         "owner": "owned",
         "path": "../composition-conformance.md",
-        "contentIdentity": "sha256:7047ab0ff941aeba82fa7ccb12534342a1438568ed4881a680d17b9bdaf8595a",
+        "contentIdentity": "sha256:88e35c471768c660e4f6f242319dc7e03c137edf087cda6807a98e413a4a600d",
         "use": "documentation resource at composition-conformance.md"
       },
       {

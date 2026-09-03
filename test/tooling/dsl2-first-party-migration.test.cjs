@@ -15,7 +15,7 @@ async function readDefinition(directory, documentName) {
 }
 
 for (const packageUnderTest of packages) {
-  test(`${packageUnderTest.name}@0.4.4 is a closed Workflow DSL 2.0 package`, async () => {
+  test(`${packageUnderTest.name}@0.4.5 is a closed Workflow DSL 2.0 package`, async () => {
     const documents = Object.fromEntries(await Promise.all(documentNames.map(async (name) => [
       name,
       await readDefinition(packageUnderTest.directory, name),
@@ -25,16 +25,16 @@ for (const packageUnderTest of packages) {
       assert.equal(document.schemaVersion, "agentops.workflow-dsl@2.0.0", `${name}.json schemaVersion`);
     }
     assert.equal(documents.package.package.name, packageUnderTest.name);
-    assert.equal(documents.package.package.version, "0.4.4");
-    assert.equal(documents.package.package.definition.version, "0.4.4");
+    assert.equal(documents.package.package.version, "0.4.5");
+    assert.equal(documents.package.package.definition.version, "0.4.5");
     assert.deepEqual(documents.package.compatibility, {
       minContractVersion: "2.0.0",
       maxContractVersion: "2.0.0",
     });
-    assert.equal(documents.workflow.workflow.version, "0.4.4");
+    assert.equal(documents.workflow.workflow.version, "0.4.5");
     assert.equal(documents.workflow.workflow.contractVersion, "agentops.workflow-dsl@2.0.0");
-    assert.equal(documents.snapshot.snapshot.package.version, "0.4.4");
-    assert.equal(documents.snapshot.snapshot.definition.version, "0.4.4");
+    assert.equal(documents.snapshot.snapshot.package.version, "0.4.5");
+    assert.equal(documents.snapshot.snapshot.definition.version, "0.4.5");
 
     const resources = [
       ...documents.package.resources.owned,
@@ -94,7 +94,7 @@ for (const packageUnderTest of packages) {
         assert.deepEqual(handoff.upstreamHandoff, {
           ...handoff.upstreamHandoff,
           package: "system-design-workflow",
-          packageVersion: "0.4.4",
+          packageVersion: "0.4.5",
         });
       }
       const selector = documents.workflow.hostOperations.find(({ id }) => id === "operation.IM-06-selection");
@@ -127,6 +127,15 @@ for (const packageUnderTest of packages) {
       "SD-08 must select the non-empty initial review lens set before SD-09");
       const requiredBindings = [
         ["node.sd-02", "workingBrief", "node", "node.sd-03", undefined, "workingBrief"],
+        ["node.sd-03", "brief", "node", "node.sd-04", undefined, "brief"],
+        ["node.sd-03", "brief", "node", "node.sd-05", undefined, "brief"],
+        ["node.sd-04", "skeleton", "node", "node.sd-05", undefined, "skeleton"],
+        ["node.sd-03", "brief", "node", "node.sd-06", undefined, "brief"],
+        ["node.sd-04", "skeleton", "node", "node.sd-06", undefined, "skeleton"],
+        ["node.sd-03", "brief", "node", "node.sd-07", undefined, "brief"],
+        ["node.sd-04", "skeleton", "node", "node.sd-07", undefined, "skeleton"],
+        ["node.sd-03", "brief", "node", "node.sd-08", undefined, "brief"],
+        ["node.sd-04", "skeleton", "node", "node.sd-08", undefined, "skeleton"],
         ["node.sd-08", "draft", "parallel-branch", "node.sd-09", "branch.sd-09.problem-solution", "draft"],
         ["node.sd-08", "draft", "parallel-branch", "node.sd-09", "branch.sd-09.architecture", "draft"],
         ["node.sd-08", "draft", "parallel-branch", "node.sd-09", "branch.sd-09.quality-acceptance", "draft"],
@@ -148,6 +157,17 @@ for (const packageUnderTest of packages) {
           && edge.target.slot.name === targetProperty),
         `${producer}.${sourceProperty} must bind ${targetNode}${targetBranch ? `/${targetBranch}` : ""}.${targetProperty}`);
       }
+      assert.ok(documents.workflow.dataflow.edges.some((edge) =>
+        edge.source.kind === "site-result"
+        && edge.source.site?.kind === "parallel-join"
+        && edge.source.site?.nodeIdentity === "node.sd-09"
+        && edge.source.slot?.kind === "whole"
+        && edge.target.kind === "site-input"
+        && edge.target.site?.kind === "node"
+        && edge.target.site?.nodeIdentity === "node.sd-12"
+        && edge.target.slot?.kind === "property"
+        && edge.target.slot.name === "reviewDisposition"),
+      "SD-09 aggregation must bind the downstream handoff-classification context");
       const actionsById = new Map(documents.actions.actions.map((action) => [action.id, action]));
       const actionByNode = new Map(documents.workflow.graph.nodes
         .filter((node) => typeof node.action === "string")

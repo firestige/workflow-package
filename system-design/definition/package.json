@@ -3,7 +3,7 @@
   "schemaVersion": "agentops.workflow-dsl@2.0.0",
   "package": {
     "name": "system-design-workflow",
-    "version": "0.4.4",
+    "version": "0.4.5",
     "purpose": "Turn a short Intake, project authority material and user opinions into an IMPLEMENTATION_READY System Design that states what problem is solved, why the design is shaped this way, and how fitness for the current project is proven; budget exhaustion or missing external authority enters recoverable INCOMPLETE, explicit cancellation enters CANCELLED, and non-retryable failure enters FAILED (none equals success).",
     "status": "DRAFT",
     "admissibility": "DESIGN_REFERENCE",
@@ -13,10 +13,10 @@
     },
     "definition": {
       "name": "system-design-workflow",
-      "version": "0.4.4",
-      "contentIdentity": "sha256:7c02484a07a06eadf3fcf3d32a60e04136fa3773b4becf9041233a2b19b5997c"
+      "version": "0.4.5",
+      "contentIdentity": "sha256:e469103acde8c8f4397c6cfabae96b26d478d6528cbea635c3ea29e8f2d23a27"
     },
-    "digest": "sha256:7801302a5614a2486b367f03681b4587226f4bb154e0c999321fa8ea508c4b32"
+    "digest": "sha256:966c5e22ae52aedd63afda0ef1fabbbaef6bc5b90fda2593e005b16d8cb0ba83"
   },
   "documents": {
     "workflow": "workflow.json",
@@ -481,7 +481,7 @@
         "kind": "documentation",
         "owner": "owned",
         "path": "../README.md",
-        "contentIdentity": "sha256:3474fb884a6eacf1078e4219615d9e80021a679b9ca316b540d51712beb54e26",
+        "contentIdentity": "sha256:f020785f6c6aa21c0c6bdbc4b676e0a88584fdab2b1ffaebaf7e94552ee930a7",
         "use": "Package-level design-time reference documentation"
       }
     ],

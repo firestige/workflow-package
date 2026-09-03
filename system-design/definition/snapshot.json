@@ -2,21 +2,21 @@
   "kind": "agentops.workflow-package-snapshot",
   "schemaVersion": "agentops.workflow-dsl@2.0.0",
   "snapshot": {
-    "id": "snapshot.system-design-workflow.0.4.4",
+    "id": "snapshot.system-design-workflow.0.4.5",
     "package": {
       "name": "system-design-workflow",
-      "version": "0.4.4",
-      "digest": "sha256:7801302a5614a2486b367f03681b4587226f4bb154e0c999321fa8ea508c4b32"
+      "version": "0.4.5",
+      "digest": "sha256:966c5e22ae52aedd63afda0ef1fabbbaef6bc5b90fda2593e005b16d8cb0ba83"
     },
     "definition": {
       "id": "system-design-workflow",
-      "version": "0.4.4",
-      "contentIdentity": "sha256:7c02484a07a06eadf3fcf3d32a60e04136fa3773b4becf9041233a2b19b5997c"
+      "version": "0.4.5",
+      "contentIdentity": "sha256:e469103acde8c8f4397c6cfabae96b26d478d6528cbea635c3ea29e8f2d23a27"
     },
     "documents": [
       {
         "kind": "workflow",
-        "contentIdentity": "sha256:7c02484a07a06eadf3fcf3d32a60e04136fa3773b4becf9041233a2b19b5997c"
+        "contentIdentity": "sha256:e469103acde8c8f4397c6cfabae96b26d478d6528cbea635c3ea29e8f2d23a27"
       },
       {
         "kind": "actions",
@@ -323,7 +323,7 @@
       {
         "id": "resource.package-readme",
         "owner": "owned",
-        "contentIdentity": "sha256:3474fb884a6eacf1078e4219615d9e80021a679b9ca316b540d51712beb54e26"
+        "contentIdentity": "sha256:f020785f6c6aa21c0c6bdbc4b676e0a88584fdab2b1ffaebaf7e94552ee930a7"
       },
       {
         "id": "resource.skill.grilling",
@@ -563,6 +563,18 @@
         "data.sd-01-sd-02-intake-context",
         "data.sd-02-status",
         "data.sd-02-sd-03-working-brief",
+        "data.sd-03-sd-04-brief",
+        "data.sd-03-sd-05-brief",
+        "data.sd-04-sd-05-skeleton",
+        "data.sd-03-sd-06-brief",
+        "data.sd-04-sd-06-skeleton",
+        "data.sd-05-sd-06-direction-review",
+        "data.sd-03-sd-07-brief",
+        "data.sd-04-sd-07-skeleton",
+        "data.sd-06-sd-07-feasibility",
+        "data.sd-03-sd-08-brief",
+        "data.sd-04-sd-08-skeleton",
+        "data.sd-07-sd-08-expanded-design",
         "data.sd-08-sd-09-problem-solution-draft",
         "data.sd-08-selected-review-lenses",
         "data.sd-08-sd-09-architecture-draft",
@@ -571,7 +583,9 @@
         "data.sd-08-sd-14-candidate",
         "data.sd-09-problem-solution-to-join",
         "data.sd-09-architecture-to-join",
-        "data.sd-09-quality-acceptance-to-join"
+        "data.sd-09-quality-acceptance-to-join",
+        "data.sd-09-join-sd-12-review-disposition",
+        "data.sd-08-sd-12-draft"
       ],
       "hostOperations": [
         "operation.sd-14-deterministic-verification",
@@ -604,12 +618,12 @@
         "skill",
         "artifact_user"
       ],
-      "mergeProof": "sha256:01ae683ba3b461d87fe21a7c8907a6b992af0524097d9b625ab6dcc35af60c50"
+      "mergeProof": "sha256:1127fbcd20555b3b21308d22dc81ecd3126d60bafa593a2be78dd4a41e20a727"
     },
     "resolutionProof": {
       "noAmbientFallback": true,
       "allBindingsExact": true
     },
-    "digest": "sha256:11a2382a9dbd6cc689bfade87a5f97cb457856eb6e631a370a2b3b93a01609ae"
+    "digest": "sha256:f66639c8925b02e8312cdf363ad38b15bbb477edea4cc3315da38a7f07f22f12"
   }
 }
