@@ -4,7 +4,7 @@
   "workflow": {
     "id": "implementation-workflow",
     "name": "Implementation Workflow",
-    "version": "0.4.7",
+    "version": "0.4.8",
     "purpose": "Turns one exact frozen, implementation-authorizing design into a VERIFIED_IMPLEMENTATION_READY feature-branch candidate through Goal Graph, Test Ladder and evolutionary TDD; preserves every upstream obligation semantic while owning its own lifecycle classification, Actions, Gates and terminal effects.",
     "contractVersion": "agentops.workflow-dsl@2.0.0"
   },
@@ -905,7 +905,7 @@
       {
         "id": "e.commit.select",
         "from": "node.IM-16",
-        "to": "node.IM-06"
+        "to": "node.IM-17"
       },
       {
         "id": "e.final.success",
@@ -1544,6 +1544,23 @@
         }
       },
       {
+        "id": "data.IM-04-goal-graph",
+        "source": {
+          "kind": "site-result",
+          "site": {
+            "kind": "node",
+            "nodeIdentity": "node.IM-04"
+          },
+          "slot": {
+            "kind": "whole"
+          }
+        },
+        "target": {
+          "kind": "state",
+          "field": "goalGraph"
+        }
+      },
+      {
         "id": "data.IM-06-goal-graph-input",
         "source": {
           "kind": "state",
@@ -1666,21 +1683,90 @@
   },
   "hostOperations": [
     {
+      "id": "operation.IM-02-preflight",
+      "contractIdentity": "host-operation.deterministic-validation.v1",
+      "configuration": {
+        "validator": "validator.preflight-checks",
+        "accepted": true,
+        "result": {
+          "passed": true,
+          "feasibilityObligations": 0,
+          "harnessBinding": { "mode": "ACCEPT_ALL", "issue": 87 },
+          "contractAvailability": {},
+          "blockers": [],
+          "routing": "preflight-grilling"
+        }
+      },
+      "requiredCapabilities": ["deterministic-validation"]
+    },
+    {
+      "id": "operation.IM-05-branch",
+      "contractIdentity": "host-operation.deterministic-validation.v1",
+      "configuration": {
+        "validator": "validator.branch-checks",
+        "accepted": true,
+        "result": { "activated": true, "branch": "delivery-managed", "baselineCommit": "delivery-baseline" }
+      },
+      "requiredCapabilities": ["deterministic-validation"]
+    },
+    {
       "id": "operation.IM-06-selection",
       "contractIdentity": "host-operation.deterministic-selection.v1",
       "configuration": {
         "validator": "validator.selection-checks",
         "accepted": true,
         "result": {
-          "goalRungReady": false,
-          "allGoalsCommitted": true,
+          "goalRungReady": true,
+          "allGoalsCommitted": false,
           "missingContract": false,
-          "routing": "select-whole"
+          "selectedGoal": "goal.greet-cli",
+          "selectedRung": "rung.walking-skeleton",
+          "routing": "select-calibrate"
         }
       },
       "requiredCapabilities": [
         "deterministic-selection"
       ]
+    },
+    {
+      "id": "operation.IM-11-rung-verification",
+      "contractIdentity": "host-operation.deterministic-validation.v1",
+      "configuration": {
+        "validator": "validator.rung-verify",
+        "accepted": true,
+        "result": { "anotherRung": false, "verified": true, "invalidFeedback": false, "routing": "verify-review" }
+      },
+      "requiredCapabilities": ["deterministic-validation"]
+    },
+    {
+      "id": "operation.IM-16-goal-commit",
+      "contractIdentity": "host-operation.deterministic-validation.v1",
+      "configuration": {
+        "validator": "validator.goal-commit-checks",
+        "accepted": true,
+        "result": { "verifiedGoalCommitted": true }
+      },
+      "requiredCapabilities": ["deterministic-validation"]
+    },
+    {
+      "id": "operation.IM-17-custody-review",
+      "contractIdentity": "host-operation.deterministic-validation.v1",
+      "configuration": {
+        "validator": "validator.whole-scope-checks",
+        "accepted": true,
+        "result": { "passed": true, "wholeScopeFindingAdmitted": false }
+      },
+      "requiredCapabilities": ["deterministic-validation"]
+    },
+    {
+      "id": "operation.IM-18-final",
+      "contractIdentity": "host-operation.deterministic-validation.v1",
+      "configuration": {
+        "validator": "validator.final-checks",
+        "accepted": true,
+        "result": { "passed": true, "branchHead": "delivery-managed", "changeSet": [], "tuningHandoffs": [] }
+      },
+      "requiredCapabilities": ["deterministic-validation"]
     }
   ],
   "waits": [
