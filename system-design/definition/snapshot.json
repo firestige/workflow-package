@@ -6,7 +6,7 @@
     "package": {
       "name": "system-design-workflow",
       "version": "0.4.0",
-      "digest": "sha256:0097be6eb3ce1b67a922864d11b817308c2d33fe3904a8cd021b8bea42c2da33"
+      "digest": "sha256:a617c916c2277799a017426bd54b046786b3b98ba298d217ec2d8c7ff7fcb4f2"
     },
     "definition": {
       "id": "system-design-workflow",
@@ -323,7 +323,7 @@
       {
         "id": "resource.package-readme",
         "owner": "owned",
-        "contentIdentity": "sha256:fa1278c323d5e0201b8525102e032a35b712f61a8799e59da6d708cf3c729f54"
+        "contentIdentity": "sha256:ec75c25673630afea182e251416777beeaf9348baae368d4327e8c79337c2b30"
       },
       {
         "id": "resource.skill.grilling",
@@ -594,12 +594,12 @@
         "skill",
         "artifact_user"
       ],
-      "mergeProof": "sha256:a70742bc4ea45bb151bfb30f8e1a69ccb2ca27436813be0323bc38ddc273bf9e"
+      "mergeProof": "sha256:624b4a0595a91f6558d3613733a86e9c95a953b2a9bfd092c3d0dab08a893c92"
     },
     "resolutionProof": {
       "noAmbientFallback": true,
       "allBindingsExact": true
     },
-    "digest": "sha256:5bac48856ac0f383436aa051483ce7e7d4c0b426b809029c7153ba88ff24cfb1"
+    "digest": "sha256:10433138bf19a30211bbf632c0135cf97fa0e9085f094c49fd7d4066b6442499"
   }
 }

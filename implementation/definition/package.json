@@ -16,7 +16,7 @@
       "version": "0.4.0",
       "contentIdentity": "sha256:2421e9ff00b8b6710419679a29fdb7ab92d47a8ffe6083f7c320675175c5cc4f"
     },
-    "digest": "sha256:34caa25b0dc6191fd071928b6f4d81895f6c46095810fc975c527e242111871f"
+    "digest": "sha256:d0be8a6d072f6c8a4c9a56ffc025c585eb936f10848fd6413e2dbf0d23b8900f"
   },
   "documents": {
     "workflow": "workflow.json",
@@ -33,7 +33,7 @@
         "kind": "documentation",
         "owner": "owned",
         "path": "../README.md",
-        "contentIdentity": "sha256:7eb9e1770541e64f63dc472fecf65d275f5246fbcb2371a7533aa35fb8e3ba1d",
+        "contentIdentity": "sha256:5f1c96c19ab3465ee77bdfa007da9f7ea872905c00dde573eee80011d1d75671",
         "use": "documentation resource at README.md"
       },
       {
@@ -161,7 +161,7 @@
         "kind": "documentation",
         "owner": "owned",
         "path": "../composition-conformance.md",
-        "contentIdentity": "sha256:b2fe36477da1fdff51376e87206772246e2e4e282a74c2ccbc5154ca3540c180",
+        "contentIdentity": "sha256:b4ccefd70809562b9e7b1ed091b78da56a688cef89a106a6a3488e7b5daf8b11",
         "use": "documentation resource at composition-conformance.md"
       },
       {

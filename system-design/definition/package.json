@@ -16,7 +16,7 @@
       "version": "0.4.0",
       "contentIdentity": "sha256:43b0253f91c774e0d9f0177241130a6c63ae59412f1d0a566bcd8073b216a664"
     },
-    "digest": "sha256:0097be6eb3ce1b67a922864d11b817308c2d33fe3904a8cd021b8bea42c2da33"
+    "digest": "sha256:a617c916c2277799a017426bd54b046786b3b98ba298d217ec2d8c7ff7fcb4f2"
   },
   "documents": {
     "workflow": "workflow.json",
@@ -481,7 +481,7 @@
         "kind": "documentation",
         "owner": "owned",
         "path": "../README.md",
-        "contentIdentity": "sha256:fa1278c323d5e0201b8525102e032a35b712f61a8799e59da6d708cf3c729f54",
+        "contentIdentity": "sha256:ec75c25673630afea182e251416777beeaf9348baae368d4327e8c79337c2b30",
         "use": "Package-level design-time reference documentation"
       }
     ],
