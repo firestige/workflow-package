@@ -461,7 +461,26 @@
             ]
           },
           "draftCheckpoints": {
-            "type": "array"
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "identity": {
+                  "type": "string"
+                },
+                "contentDigest": {
+                  "type": "string"
+                },
+                "content": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "identity",
+                "contentDigest",
+                "content"
+              ]
+            }
           }
         },
         "required": [
