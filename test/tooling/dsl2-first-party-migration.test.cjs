@@ -5,7 +5,7 @@ const test = require("node:test");
 
 const repository = path.resolve(__dirname, "../..");
 const packages = [
-  { directory: "implementation", name: "implementation-workflow", version: "0.4.8" },
+  { directory: "implementation", name: "implementation-workflow", version: "0.4.9" },
   { directory: "system-design", name: "system-design-workflow", version: "0.4.10" },
 ];
 const documentNames = ["package", "workflow", "actions", "roles", "routes", "artifacts", "validation", "snapshot"];
@@ -122,6 +122,14 @@ for (const packageUnderTest of packages) {
         const route = documents.routes.routes.find(({ id }) => id === routeId);
         assert.ok(route?.resources.tools.some(({ id }) => id === "tool.repo-read"),
           `${routeId} must receive its admitted workspace tool`);
+      }
+      for (const [promptFile, requiredInstruction] of [
+        ["materialize-tests.prompt.md", /must perform at least one workspace `write`/u],
+        ["evolve-prototype.prompt.md", /must perform at least one workspace `write`/u],
+        ["implementation-resolution.prompt.md", /must perform a workspace `write`/u],
+      ]) {
+        const prompt = await readFile(path.join(repository, "implementation", "prompts", "actions", promptFile), "utf8");
+        assert.match(prompt, requiredInstruction, `${promptFile} must not report a change without materializing it`);
       }
       const intakeResearchAction = documents.actions.actions.find(({ id }) => id === "action.IM-01R");
       for (const requiredInput of intakeResearchAction.inputSchema.required) {
