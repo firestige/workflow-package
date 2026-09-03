@@ -4,7 +4,7 @@
   "workflow": {
     "id": "implementation-workflow",
     "name": "Implementation Workflow",
-    "version": "0.4.6",
+    "version": "0.4.7",
     "purpose": "Turns one exact frozen, implementation-authorizing design into a VERIFIED_IMPLEMENTATION_READY feature-branch candidate through Goal Graph, Test Ladder and evolutionary TDD; preserves every upstream obligation semantic while owning its own lifecycle classification, Actions, Gates and terminal effects.",
     "contractVersion": "agentops.workflow-dsl@2.0.0"
   },
@@ -1494,6 +1494,56 @@
   "dataflow": {
     "edges": [
       {
+        "id": "data.IM-01-IM-01R-request-id",
+        "source": {
+          "kind": "site-result",
+          "site": {
+            "kind": "node",
+            "nodeIdentity": "node.IM-01"
+          },
+          "slot": {
+            "kind": "property",
+            "name": "requestId"
+          }
+        },
+        "target": {
+          "kind": "site-input",
+          "site": {
+            "kind": "node",
+            "nodeIdentity": "node.IM-01R"
+          },
+          "slot": {
+            "kind": "property",
+            "name": "requestId"
+          }
+        }
+      },
+      {
+        "id": "data.IM-01-IM-01R-requesting-action",
+        "source": {
+          "kind": "site-result",
+          "site": {
+            "kind": "node",
+            "nodeIdentity": "node.IM-01"
+          },
+          "slot": {
+            "kind": "property",
+            "name": "requestingAction"
+          }
+        },
+        "target": {
+          "kind": "site-input",
+          "site": {
+            "kind": "node",
+            "nodeIdentity": "node.IM-01R"
+          },
+          "slot": {
+            "kind": "property",
+            "name": "requestingAction"
+          }
+        }
+      },
+      {
         "id": "data.IM-06-goal-graph-input",
         "source": {
           "kind": "state",
@@ -1770,7 +1820,7 @@
       "id": "consume.contract-prerequisite",
       "upstreamHandoff": {
         "package": "system-design-workflow",
-        "packageVersion": "0.4.6",
+        "packageVersion": "0.4.10",
         "handoff": "handoff.contract-prerequisite"
       },
       "classification": "CONTRACT_PREREQUISITE",
@@ -1790,7 +1840,7 @@
       "id": "consume.implementation-feasibility",
       "upstreamHandoff": {
         "package": "system-design-workflow",
-        "packageVersion": "0.4.6",
+        "packageVersion": "0.4.10",
         "handoff": "handoff.implementation-feasibility"
       },
       "classification": "IMPLEMENTATION_FEASIBILITY",
@@ -1808,7 +1858,7 @@
       "id": "consume.implementation-verification",
       "upstreamHandoff": {
         "package": "system-design-workflow",
-        "packageVersion": "0.4.6",
+        "packageVersion": "0.4.10",
         "handoff": "handoff.implementation-verification"
       },
       "classification": "IMPLEMENTATION_VERIFICATION",
@@ -1833,7 +1883,7 @@
       "id": "consume.operational-tuning",
       "upstreamHandoff": {
         "package": "system-design-workflow",
-        "packageVersion": "0.4.6",
+        "packageVersion": "0.4.10",
         "handoff": "handoff.operational-tuning"
       },
       "classification": "OPERATIONAL_TUNING",

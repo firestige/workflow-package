@@ -61,4 +61,4 @@ node system-contracts/workflow-dsl-2-candidate/generated/tools/check-example.cjs
 node --test workflow-package/test/tooling/dsl2-first-party-migration.test.cjs
 ```
 
-Expected results: schema/graph/event/authority/corpus-shape/digest closure passes; the migration guard proves DSL 2.0 versions, removed 1.x bindings, exact Role/Action prompts and the System Design 0.4.5 handoff coordinate.
+Expected results: schema/graph/event/authority/corpus-shape/digest closure passes; the migration guard proves DSL 2.0 versions, removed 1.x bindings, exact Role/Action prompts and the System Design 0.4.10 handoff coordinate.

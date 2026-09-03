@@ -44,6 +44,15 @@
               "type": "string"
             }
           },
+          "requestId": {
+            "type": "string"
+          },
+          "requestingAction": {
+            "type": "string",
+            "enum": [
+              "IM-01"
+            ]
+          },
           "routing": {
             "type": "string",
             "enum": [
@@ -58,6 +67,8 @@
           "designIdentityExact",
           "obligationRegisterBound",
           "derivableFactMissing",
+          "requestId",
+          "requestingAction",
           "routing"
         ]
       },
