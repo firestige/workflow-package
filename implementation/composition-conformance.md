@@ -1,6 +1,6 @@
 # Workflow Composition Conformance Review
 
-本审查按 [`docs/workflow-composition-model-2.0.0-candidate.md`](../../docs/workflow-composition-model-2.0.0-candidate.md) 的设计顺序、不变量和十三项验收问题检查 Implementation Workflow `0.4.0-design`。状态含义：
+本审查按 [`docs/workflow-composition-model-2.0.0-candidate.md`](https://github.com/firestige/workflow-self-recursive/blob/03f216bdedc3ecf272b2b8321169edc180b4b60f/docs/workflow-composition-model-2.0.0-candidate.md) 的设计顺序、不变量和十三项验收问题检查 Implementation Workflow `0.4.0-design`。状态含义：
 
 - `DESIGN_CLOSED`：Package 已给出明确设计答案；
 - `IMPLEMENTATION_REQUIRED`：设计已闭合，但需要 Contract/Execution/Runtime/CLI 实现和证据；
