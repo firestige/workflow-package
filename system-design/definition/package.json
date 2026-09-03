@@ -3,7 +3,7 @@
   "schemaVersion": "agentops.workflow-dsl@2.0.0",
   "package": {
     "name": "system-design-workflow",
-    "version": "0.4.7",
+    "version": "0.4.8",
     "purpose": "Turn a short Intake, project authority material and user opinions into an IMPLEMENTATION_READY System Design that states what problem is solved, why the design is shaped this way, and how fitness for the current project is proven; budget exhaustion or missing external authority enters recoverable INCOMPLETE, explicit cancellation enters CANCELLED, and non-retryable failure enters FAILED (none equals success).",
     "status": "DRAFT",
     "admissibility": "DESIGN_REFERENCE",
@@ -13,10 +13,10 @@
     },
     "definition": {
       "name": "system-design-workflow",
-      "version": "0.4.7",
-      "contentIdentity": "sha256:41eebf19a230167d3f3281df789f6ff22743c3dc011565955b4e3977a8e68a3a"
+      "version": "0.4.8",
+      "contentIdentity": "sha256:445ac588b73f0bd68ce7136d24d0cd227acaa91177a949e8ac4a5039e9453438"
     },
-    "digest": "sha256:cd67e3f888a939a24ad6ff723e2be097e1a9dbba0e30b22de73675b65086ad3c"
+    "digest": "sha256:7f44d7e72ea4a44b58f8d6a3a032dce48e5b7968386b3f1c2556e769b000adc5"
   },
   "documents": {
     "workflow": "workflow.json",
@@ -113,7 +113,7 @@
         "kind": "action-prompt",
         "owner": "owned",
         "path": "../prompts/actions/adaptive-grilling.prompt.md",
-        "contentIdentity": "sha256:ebcc900870a3ab28a76fc5fda1a751f17fc7d78c4f03580d3164ab531e5299c7",
+        "contentIdentity": "sha256:e88508500c60fd0333b8aed346ff7cccc378beadcc52270b1355487b320b7a3f",
         "use": "action.sd-02 mission"
       },
       {
@@ -129,7 +129,7 @@
         "kind": "action-prompt",
         "owner": "owned",
         "path": "../prompts/actions/produce-skeleton.prompt.md",
-        "contentIdentity": "sha256:581ea01d4ee2511bfdbf65ace357f61f1b74c7d468b14577818ed11e52b1a34c",
+        "contentIdentity": "sha256:18530e4fa8c8415dfd91a7e7f3e7e9465b0645fa2bb480721e65f4d191f54f3b",
         "use": "action.sd-04 mission"
       },
       {
@@ -137,7 +137,7 @@
         "kind": "action-prompt",
         "owner": "owned",
         "path": "../prompts/actions/prepare-spike-request.prompt.md",
-        "contentIdentity": "sha256:5dfdb7c78320559b10bb3b194fcf030e1231a8fcfef95ef651a5193c49fd8d44",
+        "contentIdentity": "sha256:377ba15a7b7f290e246f0f2a168d24782384ae2d60f7a8c9658c62c5590d2e6a",
         "use": "action.sd-06 spike request preparation mission"
       },
       {
@@ -225,7 +225,7 @@
         "kind": "action-prompt",
         "owner": "owned",
         "path": "../prompts/actions/classify-downstream-handoffs.prompt.md",
-        "contentIdentity": "sha256:68bdafdec4949c91e19f979cc641141bd67f22e5fbc38025b9a57e1e252ea476",
+        "contentIdentity": "sha256:786992d7bebe134396e8649e7d9131b9392f3689d054b8ccb946266f3cd9b2f7",
         "use": "action.sd-12 mission"
       },
       {
