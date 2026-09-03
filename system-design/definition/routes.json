@@ -1,16 +1,10 @@
 {
   "kind": "agentops.routes",
-  "schemaVersion": "agentops.workflow-dsl@1.1.0",
+  "schemaVersion": "agentops.workflow-dsl@2.0.0",
   "routes": [
     {
       "id": "route.facilitator.standard",
       "role": "role.grilling-facilitator",
-      "agent": {
-        "definition": {
-          "id": "resource.agent-definition.managed"
-        },
-        "managedProjection": "required"
-      },
       "resources": {
         "rolePrompt": {
           "id": "resource.role-prompt.grilling-facilitator"
@@ -34,9 +28,6 @@
             "id": "resource.skill.grilling"
           }
         ],
-        "model": {
-          "id": "resource.model.managed"
-        },
         "tools": [
           {
             "id": "resource.tool.repo-read"
@@ -69,12 +60,6 @@
     {
       "id": "route.scout.evidence",
       "role": "role.evidence-scout",
-      "agent": {
-        "definition": {
-          "id": "resource.agent-definition.managed"
-        },
-        "managedProjection": "required"
-      },
       "resources": {
         "rolePrompt": {
           "id": "resource.role-prompt.evidence-scout"
@@ -88,9 +73,6 @@
           }
         ],
         "skills": [],
-        "model": {
-          "id": "resource.model.managed"
-        },
         "tools": [
           {
             "id": "resource.tool.repo-read"
@@ -123,12 +105,6 @@
     {
       "id": "route.designer.standard",
       "role": "role.system-designer",
-      "agent": {
-        "definition": {
-          "id": "resource.agent-definition.managed"
-        },
-        "managedProjection": "required"
-      },
       "resources": {
         "rolePrompt": {
           "id": "resource.role-prompt.system-designer"
@@ -185,9 +161,6 @@
             "id": "resource.skill.codebase-design"
           }
         ],
-        "model": {
-          "id": "resource.model.managed"
-        },
         "tools": [
           {
             "id": "resource.tool.repo-read"
@@ -220,12 +193,6 @@
     {
       "id": "route.reviewer.architecture",
       "role": "role.architecture-reviewer",
-      "agent": {
-        "definition": {
-          "id": "resource.agent-definition.managed"
-        },
-        "managedProjection": "required"
-      },
       "resources": {
         "rolePrompt": {
           "id": "resource.role-prompt.architecture-reviewer"
@@ -252,9 +219,6 @@
             "id": "resource.skill.codebase-design"
           }
         ],
-        "model": {
-          "id": "resource.model.managed"
-        },
         "tools": [
           {
             "id": "resource.tool.repo-read"
@@ -287,12 +251,6 @@
     {
       "id": "route.reviewer.problem-solution",
       "role": "role.problem-solution-reviewer",
-      "agent": {
-        "definition": {
-          "id": "resource.agent-definition.managed"
-        },
-        "managedProjection": "required"
-      },
       "resources": {
         "rolePrompt": {
           "id": "resource.role-prompt.problem-solution-reviewer"
@@ -310,9 +268,6 @@
             "id": "resource.skill.problem-solution-review"
           }
         ],
-        "model": {
-          "id": "resource.model.managed"
-        },
         "tools": [
           {
             "id": "resource.tool.repo-read"
@@ -345,12 +300,6 @@
     {
       "id": "route.reviewer.quality",
       "role": "role.quality-reviewer",
-      "agent": {
-        "definition": {
-          "id": "resource.agent-definition.managed"
-        },
-        "managedProjection": "required"
-      },
       "resources": {
         "rolePrompt": {
           "id": "resource.role-prompt.quality-reviewer"
@@ -368,9 +317,6 @@
             "id": "resource.skill.quality-acceptance-review"
           }
         ],
-        "model": {
-          "id": "resource.model.managed"
-        },
         "tools": [
           {
             "id": "resource.tool.repo-read"
@@ -403,12 +349,6 @@
     {
       "id": "route.aggregator.standard",
       "role": "role.finding-aggregator",
-      "agent": {
-        "definition": {
-          "id": "resource.agent-definition.managed"
-        },
-        "managedProjection": "required"
-      },
       "resources": {
         "rolePrompt": {
           "id": "resource.role-prompt.finding-aggregator"
@@ -422,9 +362,6 @@
           }
         ],
         "skills": [],
-        "model": {
-          "id": "resource.model.managed"
-        },
         "tools": [],
         "driver": {
           "id": "resource.driver.managed-cli"
@@ -453,12 +390,6 @@
     {
       "id": "route.facilitator.decision",
       "role": "role.grilling-facilitator",
-      "agent": {
-        "definition": {
-          "id": "resource.agent-definition.managed"
-        },
-        "managedProjection": "required"
-      },
       "resources": {
         "rolePrompt": {
           "id": "resource.role-prompt.grilling-facilitator"
@@ -476,9 +407,6 @@
             "id": "resource.skill.grilling"
           }
         ],
-        "model": {
-          "id": "resource.model.managed"
-        },
         "tools": [],
         "driver": {
           "id": "resource.driver.managed-cli"
@@ -507,12 +435,6 @@
     {
       "id": "route.reader.fresh",
       "role": "role.fresh-reader",
-      "agent": {
-        "definition": {
-          "id": "resource.agent-definition.managed"
-        },
-        "managedProjection": "required"
-      },
       "resources": {
         "rolePrompt": {
           "id": "resource.role-prompt.fresh-reader"
@@ -526,9 +448,6 @@
           }
         ],
         "skills": [],
-        "model": {
-          "id": "resource.model.managed"
-        },
         "tools": [],
         "driver": {
           "id": "resource.driver.managed-cli"

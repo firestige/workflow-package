@@ -1,42 +1,42 @@
 {
   "kind": "agentops.workflow-package-snapshot",
-  "schemaVersion": "agentops.workflow-dsl@1.1.0",
+  "schemaVersion": "agentops.workflow-dsl@2.0.0",
   "snapshot": {
-    "id": "snapshot.system-design-workflow",
+    "id": "snapshot.system-design-workflow.0.4.0",
     "package": {
       "name": "system-design-workflow",
-      "version": "0.3.0",
-      "digest": "sha256:5611855dc6908d6d128f00cc6ca4cc11117ee0122e2d71256d749cf322266f34"
+      "version": "0.4.0",
+      "digest": "sha256:a617c916c2277799a017426bd54b046786b3b98ba298d217ec2d8c7ff7fcb4f2"
     },
     "definition": {
       "id": "system-design-workflow",
-      "version": "0.3.0",
-      "contentIdentity": "sha256:9f3d2a0c7ab5ed08e976c1240cae29231801e0b9fa9a52afc7f672e07caf2316"
+      "version": "0.4.0",
+      "contentIdentity": "sha256:43b0253f91c774e0d9f0177241130a6c63ae59412f1d0a566bcd8073b216a664"
     },
     "documents": [
       {
         "kind": "workflow",
-        "contentIdentity": "sha256:9f3d2a0c7ab5ed08e976c1240cae29231801e0b9fa9a52afc7f672e07caf2316"
+        "contentIdentity": "sha256:43b0253f91c774e0d9f0177241130a6c63ae59412f1d0a566bcd8073b216a664"
       },
       {
         "kind": "actions",
-        "contentIdentity": "sha256:8f9de3ae05ed663560f0bbf31d97273a0e1680179c429ec9b06daba3e35c2c6c"
+        "contentIdentity": "sha256:ecdad2b732ae4bc7b65072d5344d0a612944e6b60c8db1de51c651cdeb1f6fdd"
       },
       {
         "kind": "roles",
-        "contentIdentity": "sha256:6c7c3dbb3fd3761752e189d69389e9a535bfdc55855f5ca5684840430589ed6b"
+        "contentIdentity": "sha256:59d7cda818dfe24c9bc57a19db1630b9de01c3c9142af0c359eb538f8f450938"
       },
       {
         "kind": "routes",
-        "contentIdentity": "sha256:c2556f1398295f2224b40a10c6232aeee8707e2d3fb544a249667a563b7ad542"
+        "contentIdentity": "sha256:08c47bbb40f28ffa72cc919dfebd284f4d93ea886b9d97aa97bbca92b5829c15"
       },
       {
         "kind": "artifacts",
-        "contentIdentity": "sha256:64ca1e80a0d7ba4477301ffff27ecc6ee3a67897dbf1450eb27a15d3adc86ec2"
+        "contentIdentity": "sha256:eb33bfb7e2b31c9a39fb1211d176ed5b34f17eaf900083c5527db7cdf0704188"
       },
       {
         "kind": "validation",
-        "contentIdentity": "sha256:bbe37c0501bef2446a57f04f7f4cf9a8fe0d85f1c4ed0d39c906863048c18323"
+        "contentIdentity": "sha256:c4d2140b3fd19edf6d64d2503ea0bb6774263a1ced27198733cae7dd3eed7433"
       }
     ],
     "resources": [
@@ -323,7 +323,7 @@
       {
         "id": "resource.package-readme",
         "owner": "owned",
-        "contentIdentity": "sha256:fef801a3b8e40364caed44b382a556f8b6a85dd706a3808e0800b7dbdd54f895"
+        "contentIdentity": "sha256:ec75c25673630afea182e251416777beeaf9348baae368d4327e8c79337c2b30"
       },
       {
         "id": "resource.skill.grilling",
@@ -334,16 +334,6 @@
         "id": "resource.skill.codebase-design",
         "owner": "referenced",
         "contentIdentity": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
-      },
-      {
-        "id": "resource.agent-definition.managed",
-        "owner": "referenced",
-        "contentIdentity": "sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
-      },
-      {
-        "id": "resource.model.managed",
-        "owner": "referenced",
-        "contentIdentity": "sha256:dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
       },
       {
         "id": "resource.driver.managed-cli",
@@ -570,6 +560,7 @@
         "event.node.wait-renewal.spike-design-parameter.budget-exhausted"
       ],
       "dataEdges": [
+        "data.sd-01-sd-02-intake-context",
         "data.sd-02-status"
       ],
       "hostOperations": [
@@ -603,12 +594,12 @@
         "skill",
         "artifact_user"
       ],
-      "mergeProof": "sha256:20a2bd9ccca94f6380415f29e0a8291aeac3f67e6613e0ffaa80098a8252585b"
+      "mergeProof": "sha256:624b4a0595a91f6558d3613733a86e9c95a953b2a9bfd092c3d0dab08a893c92"
     },
     "resolutionProof": {
       "noAmbientFallback": true,
       "allBindingsExact": true
     },
-    "digest": "sha256:b931d913c48497543d26a78731c3db2e928eec5676c1c2984120ba2a2300599d"
+    "digest": "sha256:10433138bf19a30211bbf632c0135cf97fa0e9085f094c49fd7d4066b6442499"
   }
 }

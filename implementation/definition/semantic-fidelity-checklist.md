@@ -1,12 +1,12 @@
 # Implementation Workflow Definition — Semantic Fidelity Checklist
 
-Machine Definition: `workflow-package/implementation/definition/` (`agentops.workflow-dsl@1.1.0`). The semantic source remains `workflow.md`; this checklist records the 1.1 Contract migration and does not create new Workflow meaning. Status: `DESIGN_REFERENCE`.
+Machine Definition: `workflow-package/implementation/definition/` (`agentops.workflow-dsl@2.0.0`, Package `0.4.0`). The semantic source remains `workflow.md`; this checklist records the 2.0 structural migration and does not create new Workflow meaning. Status: `DESIGN_REFERENCE`.
 
 ## 1. Contract document set
 
 | Document | Current closure |
 | --- | --- |
-| `package.json` | Exact six-document index, 92 owned and 6 referenced resources, canonical Package digest |
+| `package.json` | Exact six-document index, 85 owned and 4 referenced resources, canonical Package digest; Agent/provider selection is repository Role binding authority rather than Package-local agent/model resources |
 | `snapshot.json` | Exact Definition, document, resource, Route, graph/data/Host-operation, authority and resolution bindings with canonical Snapshot digest |
 | `workflow.json` | 30 graph nodes, 13 ordinary edges, 90 typed event edges, 3 explicit data edges, one deterministic Host operation, 5 terminals, 4 Wait declarations, one budget and 3 recovery policies |
 | `actions.json` | 25 ordinary Actions; every Agent Action has one Role/Route envelope and IM-06 is deterministic with no Agent Route |
@@ -57,8 +57,8 @@ All graph nodes declare exactly their applicable typed event edges. Budget exhau
 ## 7. Verification
 
 ```bash
-node system-contracts/workflow-dsl/tools/check-example.cjs workflow-package/implementation/definition
-node system-contracts/workflow-dsl/tools/run-conformance.cjs workflow-package/implementation/definition
+node system-contracts/workflow-dsl-2-candidate/generated/tools/check-example.cjs workflow-package/implementation/definition
+node --test workflow-package/test/tooling/dsl2-first-party-migration.test.cjs
 ```
 
-Expected results: schema/graph/event/authority/digest closure passes; corpus reports `positive=1 negative=1 recovery=1`.
+Expected results: schema/graph/event/authority/corpus-shape/digest closure passes; the migration guard proves DSL 2.0 versions, removed 1.x bindings, exact Role/Action prompts and the System Design 0.4.0 handoff coordinate.

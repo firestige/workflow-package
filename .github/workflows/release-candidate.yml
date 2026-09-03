@@ -48,13 +48,11 @@ jobs:
           test "$(git -C system-contracts rev-parse HEAD)" = "$CONTRACT_REF"
       - name: Run acceptance
         run: |
-          npm --prefix system-contracts/workflow-dsl ci
           npm --prefix system-contracts/workflow-dsl-2-candidate ci
           node system-contracts/workflow-dsl-2-candidate/generated/tools/check-example.cjs hello-world-workflow/definition
-          node system-contracts/workflow-dsl/tools/check-example.cjs implementation/definition
-          node system-contracts/workflow-dsl/tools/check-example.cjs system-design/definition
-          node system-contracts/workflow-dsl/tools/run-conformance.cjs implementation/definition
-          node system-contracts/workflow-dsl/tools/run-conformance.cjs system-design/definition
+          node system-contracts/workflow-dsl-2-candidate/generated/tools/check-example.cjs implementation/definition
+          node system-contracts/workflow-dsl-2-candidate/generated/tools/check-example.cjs system-design/definition
+          node --test test/tooling/dsl2-first-party-migration.test.cjs
           node --test test/tooling/release/release.test.cjs
       - name: Build and verify exact assets
         env:

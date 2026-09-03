@@ -4,13 +4,13 @@
 
 本目录维护 System Design Workflow 的流程定义及其自建资源。它把简短、模糊的设计请求转化为一份可进入实现的 `IMPLEMENTATION_READY` System Design。执行期间保留需求共识、设计推导、独立审查、人工决定和版本演进的完整 lineage；完成时把必要结论吸收到最终 Design，并清理不再有交付价值的过程文件。
 
-当前状态为 **design-time reference package**：[`workflow.md`](workflow.md) 是流程语义的唯一来源；在 Workflow Contract 与机器可读 DSL 发布前，本目录不提供伪可执行的 `workflow.yaml` 或 `package.yaml`。符合 [`agentops.workflow-dsl@1.0.0`](../../docs/contracts/workflow/workflow-definition-dsl.md) 的机器可读 Definition 候选翻译见 [`definition/`](definition/)（Contract `REVIEW_CANDIDATE`，未发布，`DESIGN_REFERENCE`）。
+当前状态为 **design-time reference package**：[`workflow.md`](workflow.md) 是流程语义的唯一来源；符合 [`agentops.workflow-dsl@2.0.0`](https://github.com/firestige/workflow-self-recursive/blob/03f216bdedc3ecf272b2b8321169edc180b4b60f/docs/contracts/workflow/workflow-definition-dsl-2.0.0-candidate.md) 的机器可读 Definition 候选翻译见 [`definition/`](definition/)（Package `0.4.0`，`DESIGN_REFERENCE`）。
 
 | Field | Value |
 | --- | --- |
 | Package owner | Repository owner acting through the [`team-config/` configuration authority](../../../README.md) |
-| Design version | `0.3.0-design` |
-| Governing composition model | [`docs/workflow-composition-model.md`](../../docs/workflow-composition-model.md) |
+| Design version | `0.4.0-design` |
+| Governing composition model | [`docs/workflow-composition-model-2.0.0-candidate.md`](https://github.com/firestige/workflow-self-recursive/blob/03f216bdedc3ecf272b2b8321169edc180b4b60f/docs/workflow-composition-model-2.0.0-candidate.md) |
 | Package content identity | `UNCOMMITTED` until this draft is committed |
 | Referenced-asset lookup baseline | `d6cae2c47750ffa4b5bdcad2abbe789df28e815d` |
 

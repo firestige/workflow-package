@@ -1,7 +1,7 @@
 const { createHash } = require("node:crypto");
 const { spawnSync } = require("node:child_process");
 const { gzipSync, gunzipSync } = require("node:zlib");
-const { access, mkdir, mkdtemp, readFile, readdir, rm, writeFile } = require("node:fs/promises");
+const { mkdir, mkdtemp, readFile, readdir, rm, writeFile } = require("node:fs/promises");
 const { tmpdir } = require("node:os");
 const path = require("node:path");
 
@@ -277,8 +277,7 @@ async function extractQualifiedArchive(bytes, destination) {
 async function qualifyWorkflowAssets(destination, checkerRoot) {
   const artifactCount = await verifyWorkflowAssets(destination);
   const manifest = JSON.parse(await readFile(path.join(destination, "release-metadata.json")));
-  const legacyChecker = path.join(checkerRoot, "tools/check-example.cjs");
-  const legacyLayout = await access(legacyChecker).then(() => true, () => false);
+  const checker = path.join(checkerRoot, "workflow-dsl-2-candidate", "generated", "tools/check-example.cjs");
   const clean = await mkdtemp(path.join(tmpdir(), "workflow-release-qualification-"));
   try {
     for (const item of manifest.packages) {
@@ -288,11 +287,9 @@ async function qualifyWorkflowAssets(destination, checkerRoot) {
       await extractQualifiedArchive(await readFile(path.join(destination, archiveAsset.name)), packageRoot);
       const definition = path.join(packageRoot, "package/definition");
       const packageDocument = JSON.parse(await readFile(path.join(definition, "package.json")));
-      const contractDirectory = packageDocument.schemaVersion === "agentops.workflow-dsl@2.0.0"
-        ? "workflow-dsl-2-candidate"
-        : packageDocument.schemaVersion === "agentops.workflow-dsl@1.1.0" ? "workflow-dsl" : undefined;
-      if (contractDirectory === undefined) throw new ReleaseError("RELEASE_CONTRACT_REPLAY_FAILED");
-      const checker = legacyLayout ? legacyChecker : path.join(checkerRoot, contractDirectory, ...(contractDirectory === "workflow-dsl-2-candidate" ? ["generated"] : []), "tools/check-example.cjs");
+      if (packageDocument.schemaVersion !== "agentops.workflow-dsl@2.0.0") {
+        throw new ReleaseError("RELEASE_CONTRACT_REPLAY_FAILED");
+      }
       const checked = spawnSync(process.execPath, [checker, path.join(packageRoot, "package/definition")], {
         encoding: "utf8", shell: false, timeout: 30_000, maxBuffer: 1_048_576,
       });

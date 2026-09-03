@@ -1,9 +1,9 @@
 {
   "kind": "agentops.package",
-  "schemaVersion": "agentops.workflow-dsl@1.1.0",
+  "schemaVersion": "agentops.workflow-dsl@2.0.0",
   "package": {
     "name": "system-design-workflow",
-    "version": "0.3.0",
+    "version": "0.4.0",
     "purpose": "Turn a short Intake, project authority material and user opinions into an IMPLEMENTATION_READY System Design that states what problem is solved, why the design is shaped this way, and how fitness for the current project is proven; budget exhaustion or missing external authority enters recoverable INCOMPLETE, explicit cancellation enters CANCELLED, and non-retryable failure enters FAILED (none equals success).",
     "status": "DRAFT",
     "admissibility": "DESIGN_REFERENCE",
@@ -13,10 +13,10 @@
     },
     "definition": {
       "name": "system-design-workflow",
-      "version": "0.3.0",
-      "contentIdentity": "sha256:9f3d2a0c7ab5ed08e976c1240cae29231801e0b9fa9a52afc7f672e07caf2316"
+      "version": "0.4.0",
+      "contentIdentity": "sha256:43b0253f91c774e0d9f0177241130a6c63ae59412f1d0a566bcd8073b216a664"
     },
-    "digest": "sha256:5611855dc6908d6d128f00cc6ca4cc11117ee0122e2d71256d749cf322266f34"
+    "digest": "sha256:a617c916c2277799a017426bd54b046786b3b98ba298d217ec2d8c7ff7fcb4f2"
   },
   "documents": {
     "workflow": "workflow.json",
@@ -481,7 +481,7 @@
         "kind": "documentation",
         "owner": "owned",
         "path": "../README.md",
-        "contentIdentity": "sha256:fef801a3b8e40364caed44b382a556f8b6a85dd706a3808e0800b7dbdd54f895",
+        "contentIdentity": "sha256:ec75c25673630afea182e251416777beeaf9348baae368d4327e8c79337c2b30",
         "use": "Package-level design-time reference documentation"
       }
     ],
@@ -507,28 +507,6 @@
         },
         "contentIdentity": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
         "use": "Shared codebase-design method (Module/Interface/Seam/Depth/Leverage/Locality) used when structure is in scope; exact content identity resolved by the future Package Snapshot (placeholder, do not fabricate)"
-      },
-      {
-        "id": "resource.agent-definition.managed",
-        "kind": "agent-definition",
-        "owner": "referenced",
-        "sourceLocator": {
-          "repository": "workflow-self-recursive",
-          "path": "agents/managed-agent-definition.yaml"
-        },
-        "contentIdentity": "sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
-        "use": "Managed agent definition projected through the declared Driver; exact identity resolved by the future Package Snapshot (placeholder, do not fabricate)"
-      },
-      {
-        "id": "resource.model.managed",
-        "kind": "model",
-        "owner": "referenced",
-        "sourceLocator": {
-          "repository": "workflow-self-recursive",
-          "path": "bindings/managed-model.yaml"
-        },
-        "contentIdentity": "sha256:dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
-        "use": "Managed model binding with declared capability/cost class; exact identity resolved by the future Package Snapshot (placeholder, do not fabricate)"
       },
       {
         "id": "resource.driver.managed-cli",
@@ -638,7 +616,7 @@
     "deterministic validator CLI for SD-14/SD-15 (checks defined under validators/README.md)"
   ],
   "compatibility": {
-    "minContractVersion": "1.1.0",
-    "maxContractVersion": "1.1.0"
+    "minContractVersion": "2.0.0",
+    "maxContractVersion": "2.0.0"
   }
 }

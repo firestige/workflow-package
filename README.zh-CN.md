@@ -12,7 +12,7 @@ workflow-package 存放 workflow-self-recursive 所执行的版本化 Workflow P
 
 ## Developer preview
 
-本仓库是 workflow-self-recursive 架构优先开发者预览版的一部分，适用于个人或小团队的可信本地环境。每个 Package 都必须通过其 release 精确冻结的 Workflow Contract 校验；Hello World 0.2.0 使用 Runtime DSL 2.0，现有 Implementation 与 System Design Package 继续使用 Runtime DSL 1.1。**后续会有破坏兼容性的变更。**
+本仓库是 workflow-self-recursive 架构优先开发者预览版的一部分，适用于个人或小团队的可信本地环境。每个 Package 都必须通过其 release 精确冻结的 Workflow Contract 校验；Hello World 0.2.0、Implementation 0.4.0 与 System Design 0.4.0 均使用 Runtime DSL 2.0。**后续会有破坏兼容性的变更。**
 
 ## 结构
 
@@ -25,9 +25,9 @@ workflow-package 存放 workflow-self-recursive 所执行的版本化 Workflow P
 
 ## 安装 Workflow Package
 
-产品用户选择确定的 `name@version`。Execution 从 `firestige/wsr-workflow-package` 下载不可变的 public GitHub Release `workflow-package/<name>/v<version>`，依次校验 descriptor、checksum、provenance、兼容 Contract revision、Package closure、Workflow schema 与 Snapshot identity，再写入 exact-content cache。用户不需要克隆仓库或安装仓库开发依赖。
+产品用户可通过 `name`、`name@latest` 或确定的 `name@version` 选择 Workflow。Execution 对裸名称和 `@latest` 使用 sticky-local alias 与唯一配置的 Source 完成解析，并把选中的精确 `name@version`、digest 和本地路径冻结到 Delivery。Execution 从 `firestige/wsr-workflow-package` 下载不可变的 public GitHub Release `workflow-package/<name>/v<version>`，依次校验 descriptor、checksum、provenance、兼容 Contract revision、Package closure、Workflow schema 与 Snapshot identity，再写入 exact-content cache。用户不需要克隆仓库或安装仓库开发依赖。
 
-克隆仓库仅属于 contributor workflow，绝不是 runtime fallback。官方产品 source 不提供 `latest`、branch、ambient checkout 或本地 source fallback。
+克隆仓库仅属于 contributor workflow，绝不是 runtime fallback。`latest` 是受控的 package selector，不是 tag、branch、ambient checkout 或本地 source fallback。
 
 ## 文档
 
