@@ -4,7 +4,7 @@
   "workflow": {
     "id": "implementation-workflow",
     "name": "Implementation Workflow",
-    "version": "0.4.9",
+    "version": "0.4.10",
     "purpose": "Turns one exact frozen, implementation-authorizing design into a VERIFIED_IMPLEMENTATION_READY feature-branch candidate through Goal Graph, Test Ladder and evolutionary TDD; preserves every upstream obligation semantic while owning its own lifecycle classification, Actions, Gates and terminal effects.",
     "contractVersion": "agentops.workflow-dsl@2.0.0"
   },
@@ -1727,6 +1727,16 @@
       "requiredCapabilities": [
         "deterministic-selection"
       ]
+    },
+    {
+      "id": "operation.IM-10-refactor",
+      "contractIdentity": "host-operation.deterministic-validation.v1",
+      "configuration": {
+        "validator": "validator.refactor-checks",
+        "accepted": true,
+        "result": { "regression": true, "noRefactorOrGreen": false, "changedPaths": [], "routing": "refactor-verify" }
+      },
+      "requiredCapabilities": ["deterministic-validation"]
     },
     {
       "id": "operation.IM-11-rung-verification",

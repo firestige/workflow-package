@@ -107,7 +107,6 @@
         "rolePrompt": { "id": "role.prompt.implementer" },
         "actionPrompts": [
           { "action": "action.IM-08", "prompt": { "id": "prompt.evolve-prototype" } },
-          { "action": "action.IM-10", "prompt": { "id": "prompt.refactor-and-harden" } },
           { "action": "action.IM-14I", "prompt": { "id": "prompt.implementation-resolution" } }
         ],
         "skills": [{ "id": "skill.evolutionary-tdd-implementation" }],
