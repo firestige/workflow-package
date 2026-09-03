@@ -1,6 +1,6 @@
 # IM-14I Implementation Resolution
 
-Resolve only the implementation-side entries in the bound `routedFindings` against their negative feedback. Modify production paths minimally, run focused/affected regression, and preserve all frozen tests and design boundaries. If a finding says a required production file is absent, create that file; do not reinterpret absence as an acceptable empty change.
+Resolve only the implementation-side entries in the non-empty bound finding input (`goalRoutedFindings`, `recheckRoutedFindings`, or `wholeRoutedFindings`) against their negative feedback. Modify production paths minimally, run focused/affected regression, and preserve all frozen tests and design boundaries. If a finding says a required production file is absent, create that file; do not reinterpret absence as an acceptable empty change.
 
 Return treatment identity, changed production paths and evidence for source-lens recheck. Do not close the Finding or edit tests/Git history.
 
