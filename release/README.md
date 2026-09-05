@@ -8,4 +8,4 @@ node release/cli/release.cjs build /tmp/workflow-assets "$SOURCE_REVISION" "$CON
 node release/cli/release.cjs qualify /tmp/workflow-assets /path/to/system-contracts
 ```
 
-Use the `release/next` ref for aggregate candidate dispatch. Stable promotion is separate and only its final package-scoped GitHub Release operations use the release App token. Each public stable Release is named `workflow-package/<name>/v<version>` and contains exactly the archive, descriptor, checksum, and provenance assets declared by `release-metadata.json`.
+Pushing `release/next` automatically starts candidate qualification. That commit must contain `release/request.json` with `candidate_tag` and the exact 40-character `contract_ref`; there is no manual or reusable candidate entry point. Stable promotion is separate and only its final package-scoped GitHub Release operations use the release App token. Each public stable Release is named `workflow-package/<name>/v<version>` and contains exactly the archive, descriptor, checksum, and provenance assets declared by `release-metadata.json`.
