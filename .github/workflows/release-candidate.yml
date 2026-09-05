@@ -1,23 +1,9 @@
 name: Workflow assets candidate
 
 on:
-  workflow_dispatch:
-    inputs:
-      candidate_tag:
-        required: true
-        type: string
-      contract_ref:
-        description: Exact system-contracts revision used for conformance
-        required: true
-        type: string
-  workflow_call:
-    inputs:
-      candidate_tag:
-        required: true
-        type: string
-      contract_ref:
-        required: true
-        type: string
+  push:
+    branches:
+      - release/next
 
 permissions:
   contents: write
@@ -31,6 +17,14 @@ jobs:
       - uses: actions/checkout@v6
         with:
           fetch-depth: 0
+      - name: Resolve immutable release request
+        id: request
+        run: |
+          CANDIDATE_TAG="$(jq -er .candidate_tag release/request.json)"
+          CONTRACT_REF="$(jq -er .contract_ref release/request.json)"
+          echo "$CONTRACT_REF" | grep -Eq '^[0-9a-f]{40}$'
+          echo "candidate_tag=$CANDIDATE_TAG" >> "$GITHUB_OUTPUT"
+          echo "contract_ref=$CONTRACT_REF" >> "$GITHUB_OUTPUT"
       - uses: actions/setup-node@v7
         with:
           node-version: 24.12.0
@@ -38,11 +32,11 @@ jobs:
         uses: actions/checkout@v6
         with:
           repository: firestige/wsr-contracts
-          ref: ${{ inputs.contract_ref }}
+          ref: ${{ steps.request.outputs.contract_ref }}
           path: system-contracts
       - name: Verify exact Workflow Contract revision
         env:
-          CONTRACT_REF: ${{ inputs.contract_ref }}
+          CONTRACT_REF: ${{ steps.request.outputs.contract_ref }}
         run: |
           echo "$CONTRACT_REF" | grep -Eq '^[0-9a-f]{40}$'
           test "$(git -C system-contracts rev-parse HEAD)" = "$CONTRACT_REF"
@@ -56,14 +50,14 @@ jobs:
           node --test test/tooling/release/release.test.cjs
       - name: Build and verify exact assets
         env:
-          CONTRACT_REF: ${{ inputs.contract_ref }}
+          CONTRACT_REF: ${{ steps.request.outputs.contract_ref }}
         run: |
           node release/cli/release.cjs build "$RUNNER_TEMP/local-release" "$GITHUB_SHA" "$CONTRACT_REF"
           node release/cli/release.cjs qualify "$RUNNER_TEMP/local-release" system-contracts
       - name: Create and requalify RC
         env:
           GH_TOKEN: ${{ github.token }}
-          CANDIDATE_TAG: ${{ inputs.candidate_tag }}
+          CANDIDATE_TAG: ${{ steps.request.outputs.candidate_tag }}
         run: |
           ! gh release view "$CANDIDATE_TAG"
           ! git ls-remote --exit-code --tags origin "refs/tags/$CANDIDATE_TAG"
@@ -75,7 +69,7 @@ jobs:
       - name: Attach qualification evidence
         env:
           GH_TOKEN: ${{ github.token }}
-          CANDIDATE_TAG: ${{ inputs.candidate_tag }}
+          CANDIDATE_TAG: ${{ steps.request.outputs.candidate_tag }}
         run: |
           export CANDIDATE_TAG
           node -e 'const fs=require("node:fs"),crypto=require("node:crypto"),path=require("node:path"); const p=process.env.RUNNER_TEMP,m=fs.readFileSync(path.join(p,"remote-release/release-metadata.json")); fs.writeFileSync(path.join(p,"release-qualification.json"),JSON.stringify({schemaVersion:"wsr.release-qualification@1.0.0",candidateTag:process.env.CANDIDATE_TAG,commit:process.env.GITHUB_SHA,artifactMetadataSha256:"sha256:"+crypto.createHash("sha256").update(m).digest("hex"),localAcceptance:{status:"PASS"},remoteQualification:{status:"PASS"}},null,2)+"\n")'
